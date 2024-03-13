@@ -40,6 +40,8 @@ class Crystal < Formula
   end
 
   depends_on "bdw-gc"
+  # We need gcc from homebrew to bake a reference into the compiler on Linux
+  depends_on "gcc"
   depends_on "gmp" # std uses it but it's not linked
   depends_on "libevent"
   depends_on "libyaml"
@@ -101,6 +103,14 @@ class Crystal < Formula
       ENV.prepend_path "CRYSTAL_LIBRARY_PATH", dep.opt_lib
     end
 
+    if OS.linux?
+      # `CRYSTAL_CONFIG_CC` bakes the reference to `gcc` into the compiler to
+      # ensure it uses homebrew's version of `gcc` which is configured to pick
+      # up libraries installed via homebrew.
+      gcc = Formula["gcc"]
+      ENV["CRYSTAL_CONFIG_CC"] = gcc.opt_bin/"gcc-#{gcc.any_installed_version.major}"
+    end
+
     crystal_install_dir = bin
     stdlib_install_dir = pkgshare
 
@@ -111,7 +121,6 @@ class Crystal < Formula
     release_flags = ["release=true", "FLAGS=--no-debug"]
     crystal_build_opts = release_flags + [
       "CRYSTAL_CONFIG_LIBRARY_PATH=#{config_library_path}",
-      "CRYSTAL_CONFIG_LIBRARY_RPATH=#{config_library_path}",
       "CRYSTAL_CONFIG_PATH=#{config_path}",
       "interpreter=true",
     ]
