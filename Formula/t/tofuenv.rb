@@ -17,8 +17,6 @@ class Tofuenv < Formula
     depends_on "jq"
   end
 
-  conflicts_with "opentofu", "tenv", because: "both install tofu binary"
-
   def install
     prefix.install %w[bin lib libexec share]
   end
