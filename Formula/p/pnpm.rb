@@ -1,8 +1,8 @@
 class Pnpm < Formula
   desc "Fast, disk space efficient package manager"
   homepage "https://pnpm.io/"
-  url "https://registry.npmjs.org/pnpm/-/pnpm-9.7.0.tgz"
-  sha256 "b35018fbfa8f583668b2649e407922a721355cd81f61beeb4ac1d4258e585559"
+  url "https://registry.npmjs.org/pnpm/-/pnpm-9.7.1.tgz"
+  sha256 "46f1bbc8f8020aa9869568c387198f1a813f21fb44c82f400e7d1dbde6c70b40"
   license "MIT"
 
   livecheck do
@@ -11,20 +11,18 @@ class Pnpm < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "b36c35247f89846353fca4cc96e8b866c8592a99d15151695e5dd9a911e8aa21"
-    sha256 cellar: :any,                 arm64_ventura:  "b36c35247f89846353fca4cc96e8b866c8592a99d15151695e5dd9a911e8aa21"
-    sha256 cellar: :any,                 arm64_monterey: "b36c35247f89846353fca4cc96e8b866c8592a99d15151695e5dd9a911e8aa21"
-    sha256 cellar: :any,                 sonoma:         "f4767e04fdbe079bc2c7a79a004b5bff8b2d6eb09beb8f54a3beb37b22f42f02"
-    sha256 cellar: :any,                 ventura:        "f4767e04fdbe079bc2c7a79a004b5bff8b2d6eb09beb8f54a3beb37b22f42f02"
-    sha256 cellar: :any,                 monterey:       "f4767e04fdbe079bc2c7a79a004b5bff8b2d6eb09beb8f54a3beb37b22f42f02"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f9df20acfe25e3fef0a7618f39b138506f0c94098216dee804525fba9becfc8f"
+    sha256 cellar: :any,                 arm64_sonoma:   "00be32468e57c3f710f8ada545a63d7d346757b70cc77a1fc7dbf1cabed5b33e"
+    sha256 cellar: :any,                 arm64_ventura:  "00be32468e57c3f710f8ada545a63d7d346757b70cc77a1fc7dbf1cabed5b33e"
+    sha256 cellar: :any,                 arm64_monterey: "00be32468e57c3f710f8ada545a63d7d346757b70cc77a1fc7dbf1cabed5b33e"
+    sha256 cellar: :any,                 sonoma:         "cbcd99325759373d2c261ed3dcd0c15e53a746d3832161233a79ba8b2878bbbd"
+    sha256 cellar: :any,                 ventura:        "cbcd99325759373d2c261ed3dcd0c15e53a746d3832161233a79ba8b2878bbbd"
+    sha256 cellar: :any,                 monterey:       "cbcd99325759373d2c261ed3dcd0c15e53a746d3832161233a79ba8b2878bbbd"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "351155b92b05c98650572711b25a4619d17d481046c52dff84c06f58d9dcaffd"
   end
 
   depends_on "node" => [:build, :test]
 
   conflicts_with "corepack", because: "both installs `pnpm` and `pnpx` binaries"
-
-  skip_clean "bin"
 
   def install
     system "npm", "install", *std_npm_args

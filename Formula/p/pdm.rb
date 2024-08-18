@@ -3,19 +3,19 @@ class Pdm < Formula
 
   desc "Modern Python package and dependency manager supporting the latest PEP standards"
   homepage "https://pdm.fming.dev"
-  url "https://files.pythonhosted.org/packages/d9/cc/a4496763afc279f6613c614505976c09042fc97ca3e1b9b13c5a15c0fb80/pdm-2.17.3.tar.gz"
-  sha256 "f49220f225ec71258cbf7148b14a76caeac612745bedab67f9062398ea56a7a5"
+  url "https://files.pythonhosted.org/packages/a7/4f/6636a4aca3293294d26a240b618ea9813d1214ed77d093f92ed56ca8ebf2/pdm-2.18.1.tar.gz"
+  sha256 "acef692477a7190731ee7c1f626e97516eeb7473e4eeeeede4fef2bf0fb743ee"
   license "MIT"
   head "https://github.com/pdm-project/pdm.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "d842c1c53b05426e7a692170d867af85a4fb670fb50983f6f51d5421620860f1"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "bc15a8b800b2bed910cedd59ba23a5a71c6540d3d89fb91904561db6e75f2b19"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "44b0517d6308a391ee11a9b7e01e364149992a75cae017b2ebeac8454c767b07"
-    sha256 cellar: :any_skip_relocation, sonoma:         "8586635e0ff1628031de4aaeaae57d858e88a87e5177cf2f2dee64acaa4d5bed"
-    sha256 cellar: :any_skip_relocation, ventura:        "f442373308f31b6e0a08c657a40ba3c076841ea965037145c2976163d8c42438"
-    sha256 cellar: :any_skip_relocation, monterey:       "73754cbcd56b4ced3dc151ecc1f725364d2abddad9df8abf74632ddb339a3346"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b6235de62bf8e2a251f949e4886378b92447df20e6f79cbf1073e8e62d287b2a"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "f84821a4b5244883b002f023f570ac403a444bfb83ae383f65dd776d4f661dfd"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "b0e4b40785854f252a7c96692d9ae652c07da096c0d5fe075bfe3eb7e68e285a"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "2be38c336ce2b31ece6b1d3fd88390615350d3c097d879fe71b03c2f3e7fc1fc"
+    sha256 cellar: :any_skip_relocation, sonoma:         "2f4504e6e112bc6e76374c44416b9ec822cc1e1589a24e176614b59c25cd1a8f"
+    sha256 cellar: :any_skip_relocation, ventura:        "bc1e3d8104b74aa619d128292485adc43999ca4243ab70b0562b97e085f632de"
+    sha256 cellar: :any_skip_relocation, monterey:       "7f4458e7c53603d94fba09e42e2c8490ed43b053738ecdb08a76ca9b8146a4d5"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ff7d1e71db038f32ed39931264d6c73b6c34ba06e9bc51ec385bae0b5f048b80"
   end
 
   depends_on "certifi"
@@ -102,8 +102,8 @@ class Pdm < Formula
   end
 
   resource "pbs-installer" do
-    url "https://files.pythonhosted.org/packages/08/ae/4cd6d39bd365ac440f6a0f11e3614356fc280a8717b22a36f73f139f59b4/pbs_installer-2024.4.24.tar.gz"
-    sha256 "19224733068b0ffa39b53afbb61544bee8ecb9503e7222ba034f07b9913e2c1c"
+    url "https://files.pythonhosted.org/packages/a9/4e/aa03c3d932815eb13df230ce621086a345a2f5e9d1ed6703661f48aa4882/pbs_installer-2024.8.14.tar.gz"
+    sha256 "40144b21f04e90c73f1b79601e139d56d540356630fe473842ea439a59dffaee"
   end
 
   resource "platformdirs" do
@@ -152,8 +152,8 @@ class Pdm < Formula
   end
 
   resource "tomlkit" do
-    url "https://files.pythonhosted.org/packages/4b/34/f5f4fbc6b329c948a90468dd423aaa3c3bfc1e07d5a76deec269110f2f6e/tomlkit-0.13.0.tar.gz"
-    sha256 "08ad192699734149f5b97b45f1f18dad7eb1b6d16bc72ad0c2335772650d7b72"
+    url "https://files.pythonhosted.org/packages/b1/09/a439bec5888f00a54b8b9f05fa94d7f901d6735ef4e55dcec9bc37b5d8fa/tomlkit-0.13.2.tar.gz"
+    sha256 "fff5fe59a87295b278abd31bec92c15d9bc4a06885ab12bcea52c71119392e79"
   end
 
   resource "truststore" do
@@ -167,8 +167,8 @@ class Pdm < Formula
   end
 
   resource "unearth" do
-    url "https://files.pythonhosted.org/packages/40/52/f20d419513a91ebbec226b3f7567bf5a662402c63cbd892a5fb1f5352a86/unearth-0.16.1.tar.gz"
-    sha256 "988a43418fa0b78aeb628a15f6a3b02152c1787f63fe6d254c7f4e2ccf8db0a7"
+    url "https://files.pythonhosted.org/packages/c3/0b/5f14a623276a2ee321f74b65ddf6505663d59ed3f07546d66a859d77825c/unearth-0.17.0.tar.gz"
+    sha256 "771ca270fec8bea262774a0b1ce2752739056e65234434028eceaf466cbba0b6"
   end
 
   resource "virtualenv" do

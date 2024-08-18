@@ -3,18 +3,18 @@ class Condure < Formula
 
   desc "HTTP/WebSocket connection manager"
   homepage "https://github.com/fanout/condure"
-  url "https://github.com/fanout/condure/archive/refs/tags/1.10.0.tar.gz"
-  sha256 "abe4d83ae2494a8eabd036f6f455fb4d8ebc71b29d8d50a0b35a7a59f8e0ea60"
+  url "https://github.com/fanout/condure/archive/refs/tags/1.10.1.tar.gz"
+  sha256 "eb2df8e1a80d9fe4f66c41d2e9fbcd1205d8239ccd9b6cd914de5567356b7c70"
   license "Apache-2.0"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any,                 arm64_ventura:  "683bb532c5a6e91587e203984dc6c38c81367053adf4bcb8f807a75aca9eb730"
-    sha256 cellar: :any,                 arm64_monterey: "f003a5b4706a843c38923c62b7b24324c2465e19a1b4641f9752c2c4713e5f19"
-    sha256 cellar: :any,                 sonoma:         "d2a35c97207807253e8006efb89d19c5f4cc975d4f7790fa1b32eb16408d48a9"
-    sha256 cellar: :any,                 ventura:        "3a0c81c0b4babb7b68014eef2b7925872bbf0a01f5bd8ea08365d0cdfd7f9630"
-    sha256 cellar: :any,                 monterey:       "186f073ec4ae5a3662415a14103650a7cf771636e9b142624df4fc92e7dc09cd"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "0f903cf69898091ab21e253665b9a53d08a0d67ac39bb00b6bb20c43051e381e"
+    sha256 cellar: :any,                 arm64_sonoma:   "b61e13bb29181ff457ce6a5b1b9156d370a31fabfd61767f94dfbef580469c7a"
+    sha256 cellar: :any,                 arm64_ventura:  "a3d123a19dc1da1b031ae987ea84a517e3d1d6940206dce616e40a1122c3ac57"
+    sha256 cellar: :any,                 arm64_monterey: "4fd31572d6268c0d6bcc5993b23f50a7f75306316ddc3ed0cfe6dd7ed439d325"
+    sha256 cellar: :any,                 sonoma:         "75aa7ff3919f0791a751778e0993d8244dbad023c92bee2a7c03cf2b18fb4751"
+    sha256 cellar: :any,                 ventura:        "d5b7fd6e1d9572b673a1e4e2b5662c050009f439c9dcaddf69ed07346b49d231"
+    sha256 cellar: :any,                 monterey:       "f44417d181f8cc64156a2d25910ff6ced2829011b6b7e52c36abe8fea9392392"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "00527a59f46952f13cb4a1af03af0dcf3d894dd1582828bcb3152ab5b070ac93"
   end
 
   depends_on "pkg-config" => :build
@@ -45,10 +45,6 @@ class Condure < Formula
   end
 
   def install
-    # https://github.com/fanout/condure/issues/16
-    inreplace "Cargo.toml", 'time = { version = "0.3", features = ["formatting", "local-offset", "macros"] }',
-                            'time = { version = "0.3.36", features = ["formatting", "local-offset", "macros"] }'
-
     system "cargo", "install", *std_cargo_args
   end
 

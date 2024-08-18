@@ -124,6 +124,7 @@ atop
 atuin
 audacious
 auditbeat
+auditwheel
 autobrr
 autodiff
 automake
@@ -231,6 +232,7 @@ bluez
 bmake
 bnd
 bob
+bomber
 boolector
 bore-cli
 borgbackup
@@ -239,6 +241,7 @@ bosh-cli
 botan
 botan@2
 bottom
+bounceback
 bowtie2
 box2d
 bpftop
@@ -396,6 +399,7 @@ cjson
 clair
 clamav
 clang-format
+clang-uml
 claws-mail
 clazy
 clblast
@@ -424,6 +428,7 @@ cloudformation-guard
 cloudfox
 cloudlist
 cloudprober
+clozure-cl
 clusterawsadm
 clusterctl
 clzip
@@ -596,6 +601,7 @@ dialog
 diamond
 dicebear
 diesel
+diffoci
 diffoscope
 difftastic
 digdag
@@ -670,6 +676,7 @@ dsq
 dssim
 dstack
 dstask
+dtc
 dtm
 dua-cli
 dub
@@ -985,6 +992,7 @@ glfw
 glib-networking
 glibmm
 glibmm@2.66
+glider
 glm
 global
 glooctl
@@ -1179,6 +1187,7 @@ icloudpd
 ignite
 igraph
 igv
+iir1
 ijq
 imagemagick
 imagemagick@6
@@ -1522,6 +1531,7 @@ libxdmcp
 libxext
 libxkbfile
 libxlsxwriter
+libxml++@4
 libxml2
 libxmlb
 libxmlsec1
@@ -1532,6 +1542,7 @@ libxvmc
 libzim
 libzzip
 license-eye
+licensed
 licensefinder
 lightgbm
 lighthouse
@@ -1573,6 +1584,7 @@ lsof
 lttng-ust
 lua
 luacheck
+luajit-openresty
 luarocks
 luau
 lucky-commit
@@ -1585,6 +1597,7 @@ lwtools
 lxc
 lychee
 lynis
+lz4
 lzip
 macchina
 mackup
@@ -1609,6 +1622,8 @@ mapcidr
 mapproxy
 mapserver
 mariadb
+mariadb-connector-c
+mariadb-connector-odbc
 mariadb@10.11
 mariadb@10.4
 mariadb@10.5
@@ -1737,6 +1752,7 @@ musikcube
 mutt
 mvnvm
 mvt
+mvtools
 mx
 mycli
 mycorrhiza
@@ -1828,6 +1844,7 @@ numbat
 numcpp
 numpy
 nushell
+nuspell
 nut
 nvc
 nvchecker
@@ -2132,6 +2149,7 @@ python-argcomplete
 python-build
 python-launcher
 python-lxml
+python-markdown
 python-matplotlib
 python-setuptools
 python-yq
@@ -2275,6 +2293,7 @@ samtools
 sbcl
 sbom-tool
 sbt
+sc-im
 scala
 scala@2.12
 scala@2.13
@@ -2324,6 +2343,7 @@ shadowenv
 shadowsocks-rust
 shairport-sync
 shallow-backup
+shapelib
 sheldon
 shell2http
 shellcheck
@@ -2430,6 +2450,7 @@ sqlx-cli
 squashfuse
 squealer
 squid
+squiid
 sratoolkit
 src
 srgn
@@ -2559,6 +2580,7 @@ tfautomv
 tfel
 tfmigrate
 tfproviderlint
+tfschema
 tfsec
 tfupdate
 tgui
@@ -2578,6 +2600,7 @@ tinyproxy
 tio
 tippecanoe
 tkey-ssh-agent
+tlsx
 tmux-mem-cpu-load
 tmux-xpanes
 tmuxp
@@ -2645,6 +2668,7 @@ uftrace
 ugit
 ugrep
 unar
+unbound
 uncover
 ungit
 uni
@@ -2712,7 +2736,6 @@ vitess
 vivid
 vlang
 vnstat
-volatility
 volk
 volta
 votca
@@ -2788,6 +2811,7 @@ xcbeautify
 xcdiff
 xclogparser
 xcodegen
+xctesthtmlreport
 xdg-ninja
 xdpyinfo
 xeol
@@ -2799,6 +2823,7 @@ xkeyboardconfig
 xlsxio
 xmake
 xmlrpc-c
+xmount
 xmrig
 xonsh
 xorg-server

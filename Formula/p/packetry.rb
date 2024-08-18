@@ -1,18 +1,18 @@
 class Packetry < Formula
   desc "Fast, intuitive USB 2.0 protocol analysis application for use with Cynthion"
   homepage "https://github.com/greatscottgadgets/packetry"
-  url "https://github.com/greatscottgadgets/packetry/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "8d91ddc17883299f302752b12e11aa539c306304109d733c8863b7bc444c9629"
+  url "https://github.com/greatscottgadgets/packetry/archive/refs/tags/v0.2.1.tar.gz"
+  sha256 "5dfeb9c711fc10a4225002ee835ae1b8ba8dc6bc6e5fc2d5558412b66f0c716b"
   license "BSD-3-Clause"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "88a297481690251298b9a8ead058fee32a447386f55c4796d605199d30afd710"
-    sha256 cellar: :any,                 arm64_ventura:  "247349ca46c1c3e5401b1db2d4dbc704b9ae316b7a35ed3da14e006128d6419d"
-    sha256 cellar: :any,                 arm64_monterey: "4481780d380737b3f3ebc181c7ac1d2ffd94ef0e734e92c3a7008aae5a50f6e4"
-    sha256 cellar: :any,                 sonoma:         "094f6852fbe16ccb0c6d18bfec1609c90272e389e443f270c24b6472d9e6a0a5"
-    sha256 cellar: :any,                 ventura:        "02b09c6eb6719e36b804186378ca9e3221409283f477f6f03c7ccbb07e7cf977"
-    sha256 cellar: :any,                 monterey:       "7d8b0975a480393e9e79c900d2b02296f10a412e3c9954a2b1b97105531e09b8"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "113a88db6097a15d3af6a4cc28a7f269f63093cc0e9b0130d35d739ebf017325"
+    sha256 cellar: :any,                 arm64_sonoma:   "175a54e0ae37d3e5e5a5fa91227f1d4d1df776800cd98b76f6c11a99b967b8e7"
+    sha256 cellar: :any,                 arm64_ventura:  "17f42acbf4030b4eb6a902e37af718c53ef7777388f01088d20fe4ec347a13f4"
+    sha256 cellar: :any,                 arm64_monterey: "8c4f7070d6358973c5e9fbfd68566bb7ad4312d45e1eaae6e6495fe515d18b9a"
+    sha256 cellar: :any,                 sonoma:         "f9f4bc124136e8c0ee69daba42a414ddc5e98a6e45dfe62e445b263f280595bd"
+    sha256 cellar: :any,                 ventura:        "9106929c228c332769cb054ebd3728ff9a2132f86214084db9c8bff6a15da616"
+    sha256 cellar: :any,                 monterey:       "7924f1b669d8ac376ed015332179ff941cef20035f9700ff6b5f9129d004c906"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "33ad3be16e8f406980fab4c4b1794baae7a8a6179656b43aebd53348f9928e68"
   end
 
   depends_on "pkg-config" => :build
@@ -37,6 +37,7 @@ class Packetry < Formula
     assert_match version.to_s, shell_output("#{bin}/packetry --version")
 
     # Expected result is panic because Cynthion is not connected via USB.
-    assert_match "Testing", shell_output("#{bin}/packetry --test-cynthion", 101)
+    output = shell_output("#{bin}/packetry --test-cynthion 2>&1", 1)
+    assert_match "Test failed: No usable analyzer found", output
   end
 end
