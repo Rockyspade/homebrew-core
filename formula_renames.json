@@ -154,6 +154,7 @@
   "tensorflow": "libtensorflow",
   "tepl": "libgedit-tepl",
   "thrift@0.90": "thrift@0.9",
+  "thors-serializer": "thors-mongo",
   "todolist": "ultralist",
   "tomcat7": "tomcat@7",
   "tomee-jax-rs": "tomee-plus",
