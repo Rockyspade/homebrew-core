@@ -428,6 +428,7 @@ cloudfox
 cloudlist
 cloudprober
 clozure-cl
+clp
 clusterawsadm
 clusterctl
 clzip
