@@ -1,18 +1,17 @@
 class Xroar < Formula
   desc "Dragon and Tandy 8-bit computer emulator"
   homepage "https://www.6809.org.uk/xroar/"
-  url "https://www.6809.org.uk/xroar/dl/xroar-1.5.5.tar.gz"
-  sha256 "a39b319aa5d46f455e8973cf7f3b6da67f24231dc1c91fdcb3c09e7a689d3c8b"
+  url "https://www.6809.org.uk/xroar/dl/xroar-1.6.5.tar.gz"
+  sha256 "fd2e5812578924d4b0cbc5c87375caae8a56aebea0b78f63a2399a216778b4f8"
   license "GPL-3.0-or-later"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "56f21d222837c9be1be83971a78f6a64615f14cc2098c9a30913ac10041658eb"
-    sha256 cellar: :any,                 arm64_ventura:  "9aa0fdc08b91d8e4588a7790084270806d4bf480edd54ce649c28b61770f9e34"
-    sha256 cellar: :any,                 arm64_monterey: "01124a5e4d2d6dc05a18a81a3f88698694fb1146755260de06726df32f83886b"
-    sha256 cellar: :any,                 sonoma:         "a9a0ae6b2ec3fa132f50b3c1847de52ba701438a3d43e303a9797c56341068ed"
-    sha256 cellar: :any,                 ventura:        "5021d6571619e0c96ad73b77577851d67c6c5ddd209f155628b9df599a42c0e4"
-    sha256 cellar: :any,                 monterey:       "075fdbc6564f72c1cec88039c6a095dbf01e4cd0f00cc5be5e83ffb309d54446"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "22ca19d485ff3f07848f7d0ddb148d48965328e1fa79167723883c2d108f8143"
+    sha256 cellar: :any,                 arm64_sequoia: "32c9802cca6fccfb27e357d554516b0e54fe5ec6401e762b3edf7e3f75595ca9"
+    sha256 cellar: :any,                 arm64_sonoma:  "9fb94d2563d8953bba54a143b05722b3d1a6d042e5d7cf03a07b83b033ba3a1f"
+    sha256 cellar: :any,                 arm64_ventura: "21a8c3a2415ee9853d89da0f9edbc9f3af4d239e0ec7e9b8ff54ab160e1bb8d2"
+    sha256 cellar: :any,                 sonoma:        "aca75c44f5052a3fb66186ad09851f928e2b51b9793042d6e963def6f394b234"
+    sha256 cellar: :any,                 ventura:       "b31e54b4643b071d8e5605c0a28ebcb817eaeb63486c51a2089102241e252b6d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "428c6278734912b2bc40a385bb2108630a75e144d8458e827ab08ad7566d6c79"
   end
 
   head do
@@ -32,6 +31,8 @@ class Xroar < Formula
 
   on_linux do
     depends_on "alsa-lib"
+    depends_on "mesa"
+    depends_on "pulseaudio"
   end
 
   def install

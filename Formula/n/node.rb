@@ -1,9 +1,10 @@
 class Node < Formula
   desc "Platform built on V8 to build network applications"
   homepage "https://nodejs.org/"
-  url "https://nodejs.org/dist/v22.6.0/node-v22.6.0.tar.xz"
-  sha256 "37259d618d5565ca55acc2585045c7e1c5b9965a3d4eb44c0a237fdae84b9d44"
+  url "https://nodejs.org/dist/v22.9.0/node-v22.9.0.tar.xz"
+  sha256 "a55aeb368dee93432f610127cf94ce682aac07b93dcbbaadd856df122c9239df"
   license "MIT"
+  revision 1
   head "https://github.com/nodejs/node.git", branch: "main"
 
   livecheck do
@@ -12,20 +13,19 @@ class Node < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "111d292b26d74900ecc3b8b6a21a12ffb910e53a2871a37dbbb26e55339fd8f2"
-    sha256 arm64_ventura:  "825e78d28f61c643f3ae8c651c70596556d71889325a4ede364af24ec8f54537"
-    sha256 arm64_monterey: "1abf183e19384809e15c20aa585ae19319945d6f55c6fe1987f629826c5c0fe7"
-    sha256 sonoma:         "3cefab8f0c14c13991cc7ec581611b6a07c0d45bc485faad380fb4a70f07fe11"
-    sha256 ventura:        "a394573380523b376cb513940d1eae885ec5b3f6ea2b327ac3d54a63751079c9"
-    sha256 monterey:       "495fb08253eb39e45c7dfade17267d8716656c57046531b3a884b8a991f924f2"
-    sha256 x86_64_linux:   "2f7a3bd6e7400e8725e58e25df3715b72b72864610c34241e725c2e1683c99d4"
+    sha256 arm64_sequoia: "cf11099a798826240964dcf984741456b73218f177dd16d8ec56be676e1f29d0"
+    sha256 arm64_sonoma:  "68dee27224d3715ce86766563d89a834c03d7d9b35eee7150c25d94ba29c8b1e"
+    sha256 arm64_ventura: "d9b7844150021e8ec32468c6e5cdec4f0863988643eab4b0578d8e16baaaefa0"
+    sha256 sonoma:        "df14e1b67ee62cf9a33300f59f3d6ff6c4280f76dfcaf5279baa673b874ad9f0"
+    sha256 ventura:       "9be7c7082adc46119a6c52ea413a5437094d33c894b4c833136387aa953bfb12"
+    sha256 x86_64_linux:  "9447d0936c6b3eb34cccaae5f55f8886f5c920dcb17743ac9569505c78b9b30c"
   end
 
   depends_on "pkg-config" => :build
   depends_on "python@3.12" => :build
   depends_on "brotli"
   depends_on "c-ares"
-  depends_on "icu4c"
+  depends_on "icu4c@75"
   depends_on "libnghttp2"
   depends_on "libuv"
   depends_on "openssl@3"
@@ -49,8 +49,8 @@ class Node < Formula
   # We track major/minor from upstream Node releases.
   # We will accept *important* npm patch releases when necessary.
   resource "npm" do
-    url "https://registry.npmjs.org/npm/-/npm-10.8.2.tgz"
-    sha256 "c8c61ba0fa0ab3b5120efd5ba97fdaf0e0b495eef647a97c4413919eda0a878b"
+    url "https://registry.npmjs.org/npm/-/npm-10.8.3.tgz"
+    sha256 "b7dc7eb48d7479b93668e913c7ad686ab2aa71c705d4a56b5323d1bffdba2972"
   end
 
   def install

@@ -1,3 +1,4 @@
+# typed: strict
 # frozen_string_literal: true
 
 require "abstract_command"
@@ -18,6 +19,7 @@ module Homebrew
         hide_from_man_page!
       end
 
+      sig { override.void }
       def run
         formula = Formula[args.named.first]
         timeout = args.named.second.to_i

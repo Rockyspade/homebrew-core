@@ -1,9 +1,9 @@
 class Go < Formula
   desc "Open source programming language to build simple/reliable/efficient software"
   homepage "https://go.dev/"
-  url "https://go.dev/dl/go1.23.0.src.tar.gz"
-  mirror "https://fossies.org/linux/misc/go1.23.0.src.tar.gz"
-  sha256 "42b7a8e80d805daa03022ed3fde4321d4c3bf2c990a144165d01eeecd6f699c6"
+  url "https://go.dev/dl/go1.23.2.src.tar.gz"
+  mirror "https://fossies.org/linux/misc/go1.23.2.src.tar.gz"
+  sha256 "36930162a93df417d90bd22c6e14daff4705baac2b02418edda671cdfa9cd07f"
   license "BSD-3-Clause"
   head "https://go.googlesource.com/go.git", branch: "master"
 
@@ -21,13 +21,12 @@ class Go < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "9ae04e3063ff69c93dff6e982d93ed8c07114cdd50db418ddbb514c0f3cbb0a2"
-    sha256 arm64_ventura:  "9ae04e3063ff69c93dff6e982d93ed8c07114cdd50db418ddbb514c0f3cbb0a2"
-    sha256 arm64_monterey: "9ae04e3063ff69c93dff6e982d93ed8c07114cdd50db418ddbb514c0f3cbb0a2"
-    sha256 sonoma:         "78c91083ca44ee58e1eeb70286ead1564f44f570aeba12c5a7a981c059cc28a2"
-    sha256 ventura:        "78c91083ca44ee58e1eeb70286ead1564f44f570aeba12c5a7a981c059cc28a2"
-    sha256 monterey:       "78c91083ca44ee58e1eeb70286ead1564f44f570aeba12c5a7a981c059cc28a2"
-    sha256 x86_64_linux:   "7ce2a2f4ebb0c620f909da574fe88b8abcf09e1c7e6acd6eb5f486a1931697c4"
+    sha256 arm64_sequoia: "719329749bebde70f295cacf645c45ae155fda041bc92c50119997a0dd00e522"
+    sha256 arm64_sonoma:  "719329749bebde70f295cacf645c45ae155fda041bc92c50119997a0dd00e522"
+    sha256 arm64_ventura: "719329749bebde70f295cacf645c45ae155fda041bc92c50119997a0dd00e522"
+    sha256 sonoma:        "57c7e66ca7ea40cb376a54c278f763cba6a9f6cd737799c6f20ea025950293a9"
+    sha256 ventura:       "57c7e66ca7ea40cb376a54c278f763cba6a9f6cd737799c6f20ea025950293a9"
+    sha256 x86_64_linux:  "6de4daee05bd091a7c29aee73e93bde102c560392d5114e3e92b7d1fae0fbcf4"
   end
 
   # Don't update this unless this version cannot bootstrap the new version.
@@ -64,6 +63,8 @@ class Go < Formula
   end
 
   def install
+    inreplace "go.env", /^GOTOOLCHAIN=.*$/, "GOTOOLCHAIN=local"
+
     (buildpath/"gobootstrap").install resource("gobootstrap")
     ENV["GOROOT_BOOTSTRAP"] = buildpath/"gobootstrap"
 
@@ -86,7 +87,17 @@ class Go < Formula
     rm_r(libexec/"src/runtime/pprof/testdata")
   end
 
+  def caveats
+    <<~EOS
+      Homebrew's Go toolchain is configured with
+        GOTOOLCHAIN=local
+      per Homebrew policy on tools that update themselves.
+    EOS
+  end
+
   test do
+    assert_equal "local", shell_output("#{bin}/go env GOTOOLCHAIN").strip
+
     (testpath/"hello.go").write <<~EOS
       package main
 

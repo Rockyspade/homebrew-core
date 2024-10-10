@@ -1,19 +1,18 @@
 class Vte3 < Formula
   desc "Terminal emulator widget used by GNOME terminal"
   homepage "https://wiki.gnome.org/Apps/Terminal/VTE"
-  url "https://download.gnome.org/sources/vte/0.76/vte-0.76.3.tar.xz"
-  sha256 "f678e94c056f377fd0021214adff5450cb172e9a08b160911181ddff7b7d5d60"
+  url "https://download.gnome.org/sources/vte/0.76/vte-0.76.4.tar.xz"
+  sha256 "9c52d1da6c6f7409289351fc1cba8948cd3b47d048cbfede763a0f75b77453cc"
   license "LGPL-2.0-or-later"
+  revision 1
 
   bottle do
-    rebuild 1
-    sha256 arm64_sonoma:   "f498003f52d7be2c80d3bd9f267ac496617825a72df2f31b88b21e4840d4c943"
-    sha256 arm64_ventura:  "eb95d7ad5f4a44b256818471cf1bcad69323992e290f4896930ce835e4de05e2"
-    sha256 arm64_monterey: "a4eeb754b84140619192c4c4cbae2073e3cc33a5fecb94dcfa48051b2f3bec30"
-    sha256 sonoma:         "496dd20a582cc2925492a000116b221279facef545e9c18b678d909040d9f79f"
-    sha256 ventura:        "44724e8ec9d2d585a5c67e24d9c444e21505a4a3420d181ea3e986e5def25824"
-    sha256 monterey:       "ee9131f74cfb2ae6212edc005d37d8be9f0a44f97c04fe888aab1846a1d74cca"
-    sha256 x86_64_linux:   "7e3d98d527fad56e94e8026b7bd655d460a0e0e720a5e7141948d5361148e1a6"
+    sha256 arm64_sequoia: "4468041d31d005bde0d94d6eabcccb487d9695677da2c991d282ad3d99e4eb75"
+    sha256 arm64_sonoma:  "d6b90c1a4b8074748174b0823a22d191c55345f8d1f0129a69f44902822ba712"
+    sha256 arm64_ventura: "09bf5e914cd32247c5b571f61d51208b62f852b1a9002f9b184dfa95a6cf5b2a"
+    sha256 sonoma:        "029c5d9e8320e768c9dd89fadb8b54d3011aeed5146140b551008fd735a57599"
+    sha256 ventura:       "55731ac8cee88e9f008ca0f47b4bcae57db570b425f504d55def7c4251c708b8"
+    sha256 x86_64_linux:  "8f4ddada3aa7acd5f2d1df6f8bc0ab5a9ab1c4eda0a32e58c32c83bd01ef66cb"
   end
 
   depends_on "gettext" => :build
@@ -30,7 +29,7 @@ class Vte3 < Formula
   depends_on "gnutls"
   depends_on "gtk+3"
   depends_on "gtk4"
-  depends_on "icu4c"
+  depends_on "icu4c@75"
   depends_on "lz4"
   depends_on macos: :mojave
   depends_on "pango"
@@ -64,9 +63,13 @@ class Vte3 < Formula
 
   def install
     if OS.mac? && DevelopmentTools.clang_build_version <= 1500
+      llvm = Formula["llvm"]
       ENV.llvm_clang
       if DevelopmentTools.clang_build_version <= 1400
-        ENV.prepend "LDFLAGS", "-L#{Formula["llvm"].opt_lib}/c++ -L#{Formula["llvm"].opt_lib} -lunwind"
+        ENV.prepend "LDFLAGS", "-L#{llvm.opt_lib}/c++ -L#{llvm.opt_lib} -lunwind"
+      else
+        # Avoid linkage to LLVM libunwind. Should have been handled by superenv but still occurs
+        ENV.remove "HOMEBREW_LIBRARY_PATHS", llvm.opt_lib
       end
     end
 
@@ -84,7 +87,7 @@ class Vte3 < Formula
   end
 
   test do
-    ENV.clang if OS.mac? && (DevelopmentTools.clang_build_version <= 1200)
+    ENV.clang if OS.mac? && (DevelopmentTools.clang_build_version <= 1500)
 
     (testpath/"test.c").write <<~EOS
       #include <vte/vte.h>

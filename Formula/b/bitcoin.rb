@@ -1,8 +1,8 @@
 class Bitcoin < Formula
   desc "Decentralized, peer to peer payment network"
   homepage "https://bitcoincore.org/"
-  url "https://bitcoincore.org/bin/bitcoin-core-27.1/bitcoin-27.1.tar.gz"
-  sha256 "0c1051fd921b8fae912f5c2dfd86b085ab45baa05cd7be4585b10b4d1818f3da"
+  url "https://bitcoincore.org/bin/bitcoin-core-28.0/bitcoin-28.0.tar.gz"
+  sha256 "700ae2d1e204602eb07f2779a6e6669893bc96c0dca290593f80ff8e102ff37f"
   license all_of: [
     "MIT",
     "BSD-3-Clause", # src/crc32c, src/leveldb
@@ -17,14 +17,12 @@ class Bitcoin < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any,                 arm64_sonoma:   "71aab0dcf1c7ad4c153ea3e18e00c9a6e2c70d5bc0a00f1026a5f693f2fc93f8"
-    sha256 cellar: :any,                 arm64_ventura:  "d618b0c4fe2c4d6bb50251eaeb2b05084698e0e43d2aa8ffc00531e453c2bc84"
-    sha256 cellar: :any,                 arm64_monterey: "1d0b1b8ca67672ab69bf6b94d38faaa93f958ede69fff5bd6f234401ad0413c0"
-    sha256 cellar: :any,                 sonoma:         "c9813c58fcb96a7b98f2335e879bb846bcc134026d242493862b2091007afa78"
-    sha256 cellar: :any,                 ventura:        "c7f669c4b6c16558781d3ee95e11ce9b048627a822c9cd282e50ef3831ac72c2"
-    sha256 cellar: :any,                 monterey:       "fe94d256da8c4d5e6aae08d75f38e1afe81a3e94cbbd2c71ea370028c0c0f28b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6175a2cd66d5fea7074870796b79fa81be0605c0fc502f989fde29f3bcc69f1f"
+    sha256 cellar: :any,                 arm64_sequoia: "9827fe39470644c9e18c2e29a9cc50517d755ab23600dfc15fc73a4c436090df"
+    sha256 cellar: :any,                 arm64_sonoma:  "dadd606914dc46493f9c71f3b12975186f91d15cc139cb3f9630baa4f9207420"
+    sha256 cellar: :any,                 arm64_ventura: "c21b31a816054f9bb708a30d19b7168c4287a1262723d194925ec6550c7152bd"
+    sha256 cellar: :any,                 sonoma:        "0e2895408874d922a18a81df8bbaa65aa67215c8445d6ae7ce856613f18ffd1d"
+    sha256 cellar: :any,                 ventura:       "68e8ddb21ef1fe0a67e2e72f4b5b5f0092304e501deb2aa7ad98ba9850ea5774"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "082c20a351f23b99cb778ae5b643d3ba7d02feeca0cd9adc8474e350fd9c649a"
   end
 
   depends_on "autoconf" => :build
@@ -44,7 +42,7 @@ class Bitcoin < Formula
   end
 
   fails_with :gcc do
-    version "9"
+    version "10"
     cause "Requires C++ 20"
   end
 

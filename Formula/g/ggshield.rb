@@ -3,19 +3,18 @@ class Ggshield < Formula
 
   desc "Scanner for secrets and sensitive data in code"
   homepage "https://www.gitguardian.com"
-  url "https://files.pythonhosted.org/packages/dc/7c/6b3b6ad2ff8b87930112e939814fa622e229ba918408d26a1aae491ce20a/ggshield-1.30.2.tar.gz"
-  sha256 "81b96feeac81675ef917807576a9e2a36df748a2a33b3e444cc0a6e9b98e1ffb"
+  url "https://files.pythonhosted.org/packages/30/14/3fddab1e72546c6aba3d6044c871d06fe2a0081a277389c08348ae21a74e/ggshield-1.32.1.tar.gz"
+  sha256 "baa8f47ee0b1ff0c6038bc7681fc11380a093eb6939422d9db699345f604159e"
   license "MIT"
   head "https://github.com/GitGuardian/ggshield.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "2cdef0ea0c9f9367466287f8d72a021168eb916381edddb3b8b0a466d2a79528"
-    sha256 cellar: :any,                 arm64_ventura:  "4653e18aefd495e8a7d4dd2bb92f407c5837e1205a0581b2f5e7436a29c09c57"
-    sha256 cellar: :any,                 arm64_monterey: "2c1c9322a801d866c92065f3a703775db161320eea9a6d2a10cdb10f7c7fada5"
-    sha256 cellar: :any,                 sonoma:         "928dc68469dd7687f5f05f9b9b7b00425eb26d9003dcfad4937640f222e7a529"
-    sha256 cellar: :any,                 ventura:        "de4d6c1ff6693370d30d6da3202de9e62f8012a4ba2f209635b0a1a78acf886a"
-    sha256 cellar: :any,                 monterey:       "542dd9a17ee6857fae5ec550c22f6bf3ce357cda8a20cd7db17af2a3764eef8d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "7b3630cca15266a932492f766815f1a29474b2f29335db956340cebec4d71772"
+    sha256 cellar: :any,                 arm64_sequoia: "8b7400d487cfc3f306f825b2484b098b083aebc5fa5ad2b5b5b3dafee01b507b"
+    sha256 cellar: :any,                 arm64_sonoma:  "c841eec9dede6ca429406a371df79b6efc979592651a76e8e8fb9d4b00f11b8c"
+    sha256 cellar: :any,                 arm64_ventura: "f1a2eb26ed5e42b869e4a29291324491bbd3a7462bf25596facc0819b3d08059"
+    sha256 cellar: :any,                 sonoma:        "defe6fe2fdd0a22dda5ea6117c72573cd83c54061cf0077c1ebc28cd57811574"
+    sha256 cellar: :any,                 ventura:       "898c8eeac3d9a35d3421ff51333783b22cfc4932d4ee0e5ce2a52f5ec46bbb7e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "84cbc563658ba39caba013f99fc391856c33ce69dc564c8ff0fdb37aa6fc7259"
   end
 
   depends_on "certifi"
@@ -39,8 +38,8 @@ class Ggshield < Formula
   end
 
   resource "idna" do
-    url "https://files.pythonhosted.org/packages/21/ed/f86a79a07470cb07819390452f178b3bef1d375f2ec021ecfc709fc7cf07/idna-3.7.tar.gz"
-    sha256 "028ff3aadf0609c1fd278d8ea3089299412a7a8b9bd005dd08b9f8285bcb5cfc"
+    url "https://files.pythonhosted.org/packages/f1/70/7703c29685631f5a7590aa73f1f1d3fa9a380e654b86af429e0934a32f7d/idna-3.10.tar.gz"
+    sha256 "12f65c9b470abda6dc35cf8e63cc574b1c52b11df2c86030af0ac09b01b13ea9"
   end
 
   resource "marshmallow" do
@@ -74,8 +73,8 @@ class Ggshield < Formula
   end
 
   resource "pygitguardian" do
-    url "https://files.pythonhosted.org/packages/93/3d/179b099ccd428338f94e12fcad76d61d5c77a23503c015c4c2b6bd9adc0a/pygitguardian-1.16.0.tar.gz"
-    sha256 "91f7c5454fcf7d337946f53c35d035e4979224bf45eba85ed82f9d3939c904fd"
+    url "https://files.pythonhosted.org/packages/25/b8/599e73a3e2ee7466f70ddb39b7ccce04aa3a4b59140755378dd2a01031e2/pygitguardian-1.17.0.tar.gz"
+    sha256 "17ef91e7fe954f7b8d91f39c0097ba49b07e77b5ee9d0596adad256a9d4ab71e"
   end
 
   resource "pygments" do
@@ -94,8 +93,8 @@ class Ggshield < Formula
   end
 
   resource "pyyaml" do
-    url "https://files.pythonhosted.org/packages/cd/e5/af35f7ea75cf72f2cd079c95ee16797de7cd71f29ea7c68ae5ce7be1eda0/PyYAML-6.0.1.tar.gz"
-    sha256 "bfdf460b1736c775f2ba9f6a92bca30bc2095067b8a9d77876d1fad6cc3b4a43"
+    url "https://files.pythonhosted.org/packages/54/ed/79a089b6be93607fa5cdaedf301d7dfb23af5f25c398d5ead2525b063e17/pyyaml-6.0.2.tar.gz"
+    sha256 "d584d9ec91ad65861cc08d42e834324ef890a082e591037abe114850ff7bbc3e"
   end
 
   resource "requests" do
@@ -109,8 +108,8 @@ class Ggshield < Formula
   end
 
   resource "setuptools" do
-    url "https://files.pythonhosted.org/packages/5e/11/487b18cc768e2ae25a919f230417983c8d5afa1b6ee0abd8b6db0b89fa1d/setuptools-72.1.0.tar.gz"
-    sha256 "8d243eff56d095e5817f796ede6ae32941278f542e0f941867cc05ae52b162ec"
+    url "https://files.pythonhosted.org/packages/27/b8/f21073fde99492b33ca357876430822e4800cdf522011f18041351dfa74b/setuptools-75.1.0.tar.gz"
+    sha256 "d59a21b17a275fb872a9c3dae73963160ae079f1049ed956880cd7c09b120538"
   end
 
   resource "typing-extensions" do
@@ -124,8 +123,8 @@ class Ggshield < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/43/6d/fa469ae21497ddc8bc93e5877702dca7cb8f911e337aca7452b5724f1bb6/urllib3-2.2.2.tar.gz"
-    sha256 "dd505485549a7a552833da5e6063639d0d177c04f23bc3864e41e5dc5f612168"
+    url "https://files.pythonhosted.org/packages/ed/63/22ba4ebfe7430b76388e7cd448d5478814d3032121827c12a2cc287e2260/urllib3-2.2.3.tar.gz"
+    sha256 "e7d814a81dad81e6caf2ec9fdedb284ecc9c73076b62654547cc64ccdcae26e9"
   end
 
   def install

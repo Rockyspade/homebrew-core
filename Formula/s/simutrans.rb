@@ -1,25 +1,29 @@
 class Simutrans < Formula
   desc "Transport simulator"
   homepage "https://www.simutrans.com/"
-  url "svn://servers.simutrans.org/simutrans/trunk/", revision: "11365"
-  version "124.2.1"
+  url "svn://servers.simutrans.org/simutrans/trunk/", revision: "11395"
+  version "124.2.2"
   license "Artistic-1.0"
+  revision 1
   head "https://github.com/simutrans/simutrans.git", branch: "master"
 
   livecheck do
     url "https://sourceforge.net/projects/simutrans/files/simutrans/"
     regex(%r{href=.*?/files/simutrans/(\d+(?:[.-]\d+)+)/}i)
-    strategy :page_match
+    strategy :page_match do |page, regex|
+      page.scan(regex).map { |match| match[0].tr("-", ".") }
+    end
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "2fc8ad6a2d69483848675ded8a58190d58dc40085e7c104f9d6c00f6ebf0861a"
-    sha256 cellar: :any,                 arm64_ventura:  "e3947b011f4740d842ff911114ef847c10902a5cbb973a0222af9e7e93f863ff"
-    sha256 cellar: :any,                 arm64_monterey: "90936a62a2a94ede7fa7751c03cba2114220cf4d34e8c91fcea9fe02d93abff7"
-    sha256 cellar: :any,                 sonoma:         "913ca3fdecc46ad53fa30d895c6afed2afce525dfe3bbd45fe979fd957b7e99b"
-    sha256 cellar: :any,                 ventura:        "ca3d98629dd6ee12fc7cb76529dde2a3ce9656646eba19a8d4738c004a2109a7"
-    sha256 cellar: :any,                 monterey:       "b3518394f760e65d9559ce73c30c68491c815d50809ada101a40b915ba152b10"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "3bbb9c626150451aa7efcfa646c8e677ed2dc8f9f553a18217c3b3d7c5d58abd"
+    sha256 cellar: :any,                 arm64_sequoia:  "57b2b227bd0962278b76f4281e424be3ec7e94227963ec877b63bc438732c2b1"
+    sha256 cellar: :any,                 arm64_sonoma:   "17e41bafcc374a208f3b8fee523624a11fae59833937424c73b1e95a46bd6a50"
+    sha256 cellar: :any,                 arm64_ventura:  "10f6e3b0a13418087ef4279cf6e8bab8749bde9c7cb96ed3d77d6940d9628f1b"
+    sha256 cellar: :any,                 arm64_monterey: "c4a92a1ec038f1e3e62b10eb65e0e924cd1a466a1f439bbdff5d188ed72e8ef0"
+    sha256 cellar: :any,                 sonoma:         "7f5744c508f30e94606b7fa3b80538496a046aaee1ddfd1979a4dd96ec631233"
+    sha256 cellar: :any,                 ventura:        "60fe1014db2324ad72cc22b3fac06e44e56ebaf7970b813dd8c548cd9c1b16d3"
+    sha256 cellar: :any,                 monterey:       "07e5d7e2df39a706705cc6500ff0729f909e8f9a1cc0bea88e276cd868756eb2"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "75422ede98ee42a856d407977731f4dd909a00a4d44f657e972800ec5f113111"
   end
 
   depends_on "cmake" => :build

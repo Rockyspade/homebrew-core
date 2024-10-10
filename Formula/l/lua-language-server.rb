@@ -3,19 +3,18 @@ class LuaLanguageServer < Formula
   homepage "https://github.com/LuaLS/lua-language-server"
   # pull from git tag to get submodules
   url "https://github.com/LuaLS/lua-language-server.git",
-      tag:      "3.10.4",
-      revision: "d702a55715df19a219e963da496e6fb76db0aacd"
+      tag:      "3.11.1",
+      revision: "db667f6db7ea6852d38460a1ed046eb85bb9e5ff"
   license "MIT"
   head "https://github.com/LuaLS/lua-language-server.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "198366ffa68f05a17426fb45dfffa0cc46c24312ea053d36672e18c2efb96805"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "d1d2ea9c94cb1ba79b3dd3101e9c2acb7f5ad95c92914a10bbda5a5d6b64df1b"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "edc8d3dc80e0b977b20ced45242db83f97fabe038c0ca7a20483296c93449776"
-    sha256 cellar: :any_skip_relocation, sonoma:         "6c2bca84702a26076af9deaa6fdea0933ccf8e772b41c89ae28cb4ce41a79701"
-    sha256 cellar: :any_skip_relocation, ventura:        "44f256bd4791e6356b08b700467a35d616089589df7df4e1aa532227462f5332"
-    sha256 cellar: :any_skip_relocation, monterey:       "96220a46add71d83dd04eeb0a0f56b81627cce9dee45a5e76d4754518194db16"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "dab595c5fcddfb7c363439a02469d88b4221e5290659af31f03e9036bcec4b61"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "cef4f4ae1f31b35e99c730d8bb867e7f7ffc707440269fad4d08a2ca95101813"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "7775e3fe687c9a6d555ec50328c9d71711bf45a4dcf7bf6ba1200f6c628ef49c"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "c4a86afd5615228ba7c1a3379aaa671c4559d39963fe14334348054c5a0d0809"
+    sha256 cellar: :any_skip_relocation, sonoma:        "987830dd3eae994596ce1024f1cd9db5bb71ed20dea11a5b4bad0da5998c5f3a"
+    sha256 cellar: :any_skip_relocation, ventura:       "adc41bbf74c464f2dfbe441ec9785764d7887dc893659a4c749a699146528c75"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "67a82fe24c0127f224eb8707fc70f62ec99fbef449784c4215db32ea087ec2ec"
   end
 
   depends_on "ninja" => :build

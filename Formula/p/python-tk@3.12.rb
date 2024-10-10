@@ -1,8 +1,8 @@
 class PythonTkAT312 < Formula
   desc "Python interface to Tcl/Tk"
   homepage "https://www.python.org/"
-  url "https://www.python.org/ftp/python/3.12.5/Python-3.12.5.tgz"
-  sha256 "38dc4e2c261d49c661196066edbfb70fdb16be4a79cc8220c224dfeb5636d405"
+  url "https://www.python.org/ftp/python/3.12.7/Python-3.12.7.tgz"
+  sha256 "73ac8fe780227bf371add8373c3079f42a0dc62deff8d612cd15a618082ab623"
   license "Python-2.0"
 
   livecheck do
@@ -10,13 +10,12 @@ class PythonTkAT312 < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "38b7fcb90e6a0082a8789d70eeb0ae61d54de2987d676efc344fe17dd14700c6"
-    sha256 cellar: :any,                 arm64_ventura:  "0609e81522c325d04095b51b0bf92d6be11bbe44dd009fb2dee7fc5c41d7ec7c"
-    sha256 cellar: :any,                 arm64_monterey: "d4d368c705381165de46490857db1fd9ec5a6db38c557a6dece16fa6348025df"
-    sha256 cellar: :any,                 sonoma:         "2763dc047daac754b0a91618406b1fc276bd70fd2c4ce5acf8246265b6046492"
-    sha256 cellar: :any,                 ventura:        "e42ed3105836f36e84be9ece2a4bf93d9a2282dec92ab856d5c8401790767275"
-    sha256 cellar: :any,                 monterey:       "89ac3a7b909e0e57daa5f165e74bfd5b3f65a4a7c45c111c5bfcea1084e5dfb7"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c1e66d5c1ea22dbdbd43fc240e4e500f7ef7a48db6c84b01af456acda89b4b56"
+    sha256 cellar: :any,                 arm64_sequoia: "b74d20895d8265b5d1b516b15f4635a08292dc9bba5320e3431175404d0eff55"
+    sha256 cellar: :any,                 arm64_sonoma:  "bb2896eee554c65ff8f090d1b735069f18c5173eacdf48f6ce611ac40830e158"
+    sha256 cellar: :any,                 arm64_ventura: "8d5187355e686dd00bc67d34eabea5de4322f895481b93b59cfbcd69e934acbb"
+    sha256 cellar: :any,                 sonoma:        "ea617358b902cd7dbb8d707ec2c8c8b64504e4477bd144c0d46eb4eef1e083b8"
+    sha256 cellar: :any,                 ventura:       "bdc83ffabea42a940aaf23c565d73769daa27661c297d925e40d10ff0d8d581a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1183fd08283e6b54d53ea9673dc38bd22a3546082b66be835d711bd46dc372f7"
   end
 
   depends_on "python@3.12"

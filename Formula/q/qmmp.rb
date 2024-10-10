@@ -4,6 +4,7 @@ class Qmmp < Formula
   url "https://qmmp.ylsoftware.com/files/qmmp/2.1/qmmp-2.1.9.tar.bz2"
   sha256 "b59f7a378b521d4a6d2b5c9e37a35c3494528bf0db85b24caddf3e1a1c9c3a37"
   license "GPL-2.0-or-later"
+  revision 1
 
   livecheck do
     url "https://qmmp.ylsoftware.com/downloads.php"
@@ -11,19 +12,21 @@ class Qmmp < Formula
   end
 
   bottle do
-    sha256 arm64_ventura:  "16c00f13d9ee36d3103e99ef545258d6daa51cdcf92ad5dd4cbe2133830787a7"
-    sha256 arm64_monterey: "cf810052bdf5fb66ded0deea4e5c521913940eb22f2082a712d06277eb8e7c36"
-    sha256 ventura:        "faedacd0fe2af8d0c44f40eb3f65006761cd889a445375a2f578a1571abf6f1c"
-    sha256 monterey:       "3e0735430c45f5b7e903750321b10edbc26df4b99afce4c586e33bcd3e0d1418"
-    sha256 x86_64_linux:   "089b8e427089d593674f03477d97f7e95db8b1b2efe2bcd581f30389d802d89a"
+    sha256 arm64_sonoma:   "5fdf9499f3a80c471492e03df8a755be67e31799abced5e32542e6a67ef19a78"
+    sha256 arm64_ventura:  "6d75b373d7825e6a97716f97a274608920ff7aa81f50973446e8cc5b82bba137"
+    sha256 arm64_monterey: "df531f89e2a5b959a6637041378e9da53c0a8f38a6bd2e1bbdb04c073eef4d6c"
+    sha256 sonoma:         "c0c251c58bfb213e98db5ab335cc245ac2c253239461753b361da1e1100c597f"
+    sha256 ventura:        "28648897ea50fcc6ef3a119e2c351b6f44e8c503a9906512f6902e2d5c4e2949"
+    sha256 monterey:       "48fd7d7f632424e93665d9d894b4c1734aae1d109eb12e8180053d5fecd77c33"
+    sha256 x86_64_linux:   "abd12bd0ae508464ea099d7ea64f0813f15e388396cfdcca23e152a5168efbe3"
   end
 
-  depends_on "cmake"      => :build
+  depends_on "cmake" => :build
   depends_on "pkg-config" => :build
 
   # TODO: on linux: pipewire
   depends_on "faad2"
-  depends_on "ffmpeg@6"
+  depends_on "ffmpeg"
   depends_on "flac"
   depends_on "game-music-emu"
   depends_on "jack"
@@ -56,12 +59,20 @@ class Qmmp < Formula
   uses_from_macos "curl"
 
   on_macos do
-    # musepack is not bottled on Linux
-    # https://github.com/Homebrew/homebrew-core/pull/92041
     depends_on "gettext"
     depends_on "glib"
-
+    # musepack is not bottled on Linux
+    # https://github.com/Homebrew/homebrew-core/pull/92041
     depends_on "musepack"
+  end
+
+  on_sonoma :or_newer do
+    # Support Sonoma (BSD iconv) as qmmp has an incompatible typedef:
+    # /tmp/qmmp-20240828-19582-sf4k85/qmmp-2.1.9/src/qmmp/qmmptextcodec.h:28:15:
+    # error: typedef redefinition with different types ('void *' vs 'struct __tag_iconv_t *')
+    #
+    # Issue ref: https://sourceforge.net/p/qmmp-dev/tickets/1167/
+    patch :DATA
   end
 
   on_linux do
@@ -109,3 +120,23 @@ class Qmmp < Formula
     system bin/"qmmp", "--version"
   end
 end
+
+__END__
+diff --git a/src/qmmp/qmmptextcodec.h b/src/qmmp/qmmptextcodec.h
+index 5242c33..7399c54 100644
+--- a/src/qmmp/qmmptextcodec.h
++++ b/src/qmmp/qmmptextcodec.h
+@@ -21,12 +21,11 @@
+ #ifndef QMMPTEXTCODEC_H
+ #define QMMPTEXTCODEC_H
+
++#include <iconv.h>
+ #include <QByteArray>
+ #include <QStringList>
+ #include "qmmp_export.h"
+
+-typedef void *iconv_t;
+-
+ class QMMP_EXPORT QmmpTextCodec
+ {
+ public:

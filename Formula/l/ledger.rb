@@ -2,7 +2,7 @@ class Ledger < Formula
   desc "Command-line, double-entry accounting tool"
   homepage "https://ledger-cli.org/"
   license "BSD-3-Clause"
-  revision 5
+  revision 6
   head "https://github.com/ledger/ledger.git", branch: "master"
 
   stable do
@@ -19,6 +19,27 @@ class Ledger < Formula
       url "https://github.com/ledger/ledger/commit/14b90d8d952b40e0a474223e7f74a1e6505d5450.patch?full_index=1"
       sha256 "d250557e385163e3ad3002117ebe985af040d915aab49ae1ea342db82398aeda"
     end
+
+    # Backport fix to build with `boost` 1.85.0
+    patch do
+      url "https://github.com/ledger/ledger/commit/46207852174feb5c76c7ab894bc13b4f388bf501.patch?full_index=1"
+      sha256 "8aaf8daf4748f359946c64488c96345f4a4bdf928f6ec7a1003610174428599f"
+    end
+
+    # Backport fixes to build with `boost` 1.86.0
+    # Ref: https://github.com/ledger/ledger/pull/2381
+    patch do
+      url "https://github.com/ledger/ledger/commit/ad93c185644cfcb14fe4a673e74a0cb5c954a4b4.patch?full_index=1"
+      sha256 "3d2db6b116cd7e8a1051ac7f92853f72c145ff0487f2f4e12e650ee7ec9e67b0"
+    end
+    patch do
+      url "https://github.com/ledger/ledger/commit/4f4cc1688a8e8a7c03f18603cc5a4159d9c89ca3.patch?full_index=1"
+      sha256 "938d62974ee507b851239b6525c98c8cb1c81e24e8ae2939d4675d97a8ec8f67"
+    end
+    patch do
+      url "https://github.com/ledger/ledger/commit/5320c9f719a309ddacdbe77181cabeb351949013.patch?full_index=1"
+      sha256 "9794113b28eabdcfc8b900eafc8dc2c0698409c0b3d856083ed5e38818289ba1"
+    end
   end
 
   livecheck do
@@ -27,13 +48,13 @@ class Ledger < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "60ac96b0bfcb2426e6b3aaf06469abb779ec0cd62ce1a17aa7bf7662b2431059"
-    sha256 cellar: :any,                 arm64_ventura:  "9b7a4add3841f03fff22581461f97a641f6c2bad4aead31591dff19b356a7fa4"
-    sha256 cellar: :any,                 arm64_monterey: "3eb4fb8697fe8c348e37928eda6960d00f784f65a244cdf96609c8fd48335a99"
-    sha256 cellar: :any,                 sonoma:         "83c694de6d2cd94909106e1f30a11ade60d22093e6d654599a0433f508b07d8c"
-    sha256 cellar: :any,                 ventura:        "4a699b36e5d09a6f928c4a3b1eea44ac474ab897f9bb9099a86f8950d8172dc1"
-    sha256 cellar: :any,                 monterey:       "f1c7bcf2452c2cf15d063ddf01db53e534240c1b782dd10ac3fd88cbc129dada"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "cd2794ce3d53f5ac6694a58d08a63b84a9dc679c61b03f8434dc9f7842a98b76"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_sequoia: "e739f7a2ee6e2d44b607aaacf253df09f0d9fda48f32c78a6201e2e53a4dcbc2"
+    sha256 cellar: :any,                 arm64_sonoma:  "f971e44953f6db8f4756fd4a6a440c3bf014eca8831ce1dc8defc04b366c73a3"
+    sha256 cellar: :any,                 arm64_ventura: "c3ab50d8df4c398f04cc6595f292a9659e7904f09d6e6f165d47333c99c44d31"
+    sha256 cellar: :any,                 sonoma:        "c999180f1c610065777bb800aea211dde3a6bbfc1c44a7f4cdebc251f4615174"
+    sha256 cellar: :any,                 ventura:       "747dbb2eafdce945665f1f695158b45c3ca72a3e2e147020b6d16508bf814c11"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ffb701b5cd3c4d98e9d7f2c3940ef8862c6199309648660d8da9d97e1c0bdda2"
   end
 
   depends_on "cmake" => :build
@@ -47,11 +68,8 @@ class Ledger < Formula
   uses_from_macos "mandoc" => :build
   uses_from_macos "libedit"
 
-  # Fix build with `boost` 1.85.0 using open PR.
-  # PR ref: https://github.com/ledger/ledger/pull/2337
-  patch do
-    url "https://github.com/ledger/ledger/commit/1da89f6ffb44a44257b9774c4ceb71e7b495d677.patch?full_index=1"
-    sha256 "8aaf8daf4748f359946c64488c96345f4a4bdf928f6ec7a1003610174428599f"
+  on_macos do
+    depends_on "libassuan"
   end
 
   def install
@@ -70,6 +88,7 @@ class Ledger < Formula
       -DPython_FIND_VERSION_MAJOR=3
       -DUSE_GPGME=1
     ] + std_cmake_args
+
     system "./acprep", "opt", "make", *args
     system "./acprep", "opt", "make", "doc", *args
     system "./acprep", "opt", "make", "install", *args
@@ -84,10 +103,9 @@ class Ledger < Formula
     balance = testpath/"output"
     system bin/"ledger",
       "--args-only",
-      "--file", "#{pkgshare}/examples/sample.dat",
+      "--file", pkgshare/"examples/sample.dat",
       "--output", balance,
       "balance", "--collapse", "equity"
     assert_equal "          $-2,500.00  Equity", balance.read.chomp
-    assert_equal 0, $CHILD_STATUS.exitstatus
   end
 end

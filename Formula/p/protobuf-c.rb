@@ -4,20 +4,20 @@ class ProtobufC < Formula
   url "https://github.com/protobuf-c/protobuf-c/releases/download/v1.5.0/protobuf-c-1.5.0.tar.gz"
   sha256 "7b404c63361ed35b3667aec75cc37b54298d56dd2bcf369de3373212cc06fd98"
   license "BSD-2-Clause"
-  revision 8
+  revision 11
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "626106ff116a51b04fa2c2cd36c742bd0fa596597b8673bad8e0de053a2b5d98"
-    sha256 cellar: :any,                 arm64_ventura:  "d737e93aac2b0359d19debceb053bcfcd7825ed6ed07faccf094417dc26df46a"
-    sha256 cellar: :any,                 arm64_monterey: "397f5064d4e1a75843be44cd2c160b793834993536b2bf7a19cfcd7c7036aca1"
-    sha256 cellar: :any,                 sonoma:         "c41774a8276efd7814b4f836713e5238a9edf0ff003914152be166c60bde014e"
-    sha256 cellar: :any,                 ventura:        "adbe9cd183d279b2880738a18838bbededf4d2023b76b8e554ace649788ae262"
-    sha256 cellar: :any,                 monterey:       "752d7fcb9214ce1de147f00ea1a7771a2ae8c55957271edd97ca088da86af163"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b5c80b6b3e0f47806635a9f37e2a202ff552c4f8dde81d3406fb3dcfda7c1402"
+    sha256 cellar: :any,                 arm64_sequoia: "904d4a38259359584125cd475f570d2e8af6b0f9b18e4ea462dc78fc1c407a8d"
+    sha256 cellar: :any,                 arm64_sonoma:  "18e1db05a6041d908ba135a63d35b84773a652fa60dcfaa4b059b08660ea6067"
+    sha256 cellar: :any,                 arm64_ventura: "0e5cd82d7399ac39694c18ee938ebf842aae03ceca1a8b0988f10ead5426bb3b"
+    sha256 cellar: :any,                 sonoma:        "675017f43f47c1d80bebdc4e1cc70c380ee79446584f17ff9b942ae7ebaa4389"
+    sha256 cellar: :any,                 ventura:       "7d88260630f2b33fd996c1118244222d5cb49217ac6fb283f852eb0358369b92"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8c9008f778cd4eac99c84d861c184be9f7a2b62ab5bcc382f7d9f49045e000bf"
   end
 
   head do
     url "https://github.com/protobuf-c/protobuf-c.git", branch: "master"
+
     depends_on "asciidoc" => :build
     depends_on "autoconf" => :build
     depends_on "automake" => :build
@@ -38,15 +38,8 @@ class ProtobufC < Formula
     url "https://github.com/protobuf-c/protobuf-c/commit/1b4b205d87b1bc6f575db1fd1cbbb334a694abe8.patch?full_index=1"
     sha256 "6d02812445a229963add1b41c07bebddc3437fecb2a03844708512326fd70914"
   end
-  patch do
-    url "https://github.com/protobuf-c/protobuf-c/commit/d95aced22df60a2f0049fc03af48c8b02ce4d474.patch?full_index=1"
-    sha256 "7aa44807367a4547bd15b3aa9a5275d5fe4739348bf2741ca773fa47015fb01a"
-  end
 
   def install
-    # https://github.com/protocolbuffers/protobuf/issues/9947
-    ENV.append_to_cflags "-DNDEBUG"
-
     system "autoreconf", "--force", "--install", "--verbose" if build.head?
     system "./configure", *std_configure_args
     system "make", "install"
@@ -65,5 +58,8 @@ class ProtobufC < Formula
     EOS
     (testpath/"test.proto").write testdata
     system Formula["protobuf"].opt_bin/"protoc", "test.proto", "--c_out=."
+
+    testpath.glob("test.pb-c.*").map(&:unlink)
+    system bin/"protoc-c", "test.proto", "--c_out=."
   end
 end

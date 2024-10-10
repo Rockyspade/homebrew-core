@@ -1,19 +1,18 @@
 class Okteto < Formula
   desc "Build better apps by developing and testing code directly in Kubernetes"
   homepage "https://okteto.com"
-  url "https://github.com/okteto/okteto/archive/refs/tags/2.30.1.tar.gz"
-  sha256 "eeb7fc3159feb3c970a2d716d6c54eb1fca2600222e057586ee36b0835913ad9"
+  url "https://github.com/okteto/okteto/archive/refs/tags/3.0.0.tar.gz"
+  sha256 "f8ce1063b4e5d6168c7d2dca83860d0c29d07c058f93b0f3ab5854805c6d7a42"
   license "Apache-2.0"
   head "https://github.com/okteto/okteto.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "329c5dc28cc3357b7cb607b67a9b4f46ae0610ce6e514ac932984fc81886d95f"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "eebde71635a4852c30ae538dcea48ae265ebd952fd04cf50547683982dc3b594"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "b7601ceb0fafa31a498d3301899cc3c867be052d30a7cfeaa05e3c2250709980"
-    sha256 cellar: :any_skip_relocation, sonoma:         "75a006f6787c84f93f9ec417626d268a6410e9b17324f3a26b2d3f7eefc9517b"
-    sha256 cellar: :any_skip_relocation, ventura:        "95507c9a81da2d5e27db13168187ad6b48b45cb4da3536bc13dbada0d43fc131"
-    sha256 cellar: :any_skip_relocation, monterey:       "178aab839b7ff49a3076fa3592224dd60ed48b5823f5c57cde0a37cc46f1c7f9"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a2e62188b91df878f947cd50e5426417274dc3d1cdca5a4231c3dfdef5a0edee"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "f13317dd8fdf87f9740c26c80c8b88b05d84b775cd768a330ca42d71bb5e06c2"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "4a961ad575c3d233ace6a4129bcf58771f41bb0ccb3630c2839ed394016eb4d5"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "7d41479fe4dbc627854989ef1e845b466b6f2dd8165f3d95e976187ebeb3c265"
+    sha256 cellar: :any_skip_relocation, sonoma:        "122be615c906e02cb87e7eba7d09238b9df8a976bc3669eb2813e592da1cb0fa"
+    sha256 cellar: :any_skip_relocation, ventura:       "bad42bd0919f503e11561d8a8bced4e979141e84917cb9d967275ed80a5b25c5"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1c2deba58b1129790debcd179a1d531a5e96786b9ef1d2cfd7b060374731a404"
   end
 
   depends_on "go" => :build
@@ -29,10 +28,6 @@ class Okteto < Formula
   test do
     assert_match "okteto version #{version}", shell_output("#{bin}/okteto version")
 
-    assert_match "Please run 'okteto context' to select one context",
-      shell_output(bin/"okteto init --context test 2>&1", 1)
-
-    assert_match "Your context is not set",
-      shell_output(bin/"okteto context list 2>&1", 1)
+    assert_match "Your context is not set", shell_output("#{bin}/okteto context list 2>&1", 1)
   end
 end

@@ -3,18 +3,13 @@ class Pter < Formula
 
   desc "Your console and graphical UI to manage your todo.txt file(s)"
   homepage "https://vonshednob.cc/pter/"
-  url "https://files.pythonhosted.org/packages/9d/24/636d437b89bebe272f162e310794f7e350e419b2db1082cbc84a6f7faa06/pter-3.17.0.tar.gz"
-  sha256 "2f961f4e0e3152f215df46c06914f3e343a9e2751b0e121a5bf5bf9d4394bb1c"
+  url "https://files.pythonhosted.org/packages/d9/35/247e5568d1e500266bda2601df5b5169aec86bc421e76df298eeb2678fcf/pter-3.17.1.tar.gz"
+  sha256 "26a10bca4bceaac4fcd722125bdc0cba839fa16e6abedb2b2de2d5aa626c3397"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "b19f0ebdb88dcf028e7b6a474ea7eecf7238fdaa0dcd3023dfca494c0f510c06"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "b19f0ebdb88dcf028e7b6a474ea7eecf7238fdaa0dcd3023dfca494c0f510c06"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "b19f0ebdb88dcf028e7b6a474ea7eecf7238fdaa0dcd3023dfca494c0f510c06"
-    sha256 cellar: :any_skip_relocation, sonoma:         "b19f0ebdb88dcf028e7b6a474ea7eecf7238fdaa0dcd3023dfca494c0f510c06"
-    sha256 cellar: :any_skip_relocation, ventura:        "b19f0ebdb88dcf028e7b6a474ea7eecf7238fdaa0dcd3023dfca494c0f510c06"
-    sha256 cellar: :any_skip_relocation, monterey:       "b19f0ebdb88dcf028e7b6a474ea7eecf7238fdaa0dcd3023dfca494c0f510c06"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f9dde6fe5093b52f39fcd5362081c8895f0ac5443d2f29eb65b299f430708ffb"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, all: "90bbfdf7e7deda81b3bae38fb2e5b1983eae8ce7f551df4fb19ef4978ed46c5c"
   end
 
   depends_on "python@3.12"

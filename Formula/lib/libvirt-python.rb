@@ -1,9 +1,10 @@
 class LibvirtPython < Formula
   desc "Libvirt virtualization API python binding"
   homepage "https://www.libvirt.org/"
-  url "https://download.libvirt.org/python/libvirt-python-10.6.0.tar.gz"
-  sha256 "e4259cbd724f784fca9bf22b13e8af1195dead6beee4c6ea08481a66dfdc79e4"
+  url "https://download.libvirt.org/python/libvirt-python-10.8.0.tar.gz"
+  sha256 "10cddc61c6bc5659c0eaa3e4c71f3d97c95abf327a51c207affb2e5f49f19f60"
   license "LGPL-2.1-or-later"
+  revision 1
 
   livecheck do
     url "https://download.libvirt.org/python/"
@@ -11,18 +12,17 @@ class LibvirtPython < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "f8513e7db898c86cb7ec5694512662419f1b8f98800b7eda2525af8e95c54623"
-    sha256 cellar: :any,                 arm64_ventura:  "818d1122c12b73e19c58b44734319b0abc26dd42613535ec1b855ba21a5fa072"
-    sha256 cellar: :any,                 arm64_monterey: "8f237a179ea616b7d9d8b892a65b8ddb0aa79a804a5a86c83713227685a50f36"
-    sha256 cellar: :any,                 sonoma:         "c2c378430b2bbdb617c65eeef469eb51b554d58fb9abbf314ddab3d1c7fdbdb4"
-    sha256 cellar: :any,                 ventura:        "7bc54bb1ad3fefd533d59b3c429f57d1f3513a0f6de5058b43439a4ccb955668"
-    sha256 cellar: :any,                 monterey:       "1538d94d2a76999f83ca5e369375f59e625ed86719311a5912932c5094161cdc"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c61b02df8926610d82b49b2f4a2608dc2498868a5f4bd9a4a50aeae85ad65117"
+    sha256 cellar: :any,                 arm64_sequoia: "48b21a0fb616ce0ce88d25d154f80413048663203f3f51fa5cee1a896ccb0572"
+    sha256 cellar: :any,                 arm64_sonoma:  "55f710ee5e0b87a16bfe5846815d0752f5c8709e7c8f05eb810fc2fbde1c670d"
+    sha256 cellar: :any,                 arm64_ventura: "56304a392beb82de4643f9340c12ce8eb5897ea77e70199eb6cb23260c60094d"
+    sha256 cellar: :any,                 sonoma:        "0c7e52aeec5da8fd63c41f89f9ae94bb0468968f1c3a0e7f9832ad97e2b83291"
+    sha256 cellar: :any,                 ventura:       "8f8a8dd947b66f9f3e8e19d514e9c6d45e12fb367794dadc74348150338da0ad"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "89ae778e521efc4642dc55328e5197dfa65a4ef7668aa677b94a059f02f51b71"
   end
 
   depends_on "pkg-config" => :build
   depends_on "libvirt"
-  depends_on "python@3.12"
+  depends_on "python@3.13"
 
   def pythons
     deps.map(&:to_formula)
@@ -37,14 +37,16 @@ class LibvirtPython < Formula
   end
 
   test do
-    system "python3.12", "-c",
-           # language=Python
-           <<~EOS
-             import libvirt
+    pythons.each do |python|
+      system python, "-c",
+             # language=Python
+             <<~EOS
+               import libvirt
 
-             with libvirt.open('test:///default') as conn:
-                 if libvirt.virGetLastError() is not None:
-                     raise SystemError("Failed to open a test connection")
-           EOS
+               with libvirt.open('test:///default') as conn:
+                   if libvirt.virGetLastError() is not None:
+                       raise SystemError("Failed to open a test connection")
+             EOS
+    end
   end
 end

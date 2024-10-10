@@ -6,6 +6,7 @@ class FfmpegAT6 < Formula
   # None of these parts are used by default, you have to explicitly pass `--enable-gpl`
   # to configure to activate them. In this case, FFmpeg's license changes to GPL v2+.
   license "GPL-2.0-or-later"
+  revision 3
 
   livecheck do
     url "https://ffmpeg.org/download.html"
@@ -13,13 +14,12 @@ class FfmpegAT6 < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "f355eb66f61929255b324bcb4a1a9958c513a5b9738603736f779dc1fe7959b4"
-    sha256 arm64_ventura:  "a0c1e245b8ce79386bb8ddadf88c3355cd2558ea3f595dbae6095c05559b29ba"
-    sha256 arm64_monterey: "df58195c7a42e1625ee379b4ec52aa149c19e64b46b092c979b7333fd0b69988"
-    sha256 sonoma:         "0198cc27a070f6e9148f868b17853ceb8d747da084fdd8039b35c560e259abc2"
-    sha256 ventura:        "8dcfea1b53a7451f5a585759b4223406e4d18fd0a12c584c8f8e5b97ecee98ad"
-    sha256 monterey:       "ca4634630124fab74f840e9f90f23e7522e577a1bca7506de894cb63dac21c47"
-    sha256 x86_64_linux:   "bcdd26bb7ec0265015ffd22556e978946b884ed0bcde6328a0959a55bccb388c"
+    sha256 arm64_sequoia: "5d54158b8f70b18c48e92abb63f797820bc5c981f62cfa9b7bc5fd2c1148bfe2"
+    sha256 arm64_sonoma:  "d2912673745744ea72f55451ef21e02a0cd68969834d7c6e6891867bf4589452"
+    sha256 arm64_ventura: "0d795c9b56ee515ba67998cbec4242b831e716b6d4c39be202f6d3767335f1a8"
+    sha256 sonoma:        "16d21d6a68bda3ade7c8de491290ea3447ab7134dc2f16b6d5e84e3477a3604b"
+    sha256 ventura:       "d6c1f00cd256e57e28bab5885c385119ba338e49a6649cf5d2bd77702cb261c6"
+    sha256 x86_64_linux:  "670438f630a20352e5aa5b825fbc7c082a80bd9b583b1c3d64f2a5abe855cc68"
   end
 
   keg_only :versioned_formula
@@ -48,7 +48,6 @@ class FfmpegAT6 < Formula
   depends_on "libxcb"
   depends_on "opencore-amr"
   depends_on "openjpeg"
-  depends_on "openvino"
   depends_on "opus"
   depends_on "rav1e"
   depends_on "rubberband"
@@ -75,8 +74,6 @@ class FfmpegAT6 < Formula
     depends_on "libarchive"
     depends_on "libogg"
     depends_on "libsamplerate"
-    depends_on "pugixml"
-    depends_on "tbb"
   end
 
   on_linux do
@@ -147,7 +144,6 @@ class FfmpegAT6 < Formula
       --enable-libopencore-amrnb
       --enable-libopencore-amrwb
       --enable-libopenjpeg
-      --enable-libopenvino
       --enable-libspeex
       --enable-libsoxr
       --enable-libzmq

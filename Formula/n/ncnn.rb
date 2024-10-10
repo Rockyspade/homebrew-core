@@ -1,20 +1,19 @@
 class Ncnn < Formula
   desc "High-performance neural network inference framework"
   homepage "https://github.com/Tencent/ncnn"
-  url "https://github.com/Tencent/ncnn/archive/refs/tags/20240410.tar.gz"
-  sha256 "328fe282b98457d85ab56184fa896467f6bf640d4e48e91fcefc8d31889f92b7"
+  url "https://github.com/Tencent/ncnn/archive/refs/tags/20240820.tar.gz"
+  sha256 "21e7897c7a332894934800a15189915b5131dddc84b2c8d5669ff53de8c5efa4"
   license "BSD-3-Clause"
   revision 4
   head "https://github.com/Tencent/ncnn.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "120fad96538c3b6b6195e20c58cde44e2846ab06381f18a77be96a804f7c035e"
-    sha256 cellar: :any,                 arm64_ventura:  "a4ef934cf65412a54c85bcbbd97bf802248a151467a210d8b93ebc29bdb78bb8"
-    sha256 cellar: :any,                 arm64_monterey: "e4ea0b50024b2d0c0c7eb08fb1ecc7a70e4d06a467d33e4287bec4def27af033"
-    sha256 cellar: :any,                 sonoma:         "5d9aab82633b99a674ca9a523fbc61e7fb722df3259a7a7930cdc1c103e27375"
-    sha256 cellar: :any,                 ventura:        "675fdf1df821796a77c149a14e342ea14d818cd3367bd7bcc448f53617d4a463"
-    sha256 cellar: :any,                 monterey:       "a2595627af3c52d8602c59fbd16c472fc272e1928a709dd1e8968923de2656da"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "efbc2d904fe4297e8f27f938162de20399dad153b96754c882edb43098297aa4"
+    sha256 cellar: :any,                 arm64_sequoia: "40cd2a90baa858e3c3cc2c35760d8ffaa718b497c08408b6f881b0d32d499634"
+    sha256 cellar: :any,                 arm64_sonoma:  "487d2d7de87425116f8b4a3f95e49cdb815e71773f209200ac77ebe897e67b4c"
+    sha256 cellar: :any,                 arm64_ventura: "b8301be0e678211de8f0931bc40a6eace9b905616faabf0a884278cb816f195e"
+    sha256 cellar: :any,                 sonoma:        "5690e91514661249591d7b31f8bcc4bae5d857d2d25eebabb2c1b71b85c3c7e4"
+    sha256 cellar: :any,                 ventura:       "db95b464e264751c2135518509b5d1345b918b4d99fc2a97a4d74f61d4188b16"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "60958e43d19fd68f98181f3a1538e0b07e106a5fb2c9cc07f0b4eea209247fca"
   end
 
   depends_on "cmake" => :build

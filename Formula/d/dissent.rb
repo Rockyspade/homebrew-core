@@ -1,22 +1,24 @@
 class Dissent < Formula
   desc "GTK4 Discord client in Go"
   homepage "https://github.com/diamondburned/dissent"
-  url "https://github.com/diamondburned/dissent/archive/refs/tags/v0.0.27.tar.gz"
-  sha256 "c2680b6722be898a7293ef67b99da611b15e104eadc0f2e412a92b7ad3db12c3"
+  url "https://github.com/diamondburned/dissent/archive/refs/tags/v0.0.30.tar.gz"
+  sha256 "63994e46b01e135c36902b67a8495eef71d4a4b09204c712629edadfc8398dc6"
   license "GPL-3.0-or-later"
   head "https://github.com/diamondburned/dissent.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "4ebbf1e0e44dcbacefd93dd41f213f6f1f5ed4e01c229d0f921903749d44bd40"
-    sha256 cellar: :any,                 arm64_ventura:  "97ceb1036491e64f6da6ec6c2fc798b292fa738c3e08dd4b5b2928ecf85db2db"
-    sha256 cellar: :any,                 arm64_monterey: "6642ce09c7cb01df966ed833190f98087d963a80c6cfa34ce0abeb0b8dd225f8"
-    sha256 cellar: :any,                 sonoma:         "0687a92e3fa95d47751c964c9cdc99d6108eaff60d3b0e2718b0bce78547a32e"
-    sha256 cellar: :any,                 ventura:        "eeccf2e1111d86e56257a7e088e9555253e22c78d6eb00c59dca5ea930a51132"
-    sha256 cellar: :any,                 monterey:       "716076cb7b696b25b5340980fa607b0374738423a6fd359f02b7e4574b192d70"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "15e624f1de8e498dc56bf270ae0a72ce362679581286d857b55f63deb1f2130a"
+    sha256 cellar: :any,                 arm64_sequoia:  "003766a7f965f3b7e64141b1abc478746a5e1ef02eb49d5861d3cf1e8f84aaad"
+    sha256 cellar: :any,                 arm64_sonoma:   "66b6c8504ad7fec5741ef5421a31efef88b289f2e31a32b79552dc0f0fffa1bf"
+    sha256 cellar: :any,                 arm64_ventura:  "ef7e8d322538ff9432f5a31e66d506a0ff7d97cf07221f037a31bb6e2a42797a"
+    sha256 cellar: :any,                 arm64_monterey: "0cc276875d7ff3bb230918e987d0a0f6d7e459952cba6ac01f5db030dcd0c0be"
+    sha256 cellar: :any,                 sonoma:         "64616dbce97d0114b317eece4ab4916bbc6da6f1520a46ac77a1b2a38763eabc"
+    sha256 cellar: :any,                 ventura:        "dd4d843b7c9e421238f4de4bb364451877e3837ab0fcfa785982c111048f462c"
+    sha256 cellar: :any,                 monterey:       "e1a4fae5f7fb4e9812ec05b61fbcf5b0fc49063d838ced19513e7bc7aad719d7"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5b780afc4f1ef22b68237f034d24126c07970042087a78c4333065225337f83b"
   end
 
   depends_on "go" => :build
+  depends_on "pkg-config" => :build
 
   depends_on "cairo"
   depends_on "gdk-pixbuf"
@@ -24,8 +26,10 @@ class Dissent < Formula
   depends_on "gobject-introspection"
   depends_on "graphene"
   depends_on "gtk4"
+  depends_on "gtksourceview5"
   depends_on "libadwaita"
   depends_on "libcanberra"
+  depends_on "libspelling"
   depends_on "pango"
 
   on_macos do
@@ -38,6 +42,9 @@ class Dissent < Formula
   end
 
   test do
+    # Fails in Linux CI with "Failed to open display"
+    return if OS.linux? && ENV["HOMEBREW_GITHUB_ACTIONS"]
+
     # dissent is a GUI application
     system bin/"dissent", "--help"
   end

@@ -4,7 +4,7 @@ class Opencv < Formula
   url "https://github.com/opencv/opencv/archive/refs/tags/4.10.0.tar.gz"
   sha256 "b2171af5be6b26f7a06b1229948bbb2bdaa74fcf5cd097e0af6378fce50a6eb9"
   license "Apache-2.0"
-  revision 2
+  revision 11
   head "https://github.com/opencv/opencv.git", branch: "4.x"
 
   livecheck do
@@ -13,13 +13,11 @@ class Opencv < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "087aa72ff67a7df062a9463e45f6acf646982c38ee36443b40a806f5cb1d653d"
-    sha256 arm64_ventura:  "baf32606d984f076f3e30ae3f0b200e485929e7bf49ccf256383af874084af68"
-    sha256 arm64_monterey: "4242b2999d6c39680656dfb1cad8ad91c98d96c0e5b60f0805547a5f7bef6a68"
-    sha256 sonoma:         "36fac819be67e8ea339c268818e6637e7645a5bb6aea30210435959e1be3a249"
-    sha256 ventura:        "c964dfd611d940d044247c9bb482b455f46481e11de40e38212319ebd4d29fb4"
-    sha256 monterey:       "02a9f4b1b83d67427cb02beae50b5a756ddba1658baf384fe8fd8ecc65ec5a2d"
-    sha256 x86_64_linux:   "14c66ade7d9c213182934fc9c21dea7bb3517f2a25b14d1b5965eea60c8a10fe"
+    sha256 arm64_sonoma:  "3b056a2b5fe47fbad4128abfe9ca30e207116359fbad459a1492d6eb6ba72c74"
+    sha256 arm64_ventura: "5bfc81f73ec3a3c66fd8bdf79f9d95f7d5d3315120cc29216f6ccbb11b9ffa34"
+    sha256 sonoma:        "41f609f5ed694a68d6771b11fa9dad0ba985b1400151845d2d7deb89bf0178b6"
+    sha256 ventura:       "aae4e6d2de588e94c26471d1235ee73057228e18397b1076cf98bb12cd832602"
+    sha256 x86_64_linux:  "f8ba815fc2d4bb80709b5a3bd7476cea23d30b09cc5cfe75ad8e72119e779fc7"
   end
 
   depends_on "cmake" => :build
@@ -28,12 +26,13 @@ class Opencv < Formula
   depends_on "abseil"
   depends_on "ceres-solver"
   depends_on "eigen"
-  depends_on "ffmpeg@6"
+  depends_on "ffmpeg"
   depends_on "freetype"
   depends_on "gflags"
   depends_on "glog"
   depends_on "harfbuzz"
   depends_on "jpeg-turbo"
+  depends_on "jsoncpp"
   depends_on "libpng"
   depends_on "libtiff"
   depends_on "numpy"
@@ -53,7 +52,6 @@ class Opencv < Formula
   on_macos do
     depends_on "glew"
     depends_on "imath"
-    depends_on "jsoncpp"
     depends_on "libarchive"
   end
 

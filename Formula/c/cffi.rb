@@ -1,22 +1,23 @@
 class Cffi < Formula
   desc "C Foreign Function Interface for Python"
   homepage "https://cffi.readthedocs.io/en/latest/"
-  url "https://files.pythonhosted.org/packages/1e/bf/82c351342972702867359cfeba5693927efe0a8dd568165490144f554b18/cffi-1.17.0.tar.gz"
-  sha256 "f3157624b7558b914cb039fd1af735e5e8049a87c817cc215109ad1c8779df76"
+  url "https://files.pythonhosted.org/packages/fc/97/c783634659c2920c3fc70419e3af40972dbaf758daa229a7d6ea6135c90d/cffi-1.17.1.tar.gz"
+  sha256 "1c39c6016c32bc48dd54561950ebd6836e1670f2ae46128f67cf49e789c52824"
   license "MIT"
+  revision 1
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "3b3167c9f29f076d8baf690bfc58b6bbcd4c1834106fbe9d6c6f05f388a9574b"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "f4e8350cdebb16d6ed4d585543f2456603750e1c6efb4b3b9b6653810fbcbd0a"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "ba6d90d2de71fa80aca3a95a5e6926161e411baf383200487161105db2cac135"
-    sha256 cellar: :any_skip_relocation, sonoma:         "d7adee31ade8f4338f9e31469ee1ce3a8a63970d4fad66119fab50f8b00ae989"
-    sha256 cellar: :any_skip_relocation, ventura:        "02f428835ad5ca182e3a336574b63da07ad91f47f634d475376585a31d321c27"
-    sha256 cellar: :any_skip_relocation, monterey:       "fb4d0d901e2d9aeb97ffb5953caf5ec7b8d9be055d2d67ea2355fe0f1c4a0704"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a360ac0299d1890fc98f74289dd15863ba6d5bb585d41580d90998304d1e8eff"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "908333c6c31b4da4876ccb707cdf2b1ec52aee3d83fc3c4a1b8b52f148883512"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "7818f620936fb017c68eb02c8985dfecd297349b97e67550d4915cef440dd2fe"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "b143786bb8ede8b8ad7230b6be8c004f276dacccbd4647a3f169099a536fd3a6"
+    sha256 cellar: :any_skip_relocation, sonoma:        "8e1c24e4e78f041f98e0394a6a07ef560ea84d980f0f3c3dd3ea7fb6c3f91aa4"
+    sha256 cellar: :any_skip_relocation, ventura:       "7c8eea38ba0103ddbb0243d0ed9f74a79875f1f0dfe9d8421f3e2f45dca69da5"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a49b146e624fa887497252f89c76d8e7cfcdc4d9a4ec444a5b8db856324198cf"
   end
 
   depends_on "python@3.11" => [:build, :test]
   depends_on "python@3.12" => [:build, :test]
+  depends_on "python@3.13" => [:build, :test]
   depends_on "pycparser"
 
   uses_from_macos "libffi"

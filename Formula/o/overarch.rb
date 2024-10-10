@@ -1,18 +1,12 @@
 class Overarch < Formula
   desc "Data driven description of software architecture"
   homepage "https://github.com/soulspace-org/overarch"
-  url "https://github.com/soulspace-org/overarch/releases/download/v0.29.1/overarch.jar"
-  sha256 "d7fbed38312180dd5f17ca6d8089458268095619b678fba4a1c1e52660d61d1f"
+  url "https://github.com/soulspace-org/overarch/releases/download/v0.31.0/overarch.jar"
+  sha256 "1847a71c54e72251a82dd3cb0506558ef309787acd7a0eed4fba837eec542b6d"
   license "EPL-1.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "3363eaa87a1637f544491951b53eb634c232ee574689b9941e3e50fc13256e74"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "3363eaa87a1637f544491951b53eb634c232ee574689b9941e3e50fc13256e74"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "3363eaa87a1637f544491951b53eb634c232ee574689b9941e3e50fc13256e74"
-    sha256 cellar: :any_skip_relocation, sonoma:         "3363eaa87a1637f544491951b53eb634c232ee574689b9941e3e50fc13256e74"
-    sha256 cellar: :any_skip_relocation, ventura:        "3363eaa87a1637f544491951b53eb634c232ee574689b9941e3e50fc13256e74"
-    sha256 cellar: :any_skip_relocation, monterey:       "3363eaa87a1637f544491951b53eb634c232ee574689b9941e3e50fc13256e74"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "1d52e9bc90c8fc0fff13c93041dd3ba4760b92c7292aff8db934e2a7c595c838"
+    sha256 cellar: :any_skip_relocation, all: "d84581b8733afae61ddbb824b8c7543c17b773a517c520d49badc5c127af940d"
   end
 
   head do

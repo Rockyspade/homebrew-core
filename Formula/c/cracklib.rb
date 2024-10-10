@@ -11,6 +11,7 @@ class Cracklib < Formula
   end
 
   bottle do
+    sha256 arm64_sequoia:  "f6e2026b98603f1a97a29c292ef672921cac28cdba20704902d719a7348dd02f"
     sha256 arm64_sonoma:   "0c5f49a46e9db39c735041120c5e89b06b1ec2b0e37ba2090973f2067ebee3ef"
     sha256 arm64_ventura:  "c03e267a7d0d790f718537b89fa25c6aac1f7f75a3f23addfd07e059305d97b1"
     sha256 arm64_monterey: "e76849125f0b2ee7631f381249e9b0acae465b5128c0d255a76fc0112a78539b"
@@ -28,9 +29,11 @@ class Cracklib < Formula
     depends_on "libtool" => :build
   end
 
-  depends_on "gettext"
-
   uses_from_macos "zlib"
+
+  on_macos do
+    depends_on "gettext"
+  end
 
   resource "cracklib-words" do
     url "https://github.com/cracklib/cracklib/releases/download/v2.10.2/cracklib-words-2.10.2.bz2"
@@ -41,11 +44,11 @@ class Cracklib < Formula
     buildpath.install (buildpath/"src").children if build.head?
     system "autoreconf", "--force", "--install", "--verbose" if build.head?
 
-    system "./configure", *std_configure_args,
-                          "--disable-silent-rules",
+    system "./configure", "--disable-silent-rules",
                           "--sbindir=#{bin}",
                           "--without-python",
-                          "--with-default-dict=#{var}/cracklib/cracklib-words"
+                          "--with-default-dict=#{var}/cracklib/cracklib-words",
+                          *std_configure_args
     system "make", "install"
 
     share.install resource("cracklib-words")

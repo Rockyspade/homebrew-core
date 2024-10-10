@@ -1,19 +1,18 @@
 class Croc < Formula
   desc "Securely send things from one computer to another"
   homepage "https://github.com/schollz/croc"
-  url "https://github.com/schollz/croc/archive/refs/tags/v10.0.11.tar.gz"
-  sha256 "09b355bb412d9b5d1b2e0c30b866b9885fe6c4e88f65f6486d1f0233d591e07d"
+  url "https://github.com/schollz/croc/archive/refs/tags/v10.0.13.tar.gz"
+  sha256 "69a7e60811b97d3f6e2ceac4d24fc52596ec8982039811fb5894ef78f2dedc77"
   license "MIT"
   head "https://github.com/schollz/croc.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "8f80ed0a0c99d0893c0dd61f439067254089caa9c1e83dd1f117794c7ec6f99b"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "c9d0ea504fda3ed9c4b5d42e97bc42a5c6240777bd3e1f3e1913edfaba68a5e3"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "f195b30918ea329fa16beb2fa5128d9141dc95de3c900769ccc3e40dbc2c20e9"
-    sha256 cellar: :any_skip_relocation, sonoma:         "7e7a787909f46cde35a86f3086d0984453bc81fad0502f749fc77a56a9dfb06b"
-    sha256 cellar: :any_skip_relocation, ventura:        "e57e4e7eaa429784b8787417e344eb847264c21a698075b3e98ed9ae1596f1c9"
-    sha256 cellar: :any_skip_relocation, monterey:       "6024d5ca11d7b7bb5887d267035cc7943fb867619103bad4ea8ae91cee347b1e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "47e740077f65f60914fd6d5e16134316487342da779f31f74d687bba680cb426"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "ef28473d93b4bfe50c2ce6013b60c33fc8510acce05ec64ba2580e4d41a08db8"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "ef28473d93b4bfe50c2ce6013b60c33fc8510acce05ec64ba2580e4d41a08db8"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "ef28473d93b4bfe50c2ce6013b60c33fc8510acce05ec64ba2580e4d41a08db8"
+    sha256 cellar: :any_skip_relocation, sonoma:        "48850c376a5447d6607157dfb575429439fc28c1c962c3cc64613683b178b27e"
+    sha256 cellar: :any_skip_relocation, ventura:       "48850c376a5447d6607157dfb575429439fc28c1c962c3cc64613683b178b27e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a478aff4e3ea88bc65d7c48e46a13d87683d8cbd0cca0491d68e02da2eae57ac"
   end
 
   depends_on "go" => :build

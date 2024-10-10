@@ -1,8 +1,8 @@
 class Corepack < Formula
   desc "Package acting as bridge between Node projects and their package managers"
   homepage "https://github.com/nodejs/corepack"
-  url "https://registry.npmjs.org/corepack/-/corepack-0.29.3.tgz"
-  sha256 "63b88391da952a8c977e1e85db734bfa975805cf22c1c5dc5dc9e54eb9eed97e"
+  url "https://registry.npmjs.org/corepack/-/corepack-0.29.4.tgz"
+  sha256 "ebd45f1694cb56bfc114fc05b9322ac6c60fb535e5c33af17dfb913a796668c4"
   license "MIT"
 
   livecheck do
@@ -11,14 +11,7 @@ class Corepack < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "02602f24c46d8852d823a87c5e7877f8c8cb1de3cf90a9dcad3716f6d8d36988"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "02602f24c46d8852d823a87c5e7877f8c8cb1de3cf90a9dcad3716f6d8d36988"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "02602f24c46d8852d823a87c5e7877f8c8cb1de3cf90a9dcad3716f6d8d36988"
-    sha256 cellar: :any_skip_relocation, sonoma:         "02602f24c46d8852d823a87c5e7877f8c8cb1de3cf90a9dcad3716f6d8d36988"
-    sha256 cellar: :any_skip_relocation, ventura:        "02602f24c46d8852d823a87c5e7877f8c8cb1de3cf90a9dcad3716f6d8d36988"
-    sha256 cellar: :any_skip_relocation, monterey:       "02602f24c46d8852d823a87c5e7877f8c8cb1de3cf90a9dcad3716f6d8d36988"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "67b27d9b337822a292d6ceb524c40d09ee459455265aec4f8c0221cf5a937db6"
+    sha256 cellar: :any_skip_relocation, all: "3da43ee94c2a21437b6db8bde735992f48bb0b4875b42eeb8a0e1424a8f0d694"
   end
 
   depends_on "node"

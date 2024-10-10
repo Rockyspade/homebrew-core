@@ -1,19 +1,18 @@
 class Doctl < Formula
   desc "Command-line tool for DigitalOcean"
   homepage "https://github.com/digitalocean/doctl"
-  url "https://github.com/digitalocean/doctl/archive/refs/tags/v1.111.0.tar.gz"
-  sha256 "8bbb6c632f15338f2bd38124e6ee479bd39cee0779570762f776779db0132130"
+  url "https://github.com/digitalocean/doctl/archive/refs/tags/v1.115.0.tar.gz"
+  sha256 "08c33702fa29d321b7ab005d16ddbc40d4acc6b0c1141080a127b820ae871156"
   license "Apache-2.0"
   head "https://github.com/digitalocean/doctl.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "668c9ebcfd951e6f27bf48c59233a41fc8b9e18379fc6d8806b8c2a197e53cbc"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "2ab9ba388fad075ae12c4a7685b249320f5eef561e8d033ca55cb8db66507877"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "b45c3c8585da63bb693e8d654ae8fdf1e194d0c215a967261379885d29417609"
-    sha256 cellar: :any_skip_relocation, sonoma:         "daad9a2e908fcb188dda3aeddb1243ca2df82fbeb4885511cdc8d38b8536221e"
-    sha256 cellar: :any_skip_relocation, ventura:        "e763f832aa29538c5bf587b34f02333c0e781344b7054fcf9ec4a8a616a2ab37"
-    sha256 cellar: :any_skip_relocation, monterey:       "6c693f98feaecd069d3a3b4dae98ac08c195640afe40a23407ea8c7f5eefd6e7"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "787b92c50fb1fdbca3a1b1943f17036034de26630ca29a86de57014ace20a837"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "9192d752b3a2f754fdb044b62bc4a8c538c0338efff3d11471cef59c09b3b43d"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "9192d752b3a2f754fdb044b62bc4a8c538c0338efff3d11471cef59c09b3b43d"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "9192d752b3a2f754fdb044b62bc4a8c538c0338efff3d11471cef59c09b3b43d"
+    sha256 cellar: :any_skip_relocation, sonoma:        "124d2cd4360c0184a3eebc3080e058038ea971b7d2710c996d29b2e06b6d4559"
+    sha256 cellar: :any_skip_relocation, ventura:       "124d2cd4360c0184a3eebc3080e058038ea971b7d2710c996d29b2e06b6d4559"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9f00ea0a6bdab755814aec14728854848816ecdd8a55a5f3a456fcab128cbc90"
   end
 
   depends_on "go" => :build

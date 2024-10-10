@@ -2,18 +2,17 @@ class ThorsMongo < Formula
   desc "Mongo API and Serialization library"
   homepage "https://github.com/Loki-Astari/ThorsMongo"
   url "https://github.com/Loki-Astari/ThorsMongo.git",
-      tag:      "3.3.00",
-      revision: "50edea0a79cb00ac0469e14e37e46188f20d5ae3"
+      tag:      "4.3.00",
+      revision: "37f11c9e9426b21136d1337cd4e6c5d0c5b71967"
   license "GPL-3.0-only"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "5bbdc57ecd5330c916f0c76d6a1e3497c2127d371349b15b2d534b62e802f516"
-    sha256 cellar: :any,                 arm64_ventura:  "0ff914b3b50e73d3b6b69e9c6b1deb1e19489d3119bd71d90f53937b6ceeab50"
-    sha256 cellar: :any,                 arm64_monterey: "1ce642bd9357de6608770d44c23ad67b2f03b4e0c51963fcd4a2baffb8b7bdf0"
-    sha256 cellar: :any,                 sonoma:         "df324671b1735d7d52d68da1b436e6706f00d5872861ec83105ce4771aef4eaa"
-    sha256 cellar: :any,                 ventura:        "76fc80118d6e7fe6511856b290f37e36de87dcd104b9d4bdcfbc32236988c5c4"
-    sha256 cellar: :any,                 monterey:       "4bae200a85947f3a300805f9fe4e7e90ef351328b382441c67645a67fad3c336"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "71d226417944427ea75751a1e2ce4901c89f5a5216b9fc0e4ec4246fac1c037b"
+    sha256 cellar: :any,                 arm64_sequoia: "e9017ccb37ea3c2ed2aea98ab47c83b9e38d6efb413ada227a02246746762c53"
+    sha256 cellar: :any,                 arm64_sonoma:  "70888b3bfaada2dd06eeb32d3dcdc8603d5b3b8858f73e3b486a84e7edc99f8f"
+    sha256 cellar: :any,                 arm64_ventura: "6c4f2697e44f5688393517170b08bcec639e7ac42619fd5e3f8d2837cb41147c"
+    sha256 cellar: :any,                 sonoma:        "5ff46bb6d3b72f7cf9f8f4676c365264e552302b49af66072b865fb98a218b9d"
+    sha256 cellar: :any,                 ventura:       "185909cf9dcbe3ea3294eef15ee49e44d8677844233156fa037e46028e4b4707"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f24213994777a8e8e64e149b789e55bfc8e24fcd028c0a9c0d0eb510b7198000"
   end
 
   depends_on "libyaml"
@@ -35,6 +34,7 @@ class ThorsMongo < Formula
                           "--disable-test-with-integration",
                           "--disable-test-with-mongo-query",
                           "--disable-Mongo-Service"
+
     system "make"
     system "make", "install"
   end

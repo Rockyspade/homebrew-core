@@ -4,9 +4,10 @@ class Samba < Formula
   # option. The shared folder appears in the guest as "\\10.0.2.4\qemu".
   desc "SMB/CIFS file, print, and login server for UNIX"
   homepage "https://www.samba.org/"
-  url "https://download.samba.org/pub/samba/stable/samba-4.20.4.tar.gz"
-  sha256 "3a92e97eaeb345b6b32232f503e14d34f03a7aa64c451fe8c258a11bbda908e5"
+  url "https://download.samba.org/pub/samba/stable/samba-4.21.0.tar.gz"
+  sha256 "09bb56db4ce003cafdbebe9bad368c4f4ff1945f732d18077d52f36ab20cef88"
   license "GPL-3.0-or-later"
+  revision 1
 
   livecheck do
     url "https://www.samba.org/samba/download/"
@@ -14,13 +15,12 @@ class Samba < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "ede773cb95bf6e0c7dc8657b5adbe58fe6fdff564895cdf1bc1bd3fe66bcf3d1"
-    sha256 arm64_ventura:  "62a859f4d1125e5d31f868149809016804ffe77ee0d0a358a1ffc3d625437c4e"
-    sha256 arm64_monterey: "21db0f4be3b70967f7ba146d09779f9c40c2ebd5a2814c9d3cb11fad8a5b5eeb"
-    sha256 sonoma:         "17a0f6638ff67e615fed0eace9b7654556cb61246bebc7020fbec8a5e31b0d3f"
-    sha256 ventura:        "5bb3e19312e790920ad4220c8e798ce5e780360e53349d617a5521973b161c22"
-    sha256 monterey:       "89fec77ea5a3c19fcc8a84e3ee316b86a5275663e221a107936c1e0e6ecd9877"
-    sha256 x86_64_linux:   "3b5fb16d9a48740aba18a88bff2f089f98ac032881da0a9e502c85c8ec3102d1"
+    sha256 arm64_sequoia: "cee681962650872ad27a77818650000ad20f65b7e9b927b9e5701de8ee624091"
+    sha256 arm64_sonoma:  "5e18d171f9e78718652fe45746d36af7fb4a2ec8f9431a9f091a53ef96a9cfa4"
+    sha256 arm64_ventura: "f9940ed421054893d856f4b6c7f91b6d5960c01e83b340326ab8a951ad0a4ab5"
+    sha256 sonoma:        "0222776b48d2dde6eecdb80fee74fae4ebc21e5701a482e5af403fbbd46b0aaa"
+    sha256 ventura:       "97030caaae8ff576a65b0405f4a6e10d49fe6cb8a1557d458ee17c3afb6d1cc5"
+    sha256 x86_64_linux:  "d4bde32716721ff51b3f085c8910488d7c526584c8f8fc2b8d185b5c8ee3285f"
   end
 
   depends_on "bison" => :build
@@ -29,12 +29,14 @@ class Samba < Formula
   depends_on "gnutls"
   # icu4c can get linked if detected by pkg-config and there isn't a way to force disable
   # without disabling spotlight support. So we just enable the feature for all systems.
-  depends_on "icu4c"
+  depends_on "icu4c@75"
   depends_on "krb5"
   depends_on "libtasn1"
   depends_on "popt"
   depends_on "readline"
   depends_on "talloc"
+  depends_on "tdb"
+  depends_on "tevent"
 
   uses_from_macos "flex" => :build
   uses_from_macos "perl" => :build
@@ -53,7 +55,6 @@ class Samba < Formula
 
   conflicts_with "jena", because: "both install `tdbbackup` binaries"
   conflicts_with "puzzles", because: "both install `net` binaries"
-  conflicts_with "tdb", because: "both install `tdbrestore`, `tdbtool` binaries"
 
   resource "Parse::Yapp" do
     url "https://cpan.metacpan.org/authors/id/W/WB/WBRASWELL/Parse-Yapp-1.21.tar.gz"
@@ -61,6 +62,9 @@ class Samba < Formula
   end
 
   def install
+    # Skip building test that fails on ARM with error: initializer element is not a compile-time constant
+    inreplace "lib/ldb/wscript", /\('test_ldb_comparison_fold',$/, "\\0 enabled=False," if Hardware::CPU.arm?
+
     # avoid `perl module "Parse::Yapp::Driver" not found` error on macOS 10.xx (not required on 11)
     if !OS.mac? || MacOS.version < :big_sur
       ENV.prepend_create_path "PERL5LIB", buildpath/"lib/perl5"
@@ -73,7 +77,8 @@ class Samba < Formula
     end
     ENV.append "LDFLAGS", "-Wl,-rpath,#{lib}/private" if OS.linux?
     system "./configure",
-           "--bundled-libraries=NONE,ldb,tdb,tevent",
+           "--bundled-libraries=NONE",
+           "--private-libraries=!ldb",
            "--disable-cephfs",
            "--disable-cups",
            "--disable-iprint",
@@ -97,13 +102,13 @@ class Samba < Formula
            "--localstatedir=#{var}"
     system "make"
     system "make", "install"
-    if OS.mac?
-      # macOS has its own SMB daemon as /usr/sbin/smbd, so rename our smbd to samba-dot-org-smbd to avoid conflict.
-      # samba-dot-org-smbd is used by qemu.rb .
-      # Rename profiles as well to avoid conflicting with /usr/bin/profiles
-      mv sbin/"smbd", sbin/"samba-dot-org-smbd"
-      mv bin/"profiles", bin/"samba-dot-org-profiles"
-    end
+    return unless OS.mac?
+
+    # macOS has its own SMB daemon as /usr/sbin/smbd, so rename our smbd to samba-dot-org-smbd to avoid conflict.
+    # samba-dot-org-smbd is used by qemu.rb .
+    # Rename profiles as well to avoid conflicting with /usr/bin/profiles
+    mv sbin/"smbd", sbin/"samba-dot-org-smbd"
+    mv bin/"profiles", bin/"samba-dot-org-profiles"
   end
 
   def caveats

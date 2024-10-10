@@ -1,8 +1,8 @@
 class Gh < Formula
   desc "GitHub command-line tool"
   homepage "https://cli.github.com/"
-  url "https://github.com/cli/cli/archive/refs/tags/v2.54.0.tar.gz"
-  sha256 "eedac958431876cebe243925dc354b0c21915d1bc84c5678a8073f0ec91d6a4c"
+  url "https://github.com/cli/cli/archive/refs/tags/v2.58.0.tar.gz"
+  sha256 "90894536c797147586db775d06ec2040c45cd7eef941f7ccbea46f4e5997c81c"
   license "MIT"
   head "https://github.com/cli/cli.git", branch: "trunk"
 
@@ -12,13 +12,12 @@ class Gh < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "87fd5458d122633c7df0868da975439dab8df13d53ed8089b4ebc20d602d7e9b"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "67110a2e0b88b929fd19e5f96de64664c8bae12d6e07c0bf5a17a89a1225a844"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "aa9727f337894861739bf27dcb5a6234d560e5fc8fa25311b7e1d304b02f1329"
-    sha256 cellar: :any_skip_relocation, sonoma:         "02f5f1a4a95c0007e5726e63b2efe4b10ebdcaccd203d160c026d1b3726fcaf1"
-    sha256 cellar: :any_skip_relocation, ventura:        "16949a188a19f9fdd6580ede3d6b8b5668ec56f8e0e21adfd02bd61f47986094"
-    sha256 cellar: :any_skip_relocation, monterey:       "0a42fcf5b41349cfb432925c4812adfecfecf9e5ac5e394e89abed75de030c79"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "fb758d55cdccd4c5a61d3665f7ebfdfd05d8ef3224b4cd282fe6e455b0b0d8dc"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "f3cb6b84271ebd44425139e995f6c11fb8405c73b8eebba18a2155895670e1f3"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "f3cb6b84271ebd44425139e995f6c11fb8405c73b8eebba18a2155895670e1f3"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "f3cb6b84271ebd44425139e995f6c11fb8405c73b8eebba18a2155895670e1f3"
+    sha256 cellar: :any_skip_relocation, sonoma:        "8b8a4655d289d7cef3471bb479dcf1bd3665440c3c9fa4412ac5f6e02450f849"
+    sha256 cellar: :any_skip_relocation, ventura:       "c98643a52ed2ea1afab0bea2c4168b1d045bd21b2eef22c68e5706de7dc59c81"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9b9c42f277d56692ac8a13af727eb71b6ad912c58700f0646d1e3a233586bba6"
   end
 
   depends_on "go" => :build

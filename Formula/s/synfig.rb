@@ -1,10 +1,12 @@
 class Synfig < Formula
   desc "Command-line renderer"
   homepage "https://synfig.org/"
-  url "https://downloads.sourceforge.net/project/synfig/development/1.5.2/synfig-1.5.2.tar.gz"
+  # TODO: Update livecheck to track only stable releases when 1.6.x is available.
+  url "https://downloads.sourceforge.net/project/synfig/development/1.5.2/source/synfig-1.5.2.tar.gz"
   mirror "https://github.com/synfig/synfig/releases/download/v1.5.2/synfig-1.5.2.tar.gz"
   sha256 "0a7cff341eb0bcd31725996ad70c1461ce5ddb3c3ee9f899abeb4a3e77ab420e"
   license "GPL-3.0-or-later"
+  revision 2
   head "https://github.com/synfig/synfig.git", branch: "master"
 
   livecheck do
@@ -13,13 +15,11 @@ class Synfig < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "1f56eb46a5bf1422a2c3345fb49e4a812ef751dba399404935ea00da9aeb38c1"
-    sha256 arm64_ventura:  "26e27b1c7dc24f2bb74a8bcbbcc77e9ab29dff4b38f239f0cf9ae43eaacdb07b"
-    sha256 arm64_monterey: "4376deb8c41e5451988b56058f11e8ea5445fffc6edc2a5316c4be26e8f977ab"
-    sha256 sonoma:         "9c5c64089bd7aa8c221a8a12f3de8efaf2676f4a99bfd42db85c2f5e617073fe"
-    sha256 ventura:        "4e60da11ecfbe746754edb822a48e180b8edac7a2f152f4558aa13d051eb6e6c"
-    sha256 monterey:       "9e9740207cabd7c388632446d21b24779b77fb421a6713843cb1f8705ab74f14"
-    sha256 x86_64_linux:   "b303fb306eb771db2efb5dbf9e1608f7fd7f7904947f9ea64698e9977c1732ac"
+    sha256 arm64_sonoma:  "cf897c7b4ca90d3b11d4280d4c9f87792e47c331de1a8ae8f2dc8b7e77364a6f"
+    sha256 arm64_ventura: "8a4aa8b68252349f620914abe3d341c5a096fd76a8987a3187ee7b014e45b54e"
+    sha256 sonoma:        "5a683d57ebd562483d473d9355e502a01e06d62e97b17de7c7cee471a0347fdb"
+    sha256 ventura:       "16e823e3f072aaaf8889377bf704702445677555e2850080d1f5a2a21af18fc3"
+    sha256 x86_64_linux:  "7333419b778418bcbd3300a5f6d72bc69e8eaf429addb58dd450d34355b1df6d"
   end
 
   depends_on "autoconf" => :build
@@ -30,7 +30,7 @@ class Synfig < Formula
 
   depends_on "cairo"
   depends_on "etl"
-  depends_on "ffmpeg@6"
+  depends_on "ffmpeg"
   depends_on "fftw"
   depends_on "fontconfig"
   depends_on "freetype"

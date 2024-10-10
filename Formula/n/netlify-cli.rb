@@ -1,19 +1,18 @@
 class NetlifyCli < Formula
   desc "Netlify command-line tool"
   homepage "https://www.netlify.com/docs/cli"
-  url "https://registry.npmjs.org/netlify-cli/-/netlify-cli-17.34.1.tgz"
-  sha256 "02fc91c36cb242ed101e6d975b962d730fbd1ce860de9768c5626767ec8e439a"
+  url "https://registry.npmjs.org/netlify-cli/-/netlify-cli-17.36.4.tgz"
+  sha256 "0578a892a86edcb62c89900a03dd577aad42332abdf2d310517c9cb6d92e0d7a"
   license "MIT"
   head "https://github.com/netlify/cli.git", branch: "main"
 
   bottle do
-    sha256                               arm64_sonoma:   "3f9772e9e178d742983403f671556223f26abb50b643368ead791467806804a6"
-    sha256                               arm64_ventura:  "6433a6d32b8524d3426868601f81396ace1cf8099d2f8056f928b41115725b43"
-    sha256                               arm64_monterey: "7091f0a217f835d76af92963a6c70f2cd4835485dd09376f33eb7cba934d91d8"
-    sha256                               sonoma:         "0987d067b0110ce9d1b15dd407cb2ea48db7b6b431a01fe9f78123ed1dff40d0"
-    sha256                               ventura:        "b5928f4afef2227682e4a5373977b7c0e7d620289e261ae742a090c28466fbce"
-    sha256                               monterey:       "c22bfa0ee397ed411125e0d1684767b2aecf748212e71f6150f754edd77fe924"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "67a0aa750a2a7a9f5811814146541c50e3335f1f9f7c17963b0ee94295868199"
+    sha256                               arm64_sequoia: "3b251f6bf7d0ccd48cdaee0f9247dd484454442646438a048b30996e6f6d6416"
+    sha256                               arm64_sonoma:  "ff48af0980912bcdb42706c08d11c2c876d390e7fc88a1f3dd85eb7609d3765b"
+    sha256                               arm64_ventura: "c9d6c36c0a701833ffaab2be562d4e10c8587c9c70108d933968044495352842"
+    sha256                               sonoma:        "6d0ecdb746cc1cff9984142f0cfdf5608be646b4c4e52b1cb2c6e85f3f51fdcb"
+    sha256                               ventura:       "59931de3b51bf2f5893db7d20822c68b7af4b146d8c34c721315a4200bb000b3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1d77d450af6d8f8127fb870f2e0735fb2bcaaad916bbdd4e8122ed0f7957fb46"
   end
 
   depends_on "node"

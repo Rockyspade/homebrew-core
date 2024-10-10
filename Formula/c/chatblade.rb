@@ -3,18 +3,19 @@ class Chatblade < Formula
 
   desc "CLI Swiss Army Knife for ChatGPT"
   homepage "https://github.com/npiv/chatblade"
-  url "https://files.pythonhosted.org/packages/64/1a/e83b916bf98e4c4df1e160952e212c7325dbd5f96b2a67f0a34486279603/chatblade-0.6.2.tar.gz"
-  sha256 "3786335ce943d542e1887aea03a08b3b0052b504846f3f32aad3ade6609158b4"
+  url "https://files.pythonhosted.org/packages/7b/69/08b816a91867bc9895e7792cee6a5aa7dd826896340141093b0afdeb2c3d/chatblade-0.6.4.tar.gz"
+  sha256 "77c5dabd906e5acb88531ada0b65da58cead828d899ac3d9c33ca5f518f9c163"
   license "GPL-3.0-only"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "88efb44b943857a79c00da5bec626a482bc07cc35948b9a6311e81310693042e"
-    sha256 cellar: :any,                 arm64_ventura:  "a24efb6483a54a86821055613e633788a2fbe89e6f2059cf908bb15dc31ad91b"
-    sha256 cellar: :any,                 arm64_monterey: "bd92f65b400b891699ee7ee845f235f3036a6fcf4bd6ae42dc27184e7fa0ccbe"
-    sha256 cellar: :any,                 sonoma:         "72e5ed884367015c8b8f5463752c1e87c9fbfe887853f7d48125e49b02553ed8"
-    sha256 cellar: :any,                 ventura:        "d64ab352c22e1199c4ad68882ac1b56a3346a04e0f4c4e1481c84716f9d6b3eb"
-    sha256 cellar: :any,                 monterey:       "fdd1474ad540e3ccf3fc17e2e8a11e44ffaa8df642db63203abbb30aff1c98e0"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "fee8cc84ce0a61e340cd030b97471e15e0fa11bf437caaebe3ea9e1f27122d38"
+    sha256 cellar: :any,                 arm64_sequoia:  "88ab2bea95b3b01132237a7453c31161521020d40c1d1d6d7eec6ef2cb0a5859"
+    sha256 cellar: :any,                 arm64_sonoma:   "c2b0fd4902c9e85d2512f1b99e0652489e0c334d6530c618bafc92a8cf033d3d"
+    sha256 cellar: :any,                 arm64_ventura:  "9476375fa18325f20e787bd6d0227347545278de5c5eb3887ff5df335bbe4bdb"
+    sha256 cellar: :any,                 arm64_monterey: "223a2a4511e6f8e1db1b2890ff79ec3252d480d491bf5db7b8dc288d6e7b6351"
+    sha256 cellar: :any,                 sonoma:         "bab2c67a5963e4706a0cc48fe8be07fca29cd089813623ec6219cef1beb94f54"
+    sha256 cellar: :any,                 ventura:        "f9eadc7d7bc60b4d1ffb32bcd169599040c688bb1e0dc616129177dd7d00c81a"
+    sha256 cellar: :any,                 monterey:       "cedc2b203ffb66c5932c8fa4b1d077ef28276e715877bbc9e8a62549ca58e8b5"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "99f00bc915fbc223632af2094788a98059f8a9b68748328e18b78e66a587a852"
   end
 
   depends_on "rust" => :build
@@ -53,13 +54,13 @@ class Chatblade < Formula
   end
 
   resource "httpx" do
-    url "https://files.pythonhosted.org/packages/5c/2d/3da5bdf4408b8b2800061c339f240c1802f2e82d55e50bd39c5a881f47f0/httpx-0.27.0.tar.gz"
-    sha256 "a0cb88a46f32dc874e04ee956e4c2764aba2aa228f650b06788ba6bda2962ab5"
+    url "https://files.pythonhosted.org/packages/78/82/08f8c936781f67d9e6b9eeb8a0c8b4e406136ea4c3d1f89a5db71d42e0e6/httpx-0.27.2.tar.gz"
+    sha256 "f7c2be1d2f3c3c3160d441802406b206c2b76f5947b11115e6df10c6c65e66c2"
   end
 
   resource "idna" do
-    url "https://files.pythonhosted.org/packages/21/ed/f86a79a07470cb07819390452f178b3bef1d375f2ec021ecfc709fc7cf07/idna-3.7.tar.gz"
-    sha256 "028ff3aadf0609c1fd278d8ea3089299412a7a8b9bd005dd08b9f8285bcb5cfc"
+    url "https://files.pythonhosted.org/packages/e8/ac/e349c5e6d4543326c6883ee9491e3921e0d07b55fdf3cce184b40d63e72a/idna-3.8.tar.gz"
+    sha256 "d838c2c0ed6fced7693d5e8ab8e734d5f8fda53a039c0164afb0b82e771e3603"
   end
 
   resource "markdown-it-py" do

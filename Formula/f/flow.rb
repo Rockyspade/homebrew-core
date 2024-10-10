@@ -1,19 +1,18 @@
 class Flow < Formula
   desc "Static type checker for JavaScript"
   homepage "https://flow.org/"
-  url "https://github.com/facebook/flow/archive/refs/tags/v0.244.0.tar.gz"
-  sha256 "a0821dec67219cfcfffee88dbdbf3db7c7513e5ec36a1b1c3c03fd79cbd4e538"
+  url "https://github.com/facebook/flow/archive/refs/tags/v0.247.1.tar.gz"
+  sha256 "2874cd8f609cc2e1bd526d3e9b34cb493715c3eb612d1113e41440454561e85c"
   license "MIT"
   head "https://github.com/facebook/flow.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "bafc472ae7426dcd649aed0bac5d5411c4cda92f9980f3f041eeb793dafcc4ab"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "0be732fdca2055cad4fc780c5c45964c48acc3d1f4207fe63ee50ffaf2e861b5"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "4992f28e31ea7ca426f599281d74ac9fd0ca052ab4eb04d6daa8f5e4a43d843e"
-    sha256 cellar: :any_skip_relocation, sonoma:         "abce398e102cf4115525734cfdd47b4726cab24bd530b267a63fb126a29d388b"
-    sha256 cellar: :any_skip_relocation, ventura:        "38dd55ad1550c219ffc6f1563b08201e17304d024555f909b7f5bb6fb6cff404"
-    sha256 cellar: :any_skip_relocation, monterey:       "e9c0c435797b50c34d85dd5c32d27ce278a07a5e202c33ca5564683f9d66d4e7"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f11ba53308277453eea3109c9701cb9bf94f0895386782354c157e9f4279e732"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "e4dff5c4683ad71104cfe37f33d4f6992a79904ff9fe78f166f9accad667b406"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "cde190878a5a77f356c06d80599046d5333f0c1544011d6c29afce2f50cac7da"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "26c1b8e6101a52f8e91d83323f73efd0f715c2c04a0a218c8038558218ccbbe2"
+    sha256 cellar: :any_skip_relocation, sonoma:        "e5c49771640596d956640347aff6d90efebcf274f04406920b0dda4e1d26f490"
+    sha256 cellar: :any_skip_relocation, ventura:       "73629924cd981a09af9524a25e423fa0702b6dc700ca128ab43dd717c503d65e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "75bb4229c88a3c2592094da86b044bd24b02039931422c703e2b8d2ff951d706"
   end
 
   depends_on "ocaml" => :build

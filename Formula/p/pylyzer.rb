@@ -1,18 +1,17 @@
 class Pylyzer < Formula
   desc "Fast static code analyzer & language server for Python"
   homepage "https://github.com/mtshiba/pylyzer"
-  url "https://github.com/mtshiba/pylyzer/archive/refs/tags/v0.0.59.tar.gz"
-  sha256 "4613257a426e14672f000ecec9f28bf3d5a500e6f1f019f1d91418ed43dd0d5b"
+  url "https://github.com/mtshiba/pylyzer/archive/refs/tags/v0.0.65.tar.gz"
+  sha256 "04673aae114c1db60a807a6ec48b505f3f3df5b830c86195bc3698e481dab621"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "0704fa2699229adfd7e679bfc889149a9d2d839e357a42fd36335307fe61b86a"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "46518f56b28f8b7509fde59d578f097736589048feed8b3eddf105919b502acc"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "f4620efeec2566cde517cc9743c77d2efdc6e25601042693d7b3dd2a534db5d1"
-    sha256 cellar: :any_skip_relocation, sonoma:         "482fc9ee00b6eb26ba34f85876a6c54ade9e4a692455731400495451cffaede9"
-    sha256 cellar: :any_skip_relocation, ventura:        "8416e1bcba7ecac35ba7dcd2c5ebff44eee2ca39bb575a70614634876bdd109b"
-    sha256 cellar: :any_skip_relocation, monterey:       "7b278e1794339ff854bdd6e6720514f8838269bfa72c43e34df31b53d396f4ac"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "02497cdfa469a075b1b59062d35712ba2cc803b1ecf18c3294632afc6402cc8c"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "7c2063488f0680d1a4d55ac394dfd4ea8b1e89eab0690d56ab0f0c1b5a5db2dc"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "d7567d7c3e864de13a16769d20aa7bc10f4cf7a0c073e8082e3ecf9cbb96222c"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "1bb1453a3e628d937679ed7f4c248f3f6bd876a99f5bddd1682fc2cccd567e2f"
+    sha256 cellar: :any_skip_relocation, sonoma:        "42c777f4a3e801b4c9b52c0a6c3a999a1235ceaa284270819caeb5b74f4b1694"
+    sha256 cellar: :any_skip_relocation, ventura:       "3dba65585ba961889d81d2b259967949b8f9efb53b41d618dad288219dffee8a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "650f85f76a4ff547374b85126081118521ac4ef45ed44034cf7ba4fe909d54ee"
   end
 
   depends_on "rust" => :build

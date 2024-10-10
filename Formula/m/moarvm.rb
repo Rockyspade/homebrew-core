@@ -1,8 +1,8 @@
 class Moarvm < Formula
   desc "VM with adaptive optimization and JIT compilation, built for Rakudo"
   homepage "https://moarvm.org"
-  url "https://github.com/MoarVM/MoarVM/releases/download/2024.07/MoarVM-2024.07.tar.gz"
-  sha256 "625241fe1578341f6099784f0ea82a62b8a638855c3b8fa604d6ce9e5024fe29"
+  url "https://github.com/MoarVM/MoarVM/releases/download/2024.09/MoarVM-2024.09.tar.gz"
+  sha256 "ea9b3b7ed126ce45619b8b5a4091ac2586603c9160130799a7d3e12795c14d24"
   license "Artistic-2.0"
 
   livecheck do
@@ -11,13 +11,12 @@ class Moarvm < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "4c6554bdc32cd98e00871bee60e427c773a0de141308b27ae2282397aa06857d"
-    sha256 arm64_ventura:  "8a8d69cdd896206c17b064f046323b454b9a2d7ab81b88d065b3437ab1a77389"
-    sha256 arm64_monterey: "624e25cb64bf307167daae1cc1e1d13fdda590a334d346e198346513967ce7d6"
-    sha256 sonoma:         "f4b3e450cd22a28d9d3739d505c6fd2fc21cb3b02b71184c057f4359ab05e965"
-    sha256 ventura:        "bc305ba6beb7e85e4c8ea66565486c5245331745260c24db6642b5d96974b298"
-    sha256 monterey:       "e44a7877ecc17bed11f6684887c1cb5616254180df1029a8fdf763d70c6fe6f5"
-    sha256 x86_64_linux:   "c6950e5f56ccf31ce51d30b3e1639f040fe9d193d0c26d833d154b6f034d6b97"
+    sha256 arm64_sequoia: "a0b1a2c9714db7d2c0d76c3d2df65a13c31187a7383be3aa7a936253f9f58247"
+    sha256 arm64_sonoma:  "d9cac2444f40b5875197dba7e46749c6ec80d9d5a54f90cd400a1ad91f901105"
+    sha256 arm64_ventura: "cfd13314ef8d3cbcaf359e4b30582c57d40a540304ed8b03a3fc99de03d46251"
+    sha256 sonoma:        "b7b8dc363c62cfc68f786f9157ee5270ad1b4cadd9be1191b4ce5cf217d41f7b"
+    sha256 ventura:       "c90f145721c8235ce88cee88f3e3a94888ea2c7078612958c4bf2e46eadb3fa2"
+    sha256 x86_64_linux:  "45430cc52404c0862038ccf969210ba2844cdafad607a5bad528f7704ea368e3"
   end
 
   depends_on "pkg-config" => :build
@@ -28,11 +27,12 @@ class Moarvm < Formula
   uses_from_macos "perl" => :build
   uses_from_macos "libffi"
 
+  conflicts_with "moar", because: "both install `moar` binaries"
   conflicts_with "rakudo-star", because: "rakudo-star currently ships with moarvm included"
 
   resource "nqp" do
-    url "https://github.com/Raku/nqp/releases/download/2024.07/nqp-2024.07.tar.gz"
-    sha256 "ab13f2de962817bfedc971088aa6b54911c424150dc284623444ef64878af07e"
+    url "https://github.com/Raku/nqp/releases/download/2024.09/nqp-2024.09.tar.gz"
+    sha256 "03de709b6353c4cc80aeb8ba2ef3fe54ec4bfe04ea6a10c631ca560b58cb181d"
   end
 
   def install

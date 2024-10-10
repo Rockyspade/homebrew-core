@@ -1,18 +1,17 @@
 class Geni < Formula
   desc "Standalone database migration tool"
   homepage "https://github.com/emilpriver/geni"
-  url "https://github.com/emilpriver/geni/archive/refs/tags/v1.0.14.tar.gz"
-  sha256 "a27599bb9c6779d5be5269fabc68e232f6afc2c7f78f3dd6d2f342ff309421b0"
+  url "https://github.com/emilpriver/geni/archive/refs/tags/v1.1.4.tar.gz"
+  sha256 "f1997ef7be666bd6cf40a3bfe631ecd01c3ce9d441120bbc623073e4a61292f6"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "1a9f032b71ef5da5dd3238f87f9ce65dedb76297f9f3497e814b6de390040054"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "bcc8e6092ab730359ff9b0d5dc843773b3d10a5be14a97b0d859399aa73a46e0"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "d1fa58b25a021db0ef9be2481e197fb19647f8514069a128b97e2287fb8c6fcb"
-    sha256 cellar: :any_skip_relocation, sonoma:         "d0f7ec200bce867ab1f840a8bf256ce9cd857d5012b77dfd1bd3c4a77265d89d"
-    sha256 cellar: :any_skip_relocation, ventura:        "7ea2350dd2b26f0d1439ddcd8de00f802512e86a55ab8035405657619deba865"
-    sha256 cellar: :any_skip_relocation, monterey:       "e8f3f659cf17ef00b25a1af917aa2a14c688d53a5e2afbd35bb6faacf9be46d3"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "428b5a0d93043a1607715c5828a724c98439f073077181e9c275ae2a278064fc"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "37f4005cc0cefbf898f96f8eed023850ccf54298fcba0393a6c0d920620e4ff0"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "39be2d763a87d9a78f62702f9cdb6174e9fc59d04a6104e89e16e159d1848a09"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "3708ee87e5cebb66aa5d1c3b43d3ceb26d8699fabe236fced5228b275af3cdb9"
+    sha256 cellar: :any_skip_relocation, sonoma:        "04ba8b7c186b70d0b1fb8b5d4a3518506e0f0bd20e1f3eda1a9bbd0f1aec3501"
+    sha256 cellar: :any_skip_relocation, ventura:       "f779a384b9c287202b52d90a8598fb2ac2cd8b2c8553f344681b0a338db37603"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7b02203af60c022b420c758019ba1b132e3258e23404d073ed8a805bfb73a03e"
   end
 
   depends_on "rust" => :build

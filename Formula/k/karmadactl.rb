@@ -1,19 +1,18 @@
 class Karmadactl < Formula
   desc "CLI for Karmada control plane"
   homepage "https://karmada.io/"
-  url "https://github.com/karmada-io/karmada/archive/refs/tags/v1.10.4.tar.gz"
-  sha256 "64a72db838d8f3e3243815435bea54ecd929edd1e90430537d0d28508997a219"
+  url "https://github.com/karmada-io/karmada/archive/refs/tags/v1.11.1.tar.gz"
+  sha256 "905cc46e0b18c849c24ad5c9bcdc549da5712bc9edd7ed0c9bc0e40cfc22b5a3"
   license "Apache-2.0"
   head "https://github.com/karmada-io/karmada.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "cd851526b18631ba72fc73fd55b36f27aff6d5af1af1dd6c91dfb0f5b3977785"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "e04fc572d51ff2a25e0beb8b3285941d4f27ae7676f94eae34702f28768074be"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "faa9716058278ade7b8b7c6a89486afb851687f514f97b4ba72c2c8984f137f9"
-    sha256 cellar: :any_skip_relocation, sonoma:         "f7d2ec7d412432a2a015b7c951feddc5bdba29983a645c123460fcf36c728e0c"
-    sha256 cellar: :any_skip_relocation, ventura:        "96ae5c5f9363bcbadd211b31b004dec2c39e273b0d83fe7bc48945c734677685"
-    sha256 cellar: :any_skip_relocation, monterey:       "14e964a3cc1d6a57505f3dbe30e573a3f2544ab2c799b28a0a41c6286e719513"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "01d8d46f6d555a06f193e218da22edf63345eccd56b1054d6781dec760a94dd5"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "74fc27efebe5c093ad528de9e4d05ea3f001aaaa3a00fd48a8ba2c080a1ea3f1"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "8e9135d3329c938ad9eba2d14b497e34def19dae243439fcd321d828ce98f855"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "04bc426e9eb7151ec43f0755135b1bf5a7780c11147822b2c4546523a91b1774"
+    sha256 cellar: :any_skip_relocation, sonoma:        "340beaa40d5151c786e4d9a9b73bee3c3782737f5d9de4ddc4c25d732cd6efed"
+    sha256 cellar: :any_skip_relocation, ventura:       "aa32b7399d604e93cf31359bc72cc8b00b3ff3f321e6f87846d3dcf98d042cb0"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "731778b35d030cfd8c306e9666b1a2dbd287cae58d472ba686d9daf92a3d83b6"
   end
 
   depends_on "go" => :build

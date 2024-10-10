@@ -1,19 +1,12 @@
 class Ncc < Formula
   desc "Compile a Node.js project into a single file"
   homepage "https://github.com/vercel/ncc"
-  url "https://registry.npmjs.org/@vercel/ncc/-/ncc-0.38.1.tgz"
-  sha256 "0633a7c007ddc69becffd112e5e8a2afa0da0fbf7d6e085122f2ae90e63847e0"
+  url "https://registry.npmjs.org/@vercel/ncc/-/ncc-0.38.2.tgz"
+  sha256 "6d07c32da3e6d2e01ef03598a3f2aa6b58636473a2f43e51cdde1629610b53e1"
   license "MIT"
 
   bottle do
-    rebuild 2
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "507cc4d97e59cb966e9a1da8af31b4041afea40cefef244c707bee8a65e92e1a"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "507cc4d97e59cb966e9a1da8af31b4041afea40cefef244c707bee8a65e92e1a"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "507cc4d97e59cb966e9a1da8af31b4041afea40cefef244c707bee8a65e92e1a"
-    sha256 cellar: :any_skip_relocation, sonoma:         "507cc4d97e59cb966e9a1da8af31b4041afea40cefef244c707bee8a65e92e1a"
-    sha256 cellar: :any_skip_relocation, ventura:        "507cc4d97e59cb966e9a1da8af31b4041afea40cefef244c707bee8a65e92e1a"
-    sha256 cellar: :any_skip_relocation, monterey:       "507cc4d97e59cb966e9a1da8af31b4041afea40cefef244c707bee8a65e92e1a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "204def702229d225311c36b5a60152f49d181e968921274198fb331ba0589610"
+    sha256 cellar: :any_skip_relocation, all: "f1cf16395842b95925773b2bbf6db4b6c7f00cf4bddd67eec63c03ea57e0b9f5"
   end
 
   depends_on "node"

@@ -1,8 +1,8 @@
 class BitwardenCli < Formula
   desc "Secure and free password manager for all of your devices"
   homepage "https://bitwarden.com/"
-  url "https://github.com/bitwarden/clients/archive/refs/tags/cli-v2024.6.1.tar.gz"
-  sha256 "1dff0f6af422864aa9a4e8c226282cb3f4346a4c8e661effe2571e1553603e56"
+  url "https://github.com/bitwarden/clients/archive/refs/tags/cli-v2024.9.0.tar.gz"
+  sha256 "72a87d4eccbf80b31b5fe80c485bff90792018de7c983ff5e93911f2201d3684"
   license "GPL-3.0-only"
 
   livecheck do
@@ -11,14 +11,12 @@ class BitwardenCli < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "62981189e5dc48300a569d46e4715971503ccf67961cb8179d5640c79f6273e3"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "5885f6bf3a742d7ee3c756e30d0107a9ecd25b1368458611ae5734050f9875bf"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "2ed398d05150c71293f934543a149490668cf0edd9cce9b9058d154c5255b367"
-    sha256 cellar: :any_skip_relocation, sonoma:         "182870118b975e4ac4dd5f17571c8fe44563da2ff8da201c25536fcc29875e77"
-    sha256 cellar: :any_skip_relocation, ventura:        "6af180ca8807842a194282a789dfbc944c40b40235fe0e80aa660d1eba75cbda"
-    sha256 cellar: :any_skip_relocation, monterey:       "17d4695f522e1c15e8b56b63c7aa81abe4aab96fdad42e9b3be3fd23be668e67"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b69bff8e769adee84a006cfcdce42471a5cc53a8548cc4ece2c712ec65d13166"
+    sha256                               arm64_sequoia: "2383245b9a12e0c354dd68c720451de46aae601c12887bde28c949c8bf67d5e6"
+    sha256                               arm64_sonoma:  "2a42ac44f92ea430b309bed47be24d4bfc37decd5eeb3eb5a11e8714b5e5664e"
+    sha256                               arm64_ventura: "066c34a2d005f4c9d4097d0f573737456e71b74cd633d97200e20669be196a89"
+    sha256                               sonoma:        "f01b6466381189ff1daac576f3e41ed9c16f3e00e48647b18a5a6817f9067c19"
+    sha256                               ventura:       "f5cb3d914f7173554fe4d8a9c2c7208ab8e1ec433a3f9c645060526de97ea29b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "002a7f7e4b6655fe8f3b7ca8a62fc50954422066483eaedc656524c560e7c26b"
   end
 
   depends_on "node"
@@ -33,6 +31,14 @@ class BitwardenCli < Formula
         bin.install_symlink Dir[libexec/"bin/*"]
       end
     end
+
+    # Remove incompatible pre-built `argon2` binaries
+    os = OS.kernel_name.downcase
+    arch = Hardware::CPU.intel? ? "x64" : Hardware::CPU.arch.to_s
+    node_modules = libexec/"lib/node_modules/@bitwarden/cli/node_modules"
+    (node_modules/"argon2/prebuilds/linux-arm64/argon2.armv8.musl.node").unlink
+    (node_modules/"argon2/prebuilds/linux-x64/argon2.musl.node").unlink
+    (node_modules/"argon2/prebuilds").each_child { |dir| rm_r(dir) if dir.basename.to_s != "#{os}-#{arch}" }
 
     generate_completions_from_executable(
       bin/"bw", "completion",

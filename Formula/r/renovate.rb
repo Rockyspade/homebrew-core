@@ -1,8 +1,8 @@
 class Renovate < Formula
   desc "Automated dependency updates. Flexible so you don't need to be"
   homepage "https://github.com/renovatebot/renovate"
-  url "https://registry.npmjs.org/renovate/-/renovate-38.39.0.tgz"
-  sha256 "9ffe878903706bcb370e34e511e8ab0e5977451f0f12608c80001084046020b7"
+  url "https://registry.npmjs.org/renovate/-/renovate-38.116.0.tgz"
+  sha256 "08407f3e1251e259a6fbe225dea35eed6a0cf550574ac8410364c458def52345"
   license "AGPL-3.0-only"
 
   # There are thousands of renovate releases on npm and the page the `Npm`
@@ -17,16 +17,15 @@ class Renovate < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "13eae193cb76fa30838d7696bd1752d3c7a0bf0f98f0f5046bba81cb68b630bd"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "5a08b89cb32bbdffffcae0825b767b7c5075fd53d46a0c3133bd7f732c3bf4c0"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "65dd4fa88c70f0485056b32ae56d37f4c6604681fab68da5c4be03e0ba7f328f"
-    sha256 cellar: :any_skip_relocation, sonoma:         "a00f0244c0d25f9f829d05495cd166dc74b2de0025ac46c22e50e470c47628dc"
-    sha256 cellar: :any_skip_relocation, ventura:        "9095833b1b244b6387fdf3151732c29ff9d618bfcd192f3bd9d1ff7bb6416901"
-    sha256 cellar: :any_skip_relocation, monterey:       "6bee02989cc24c66d77c3fed088cfeca6b346b38ad5c0dd00506975f98343543"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "778eafc2461af2f494eb8b874c4767049f88c2879994a59ea186157be8b84964"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "36f57e2b3a7ae0ab6c25ff50923ffc5bd8bec4c16544e3ecfe2ccd1ba47a3469"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "eb93ba035aa4a2faa7f65a854b91f4bfcb53466eee20d76507c01dc0c46b46a2"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "77a5a2436315779755b474ff7e351bbb3654c9f030acdba6b5440b36ed39329d"
+    sha256 cellar: :any_skip_relocation, sonoma:        "39cc1b7ba787a5ef424283035c2c7003950ff01d89249c455b9ec705c9471f7d"
+    sha256 cellar: :any_skip_relocation, ventura:       "7a4c3f3fca68dc9fd9fdcc60d195b0b91d95fda2f86a0065d34fa37cc06131cd"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c397729f94405d1369d83f388add582df5c287355716a47f59ffbd425b50cc18"
   end
 
-  depends_on "node"
+  depends_on "node@20"
 
   uses_from_macos "git", since: :monterey
 
@@ -36,6 +35,6 @@ class Renovate < Formula
   end
 
   test do
-    assert_match "FATAL: You must configure a GitHub token", shell_output("#{bin}/renovate 2>&1", 1)
+    system bin/"renovate", "--platform=local", "--enabled=false"
   end
 end

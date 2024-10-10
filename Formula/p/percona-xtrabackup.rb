@@ -5,7 +5,7 @@ class PerconaXtrabackup < Formula
   url "https://downloads.percona.com/downloads/Percona-XtraBackup-LATEST/Percona-XtraBackup-8.0.35-31/source/tarball/percona-xtrabackup-8.0.35-31.tar.gz"
   sha256 "c6bda1e7f983e5a667bff22d1d67d33404db4e741676d03c9c60bbd4b263cabf"
   license "GPL-2.0-only"
-  revision 1
+  revision 4
 
   livecheck do
     url "https://docs.percona.com/percona-xtrabackup/latest/"
@@ -20,28 +20,27 @@ class PerconaXtrabackup < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "b5c06024f4c828b0f32b02ffae20618aaf49f68f29ea6e76447e78e8ea4dad95"
-    sha256 arm64_ventura:  "2ed8789709352a980495715cbea9250df93ea6dce312d5467f6291725630941c"
-    sha256 arm64_monterey: "e4d5dcf4b5a416efaaf07d84dbecb7947ce4bc7a300cbb1bf8312db6c97d512f"
-    sha256 sonoma:         "a571ccf5981b0ca05d3ddf313ac273191b52f0a88ce757c7b1d9f2e29ab08be1"
-    sha256 ventura:        "94ac98979fb87f800d8dd9e473d3a27825b20263895a5a8b78ee78239bd10696"
-    sha256 monterey:       "463d67d569e0ee402ef0192f6c6c51d485c955e50c73398c1c224bce7e710812"
-    sha256 x86_64_linux:   "9b680005cf3231ce6a6760aa4e580af5fe90be024702f9eb939815a0bc25b017"
+    sha256 arm64_sequoia: "c8ef081b00871cc792e94dcbc5ac96794cf31c91dc56f5a01f0946c115b7e092"
+    sha256 arm64_sonoma:  "23d34ca8f1609a8cb6184af74d8b3ddbf396e233b1ab25156e63dbb1c5fa59da"
+    sha256 arm64_ventura: "12b6d3fd4ef4f173c1a984086399e3a7c83ead787d5d3fa82f8fa054392c6d69"
+    sha256 sonoma:        "b3a41cd550b4841671ba7a9b128ca48711e3beed022633faf96f8b91c39a05d2"
+    sha256 ventura:       "421fd016c758138601b16e9dfdc141df14dea99137867366da81037f57d500d7"
+    sha256 x86_64_linux:  "a5481f586f2bbf168acc14e5d5bdb5ae32e2b938795844e9dd735ea3fb68e4cd"
   end
 
   depends_on "bison" => :build # needs bison >= 3.0.4
   depends_on "cmake" => :build
+  depends_on "libevent" => :build
   depends_on "pkg-config" => :build
   depends_on "sphinx-doc" => :build
-  depends_on "icu4c"
+  depends_on "abseil"
+  depends_on "icu4c@75"
   depends_on "libev"
-  depends_on "libevent"
-  depends_on "libfido2"
   depends_on "libgcrypt"
   depends_on "lz4"
   depends_on "mysql-client"
   depends_on "openssl@3"
-  depends_on "protobuf@21"
+  depends_on "protobuf"
   depends_on "zlib"
   depends_on "zstd"
 
@@ -95,9 +94,29 @@ class PerconaXtrabackup < Formula
   patch :DATA
 
   def install
-    # Disable ABI checking
-    inreplace "cmake/abi_check.cmake", "RUN_ABI_CHECK 1", "RUN_ABI_CHECK 0" if OS.linux?
+    # Remove bundled libraries other than explicitly allowed below.
+    # `boost` and `rapidjson` must use bundled copy due to patches.
+    # `lz4` is still needed due to xxhash.c used by mysqlgcs
+    keep = %w[duktape libkmip lz4 rapidjson robin-hood-hashing]
+    (buildpath/"extra").each_child { |dir| rm_r(dir) unless keep.include?(dir.basename.to_s) }
+    (buildpath/"boost").install resource("boost")
 
+    if OS.linux?
+      # Disable ABI checking
+      inreplace "cmake/abi_check.cmake", "RUN_ABI_CHECK 1", "RUN_ABI_CHECK 0"
+
+      # Work around build issue with Protobuf 22+ on Linux
+      # Ref: https://bugs.mysql.com/bug.php?id=113045
+      # Ref: https://bugs.mysql.com/bug.php?id=115163
+      inreplace "cmake/protobuf.cmake" do |s|
+        s.gsub! 'IF(APPLE AND WITH_PROTOBUF STREQUAL "system"', 'IF(WITH_PROTOBUF STREQUAL "system"'
+        s.gsub! ' INCLUDE REGEX "${HOMEBREW_HOME}.*")', ' INCLUDE REGEX "libabsl.*")'
+      end
+    end
+
+    icu4c = deps.map(&:to_formula).find { |f| f.name.match?(/^icu4c@\d+$/) }
+    # -DWITH_FIDO=system isn't set as feature isn't enabled and bundled copy was removed.
+    # Formula paths are set to avoid HOMEBREW_HOME logic in CMake scripts
     cmake_args = %W[
       -DBUILD_CONFIG=xtrabackup_release
       -DCOMPILATION_COMMENT=Homebrew
@@ -105,24 +124,22 @@ class PerconaXtrabackup < Formula
       -DINSTALL_MANDIR=share/man
       -DWITH_MAN_PAGES=ON
       -DINSTALL_MYSQLTESTDIR=
+      -DBISON_EXECUTABLE=#{Formula["bison"].opt_bin}/bison
+      -DOPENSSL_ROOT_DIR=#{Formula["openssl@3"].opt_prefix}
+      -DWITH_ICU=#{icu4c.opt_prefix}
       -DWITH_SYSTEM_LIBS=ON
+      -DWITH_BOOST=#{buildpath}/boost
       -DWITH_EDITLINE=system
-      -DWITH_FIDO=system
-      -DWITH_ICU=system
       -DWITH_LIBEVENT=system
       -DWITH_LZ4=system
       -DWITH_PROTOBUF=system
       -DWITH_SSL=system
-      -DOPENSSL_ROOT_DIR=#{Formula["openssl@3"].opt_prefix}
       -DWITH_ZLIB=system
       -DWITH_ZSTD=system
     ]
     # Work around build script incorrectly looking for procps on macOS.
     # Issue ref: https://jira.percona.com/browse/PXB-3210
     cmake_args << "-DPROCPS_INCLUDE_DIR=/dev/null" if OS.mac?
-
-    (buildpath/"boost").install resource("boost")
-    cmake_args << "-DWITH_BOOST=#{buildpath}/boost"
 
     # Remove conflicting manpages
     rm (Dir["man/*"] - ["man/CMakeLists.txt"])
@@ -181,7 +198,7 @@ index 42e63d0..5d21cc3 100644
 @@ -1942,31 +1942,6 @@ MYSQL_CHECK_RAPIDJSON()
  MYSQL_CHECK_FIDO()
  MYSQL_CHECK_FIDO_DLLS()
- 
+
 -IF(APPLE)
 -  GET_FILENAME_COMPONENT(HOMEBREW_BASE ${HOMEBREW_HOME} DIRECTORY)
 -  IF(EXISTS ${HOMEBREW_BASE}/include/boost)

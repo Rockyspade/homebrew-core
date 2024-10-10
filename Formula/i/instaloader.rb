@@ -3,18 +3,12 @@ class Instaloader < Formula
 
   desc "Download media from Instagram"
   homepage "https://instaloader.github.io/"
-  url "https://files.pythonhosted.org/packages/4d/05/ee254e68931d88e68a6bd2b5720f9c4005abd4049dd5faa3b1a87bdbf56d/instaloader-4.13.tar.gz"
-  sha256 "49b15c3c41ba9287ddecacb57c5fdd1ee706107117b4b8ddd9ccb56ab75c573c"
+  url "https://files.pythonhosted.org/packages/d6/71/87b6d26ec53faf00ce00936a13da7e59ecca77f52263638e8e5d3e637a53/instaloader-4.13.1.tar.gz"
+  sha256 "36774ea1076eeb236f8782d221e3737f71ddc023042f0b13761429ef137f1133"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "6182495df81f13c68aeb94a736d96d91b4e9b844ebd573df6516cdcde3b8cb5b"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "6182495df81f13c68aeb94a736d96d91b4e9b844ebd573df6516cdcde3b8cb5b"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "6182495df81f13c68aeb94a736d96d91b4e9b844ebd573df6516cdcde3b8cb5b"
-    sha256 cellar: :any_skip_relocation, sonoma:         "6182495df81f13c68aeb94a736d96d91b4e9b844ebd573df6516cdcde3b8cb5b"
-    sha256 cellar: :any_skip_relocation, ventura:        "6182495df81f13c68aeb94a736d96d91b4e9b844ebd573df6516cdcde3b8cb5b"
-    sha256 cellar: :any_skip_relocation, monterey:       "6182495df81f13c68aeb94a736d96d91b4e9b844ebd573df6516cdcde3b8cb5b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6d4acb0c849b751f95ab8f1c8df6a2c2c25ea1eb27f5a88d4a640ef73d2bf32b"
+    sha256 cellar: :any_skip_relocation, all: "88fcb2a8e907aa96666741cd69b47232df252b75a4fe339f2889680230972d4e"
   end
 
   depends_on "certifi"
@@ -26,8 +20,8 @@ class Instaloader < Formula
   end
 
   resource "idna" do
-    url "https://files.pythonhosted.org/packages/21/ed/f86a79a07470cb07819390452f178b3bef1d375f2ec021ecfc709fc7cf07/idna-3.7.tar.gz"
-    sha256 "028ff3aadf0609c1fd278d8ea3089299412a7a8b9bd005dd08b9f8285bcb5cfc"
+    url "https://files.pythonhosted.org/packages/e8/ac/e349c5e6d4543326c6883ee9491e3921e0d07b55fdf3cce184b40d63e72a/idna-3.8.tar.gz"
+    sha256 "d838c2c0ed6fced7693d5e8ab8e734d5f8fda53a039c0164afb0b82e771e3603"
   end
 
   resource "requests" do

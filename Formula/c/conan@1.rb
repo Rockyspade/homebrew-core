@@ -13,6 +13,7 @@ class ConanAT1 < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "0899ee0bd21ac7db945a20f7ad18933d7172bc21c67d512a415c60c6d2e50dfa"
     sha256 cellar: :any,                 arm64_sonoma:   "9b2782632b27dbb5856b2c27771ad3e3780c4be1bd36e51c4a8ae052f60a551d"
     sha256 cellar: :any,                 arm64_ventura:  "3139cc0289c0e2d37dc3269455c93810c8104cfe47b5df08c4808bc57a1e29f8"
     sha256 cellar: :any,                 arm64_monterey: "bd4503a80fc87011d01c4a77e2137dffafabfbedf8d5f94053a1758f3c7a4805"
@@ -123,6 +124,12 @@ class ConanAT1 < Formula
   resource "urllib3" do
     url "https://files.pythonhosted.org/packages/c8/93/65e479b023bbc46dab3e092bda6b0005424ea3217d711964ccdede3f9b1b/urllib3-1.26.19.tar.gz"
     sha256 "3e3d753a8618b86d7de333b4223005f68720bcd6a7d2bcb9fbd2229ec7c1e429"
+  end
+
+  # sequoia build patch, upstream pr ref, https://github.com/conan-io/conan/pull/16980
+  patch do
+    url "https://github.com/conan-io/conan/commit/ec02a5d24feff1c7f4278d1e07d48486b43b8f54.patch?full_index=1"
+    sha256 "2a6a1a1f5d0cc9166fb8223dc6f7690919c70dfa82ffc964bf0aae54e92a0f9a"
   end
 
   def install

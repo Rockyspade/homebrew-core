@@ -1,19 +1,18 @@
 class YaraX < Formula
   desc "Tool to do pattern matching for malware research"
   homepage "https://virustotal.github.io/yara-x/"
-  url "https://github.com/VirusTotal/yara-x/archive/refs/tags/v0.6.0.tar.gz"
-  sha256 "2f60e714aaa9140642f83aef7df012baaf7941ca444995a79c3b99cb4941367c"
+  url "https://github.com/VirusTotal/yara-x/archive/refs/tags/v0.9.0.tar.gz"
+  sha256 "ed5bf7eb29b02c7dbc5b697a171b79891d298a0b219d18430dda7687d80d8cdc"
   license "BSD-3-Clause"
   head "https://github.com/VirusTotal/yara-x.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "4d032c6f13c973f37fbdce10716a7bfc75d2e5bfa0b107ba5d3818ec7525492b"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "832cd54c22e4b173638f0d33522591aef9abfc04f6c47334665e366c95e9dad7"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "f563aee617d0bb63dac1674e9c2b9fc6968fe06dbeff08838c2516dd70651846"
-    sha256 cellar: :any_skip_relocation, sonoma:         "bbd6b3459cc20614decb327e1f925bd5db7d7bb2bf136c0c1526a141e1cab030"
-    sha256 cellar: :any_skip_relocation, ventura:        "5650c99f8c066e96cc112bc48f26cf93d1d4855fa5475a649b4dc51580649f48"
-    sha256 cellar: :any_skip_relocation, monterey:       "eafd03d8c347fa8ce9b44c15fbb0b9848bf555a7b8417e4187e57f0cd7c217dc"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c0c916db31f7ef907f87b6fa4a60ac8b082dfb5edb3a18bbc079e726a17a4141"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "056812f30082c23813aa3ec22f8a1ec01d6ab913926170117d9db7354c0b036a"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "340e2b30cf51300a2169ebe2bd8688eac6021016f137aa759d4ab1e4df4c68ed"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "065ac1bd92b9ece3de6f1fbdbf57fd9acb847177b9b8f0c0389af73dfab2ad05"
+    sha256 cellar: :any_skip_relocation, sonoma:        "e49b3a92acd5af51bf9eb52592492028e0551f5b0eaa2b1b3dd71609248e7e88"
+    sha256 cellar: :any_skip_relocation, ventura:       "e0d907112656a1ad37e0a03f641b06cfa075dcad31c39ff3ccee9ba6d2096408"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f180ddb4b8e34e9e65f0330d394879396e0e7c01095141b5fe002f8abeafb382"
   end
 
   depends_on "rust" => :build
@@ -42,7 +41,11 @@ class YaraX < Formula
     program = testpath/"zero.prg"
     program.binwrite [0x00, 0xc0, 0xa9, 0x30, 0x4c, 0xd2, 0xff].pack("C*")
 
-    assert_equal "chrout #{program}", shell_output("#{bin}/yr scan #{rules} #{program}").strip
+    assert_equal <<~EOS.strip, shell_output("#{bin}/yr scan #{rules} #{program}").strip
+       Error parsing config, using defaults: No such file or directory (os error 2)
+       in .yara-x.toml TOML file
+      chrout #{program}
+    EOS
 
     assert_match version.to_s, shell_output("#{bin}/yr --version")
   end

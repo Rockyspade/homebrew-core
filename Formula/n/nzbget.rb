@@ -1,19 +1,19 @@
 class Nzbget < Formula
   desc "Binary newsgrabber for nzb files"
   homepage "https://nzbget.com"
-  url "https://github.com/nzbgetcom/nzbget/archive/refs/tags/v24.2.tar.gz"
-  sha256 "4fbcfc4faa49be0dc9d0b85cfbae2e38043be1e2f6755e6891d48785baa9438b"
+  url "https://github.com/nzbgetcom/nzbget/archive/refs/tags/v24.3.tar.gz"
+  sha256 "b20ff0da1367825fbf00337a48196e81514195748d3d96f620f28ab2cc0b7cc0"
   license "GPL-2.0-or-later"
   head "https://github.com/nzbgetcom/nzbget.git", branch: "develop"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "5a96e1b17b202d54fa97ebe5fd4f1d38550d4e8a285c60fbb465ee9be009ab77"
-    sha256 cellar: :any,                 arm64_ventura:  "cf6d8e282f4248416118d56204cfe6d49e8bec7cb09886d33f35f7d44fedc22d"
-    sha256 cellar: :any,                 arm64_monterey: "d53efce230b7a7fc9747ce1a608b3badae5a10c9b49024a3d9437d1e552c9fbe"
-    sha256                               sonoma:         "9559272a9e37f378ceca3b761ba31899b026a01d4ac710754fd50dc25cb498f0"
-    sha256                               ventura:        "252c8037f8e7415f1d0f44dca59775b81a69fe9c0ac71299c6de472efd5b0a72"
-    sha256                               monterey:       "e6bac6b68919d792c280e9bd4c65f98553178e2290b678d45d657bb01f3fb554"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a8a237114ad39707e20f453b6c69832808b834919c54babd318842ba4b1c07a9"
+    sha256 cellar: :any,                 arm64_sonoma:   "5c8c7d15f27dc7b650f42e049c29111af248e35dfb41916939869c9d63f1f986"
+    sha256 cellar: :any,                 arm64_ventura:  "5d1ca334ae08f0aaf99c474b3d6ca01d7a24ce6e34a25ef84426bd829e2bae0d"
+    sha256 cellar: :any,                 arm64_monterey: "fe3f2f00177bb08ab060af9524068489e3fde33fcd1262d2099eca47234ae8a8"
+    sha256                               sonoma:         "8735a21091a5d22fd9faf0571b02c003825022a4bccb17b25d361314961bb24a"
+    sha256                               ventura:        "648677c0bd4dd2b93e3737c4ebb11fe9e5f6f6dc591da8f3df75a5e4d055f23a"
+    sha256                               monterey:       "cc815d9546026e20294ac1690eba95d1329db0cc74ecc4015cc48484d3371b63"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b5658154d9bdc1496d74858305c9c72284efe6639c1252e827519c147d5b0dc3"
   end
 
   depends_on "cmake" => :build

@@ -3,11 +3,11 @@ class Awk < Formula
   homepage "https://www.cs.princeton.edu/~bwk/btl.mirror/"
   url "https://github.com/onetrueawk/awk/archive/refs/tags/20240728.tar.gz"
   sha256 "2d479817f95d5997fc4348ecebb1d8a1b25c81cebedb46ca4f59434247e08543"
-  # https://fedoraproject.org/wiki/Licensing:MIT?rd=Licensing/MIT#Standard_ML_of_New_Jersey_Variant
-  license "MIT"
+  license "SMLNJ"
   head "https://github.com/onetrueawk/awk.git", branch: "master"
 
   bottle do
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "f2b9331555d9feaeaf4bf73c070c7bd50d7fd1517fad22935bba33314d02e053"
     sha256 cellar: :any_skip_relocation, arm64_sonoma:   "a728d9ed877bfae84e267c64e81f09a511f3dd523bda31c7b0ec3a7076d6483f"
     sha256 cellar: :any_skip_relocation, arm64_ventura:  "0b2e6af0767f18b30bde9bf047197aa8f861afe72b374892794993ecceaa4b2c"
     sha256 cellar: :any_skip_relocation, arm64_monterey: "f71f833d37dd5ec5d675afb9c770997547e360c40ccac159cddeecedf40493fe"

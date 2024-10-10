@@ -11,6 +11,7 @@ class Ktoblzcheck < Formula
   end
 
   bottle do
+    sha256 arm64_sequoia:  "69a9f3ddb1dc70844da2adca7076e8fbb8102bdc17ae465016d43f87951d6964"
     sha256 arm64_sonoma:   "084776ea34dcc4ae3e571bd5383ef29e7e62b4851353fd0e86d4ae8ae301bf2b"
     sha256 arm64_ventura:  "9af95c7e3d1c66ca99021731dbccb96c5c5450f6e9b34eb2591a961dd113e4b8"
     sha256 arm64_monterey: "8cf9571be81238bcb9f03425b18f4674f0651f6718163ed1be21c4dac77d106a"
@@ -21,7 +22,6 @@ class Ktoblzcheck < Formula
   end
 
   depends_on "cmake" => :build
-  depends_on "python-setuptools" => :build
   depends_on "python@3.12"
   depends_on "sqlite"
 
@@ -45,7 +45,7 @@ class Ktoblzcheck < Formula
     ENV.append_path "PYTHONPATH", buildpath/Language::Python.site_packages(python3)
     resources.each do |r|
       r.stage do
-        system python3, "-m", "pip", "install", *std_pip_args(prefix: buildpath), "."
+        system python3, "-m", "pip", "install", *std_pip_args(prefix: buildpath, build_isolation: true), "."
       end
     end
 

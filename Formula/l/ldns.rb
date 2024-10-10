@@ -13,6 +13,7 @@ class Ldns < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "1ab882f529bbd6505a781395684a45e9fe251ddc3ec1cf771f2e467c6e2f735f"
     sha256 cellar: :any,                 arm64_sonoma:   "7dfc3b636d9b41f1697678de47415fee711f497f9e837708027b8e401435e006"
     sha256 cellar: :any,                 arm64_ventura:  "741fa5c80857655f1df62a4016591b17ec8d6cbff9aac4bdf28d4ffc6e0c8d93"
     sha256 cellar: :any,                 arm64_monterey: "dc37a2cbf234ba5d639dd7bde6fba7768a8cd27dca2e7e253706fef90df732e4"
@@ -22,7 +23,6 @@ class Ldns < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "18e17dee3c78315e4b42f3aa15d8cb2b1f2efbc21b3fb444f373e3afa119ff84"
   end
 
-  depends_on "python-setuptools" => :build
   depends_on "swig" => :build
   depends_on "openssl@3"
   depends_on "python@3.12"

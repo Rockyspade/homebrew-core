@@ -1,19 +1,17 @@
 class Basti < Formula
   desc "Securely connect to RDS, Elasticache, and other AWS resources in VPCs"
   homepage "https://github.com/basti-app/basti"
-  url "https://registry.npmjs.org/basti/-/basti-1.6.2.tgz"
-  sha256 "8d813c1f4e3b8195655d40e670aa8a2eb7dce2cd21d996564c56a3296163f1d7"
+  url "https://registry.npmjs.org/basti/-/basti-1.7.0.tgz"
+  sha256 "0651972e9059354dd934b01b08b8f895da7cdaa3ffb52046e318dd10d9f36701"
   license "MIT"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "e19564aeece7fc2749628f1b327717f0ed1aa365f52b40721aaa374aa3058074"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "e19564aeece7fc2749628f1b327717f0ed1aa365f52b40721aaa374aa3058074"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "e19564aeece7fc2749628f1b327717f0ed1aa365f52b40721aaa374aa3058074"
-    sha256 cellar: :any_skip_relocation, sonoma:         "1e632db83fe49e15bf89f32d16d71a378b3a35107b4763a185a5f84636413c22"
-    sha256 cellar: :any_skip_relocation, ventura:        "1e632db83fe49e15bf89f32d16d71a378b3a35107b4763a185a5f84636413c22"
-    sha256 cellar: :any_skip_relocation, monterey:       "1e632db83fe49e15bf89f32d16d71a378b3a35107b4763a185a5f84636413c22"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "907d5b4c78c66add943f6a57e448c559dcf182138ba6133d098b841093157f35"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "9ff427644cc71dbef154812ea218d9ea3c52058f50eb835a7d5b0442afc80e46"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "9ff427644cc71dbef154812ea218d9ea3c52058f50eb835a7d5b0442afc80e46"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "9ff427644cc71dbef154812ea218d9ea3c52058f50eb835a7d5b0442afc80e46"
+    sha256 cellar: :any_skip_relocation, sonoma:        "41122c17de5e710ae0bd301de1358fd35e3995893434a750838c42c4e5004303"
+    sha256 cellar: :any_skip_relocation, ventura:       "41122c17de5e710ae0bd301de1358fd35e3995893434a750838c42c4e5004303"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1ffdeb9e292a573a356abdc46fd03447c88a45c844bdf1c135ac61f22b8244c7"
   end
 
   depends_on "node"

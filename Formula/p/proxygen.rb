@@ -1,32 +1,33 @@
 class Proxygen < Formula
   desc "Collection of C++ HTTP libraries"
   homepage "https://github.com/facebook/proxygen"
-  url "https://github.com/facebook/proxygen/releases/download/v2024.08.12.00/proxygen-v2024.08.12.00.tar.gz"
-  sha256 "b8d764fd509ab1a3c9d4dfdc4d0828576b84dc4b2252483846a62f9852d85d4c"
+  url "https://github.com/facebook/proxygen/releases/download/v2024.10.07.00/proxygen-v2024.10.07.00.tar.gz"
+  sha256 "e2a7428b4b81e5237997293e60d1ee4ac5568f39fbe24adf543df8f85c782307"
   license "BSD-3-Clause"
   head "https://github.com/facebook/proxygen.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "69a31f6e22cef786f2ddc1ac5e210cf14d5379c29ec3e7dd07ee855d33c94b4f"
-    sha256 cellar: :any,                 arm64_ventura:  "10c55ea345ff9d6d3642f0c770e0651ac8206417a89992ed139b6643f6fffc0f"
-    sha256 cellar: :any,                 arm64_monterey: "db0b5786660f42cb51915d76f0c115f7f6dcafad43751ba0ae4a528fde2f007d"
-    sha256 cellar: :any,                 sonoma:         "555f849f89d1c9351a42aeca1dc5cdb1d6def523fae2e9adb2b3856248d1bacc"
-    sha256 cellar: :any,                 ventura:        "1b85155ed160eeac64c8875dc49b2a3cd93e87505ebeb0c7143e5203cb8e9536"
-    sha256 cellar: :any,                 monterey:       "a5ee9bf2d95dc8df19f2eef13ba3ec86f865fcb0653a675fdd4ce1c2d13f14f8"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "bbead113673c1fcd1aaa6da72115f5430870c0da8a7a2f4557cec3bf28152a78"
+    sha256 cellar: :any,                 arm64_sequoia: "f818ebc5d17f533dbd8b437a7ed6bd69fb038be2667144706ebae27806eb2fd1"
+    sha256 cellar: :any,                 arm64_sonoma:  "96b805244fa346b92a6b5cca8e53f1b43b79c83aba9e683fecc52df3c3fed4a2"
+    sha256 cellar: :any,                 arm64_ventura: "9f4af61314e96c8fe43f93c8ecada3ae9af2e8f726471ad9f1b54a2e46eb158a"
+    sha256 cellar: :any,                 sonoma:        "5db62fbd8b20a35d7137fc682bcfe98a5f2c1f1d0ac4dc13a2e033b70d2183c0"
+    sha256 cellar: :any,                 ventura:       "f359cba0d8b31e0b2ba8f40c3dec1643a012c1d7951be08c461ca1b049210b9e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "646a063e3563e9cf366a52dbe166e1aed5c9adb27184d62956b34371ec6ee633"
   end
 
   depends_on "cmake" => :build
   depends_on "boost"
+  depends_on "double-conversion"
   depends_on "fizz"
   depends_on "fmt"
   depends_on "folly"
   depends_on "gflags"
-  depends_on "libsodium"
+  depends_on "glog"
   depends_on "mvfst"
   depends_on "openssl@3"
   depends_on "wangle"
   depends_on "zstd"
+
   uses_from_macos "gperf" => :build
   uses_from_macos "python" => :build
   uses_from_macos "zlib"
@@ -34,12 +35,17 @@ class Proxygen < Formula
   conflicts_with "hq", because: "both install `hq` binaries"
 
   def install
-    system "cmake", "-S", ".", "-B", "build",
-                    "-DBUILD_SHARED_LIBS=ON",
-                    "-DCMAKE_INSTALL_RPATH=#{rpath}",
-                    *std_cmake_args
-    system "cmake", "--build", "build"
-    system "cmake", "--install", "build"
+    args = ["-DBUILD_SHARED_LIBS=ON", "-DCMAKE_INSTALL_RPATH=#{rpath}"]
+    if OS.mac?
+      args += [
+        "-DCMAKE_EXE_LINKER_FLAGS=-Wl,-dead_strip_dylibs",
+        "-DCMAKE_SHARED_LINKER_FLAGS=-Wl,-dead_strip_dylibs",
+      ]
+    end
+
+    system "cmake", "-S", ".", "-B", "_build", *args, *std_cmake_args
+    system "cmake", "--build", "_build"
+    system "cmake", "--install", "_build"
   end
 
   test do

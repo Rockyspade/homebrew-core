@@ -1,8 +1,8 @@
 class Istioctl < Formula
   desc "Istio configuration command-line utility"
   homepage "https://istio.io/"
-  url "https://github.com/istio/istio/archive/refs/tags/1.23.0.tar.gz"
-  sha256 "e29fd51c035d489b0e8b74d34f0a33014f1e16ac98077d866d09fe307457213b"
+  url "https://github.com/istio/istio/archive/refs/tags/1.23.2.tar.gz"
+  sha256 "d4db1a44275f0f1a1a209960c9087e7006de5df7e41a04716283feacf333aa7b"
   license "Apache-2.0"
   head "https://github.com/istio/istio.git", branch: "master"
 
@@ -12,13 +12,12 @@ class Istioctl < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "597550de23075b6c6d5bd761463901fb2a0082cbad036aa6d4bda1b9438a4bb3"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "f1482b0bbedef2b5ab3b2b7e7dc489de56933ff0d02da57ecd2b4ee019c13b6c"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "f2b20320f2c5de3aa1573fab236a79aaa451314b92e7d67659fe361f24401db1"
-    sha256 cellar: :any_skip_relocation, sonoma:         "90afdcfcbdb14799e60058649ebaebb94fea8cf9caf09aa198570e0b7cf873ad"
-    sha256 cellar: :any_skip_relocation, ventura:        "07e4438c6a7fe04349eb90f3f3c9411f473f2d643bf8f52c1991dfe6f6448f5a"
-    sha256 cellar: :any_skip_relocation, monterey:       "a908c065ea37a577690c6c91f57456b9a82764b0f22b890acfa28796aa398849"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "cab719dda903558daeb5d48eb18a3b25069532f53144edf4a37b3853aadbe0ca"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "93fc940dae393c05deaa639c68c68d402e61a0bd05093c65584cb5e4dee5818a"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "4437e167625082c123550a01624dca004356ad966b5ecd477eda3d336584e723"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "87ea5537d1416a86ad9f46e78655b256229ff35f265d630ee9776d9bdc0a0191"
+    sha256 cellar: :any_skip_relocation, sonoma:        "b0313773b0d99aef43009bd862ad1e8fbe1f0216201ff8b1c822b5328ad2e30c"
+    sha256 cellar: :any_skip_relocation, ventura:       "fc85d32a8b71d6265b13814d23f6d050b5defdc760fe7d8b5c1fe56b508e600c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "41fc0fb60580820b709a8307d0baca19bef0628040f40ef2a1f63adcf49589d3"
   end
 
   depends_on "go" => :build

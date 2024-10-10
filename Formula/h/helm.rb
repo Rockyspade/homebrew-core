@@ -2,22 +2,27 @@ class Helm < Formula
   desc "Kubernetes package manager"
   homepage "https://helm.sh/"
   url "https://github.com/helm/helm.git",
-      tag:      "v3.15.4",
-      revision: "fa9efb07d9d8debbb4306d72af76a383895aa8c4"
+      tag:      "v3.16.2",
+      revision: "13654a52f7c70a143b1dd51416d633e1071faffb"
   license "Apache-2.0"
   head "https://github.com/helm/helm.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "78b0b1f06be1b74dc16d63ee534a448794bab86d7c0edaa6ace14e782837c73e"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "9e7f3a284c12b3a3b9b078b17a94b4f22144147cb985581db046b81d9d6a3cec"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "2bdb344a18a4cd2e3c34acbc03b8e95cc8432914f0dc15972bccf41ef385e697"
-    sha256 cellar: :any_skip_relocation, sonoma:         "49c3b477daada863ddaba962afb61636335edc5575471c840d8e5c54904e62a5"
-    sha256 cellar: :any_skip_relocation, ventura:        "9cc434835fd4509d759bf11b7b7fb7cd14c99b184f2953acfea661efabf73a3b"
-    sha256 cellar: :any_skip_relocation, monterey:       "aacc3a3269573c95323e4b38dfdffcebf1b46e701929565f0aec79a46c8567b2"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "0a84839615fab01d818a02d68c646a2662d7251daa31bc0fdca2d3b685edb576"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "13ad3314a8d2eda0a9fdc822adb7117107cb1df214012245370e3756918222ac"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "ca9adda46f918e7b6c33349ce871a65c3a82f308539ab910396c802d3dfd08da"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "2bcf7612097cf01e16695a53bf33ff8794e4de114847c14e7bebdd430ed249f5"
+    sha256 cellar: :any_skip_relocation, sonoma:        "41256c21b0ea9ecea53c31675ef0dc2e683f83feafd664a8bb6e170fbc705645"
+    sha256 cellar: :any_skip_relocation, ventura:       "575f55d49da92c7679c285bdc17056b5df25ea277f74e951e35024da0c7c019d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d13febc5a4916a8f8c7c9918365c27fd862279c5c540ee7d4896b4ebd142402e"
   end
 
   depends_on "go" => :build
+
+  # fix testchart lint errors, upstream pr ref, https://github.com/helm/helm/pull/13329
+  patch do
+    url "https://github.com/helm/helm/commit/ddead08eb8e7e3fbbdbb6d40938dda36905789af.patch?full_index=1"
+    sha256 "471c2d7dcbd48d37eaf69e552d53e928e9ba42efccb021d78bbd354599d80811"
+  end
 
   def install
     system "make", "build"
@@ -36,7 +41,6 @@ class Helm < Formula
     assert File.directory? testpath/"foo/charts"
 
     version_output = shell_output("#{bin}/helm version 2>&1")
-    assert_match "GitTreeState:\"clean\"", version_output
     assert_match "GitCommit:\"#{stable.specs[:revision]}\"", version_output
     assert_match "Version:\"v#{version}\"", version_output
   end

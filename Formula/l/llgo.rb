@@ -1,42 +1,46 @@
 class Llgo < Formula
   desc "Go compiler based on LLVM integrate with the C ecosystem and Python"
   homepage "https://github.com/goplus/llgo"
-  url "https://github.com/goplus/llgo/archive/refs/tags/v0.9.6.tar.gz"
-  sha256 "2b88b7d088a88e61d0776e7a3e70b418bfb09af0e4140275ed35141658db8e83"
+  url "https://github.com/goplus/llgo/archive/refs/tags/v0.9.7.tar.gz"
+  sha256 "f9721be0b41d1e622923b4aa1d4e8071af93753f36f4c9285697e6af009fa0dc"
   license "Apache-2.0"
+  revision 1
 
   bottle do
-    sha256 cellar: :any, arm64_sonoma:   "1f28451ef983844e57e836cd7fb9637fd8f9c9f8fbecd596d78d858fc3d2172e"
-    sha256 cellar: :any, arm64_ventura:  "5e94831ddbb74021b91f446ad5871742fd6a62a71810a8debe7622569374e049"
-    sha256 cellar: :any, arm64_monterey: "fdd1baa035e6a92a5f6c708e2b55cc8824b55a0b0d403fa196112ea5c03cb70c"
-    sha256 cellar: :any, sonoma:         "0e96026933f1157e844e36f28c8832593124d523b6cd293c42383e69e40d7590"
-    sha256 cellar: :any, ventura:        "f2a4119581dd5bbaf8d33561edbec6b5fe2051de4b78b83bf41660cdb6f3f069"
-    sha256 cellar: :any, monterey:       "9cf5a78bedce3d955cbb33730599a165404863784583c8098484b3c224dc72da"
-    sha256               x86_64_linux:   "0ddb79429e4f5e455d72f69674eaab0d10505d0c22cf1f5c35543a9ef9f45490"
+    sha256 cellar: :any, arm64_sequoia: "c2843ed4c34662cd4efb4332efc801ebd481623ccc1cff1448be0804ad197038"
+    sha256 cellar: :any, arm64_sonoma:  "02e5fbd91b3ec0560cd653cd113eaff7d7899521fe56efb95bf76da703e88c9f"
+    sha256 cellar: :any, arm64_ventura: "ee9649478a6a5327d9c7c28880b1cf203cdc4e88c09cc59ce9d8f06e275749db"
+    sha256 cellar: :any, sonoma:        "1a21fcc15688f58e760474cb36700411865591f1dc88608a7434866017af43ae"
+    sha256 cellar: :any, ventura:       "50fd0b364c4ff977f5bc1c64d54a048dce67fcc06e12a0fb228cb2f2d6eabce0"
+    sha256               x86_64_linux:  "ec6fb4fdba58e39f7008ffa6311278e155a7e37856c78b88e953afa4f0a61cec"
   end
 
   depends_on "bdw-gc"
   depends_on "go"
-  depends_on "llvm"
+  depends_on "llvm@18"
   depends_on "openssl@3"
   depends_on "pkg-config"
+
+  def llvm
+    deps.map(&:to_formula).find { |f| f.name.match?(/^llvm(@\d+)?$/) }
+  end
 
   def install
     if OS.linux?
       ENV.prepend "CGO_CPPFLAGS",
-        "-I#{Formula["llvm"].opt_include} " \
+        "-I#{llvm.opt_include} " \
         "-D_GNU_SOURCE " \
         "-D__STDC_CONSTANT_MACROS " \
         "-D__STDC_FORMAT_MACROS " \
         "-D__STDC_LIMIT_MACROS"
-      ENV.prepend "CGO_LDFLAGS", "-L#{Formula["llvm"].opt_lib} -lLLVM"
+      ENV.prepend "CGO_LDFLAGS", "-L#{llvm.opt_lib} -lLLVM"
     end
 
     ldflags = %W[
       -s -w
       -X github.com/goplus/llgo/x/env.buildVersion=v#{version}
       -X github.com/goplus/llgo/x/env.buildTime=#{time.iso8601}
-      -X github.com/goplus/llgo/xtool/env/llvm.ldLLVMConfigBin=#{Formula["llvm"].opt_bin/"llvm-config"}
+      -X github.com/goplus/llgo/xtool/env/llvm.ldLLVMConfigBin=#{llvm.opt_bin/"llvm-config"}
     ]
     build_args = *std_go_args(ldflags:)
     build_args += ["-tags", "byollvm"] if OS.linux?
@@ -44,7 +48,7 @@ class Llgo < Formula
 
     libexec.install "LICENSE", "README.md"
 
-    path = %w[go llvm pkg-config].map { |f| Formula[f].opt_bin }.join(":")
+    path = llvm.opt_bin + ":" + %w[go pkg-config].map { |f| Formula[f].opt_bin }.join(":")
     opt_lib = %w[bdw-gc openssl@3].map { |f| Formula[f].opt_lib }.join(":")
 
     (libexec/"bin").children.each do |f|

@@ -1,18 +1,18 @@
 class Sile < Formula
   desc "Modern typesetting system inspired by TeX"
   homepage "https://sile-typesetter.org"
-  url "https://github.com/sile-typesetter/sile/releases/download/v0.15.4/sile-0.15.4.tar.zst"
-  sha256 "35d837b382ef4933489baea169264b94143da1538e71cdbc640c2f75c39e2358"
+  url "https://github.com/sile-typesetter/sile/releases/download/v0.15.5/sile-0.15.5.tar.zst"
+  sha256 "d20137b02d16302d287670fd285ad28ac3b8d3af916460aa6bc8cbff9321b9f9"
   license "MIT"
+  revision 1
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "1b20606d54dd6e80f9f93fa75c3e36119ab6446fd51840cee4eb55ea27dbc3f1"
-    sha256 cellar: :any,                 arm64_ventura:  "1da2db559e3d57641a06e4a3b9474e2fec862dbb723f3758fe8dbfe9f7ae3f09"
-    sha256 cellar: :any,                 arm64_monterey: "4adb00ce7c362e6f7611eb914fc61f5208988fc073e141fe3297b6252c163e7c"
-    sha256 cellar: :any,                 sonoma:         "1e98064e6ec010cbff994043776efb5c6f59ebba3b4223f61f83bc534474f756"
-    sha256 cellar: :any,                 ventura:        "4f7f2edcbd77809d66f0a19d579402f2804f92e4ca690df4011c7f92d6741742"
-    sha256 cellar: :any,                 monterey:       "6d6234f00ebca6fbc771455d32d2d1b1d1fc497dd514de1200f275a94032575f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "1bc1711733c16a19daf709a92d4b62f21f293f9c9abe4d66787b31c8148ca07e"
+    sha256 cellar: :any,                 arm64_sequoia: "99457175ef945f3dadf7772a5803d241024dc3d0239c9374c127f31025065b16"
+    sha256 cellar: :any,                 arm64_sonoma:  "0336ffc9958c96ad39c4cadcfcdda8d7e87eaca22089f99c00632287670a4348"
+    sha256 cellar: :any,                 arm64_ventura: "077665bc074168d89805933aefdf8e651943b7e78d08c213c461431f67fa1789"
+    sha256 cellar: :any,                 sonoma:        "bde850dcc3bcebaddaeb56826ec4053387dee316bdb97e0b928aadb1a2cf1710"
+    sha256 cellar: :any,                 ventura:       "7e4cdb78860f0e020f3bbf3b4153ca22a79d8274675f5749fd26799ce2140e12"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3bd7be9973e8d3840c1e73546b9409cad93dc7ba52497e0bc2f957f06cb856d8"
   end
 
   head do
@@ -30,7 +30,7 @@ class Sile < Formula
 
   depends_on "fontconfig"
   depends_on "harfbuzz"
-  depends_on "icu4c"
+  depends_on "icu4c@75"
   depends_on "libpng"
   depends_on "luajit"
   depends_on "luarocks"

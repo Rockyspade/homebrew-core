@@ -1,18 +1,17 @@
 class SafCli < Formula
   desc "CLI for the MITRE Security Automation Framework (SAF)"
   homepage "https://saf-cli.mitre.org"
-  url "https://registry.npmjs.org/@mitre/saf/-/saf-1.4.11.tgz"
-  sha256 "f4292e5e18bc0f8071c8f6e79aac4906a6e386438383200b045acdc041b0a7c3"
+  url "https://registry.npmjs.org/@mitre/saf/-/saf-1.4.15.tgz"
+  sha256 "1d4d1c0ab94f7b86dd772ee8167f34e730432a52b8a0d0972077ee290e3e179a"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "f54242a7274e3c7a66d41792821917f05494f21edaa83e754368cdc007dca7aa"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "f54242a7274e3c7a66d41792821917f05494f21edaa83e754368cdc007dca7aa"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "f54242a7274e3c7a66d41792821917f05494f21edaa83e754368cdc007dca7aa"
-    sha256 cellar: :any_skip_relocation, sonoma:         "eca47c1608c48bd0601113f976d5a5da85a76b967fdb73b5987c6f68e532628a"
-    sha256 cellar: :any_skip_relocation, ventura:        "eca47c1608c48bd0601113f976d5a5da85a76b967fdb73b5987c6f68e532628a"
-    sha256 cellar: :any_skip_relocation, monterey:       "eca47c1608c48bd0601113f976d5a5da85a76b967fdb73b5987c6f68e532628a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f54242a7274e3c7a66d41792821917f05494f21edaa83e754368cdc007dca7aa"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "1c2a517175584071429f989b8dd120991d302962f8ba774a1fbca8ea5434b2aa"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "1c2a517175584071429f989b8dd120991d302962f8ba774a1fbca8ea5434b2aa"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "1c2a517175584071429f989b8dd120991d302962f8ba774a1fbca8ea5434b2aa"
+    sha256 cellar: :any_skip_relocation, sonoma:        "2ae5c83812d68f4b9019176e3d00c56a1e0090e1f4c5b6877c6f99e811c6bd3d"
+    sha256 cellar: :any_skip_relocation, ventura:       "2ae5c83812d68f4b9019176e3d00c56a1e0090e1f4c5b6877c6f99e811c6bd3d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1c2a517175584071429f989b8dd120991d302962f8ba774a1fbca8ea5434b2aa"
   end
 
   depends_on "node"

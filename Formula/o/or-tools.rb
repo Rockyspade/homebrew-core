@@ -1,10 +1,10 @@
 class OrTools < Formula
   desc "Google's Operations Research tools"
   homepage "https://developers.google.com/optimization/"
-  url "https://github.com/google/or-tools/archive/refs/tags/v9.10.tar.gz"
-  sha256 "e7c27a832f3595d4ae1d7e53edae595d0347db55c82c309c8f24227e675fd378"
+  url "https://github.com/google/or-tools/archive/refs/tags/v9.11.tar.gz"
+  sha256 "f6a0bd5b9f3058aa1a814b798db5d393c31ec9cbb6103486728997b49ab127bc"
   license "Apache-2.0"
-  revision 5
+  revision 1
   head "https://github.com/google/or-tools.git", branch: "stable"
 
   livecheck do
@@ -13,13 +13,12 @@ class OrTools < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "670ff830a6730482830871ae6bf3442a1fe4e3551aa1729fb2fa7f3d004e55e6"
-    sha256 cellar: :any,                 arm64_ventura:  "9cf728da5f97675ad324da6aaf0b0bc99a884f986f878885d15d546e453732e5"
-    sha256 cellar: :any,                 arm64_monterey: "758e3424aed2892e2a39e849ad23d1babc464fe0c0b4c832de604bee42b40cee"
-    sha256 cellar: :any,                 sonoma:         "5b7ed186e37d7e95853e2c9a1a929327bf5bb0e5ab3017d60170dcb333011e06"
-    sha256 cellar: :any,                 ventura:        "c3228550a9edc33ff73540da5e6cdd14f7fe5d6d6058a7d7a96dc83f61ef781b"
-    sha256 cellar: :any,                 monterey:       "f36961173edee868149ecbab48cd1c74f3993bc15aacbf500947632cb92d0bf4"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "7cae931aae182e1025e201bb46a94e078e1e6c7261be49a008d9f98a134ff512"
+    sha256 cellar: :any,                 arm64_sequoia: "d96a2474dcec3e479e493f9a2feea94fdba14d1142c3a03fd955a2ebe8ccabf0"
+    sha256 cellar: :any,                 arm64_sonoma:  "b334335e402ba2def5df45083b409feee658658fb144f91125f12c82846327fb"
+    sha256 cellar: :any,                 arm64_ventura: "944b2e33feaf16cbc65b85c389dc7c51b24c49cca9ff174a356cf7af617b7726"
+    sha256 cellar: :any,                 sonoma:        "e9a11426f2c10f3f084bbcfcac027b9c888b7b73be0d7db45bf16f6ca7530d35"
+    sha256 cellar: :any,                 ventura:       "bca479d83dbef1eef8370315db6e2258ab265fb23850a9404d5fd1c63b55b1b1"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "813619753bab47c09c9eadea6d600301d90699ad56cb490104650b4663266586"
   end
 
   depends_on "cmake" => [:build, :test]

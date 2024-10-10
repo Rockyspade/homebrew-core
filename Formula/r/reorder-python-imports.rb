@@ -9,16 +9,11 @@ class ReorderPythonImports < Formula
   head "https://github.com/asottile/reorder-python-imports.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "2184a6a4047d37b0c9cb152b9fc78a902928c1eb21acc76dbbeb3a3b964eafe8"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "2184a6a4047d37b0c9cb152b9fc78a902928c1eb21acc76dbbeb3a3b964eafe8"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "2184a6a4047d37b0c9cb152b9fc78a902928c1eb21acc76dbbeb3a3b964eafe8"
-    sha256 cellar: :any_skip_relocation, sonoma:         "2184a6a4047d37b0c9cb152b9fc78a902928c1eb21acc76dbbeb3a3b964eafe8"
-    sha256 cellar: :any_skip_relocation, ventura:        "2184a6a4047d37b0c9cb152b9fc78a902928c1eb21acc76dbbeb3a3b964eafe8"
-    sha256 cellar: :any_skip_relocation, monterey:       "2184a6a4047d37b0c9cb152b9fc78a902928c1eb21acc76dbbeb3a3b964eafe8"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "453f41a6a7922df6dba675524704b362bf71215209efc7c9f6da0ddc4469caf6"
+    rebuild 2
+    sha256 cellar: :any_skip_relocation, all: "b75b313135de7f1b47f4b7e2a1355bcdd3ce952195c13e144f688a79ebc460cc"
   end
 
-  depends_on "python@3.12"
+  depends_on "python@3.13"
 
   resource "classify-imports" do
     url "https://files.pythonhosted.org/packages/7e/b6/6cdc486fced92110a8166aa190b7d60435165119990fc2e187a56d15144b/classify_imports-4.2.0.tar.gz"

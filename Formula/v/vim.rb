@@ -2,8 +2,8 @@ class Vim < Formula
   desc "Vi 'workalike' with many additional features"
   homepage "https://www.vim.org/"
   # vim should only be updated every 50 releases on multiples of 50
-  url "https://github.com/vim/vim/archive/refs/tags/v9.1.0650.tar.gz"
-  sha256 "354db058c5209fd76fdd4589c0b34714e9785380aefb59f812ffd5a122e654ff"
+  url "https://github.com/vim/vim/archive/refs/tags/v9.1.0750.tar.gz"
+  sha256 "6d668be3da4ab41081b2b9d935f41d066e6002c8c72e23e37e0c5363c9da977b"
   license "Vim"
   head "https://github.com/vim/vim.git", branch: "master"
 
@@ -25,22 +25,22 @@ class Vim < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "c6c4666f9faea5b55285284beb58d9762df1abe57fcbf971e42178ee76121b6f"
-    sha256 arm64_ventura:  "305b45d3d91505534e3d02de29450a5123965f69e85917c4b092e8b97aebf7b3"
-    sha256 arm64_monterey: "9dbf3c233fe5c3d05246b0dfe25ad9f309185c069fa98fb1b3b81679b0e80ee3"
-    sha256 sonoma:         "3852d438aceb36e7560d531946e6fccf7aa503fd9e27e263a4e51a76efbb241c"
-    sha256 ventura:        "4f8e9143e6d90158ee2c06b7fe9eeabfa478574eab4042c992e194b4dafc3741"
-    sha256 monterey:       "98cb7180166d7254f6050fea36bc57f34153fb0f281b69d4995b6af60a6d96af"
-    sha256 x86_64_linux:   "69b9c1f438056d82fa5b8a8dba5233fc6fda49bd58bade861974f013f640d9b0"
+    sha256 arm64_sequoia: "14c298dab305f7a561abdac4e8c28b99fe2902e71cb1c4bf22fb3e773e86df26"
+    sha256 arm64_sonoma:  "8a868ed6bb27825dba7ad8cb112b37ff8e1168b8c33623b19dbd9304e1b282c1"
+    sha256 arm64_ventura: "8e244a128980f7bcd10bedd4090a7dcba6c75487aea0f6fccb7bda5fc13dfae8"
+    sha256 sonoma:        "3a34e285693c9d6848fc45f13b2b3e5c5d6b8bbbd1684ec77cc64f38bbe1553b"
+    sha256 ventura:       "e76e904c3c8af41ce76c70d18205343c9da6c6232b3d60e41629d6135118c5c5"
+    sha256 x86_64_linux:  "dc04a8a373c23dce78f37cf0343faa3bb07325e4e20cd605ac5b45aa9ad08d4f"
   end
 
   depends_on "gettext"
   depends_on "libsodium"
   depends_on "lua"
   depends_on "ncurses"
-  depends_on "perl"
   depends_on "python@3.12"
   depends_on "ruby"
+
+  uses_from_macos "perl"
 
   on_linux do
     depends_on "acl"

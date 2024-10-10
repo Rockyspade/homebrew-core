@@ -2,10 +2,11 @@ class Php < Formula
   desc "General-purpose scripting language"
   homepage "https://www.php.net/"
   # Should only be updated if the new version is announced on the homepage, https://www.php.net/
-  url "https://www.php.net/distributions/php-8.3.10.tar.xz"
-  mirror "https://fossies.org/linux/www/php-8.3.10.tar.xz"
-  sha256 "a0f2179d00931fe7631a12cbc3428f898ca3d99fe564260c115af381d2a1978d"
+  url "https://www.php.net/distributions/php-8.3.12.tar.xz"
+  mirror "https://fossies.org/linux/www/php-8.3.12.tar.xz"
+  sha256 "f774e28633e26fc8c5197f4dae58ec9e3ff87d1b4311cbc61ab05a7ad24bd131"
   license "PHP-3.01"
+  revision 1
 
   livecheck do
     url "https://www.php.net/downloads"
@@ -13,13 +14,12 @@ class Php < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "0b6ba26212e16ecd59e268024e17946d95c4c0723e0234092c0c8700cd493110"
-    sha256 arm64_ventura:  "a424aba4cba7d90789adb33e0a872e8fa1ed602258f1949b8b053d37d8615576"
-    sha256 arm64_monterey: "fed1289395302144ef24cfd722271c7157d38fa0bb6dbf9e02c25ef4f9eb52e9"
-    sha256 sonoma:         "62fd74d18031c6c56771465fc3be13a3f2547fb4ffdba5cc521cbef12a707c1a"
-    sha256 ventura:        "b45cc254e2977b16e23e4dca6709b88b20014d39c970f98909a07ee2d6f1b814"
-    sha256 monterey:       "586392559420c6b6fef97137d623945e59a51dc177b02838b99d7268724d4558"
-    sha256 x86_64_linux:   "111e4a51d201e6d99f94256cf0bf4da6adeb88754616a677e77ada74170c19b7"
+    sha256 arm64_sequoia: "3a1b68bfcaa324d24804cdc53f39713bdd3394783cd15c3b03d3d306af9c7dda"
+    sha256 arm64_sonoma:  "86b422357d3a6e8cbfe4f40163bcb025d4a5165992d4f6183989e915cc6c0818"
+    sha256 arm64_ventura: "31fe803f14f625a3eca39317eb97d9235fd9a78bc92d92d18954c0790abc819a"
+    sha256 sonoma:        "4ba01da5435b785da498d907d213651fc19688d14bffe5fa69f7147f9fe376e3"
+    sha256 ventura:       "3a557eded33d150fc3eddbc18770c44adbdd5febbe5f02bdc01bebcdd7312349"
+    sha256 x86_64_linux:  "4bcd6227512ff50b956298f82c4775662028969cb0701a6a13e1808a6f539846"
   end
 
   head do
@@ -41,7 +41,7 @@ class Php < Formula
   depends_on "gd"
   depends_on "gettext"
   depends_on "gmp"
-  depends_on "icu4c"
+  depends_on "icu4c@75"
   depends_on "krb5"
   depends_on "libpq"
   depends_on "libsodium"
@@ -399,7 +399,7 @@ class Php < Formula
       pid = fork do
         exec Formula["httpd"].opt_bin/"httpd", "-X", "-f", "#{testpath}/httpd.conf"
       end
-      sleep 3
+      sleep 10
 
       assert_match expected_output, shell_output("curl -s 127.0.0.1:#{port}")
 
@@ -412,7 +412,7 @@ class Php < Formula
       pid = fork do
         exec Formula["httpd"].opt_bin/"httpd", "-X", "-f", "#{testpath}/httpd-fpm.conf"
       end
-      sleep 3
+      sleep 10
 
       assert_match expected_output, shell_output("curl -s 127.0.0.1:#{port}")
     ensure

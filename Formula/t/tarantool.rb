@@ -1,9 +1,10 @@
 class Tarantool < Formula
   desc "In-memory database and Lua application server"
   homepage "https://tarantool.org/"
-  url "https://download.tarantool.org/tarantool/src/tarantool-3.1.1.tar.gz"
-  sha256 "705aeeac16b26ab7b06c6acb418ae22c5367665dcdccc28d577271fddd78a1e6"
+  url "https://download.tarantool.org/tarantool/src/tarantool-3.2.0.tar.gz"
+  sha256 "16a6d54a67f5f954cf784175dfcdb2b549c04ed1414e76256743e1fd4a560289"
   license "BSD-2-Clause"
+  revision 1
   version_scheme 1
   head "https://github.com/tarantool/tarantool.git", branch: "master"
 
@@ -13,18 +14,16 @@ class Tarantool < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "00eec48fa3453dddb4f0d04942159d79b3e8d09ebdfd7aed59aa94cc3b292dfb"
-    sha256 cellar: :any,                 arm64_ventura:  "161b28c6bd698ad25ef263432ef952236518fa83c169c704db6f36a09089d919"
-    sha256 cellar: :any,                 arm64_monterey: "76e784d0b260461c09ffa60254a5710854cfca949a6e58f033c8ebe9f56ee3a8"
-    sha256 cellar: :any,                 sonoma:         "fc6c89a9a7008a5afcf2cb454adaa151333dc9360d33ec5e48b5f99d3a8b08a3"
-    sha256 cellar: :any,                 ventura:        "0ee24029edbc046f6ddc03a096c5f04d1a7d171fbd0876d4dc217dcc2bc69ba9"
-    sha256 cellar: :any,                 monterey:       "d6d50ad1f20bb62c9f2e079e0fb3db925c3583dce89ef2ca607ad3c2a731ece4"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "573e31c572d7d11969ecffc374e166bd902494ba963b2c03335f59a3fddcf57c"
+    sha256 cellar: :any,                 arm64_sonoma:  "5f117fd009f89af0abf902bf998672b39245686d690fffb3dc6b05b02660a8f8"
+    sha256 cellar: :any,                 arm64_ventura: "680685e7c6f484fe77b29fafcea65f9e8a5bf4c2871a66acccf3b329f4dda354"
+    sha256 cellar: :any,                 sonoma:        "2461f907aa5caf3d445e70a1dc67184102d0aa337f5851264cf8de41ac25e3ec"
+    sha256 cellar: :any,                 ventura:       "ab6593510eeafe2e45c94ecb3dfc564d5d65ded360f28577b9e473221c753135"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d35fc9a3a07fbda58c72b8cda1f3211a3c4825478729c85dac7db80156f76f41"
   end
 
   depends_on "cmake" => :build
   depends_on "curl" # curl 8.4.0+
-  depends_on "icu4c"
+  depends_on "icu4c@75"
   depends_on "libyaml"
   depends_on "openssl@3"
   depends_on "readline"

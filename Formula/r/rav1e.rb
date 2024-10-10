@@ -12,6 +12,7 @@ class Rav1e < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "fa713f47f3e544d96dc62d374567bbc917d6f8bd5009779454468961c593d43a"
     sha256 cellar: :any,                 arm64_sonoma:   "03c3c20f83de1fca64b0e0c67e8eb583a334f30769c047304a6627fcec76c765"
     sha256 cellar: :any,                 arm64_ventura:  "ebbacd899e780c0eaa27cd2adb2d3eba5f1d60d1ea38097601e1ea8991c95c30"
     sha256 cellar: :any,                 arm64_monterey: "5a95ecb310417a49fcd0a488a7f69bddede2ab766345e7a90f28235430c27109"
@@ -30,7 +31,7 @@ class Rav1e < Formula
 
   def install
     system "cargo", "install", *std_cargo_args
-    system "cargo", "cinstall", "--prefix", prefix, "--libdir", lib
+    system "cargo", "cinstall", "--jobs", ENV.make_jobs.to_s, "--release", "--prefix", prefix, "--libdir", lib
   end
 
   test do

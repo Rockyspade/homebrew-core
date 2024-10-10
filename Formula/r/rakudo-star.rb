@@ -1,28 +1,29 @@
 class RakudoStar < Formula
   desc "Rakudo compiler and commonly used packages"
   homepage "https://rakudo.org/"
-  url "https://github.com/rakudo/star/releases/download/2024.07/rakudo-star-2024.07.tar.gz"
-  sha256 "ba2f4869dc99b55a8dcfbac9e7420955097ef426be0f72e56bf8f006911a8a8f"
+  url "https://github.com/rakudo/star/releases/download/2024.09/rakudo-star-2024.09.tar.gz"
+  sha256 "5b320e963aae8c0345b3ecb9a3d7baaf377729d256548cdafb246076ce65555b"
   license "Artistic-2.0"
+  revision 1
 
   bottle do
-    sha256 arm64_sonoma:   "7b4f81c585a74cb2dd53b66f78de071f843174e927a5bd09de8eef6ba3102575"
-    sha256 arm64_ventura:  "121c9b02ee9e34126e4256c6751b60a98fc653dd7f057023ee4496a9133c2541"
-    sha256 arm64_monterey: "930d4e76a2b97a975900e5e1af2daba77f2daaf48718ec5cafb5759ab5b30664"
-    sha256 sonoma:         "dfa7b6cf2fb13462ad7e53803acbdeddcc83c7e73e7812e9f7050325411f8af3"
-    sha256 ventura:        "a2df25542d0ca221eda42e4982370905cce993e5b8014b4e01d6ba9d6863be77"
-    sha256 monterey:       "f448c7dee91af27a88cd589c6a65e9dd1f4188560ffdccc86b33ab6c3f9920ef"
-    sha256 x86_64_linux:   "15c9d231183307647e2ce8ea885097c34d54cf3fb1dc481a37e013e34a7b3801"
+    sha256 arm64_sequoia: "ed0f866c75d5956261d375bcd666de04020906a1675e61186421fe109b50c180"
+    sha256 arm64_sonoma:  "90c8f0b3cc519445cfdaf913853ed17a8b76d319137ea44822a4044714c6d1ca"
+    sha256 arm64_ventura: "122ab41ad41f9620cfc55290da6a4989799fb4a223c7c8fa3f0ad0cd6d82bb70"
+    sha256 sonoma:        "baca08ff3b3ae0df9126740b8a8fc2bb8358ca338c0f5ff7b1ecc46dffc0a285"
+    sha256 ventura:       "afac32d41fc59e0ceaa8aebe2ab8f811b8e549fde8826d422b8b348ef39b6398"
+    sha256 x86_64_linux:  "14c9e4954c654cc1ebc2071cc125e4ae3555c2e4b3d984de0b2c539b77b3606d"
   end
 
   depends_on "bash" => :build
   depends_on "gmp"
-  depends_on "icu4c"
+  depends_on "icu4c@75"
   depends_on "openssl@3"
   depends_on "pcre"
   depends_on "readline"
   uses_from_macos "libffi", since: :catalina
 
+  conflicts_with "moar", because: "both install `moar` binaries"
   conflicts_with "moarvm", "nqp", because: "rakudo-star currently ships with moarvm and nqp included"
   conflicts_with "parrot"
   conflicts_with "rakudo"

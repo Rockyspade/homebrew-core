@@ -8,6 +8,7 @@ class HttpServer < Formula
 
   bottle do
     rebuild 1
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "bb1d84d1666919ec7a065dbb8d7a33a6b66ec0d853566efb9fbef8257202c827"
     sha256 cellar: :any_skip_relocation, arm64_sonoma:   "b8798ac5ea1972bc153b971db14968ada2527c73c4ac4c442f3c3e2c2d2b0802"
     sha256 cellar: :any_skip_relocation, arm64_ventura:  "b8798ac5ea1972bc153b971db14968ada2527c73c4ac4c442f3c3e2c2d2b0802"
     sha256 cellar: :any_skip_relocation, arm64_monterey: "b8798ac5ea1972bc153b971db14968ada2527c73c4ac4c442f3c3e2c2d2b0802"
@@ -18,6 +19,8 @@ class HttpServer < Formula
   end
 
   depends_on "node"
+
+  conflicts_with "http-server-rs", because: "both install a `http-server` binary"
 
   def install
     system "npm", "install", *std_npm_args

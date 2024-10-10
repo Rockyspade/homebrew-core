@@ -6,6 +6,7 @@ class Libimagequant < Formula
   license all_of: ["GPL-3.0-or-later", "HPND"]
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "f411bdf39fe60ea4ed53aecdd492797922f06b0689bb04c3f02052af55a18d35"
     sha256 cellar: :any,                 arm64_sonoma:   "979e2b7ba7184cfa5c8f7f6c6f49ac20483c319421ea0de84e64846683635d5f"
     sha256 cellar: :any,                 arm64_ventura:  "aa15ba471418f6a856f757c0bd1a5cec72a395dd6165fb047de74a2cb49e1762"
     sha256 cellar: :any,                 arm64_monterey: "b992cfca22175166db0ff267ad0b1e8e45302670abb24c6766e1ca397239965f"
@@ -20,7 +21,7 @@ class Libimagequant < Formula
 
   def install
     cd "imagequant-sys" do
-      system "cargo", "cinstall", "--prefix", prefix, "--libdir", lib
+      system "cargo", "cinstall", "--jobs", ENV.make_jobs.to_s, "--release", "--prefix", prefix, "--libdir", lib
     end
   end
 

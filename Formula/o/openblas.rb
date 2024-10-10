@@ -1,10 +1,15 @@
 class Openblas < Formula
   desc "Optimized BLAS library"
   homepage "https://www.openblas.net/"
-  url "https://github.com/xianyi/OpenBLAS/archive/refs/tags/v0.3.28.tar.gz"
+  url "https://github.com/OpenMathLib/OpenBLAS/archive/refs/tags/v0.3.28.tar.gz"
   sha256 "f1003466ad074e9b0c8d421a204121100b0751c96fc6fcf3d1456bd12f8a00a1"
-  license "BSD-3-Clause"
-  head "https://github.com/xianyi/OpenBLAS.git", branch: "develop"
+  # The main license is BSD-3-Clause. Additionally,
+  # 1. OpenBLAS is based on GotoBLAS2 so some code is under original BSD-2-Clause-Views
+  # 2. lapack-netlib/ is a bundled LAPACK so it is BSD-3-Clause-Open-MPI
+  # 3. interface/{gemmt.c,sbgemmt.c} is BSD-2-Clause
+  # 4. relapack/ is MIT but license is omitted as it is not enabled
+  license all_of: ["BSD-3-Clause", "BSD-2-Clause-Views", "BSD-3-Clause-Open-MPI", "BSD-2-Clause"]
+  head "https://github.com/OpenMathLib/OpenBLAS.git", branch: "develop"
 
   livecheck do
     url :stable
@@ -12,6 +17,7 @@ class Openblas < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "8d319fccf7a06b8f0540d8cb864a1fbdcde99f5b2c57574b8effc52bd5cf2faf"
     sha256 cellar: :any,                 arm64_sonoma:   "0f31a93b4161cf8a6bb9cda77dd41c5285327920e75ef091e587a6f9ed74446e"
     sha256 cellar: :any,                 arm64_ventura:  "542382c256f30f672e9b2006afb65864ae59383ec80432e2b0dcfd0bda797e82"
     sha256 cellar: :any,                 arm64_monterey: "b0582fc465c1cd001d994b11efd60b54f47bd8d39ace6a53a289c81e7f6f99c5"

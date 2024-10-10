@@ -2,10 +2,11 @@ class PhpAT82 < Formula
   desc "General-purpose scripting language"
   homepage "https://www.php.net/"
   # Should only be updated if the new version is announced on the homepage, https://www.php.net/
-  url "https://www.php.net/distributions/php-8.2.22.tar.xz"
-  mirror "https://fossies.org/linux/www/php-8.2.22.tar.xz"
-  sha256 "8566229bc88ad1f4aadc10700ab5fbcec81587c748999d985f11cf3b745462df"
+  url "https://www.php.net/distributions/php-8.2.24.tar.xz"
+  mirror "https://fossies.org/linux/www/php-8.2.24.tar.xz"
+  sha256 "80a5225746a9eb484475b312d4c626c63a88a037d8e56d214f30205e1ba1411a"
   license "PHP-3.01"
+  revision 1
 
   livecheck do
     url "https://www.php.net/downloads"
@@ -13,13 +14,12 @@ class PhpAT82 < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "38ed71cef858bce7cec469bfeeb24d94c120fdf4570ac4f6ead8a40de86477ae"
-    sha256 arm64_ventura:  "f9fa7942441d459e5813ba2665cd6195f9152e3c8a5ae9faff224512c001f7bb"
-    sha256 arm64_monterey: "7e21739e03f44e6f37719aa3304eb27c6f1f001e3dac7dac2bcdbdc0ee6b6cd7"
-    sha256 sonoma:         "0292176091d1bf75f3af5ea2c8d0821aaec8fc65ceb7dfdd8f8afdc12d94fc0a"
-    sha256 ventura:        "e1886532819e31afdac4b7cc9e3e8fc86af1712bb8a7daa6f4256091bb1fcf29"
-    sha256 monterey:       "73835cf81a1ff2d8044a42c35994c1d64c47718935d378b637f62774cf3cd628"
-    sha256 x86_64_linux:   "02755d79b5d09e41f038c63f6ea7be828f83f82224ccaa01c04144e65b8f7953"
+    sha256 arm64_sequoia: "3c6a83104193081c192959748f627b31d0ab07f80c4450d93f8f8427d7f476f5"
+    sha256 arm64_sonoma:  "26840d376aeb10ccf1e343572f63a0b98e72a24c6c26196d526f766e278f2ca4"
+    sha256 arm64_ventura: "07e09ca7226060abe42ea07012cf595a8877bcbf3292ff1dcd5d50c3325dfa2e"
+    sha256 sonoma:        "52cc2f48216f6ac3c06dfec4b9718b6e34eb34177fcdab29c59d1dd577933600"
+    sha256 ventura:       "6396e6ba27ee8fdc6a3f53f4dcec4c169144a849d03abe4ba6d071e1384b87a7"
+    sha256 x86_64_linux:  "aeaa83ed5f1510c3b8991fd894e8db051b87cf16b860a31a42443309f80e7a9d"
   end
 
   keg_only :versioned_formula
@@ -40,7 +40,7 @@ class PhpAT82 < Formula
   depends_on "gd"
   depends_on "gettext"
   depends_on "gmp"
-  depends_on "icu4c"
+  depends_on "icu4c@75"
   depends_on "krb5"
   depends_on "libpq"
   depends_on "libsodium"
@@ -402,7 +402,7 @@ class PhpAT82 < Formula
       pid = fork do
         exec Formula["httpd"].opt_bin/"httpd", "-X", "-f", "#{testpath}/httpd.conf"
       end
-      sleep 3
+      sleep 10
 
       assert_match expected_output, shell_output("curl -s 127.0.0.1:#{port}")
 
@@ -415,7 +415,7 @@ class PhpAT82 < Formula
       pid = fork do
         exec Formula["httpd"].opt_bin/"httpd", "-X", "-f", "#{testpath}/httpd-fpm.conf"
       end
-      sleep 3
+      sleep 10
 
       assert_match expected_output, shell_output("curl -s 127.0.0.1:#{port}")
     ensure

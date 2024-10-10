@@ -1,19 +1,12 @@
 class GitSplitDiffs < Formula
   desc "Syntax highlighted side-by-side diffs in your terminal"
   homepage "https://github.com/banga/git-split-diffs"
-  url "https://registry.npmjs.org/git-split-diffs/-/git-split-diffs-2.1.0.tgz"
-  sha256 "4d49a8d4fd4e674ecd639cd9057cd3e04a503af5322b61c62b82a8221fc60729"
+  url "https://registry.npmjs.org/git-split-diffs/-/git-split-diffs-2.2.0.tgz"
+  sha256 "13d6691e49a21b24d6cff14bbe992b18a5bb92eb8d96aa76a35ec2edb79a9d84"
   license "MIT"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "de5be1a8af6bf08498fa775a74b84b0fa6a43f1b0a948b41aac34eb84df5971e"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "de5be1a8af6bf08498fa775a74b84b0fa6a43f1b0a948b41aac34eb84df5971e"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "de5be1a8af6bf08498fa775a74b84b0fa6a43f1b0a948b41aac34eb84df5971e"
-    sha256 cellar: :any_skip_relocation, sonoma:         "de5be1a8af6bf08498fa775a74b84b0fa6a43f1b0a948b41aac34eb84df5971e"
-    sha256 cellar: :any_skip_relocation, ventura:        "de5be1a8af6bf08498fa775a74b84b0fa6a43f1b0a948b41aac34eb84df5971e"
-    sha256 cellar: :any_skip_relocation, monterey:       "de5be1a8af6bf08498fa775a74b84b0fa6a43f1b0a948b41aac34eb84df5971e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e479320545a1b6326b0a5d99b932bc9c56909616c6fc950ef98f327b50712301"
+    sha256 cellar: :any_skip_relocation, all: "74fbd732352861601eab8397dcf20ce566e08f07ab2ceafc388df2fb842e54fb"
   end
 
   depends_on "node"

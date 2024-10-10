@@ -6,9 +6,10 @@ class IconNamingUtils < Formula
   # url "http://tango.freedesktop.org/releases/icon-naming-utils-0.8.90.tar.gz"
   url "https://deb.debian.org/debian/pool/main/i/icon-naming-utils/icon-naming-utils_0.8.90.orig.tar.gz"
   sha256 "044ab2199ed8c6a55ce36fd4fcd8b8021a5e21f5bab028c0a7cdcf52a5902e1c"
-  license "GPL-2.0"
+  license "GPL-2.0-or-later"
 
   bottle do
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "3caca3e4bf1e45408fdd966f46f860a0fd9002f471a1fa258e9c3c66ab28b204"
     sha256 cellar: :any_skip_relocation, arm64_sonoma:   "4875c2788c7c77a35e9af5ecda0d4ba48ec06668ed12acd5b95b77860a8e25ca"
     sha256 cellar: :any_skip_relocation, arm64_ventura:  "0d9b0891567661143495e9cb87f7811d66a7e980e26d403fdbd3485590f9bbf7"
     sha256 cellar: :any_skip_relocation, arm64_monterey: "0d9b0891567661143495e9cb87f7811d66a7e980e26d403fdbd3485590f9bbf7"

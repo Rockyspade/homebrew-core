@@ -1,19 +1,18 @@
 class Terramaid < Formula
   desc "Utility for generating Mermaid diagrams from Terraform configurations"
   homepage "https://github.com/RoseSecurity/Terramaid"
-  url "https://github.com/RoseSecurity/Terramaid/archive/refs/tags/v1.9.0.tar.gz"
-  sha256 "555dda8e7bacb2b4c389d2eba764a50554ca9e130c15f5d0b6fe7f817eaa934e"
+  url "https://github.com/RoseSecurity/Terramaid/archive/refs/tags/v1.13.0.tar.gz"
+  sha256 "e9972e4dcc75c93c010b81e7679f857c2dbd560680461b1dc5a47d36f35334e2"
   license "Apache-2.0"
   head "https://github.com/RoseSecurity/Terramaid.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "77caf01a4a980db936dbaf51f1ef4e379f3a493958fca952120cc768aaba170c"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "de3b53282dd08af5a2a10cbc2b89eeab98ad14faa4a00594fd44460cbc96c818"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "3ad7e5a0c8bc6fb5930afd770e174e8ac3e993ac6bc99b4428d740dbd1524960"
-    sha256 cellar: :any_skip_relocation, sonoma:         "b8ca7e31410cc1f92d5cc629c3d0f388553bcc18fe14dfaba1b8cbcdae459e16"
-    sha256 cellar: :any_skip_relocation, ventura:        "083c64d51e7b7dcff3015f3d231fd93624126241b301e7f961f6006bd75a140d"
-    sha256 cellar: :any_skip_relocation, monterey:       "c25e886d0a86185d21fdae5045d09f907e3bf089ae58bce707277ab23449aee8"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a25061aab5135bb818ff2beddbaed3db0251aa104f53c1b8f398f377156ed590"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "8c904635113ea2754cac3a5c381e57fee03d1fdaa6c127d92bbe1060d29d3583"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "8c904635113ea2754cac3a5c381e57fee03d1fdaa6c127d92bbe1060d29d3583"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "8c904635113ea2754cac3a5c381e57fee03d1fdaa6c127d92bbe1060d29d3583"
+    sha256 cellar: :any_skip_relocation, sonoma:        "80877a4f304a479714f14366fe3f033271e3faf51d0f03c2b6a4d9a7aebfa96e"
+    sha256 cellar: :any_skip_relocation, ventura:       "80877a4f304a479714f14366fe3f033271e3faf51d0f03c2b6a4d9a7aebfa96e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "2572c92a3edfe411165da06822249f5e6984ad9bb02605adda7ce51ed6d10515"
   end
 
   depends_on "go" => [:build, :test]

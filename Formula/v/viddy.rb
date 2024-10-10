@@ -1,38 +1,39 @@
 class Viddy < Formula
   desc "Modern watch command"
   homepage "https://github.com/sachaos/viddy"
-  url "https://github.com/sachaos/viddy/archive/refs/tags/v0.4.0.tar.gz"
-  sha256 "b64cca44ef6367397498faae92296fc005156e6e5a7518b6f64ac2bc912044d0"
+  url "https://github.com/sachaos/viddy/archive/refs/tags/v1.1.6.tar.gz"
+  sha256 "54b1d530276f441afdb5fe989f31efbb54eca934c71a808c0627b60b6b5c6a95"
   license "MIT"
   head "https://github.com/sachaos/viddy.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "77e5567367add7bad2e3aefbe7230676e4d8af3abe15249470bb1d3da2bb80de"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "0f550e755090099bbd12d4493f7af1425d6523a5f566e173762199bdac87d974"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "08ff40650c144632d75ae7b28f3c0408d2c6908ac9c618f4a117a653a2c6ead7"
-    sha256 cellar: :any_skip_relocation, sonoma:         "bc71aba8a25994cf2914ece7a04c50c66d93e56a815e5bc6606382ce448b197c"
-    sha256 cellar: :any_skip_relocation, ventura:        "ae8636093e3ca11a0a33d8ba3d0cb7ed6193c1180aa35fed97044e502fba92ad"
-    sha256 cellar: :any_skip_relocation, monterey:       "03efb53e5b82a1dc6bf0744dd262cd9161e0c54bb46a8078ed6d049b8bd642a1"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c40816ab0aa685145f5a8994fbf18115212c233dd17d7efe1ba433b8e425d57e"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "dc72a9f85a92d2fd33b410890e58d4338b8f4d65ccc380d68ec1637d59e13a0a"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "09f0f191d1b87ff861e7a55ee78e123d96a10e6eaade40f20ad44ba2822edb76"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "a54db326ecbeed84c3553284e5f2b2871695a631a8d68a93e0312b14ce72f3b5"
+    sha256 cellar: :any_skip_relocation, sonoma:        "84ce51de84a877b925fa2c2c53f8176a653adfbaea4ad9ec732279c9651c273a"
+    sha256 cellar: :any_skip_relocation, ventura:       "78861d780e972d23161c93e3b2718ffee87b7e1e79d428511501c5b292b97476"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8c066445f426fe60e7a5178de80fb1c2b7c3a4a372e3d3df497b65720a820937"
   end
 
-  depends_on "go" => :build
+  depends_on "rust" => :build
 
   def install
-    system "go", "build", *std_go_args(ldflags: "-s -w -X main.version=v#{version}")
+    system "cargo", "install", *std_cargo_args
   end
 
   test do
     # Errno::EIO: Input/output error @ io_fread - /dev/pts/0
     return if OS.linux? && ENV["HOMEBREW_GITHUB_ACTIONS"]
 
-    ENV["TERM"] = "xterm"
-    require "pty"
-    r, _, pid = PTY.spawn "#{bin}/viddy echo hello"
-    sleep 1
-    Process.kill "SIGINT", pid
-    assert_includes r.read, "Every"
+    begin
+      pid = fork do
+        system bin/"viddy", "--interval", "1", "date"
+      end
+      sleep 2
+    ensure
+      Process.kill("TERM", pid)
+    end
 
-    assert_equal 0, $CHILD_STATUS.exitstatus
+    assert_match "viddy #{version}", shell_output("#{bin}/viddy --version")
   end
 end

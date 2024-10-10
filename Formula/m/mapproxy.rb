@@ -2,19 +2,21 @@ class Mapproxy < Formula
   include Language::Python::Virtualenv
 
   desc "Accelerating web map proxy"
-  homepage "https://mapproxy.org/"
-  url "https://files.pythonhosted.org/packages/c8/c5/dd0f9e5bc140f6078bd7a9f62e90f2ac8b7d23e557d939283f2380e19e1a/MapProxy-2.2.0.tar.gz"
-  sha256 "d851207dda3c8bf479954d06e75e3325c68845ef32eb4566d231ce0446a81302"
+  # `mapproxy.org` is 404, upstream bug report, https://github.com/mapproxy/mapproxy/issues/983
+  homepage "https://github.com/mapproxy/mapproxy"
+  url "https://files.pythonhosted.org/packages/bd/23/7051a8b1226e026df32669c059e3a63a9fd9dbe93ffd2af190f3e6d80825/MapProxy-3.0.1.tar.gz"
+  sha256 "d92a347b954359d7b7ddb364b1d87375a88ea785e41dcc942de0627d5e4eb4a3"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "81225e77d50fde6fe0389ab03e1e0301c57655585965546021213026595eb13a"
-    sha256 cellar: :any,                 arm64_ventura:  "c2156e48e4b818a38bbaafba6ef291b5a73eb80fde45fa641994c09a4f63716c"
-    sha256 cellar: :any,                 arm64_monterey: "0b5b1b5984a9a176fab740cc35908ed55d18573ddf2e4406c0950df8159bd36c"
-    sha256 cellar: :any,                 sonoma:         "9a54ac95a0da1f9526e48e8eaba308d80a12cb102105670026009103f93adad2"
-    sha256 cellar: :any,                 ventura:        "a5133cc27e5444498808f2b29f65803db2725512a67b5a98e6a793ae7741a8fa"
-    sha256 cellar: :any,                 monterey:       "152ae74f05a51bc4c38c74114a47bf4e15bdb9ec53d82b10f57cfb5d508f9c5f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e50c52ddb2c83c33a137864f6962d26cd9e261a0753980a34e8add9b6b91e27b"
+    sha256 cellar: :any,                 arm64_sequoia:  "c45785fdc0fb887b491f6e59a331c6e2f15b7a6d4d1e212ee7a80aed20ca603a"
+    sha256 cellar: :any,                 arm64_sonoma:   "b2a4db9ae55eed18dcc9b5f992265cd507f63157f5bd258441ccee863103ca1e"
+    sha256 cellar: :any,                 arm64_ventura:  "e18f5c2d8ca001c1fbb5c285329e010edf1a15fc487c260260be7a956f5295a8"
+    sha256 cellar: :any,                 arm64_monterey: "729aa9b82b21f60f20ddb80a25f6d2c6831ba4efa682412bc46b0bb6a7636090"
+    sha256 cellar: :any,                 sonoma:         "c6584ba3540b951e3f47862fcbd72bad173e2f67a6b07f580cdfc1d2f177b950"
+    sha256 cellar: :any,                 ventura:        "213edfb1399fa044ae5ba2db68a9d24da0d12ac433634bcf61373337014f7935"
+    sha256 cellar: :any,                 monterey:       "f875f123cc9d8ae6c0a06fb741dc2d4ddbfa4894318377a72d64f20b9739b185"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a27250ca0044ab0bc0fb85ddaac7bbc7605c9b3e37d51f1cf200bdee41e1be34"
   end
 
   depends_on "rust" => :build # for rpds-py
@@ -25,8 +27,8 @@ class Mapproxy < Formula
   depends_on "python@3.12"
 
   resource "attrs" do
-    url "https://files.pythonhosted.org/packages/e3/fc/f800d51204003fa8ae392c4e8278f256206e7a919b708eef054f5f4b650d/attrs-23.2.0.tar.gz"
-    sha256 "935dc3b529c262f6cf76e50877d35a4bd3c1de194fd41f47a2b7ae8f19971f30"
+    url "https://files.pythonhosted.org/packages/fc/0f/aafca9af9315aee06a89ffde799a10a582fe8de76c563ee80bbcdc08b3fb/attrs-24.2.0.tar.gz"
+    sha256 "5cfb1b9148b5b086569baec03f20d7b6bf3bcacc9a42bebf87ffaaca362f6346"
   end
 
   resource "future" do
@@ -50,8 +52,8 @@ class Mapproxy < Formula
   end
 
   resource "pyyaml" do
-    url "https://files.pythonhosted.org/packages/cd/e5/af35f7ea75cf72f2cd079c95ee16797de7cd71f29ea7c68ae5ce7be1eda0/PyYAML-6.0.1.tar.gz"
-    sha256 "bfdf460b1736c775f2ba9f6a92bca30bc2095067b8a9d77876d1fad6cc3b4a43"
+    url "https://files.pythonhosted.org/packages/54/ed/79a089b6be93607fa5cdaedf301d7dfb23af5f25c398d5ead2525b063e17/pyyaml-6.0.2.tar.gz"
+    sha256 "d584d9ec91ad65861cc08d42e834324ef890a082e591037abe114850ff7bbc3e"
   end
 
   resource "referencing" do
@@ -60,8 +62,8 @@ class Mapproxy < Formula
   end
 
   resource "rpds-py" do
-    url "https://files.pythonhosted.org/packages/2f/fe/5217efe981c2ae8647b503ba3b8f55efc837df62f63667572b4bb75b30bc/rpds_py-0.19.1.tar.gz"
-    sha256 "31dd5794837f00b46f4096aa8ccaa5972f73a938982e32ed817bb520c465e520"
+    url "https://files.pythonhosted.org/packages/55/64/b693f262791b818880d17268f3f8181ef799b0d187f6f731b1772e05a29a/rpds_py-0.20.0.tar.gz"
+    sha256 "d72a210824facfdaf8768cf2d7ca25a042c30320b3020de2fa04640920d4e121"
   end
 
   resource "werkzeug" do

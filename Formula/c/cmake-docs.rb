@@ -1,10 +1,10 @@
 class CmakeDocs < Formula
   desc "Documentation for CMake"
   homepage "https://www.cmake.org/"
-  url "https://github.com/Kitware/CMake/releases/download/v3.30.2/cmake-3.30.2.tar.gz"
-  mirror "http://fresh-center.net/linux/misc/cmake-3.30.2.tar.gz"
-  mirror "http://fresh-center.net/linux/misc/legacy/cmake-3.30.2.tar.gz"
-  sha256 "46074c781eccebc433e98f0bbfa265ca3fd4381f245ca3b140e7711531d60db2"
+  url "https://github.com/Kitware/CMake/releases/download/v3.30.5/cmake-3.30.5.tar.gz"
+  mirror "http://fresh-center.net/linux/misc/cmake-3.30.5.tar.gz"
+  mirror "http://fresh-center.net/linux/misc/legacy/cmake-3.30.5.tar.gz"
+  sha256 "9f55e1a40508f2f29b7e065fa08c29f82c402fa0402da839fffe64a25755a86d"
   license "BSD-3-Clause"
   head "https://gitlab.kitware.com/cmake/cmake.git", branch: "master"
 
@@ -13,13 +13,12 @@ class CmakeDocs < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "057e01938eef056e88b448f4818a910916fca663e9b3dcc80533db4ff9a96988"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "057e01938eef056e88b448f4818a910916fca663e9b3dcc80533db4ff9a96988"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "057e01938eef056e88b448f4818a910916fca663e9b3dcc80533db4ff9a96988"
-    sha256 cellar: :any_skip_relocation, sonoma:         "e2db811ac1baca6cbcc95c6f4663a677fcf8d40c23d6e19c28bf21ad10aab124"
-    sha256 cellar: :any_skip_relocation, ventura:        "e2db811ac1baca6cbcc95c6f4663a677fcf8d40c23d6e19c28bf21ad10aab124"
-    sha256 cellar: :any_skip_relocation, monterey:       "e2db811ac1baca6cbcc95c6f4663a677fcf8d40c23d6e19c28bf21ad10aab124"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "057e01938eef056e88b448f4818a910916fca663e9b3dcc80533db4ff9a96988"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "8d7f2006b814dbea90e2f83b0ab664823fde47d031fdda74668390fb9c1d276a"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "8d7f2006b814dbea90e2f83b0ab664823fde47d031fdda74668390fb9c1d276a"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "8d7f2006b814dbea90e2f83b0ab664823fde47d031fdda74668390fb9c1d276a"
+    sha256 cellar: :any_skip_relocation, sonoma:        "9a1f6d4f052f691b996cbe677b11feb2596527efe73237669c802b27a0906691"
+    sha256 cellar: :any_skip_relocation, ventura:       "9a1f6d4f052f691b996cbe677b11feb2596527efe73237669c802b27a0906691"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8d7f2006b814dbea90e2f83b0ab664823fde47d031fdda74668390fb9c1d276a"
   end
 
   depends_on "cmake" => :build

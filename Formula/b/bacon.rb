@@ -1,19 +1,18 @@
 class Bacon < Formula
   desc "Background rust code check"
   homepage "https://dystroy.org/bacon/"
-  url "https://github.com/Canop/bacon/archive/refs/tags/v2.20.0.tar.gz"
-  sha256 "a7913eeab25f47aff651b7e09c46669e6d4b4a56af07ab6cac686fe867c72ddc"
+  url "https://github.com/Canop/bacon/archive/refs/tags/v3.0.0.tar.gz"
+  sha256 "ff2460da9f527f48c899fbf40fb7e2645dc3eb28e04677490d7fbab2bdaf8fea"
   license "AGPL-3.0-or-later"
   head "https://github.com/Canop/bacon.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "fd28de253e176bdbd42a1e77ccefabec3082177987065cbb7bd6da9c23b75c3b"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "1c2d7f5b9a7546475cebdf3e8074c6fd60ad6b99adfbac7ec8186db825b4dcdf"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "f9490a35dc37d527f4f4a17a8fadc5a976ff26d7c11fb9047b3d1c8de3a9b3e5"
-    sha256 cellar: :any_skip_relocation, sonoma:         "5991ba0f11d6c7c78d1fb20b27f5b3edc5f69d07b65b30e9f9c09d78a5f83a48"
-    sha256 cellar: :any_skip_relocation, ventura:        "bf1c2311f102ba97b2696f14ea460600a03f2c9c0bf4d61b9aaf9c1446ff0e02"
-    sha256 cellar: :any_skip_relocation, monterey:       "11a369f5b96ac470c91627d26e05fdda3c13392a9825c078075daabb9af63bec"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "4452ea03b943be41c145d45d4219e67c88dc5b2c3c32ebde80e593ef372bf00a"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "63115e77fe6bb868db544cc5889c2b80c5436cf92d905474c0ce602969b75bd2"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "238fcce605b488082cb8391204869a8f7fb9036e51be13f16ddbdf6df0d2db15"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "7ac5336e8676277c395ec9b95407ae30d88c7f1378e8acdc0e98d6a2fe72f899"
+    sha256 cellar: :any_skip_relocation, sonoma:        "321d525118678bbffc6e3ca080b4f4f817da49a2fcc62ed0b69fd8ff2ba89fa4"
+    sha256 cellar: :any_skip_relocation, ventura:       "aea0dd43bff127e5bed0686b3aa2c653af58635fe4048224b7745106d2eef7ba"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8d1a47e5ca5913cffc3b4abf00bd95917a72df26aad789c56d9c3938bfb06b07"
   end
 
   depends_on "rust" => :build

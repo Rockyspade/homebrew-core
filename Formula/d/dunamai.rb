@@ -8,16 +8,11 @@ class Dunamai < Formula
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "4c78c570e217fdeee758c38b7e3775fd210db8ae69ffec4ba93c31066e4ae822"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "4c78c570e217fdeee758c38b7e3775fd210db8ae69ffec4ba93c31066e4ae822"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "4c78c570e217fdeee758c38b7e3775fd210db8ae69ffec4ba93c31066e4ae822"
-    sha256 cellar: :any_skip_relocation, sonoma:         "4c78c570e217fdeee758c38b7e3775fd210db8ae69ffec4ba93c31066e4ae822"
-    sha256 cellar: :any_skip_relocation, ventura:        "4c78c570e217fdeee758c38b7e3775fd210db8ae69ffec4ba93c31066e4ae822"
-    sha256 cellar: :any_skip_relocation, monterey:       "4c78c570e217fdeee758c38b7e3775fd210db8ae69ffec4ba93c31066e4ae822"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "27bc06434769c714e9a61ce3e7a1548e13940f3bd4763ea5a40ed4c5b1d30bc5"
+    rebuild 2
+    sha256 cellar: :any_skip_relocation, all: "9be0bc5695860ddeb94edf7a55d3cdc814d997751c65e702aaeb1a9a81105b01"
   end
 
-  depends_on "python@3.12"
+  depends_on "python@3.13"
 
   resource "packaging" do
     url "https://files.pythonhosted.org/packages/51/65/50db4dda066951078f0a96cf12f4b9ada6e4b811516bf0262c0f4f7064d4/packaging-24.1.tar.gz"

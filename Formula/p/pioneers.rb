@@ -7,6 +7,7 @@ class Pioneers < Formula
   revision 1
 
   bottle do
+    sha256 arm64_sequoia:  "f8818813a32e582cfe48b07fea5acb1f9796fb529586e2b1d73eded630f64eb4"
     sha256 arm64_sonoma:   "322552b3012b80d29fbb86bd7986a9819857e34f37a4e25d5787ba891318f17f"
     sha256 arm64_ventura:  "e4593b8a69cf0aa9ce87ffe07240f877ec2462d6f2956d7757bc35656e7946d2"
     sha256 arm64_monterey: "9dc75e65f88e84ce1354958dab915fc80436b07ea720239479e1d82ead6fbd8c"
@@ -16,14 +17,24 @@ class Pioneers < Formula
     sha256 x86_64_linux:   "3efeb1b6c8a348562ebb969cbd877612cefe83e65b54bd52533f9bed290f8bc9"
   end
 
+  depends_on "gettext" => :build
   depends_on "intltool" => :build
   depends_on "itstool" => :build
   depends_on "pkg-config" => :build
-  depends_on "gettext"
+  depends_on "cairo"
+  depends_on "gdk-pixbuf"
+  depends_on "glib"
   depends_on "gtk+3"
   depends_on "librsvg" # svg images for gdk-pixbuf
+  depends_on "pango"
 
   uses_from_macos "perl" => :build
+
+  on_macos do
+    depends_on "at-spi2-core"
+    depends_on "gettext"
+    depends_on "harfbuzz"
+  end
 
   on_linux do
     depends_on "perl-xml-parser" => :build
