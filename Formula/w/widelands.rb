@@ -1,8 +1,8 @@
 class Widelands < Formula
   desc "Free real-time strategy game like Settlers II"
   homepage "https://www.widelands.org/"
-  url "https://github.com/widelands/widelands/archive/refs/tags/v1.2.tar.gz"
-  sha256 "c6bed3717c541276fbed8a33adce230a2637297588c719268fcb963e076210e2"
+  url "https://github.com/widelands/widelands/archive/refs/tags/v1.2.1.tar.gz"
+  sha256 "799bfd32048ef20118c48e21f3fc843ae0451c42bb8bf2eabcb9b26bf6fe54b4"
   license "GPL-2.0-or-later"
   version_scheme 1
 
@@ -12,13 +12,12 @@ class Widelands < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "49df0bbc341c148bb09064dfdf41be0216f9c026e4cf78c803d5d58b15031028"
-    sha256 arm64_ventura:  "5286091b56fb4c2bbd15841ac7074e07933bc75d4e1699d959e7da2eeabf5b45"
-    sha256 arm64_monterey: "8b6883a14cd5732b4d71e423573a48da53f05329552f581775ac06ddb3f6bea5"
-    sha256 sonoma:         "07ea532a734d18fbb7d1cb08ad4fad5c5c2c742ab25b28ba597c10af765d821c"
-    sha256 ventura:        "8be55a2c96d0782a1195c0beae0221f52d52938af570835268fccc6339ffe205"
-    sha256 monterey:       "18ad1a1c68b547c4a7079cd546b7d9f07f0a9a75a04eeb9d1f1a85dbf9eeb402"
-    sha256 x86_64_linux:   "9cb4ef5b7a47e801e43e43c3b848fceaf2cdc510e94d9cbc00afc27bdcc4e518"
+    sha256 arm64_sequoia: "8f6a42336d2463fa5fb780b1d0a265f58e83c8011f90b635a994b39fe2382c69"
+    sha256 arm64_sonoma:  "f81d945d7bdb3961c2c808294496a42d29c78133850e6ff9578451c68524d043"
+    sha256 arm64_ventura: "fde531ff4c5c0bd673dcefdc64caf3598b4c43fdc02b75a93464862054c7f96e"
+    sha256 sonoma:        "506d22d26f4c3e2ab5893a116fbbb9a298073ac8fbb66ddb230874c495ff88a9"
+    sha256 ventura:       "974a1506ca44d90f468e681ac4f29aed05fd0a2a3847b301600de2fd33c74cf2"
+    sha256 x86_64_linux:  "68877518c427d75cf1a45005a2ee32258df2a587eadbfd6429af2626d90c51f7"
   end
 
   depends_on "asio" => :build
@@ -28,7 +27,7 @@ class Widelands < Formula
   depends_on "pkg-config" => :build
 
   depends_on "glew"
-  depends_on "icu4c"
+  depends_on "icu4c@76"
   depends_on "libpng"
   depends_on "lua"
   depends_on "minizip"

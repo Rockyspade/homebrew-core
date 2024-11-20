@@ -1,8 +1,8 @@
 class Allure < Formula
   desc "Flexible lightweight test report tool"
   homepage "https://github.com/allure-framework/allure2"
-  url "https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.30.0/allure-commandline-2.30.0.zip"
-  sha256 "2e3e9af0772796862da17d95007abd8d3df1176c13aca89ee2c79118fe4dd2f7"
+  url "https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.32.0/allure-commandline-2.32.0.zip"
+  sha256 "d0670d85cda9677409b1e8615c2a26f5acfbf64658fbb0e05958d70626f99318"
   license "Apache-2.0"
 
   livecheck do
@@ -11,13 +11,7 @@ class Allure < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "0dcc88d31dacc90ea42157fd33aeaf308bffc0d2ba821848435345f293c2f3d4"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "0dcc88d31dacc90ea42157fd33aeaf308bffc0d2ba821848435345f293c2f3d4"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "0dcc88d31dacc90ea42157fd33aeaf308bffc0d2ba821848435345f293c2f3d4"
-    sha256 cellar: :any_skip_relocation, sonoma:         "0dcc88d31dacc90ea42157fd33aeaf308bffc0d2ba821848435345f293c2f3d4"
-    sha256 cellar: :any_skip_relocation, ventura:        "0dcc88d31dacc90ea42157fd33aeaf308bffc0d2ba821848435345f293c2f3d4"
-    sha256 cellar: :any_skip_relocation, monterey:       "0dcc88d31dacc90ea42157fd33aeaf308bffc0d2ba821848435345f293c2f3d4"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "aba96abd6775fb70188e8f9cab54fd1ee362f184a99d891b3dc8a5e5901e4c37"
+    sha256 cellar: :any_skip_relocation, all: "b4600f1016bed8e21bff2cece4c62c40667c320313c5f4eefea3d4607fbbd9fa"
   end
 
   depends_on "openjdk"
@@ -32,7 +26,7 @@ class Allure < Formula
   end
 
   test do
-    (testpath/"allure-results/allure-result.json").write <<~EOS
+    (testpath/"allure-results/allure-result.json").write <<~JSON
       {
         "uuid": "allure",
         "name": "testReportGeneration",
@@ -56,7 +50,7 @@ class Allure < Formula
           }
         ]
       }
-    EOS
+    JSON
     system bin/"allure", "generate", "#{testpath}/allure-results", "-o", "#{testpath}/allure-report"
   end
 end

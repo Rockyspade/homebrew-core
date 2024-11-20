@@ -1,11 +1,26 @@
 class Tectonic < Formula
   desc "Modernized, complete, self-contained TeX/LaTeX engine"
   homepage "https://tectonic-typesetting.github.io/"
-  url "https://github.com/tectonic-typesetting/tectonic/archive/refs/tags/tectonic@0.15.0.tar.gz"
-  sha256 "3c13de312c4fe39ff905ad17e64a15a3a59d33ab65dacb0a8b9482c57e6bc6aa"
   license "MIT"
-  revision 1
+  revision 3
   head "https://github.com/tectonic-typesetting/tectonic.git", branch: "master"
+
+  stable do
+    url "https://github.com/tectonic-typesetting/tectonic/archive/refs/tags/tectonic@0.15.0.tar.gz"
+    sha256 "3c13de312c4fe39ff905ad17e64a15a3a59d33ab65dacb0a8b9482c57e6bc6aa"
+
+    # Backport `time` update to build on newer Rust
+    patch do
+      url "https://github.com/tectonic-typesetting/tectonic/commit/6b49ca8db40aaca29cb375ce75add3e575558375.patch?full_index=1"
+      sha256 "86e5343d1ce3e725a7dab0227003dddd09dcdd5913eb9e5866612cb77962affb"
+    end
+
+    # Backport fix for icu4c 75
+    patch do
+      url "https://github.com/tectonic-typesetting/tectonic/commit/d260961426b01f7643ba0f35f493bdb671eeaf3f.patch?full_index=1"
+      sha256 "7d2014a1208569a63fca044b8957e2d2256fa169ea2ebe562aed6f490eec17d1"
+    end
+  end
 
   # As of writing, only the tags starting with `tectonic@` are release versions.
   # NOTE: The `GithubLatest` strategy cannot be used here because the "latest"
@@ -16,14 +31,12 @@ class Tectonic < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any,                 arm64_sonoma:   "85647768c6b32b1cceebac4c541e5efbb99fdc566924fe4559f6533d161eb06a"
-    sha256 cellar: :any,                 arm64_ventura:  "39804b39b3a365a653c64bd7c38ed9f8f8375b7295b4b488d65a9a0ea45fe465"
-    sha256 cellar: :any,                 arm64_monterey: "88d39d53987fbe343aecb1dba5b388bd87981bcef6f378ce16be169732f93d16"
-    sha256 cellar: :any,                 sonoma:         "eecc9938bf7b89cdb57054f9f098ebc619a284fa6f6fe077f984ff8497c35a35"
-    sha256 cellar: :any,                 ventura:        "aa1b9a3cca1c889ac3140030b3b940d18de821a75e7b10211cf20940add18c04"
-    sha256 cellar: :any,                 monterey:       "29b6de4cf2fa8ea3de5f209fe3cfd3608cca115954989eb674679d1dd9651b45"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "8d15114dca090265bdd487b79a65295ff695ee1c928c5471fd1ad633fccfebc0"
+    sha256 cellar: :any,                 arm64_sequoia: "ec1722650c30319f61d56d7d8cca8db7cc9e076ad4893606facfbd9ee69ae7b3"
+    sha256 cellar: :any,                 arm64_sonoma:  "721748a97a49ff72d7104f4ac681a9bb4dc45b03918dc8ad381ad8222ed0fc66"
+    sha256 cellar: :any,                 arm64_ventura: "60ddb06cede028376f301c6943862850df6a94dc51d019c2c0a7d8a34e1ad39f"
+    sha256 cellar: :any,                 sonoma:        "94aae850c22adffae6daa088513cd87f5c33fc51413e3548fd781990d6743e6f"
+    sha256 cellar: :any,                 ventura:       "a45fab4582fb61a2a8c09c4556c4c450c6a21bfda04fd3e8c0bd6e2a5ece07c4"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "cf78eafd736c3ef80d839669766e9c4ceb283772facbbe8aaa236084d6eda476"
   end
 
   depends_on "pkg-config" => :build
@@ -31,13 +44,17 @@ class Tectonic < Formula
   depends_on "freetype"
   depends_on "graphite2"
   depends_on "harfbuzz"
-  depends_on "icu4c"
+  depends_on "icu4c@76"
   depends_on "libpng"
   depends_on "openssl@3"
 
-  def install
-    ENV.cxx11
+  uses_from_macos "zlib"
 
+  on_linux do
+    depends_on "fontconfig"
+  end
+
+  def install
     if OS.mac?
       ENV["MACOSX_DEPLOYMENT_TARGET"] = MacOS.version.to_s # needed for CLT-only builds
       ENV.delete("HOMEBREW_SDKROOT") if MacOS.version == :high_sierra

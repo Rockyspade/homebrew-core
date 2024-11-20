@@ -7,6 +7,7 @@ class Akku < Formula
   head "https://gitlab.com/akkuscm/akku.git", branch: "master"
 
   bottle do
+    sha256 arm64_sequoia:  "0f13478e5f6f3b41e6e75beac905b2aaae1df9d9a1eb7d600bf0f6bf70b076f0"
     sha256 arm64_sonoma:   "565a1f1bba15ccfbe640704c86b1752a03fe8935b86fefe5c02f946d51cf6b0a"
     sha256 arm64_ventura:  "dac9e5f8e17d8b88899acb8fcd0678e863c028737aa921c07ad982804c3ab656"
     sha256 arm64_monterey: "a0a5fc11cd13c9ebb25ad4d8e46c607a67b061852e4d3ef17ec1ace4758d8962"
@@ -18,21 +19,19 @@ class Akku < Formula
     sha256 x86_64_linux:   "23a1841305dd2e17051dc12c0e0c10e17420c432a0fca409ece365558a5cce4f"
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "guile"
 
   def install
-    system "./configure", *std_configure_args, "--disable-silent-rules"
+    system "./configure", "--disable-silent-rules", *std_configure_args
     system "make"
     system "make", "install"
   end
 
   test do
     system bin/"akku", "init", "brewtest"
-    assert_predicate testpath/"brewtest/brewtest.sls", :exist?
-    assert_match "akku-package (\"brewtest\"",
-      (testpath/"brewtest/Akku.manifest").read
-
+    assert_path_exists testpath/"brewtest/brewtest.sls"
+    assert_match "akku-package (\"brewtest\"", (testpath/"brewtest/Akku.manifest").read
     assert_match "Akku.scm #{version}", shell_output("#{bin}/akku --help 2>&1")
   end
 end

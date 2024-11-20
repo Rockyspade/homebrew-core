@@ -13,6 +13,7 @@ class ZeroInstall < Formula
   end
 
   bottle do
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "c693f4d80b111a0a5358f8b473320134c026a20d87febc6f827bab257876baff"
     sha256 cellar: :any_skip_relocation, arm64_sonoma:   "b751e193e9b5105e46de557b3d09b57dac2e36457358c66d5af441955c98b6b1"
     sha256 cellar: :any_skip_relocation, arm64_ventura:  "29193da44165014972823b152963e10f4b016964418842bf24e944d9e29d47ac"
     sha256 cellar: :any_skip_relocation, arm64_monterey: "e681ef011946eee260f580f0faaf250803ffe7df97875db1560f24d26de68e44"
@@ -28,7 +29,7 @@ class ZeroInstall < Formula
   depends_on "ocaml" => :build
   depends_on "ocamlbuild" => :build
   depends_on "opam" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "gnupg"
 
   uses_from_macos "python" => :build
@@ -36,7 +37,7 @@ class ZeroInstall < Formula
   uses_from_macos "curl"
 
   on_linux do
-    depends_on "pkg-config"
+    depends_on "pkgconf"
   end
 
   def install
@@ -73,12 +74,12 @@ class ZeroInstall < Formula
   end
 
   test do
-    (testpath/"hello.sh").write <<~EOS
+    (testpath/"hello.sh").write <<~SH
       #!/bin/sh
       echo "hello world"
-    EOS
+    SH
     chmod 0755, testpath/"hello.sh"
-    (testpath/"hello.xml").write <<~EOS
+    (testpath/"hello.xml").write <<~XML
       <?xml version="1.0" ?>
       <interface xmlns="http://zero-install.sourceforge.net/2004/injector/interface" xmlns:compile="http://zero-install.sourceforge.net/2006/namespaces/0compile">
         <name>hello-bash</name>
@@ -91,7 +92,7 @@ class ZeroInstall < Formula
           </implementation>
         </group>
       </interface>
-    EOS
+    XML
     assert_equal "hello world\n", shell_output("#{bin}/0launch --console hello.xml")
   end
 end

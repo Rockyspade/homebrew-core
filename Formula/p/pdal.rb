@@ -1,9 +1,10 @@
 class Pdal < Formula
   desc "Point data abstraction library"
   homepage "https://www.pdal.io/"
-  url "https://github.com/PDAL/PDAL/releases/download/2.7.2/PDAL-2.7.2-src.tar.bz2"
-  sha256 "f6ae0f3dc012b19c70dde2361799ecac0cdcbeb9cad5cfd96313c9fdc8608f32"
+  url "https://github.com/PDAL/PDAL/releases/download/2.8.1/PDAL-2.8.1-src.tar.bz2"
+  sha256 "0e8d7deabe721f806b275dda6cf5630a8e43dc7210299b57c91f46fadcc34b31"
   license "BSD-3-Clause"
+  revision 1
   head "https://github.com/PDAL/PDAL.git", branch: "master"
 
   # The upstream GitHub repository sometimes creates tags that only include a
@@ -17,13 +18,12 @@ class Pdal < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "21d4f2320e136d8c7d87d299d0984feb8f6aab0f6dab4e7a676d2b21ba593959"
-    sha256 cellar: :any,                 arm64_ventura:  "ac56d6c29ebf15e1712aea4e32a556b9990176495e499403066537cab2b2ece5"
-    sha256 cellar: :any,                 arm64_monterey: "043b657f0abf3e90d8fe5f6a9ceebfc0a2cb34b7b5d533b9dae9526528e0b5dd"
-    sha256 cellar: :any,                 sonoma:         "75c2fecb49a5d8029a38a0f2c2872acd540a27a3aef6da7ef33589ea7179fe96"
-    sha256 cellar: :any,                 ventura:        "27b9308832346b0ce1d59ec1658883e4cd9f76d12b20010e689f297e3b2b276e"
-    sha256 cellar: :any,                 monterey:       "9d7f89d8ee77abb37ff4dc86e105671c094b22651cfe3de2bb92f310a0d568fe"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d46e3c1ec5dbca3550598e86b7d25f49f36749bc303f09ae1c7771eddf9628b7"
+    sha256 cellar: :any,                 arm64_sequoia: "5ace63b345d073dff970808b106404c6948a3c11d485809811ca1b7688d3e63c"
+    sha256 cellar: :any,                 arm64_sonoma:  "3c902d2284736cb833b7df51a6aebfdbc287106cb083b99eff902217da069cff"
+    sha256 cellar: :any,                 arm64_ventura: "6ed67bc6d48660119474b32a6619767d2773b596b8d532abfb47e66c0a667402"
+    sha256 cellar: :any,                 sonoma:        "d32e2895b2ded2584177286909dc4610de3966ed88f0f55f496bcdf7bcc6480a"
+    sha256 cellar: :any,                 ventura:       "445cd7662377535b2edc3a4c7ac45c454256d09c7b03187e724c644c837202fd"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a388ac898e825428521848a1a71c3bd92e25132b250040bdd7def926e9ebe96f"
   end
 
   depends_on "cmake" => :build

@@ -6,6 +6,7 @@ class Apidoc < Formula
   license "MIT"
 
   bottle do
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "77eead90a2e275963902897bb539d05529082eefc6da4862e006cce26e850fb6"
     sha256 cellar: :any_skip_relocation, arm64_sonoma:   "e50dd2df96beabbbb2ae46b9066c60903b6c778798fa172aeece50e8a68d78b8"
     sha256 cellar: :any_skip_relocation, arm64_ventura:  "3ae177f380e815fcea0ae8cf238d1cba13f50e7d78195e0329c6574155a53624"
     sha256 cellar: :any_skip_relocation, arm64_monterey: "3ae177f380e815fcea0ae8cf238d1cba13f50e7d78195e0329c6574155a53624"
@@ -30,7 +31,7 @@ class Apidoc < Formula
   end
 
   test do
-    (testpath/"api.go").write <<~EOS
+    (testpath/"api.go").write <<~GO
       /**
        * @api {get} /user/:id Request User information
        * @apiVersion #{version}
@@ -42,14 +43,14 @@ class Apidoc < Formula
        * @apiSuccess {String} firstname Firstname of the User.
        * @apiSuccess {String} lastname  Lastname of the User.
        */
-    EOS
-    (testpath/"apidoc.json").write <<~EOS
+    GO
+    (testpath/"apidoc.json").write <<~JSON
       {
         "name": "brew test example",
         "version": "#{version}",
         "description": "A basic apiDoc example"
       }
-    EOS
+    JSON
     system bin/"apidoc", "-i", ".", "-o", "out"
     assert_predicate testpath/"out/assets/main.bundle.js", :exist?
   end

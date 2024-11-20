@@ -7,6 +7,7 @@ class Librtlsdr < Formula
   head "https://git.osmocom.org/rtl-sdr", using: :git, branch: "master"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "3dc37dee4e2862871cf66c0ba71eedfbbe5bab103b766d3d948faeeee5e97f1c"
     sha256 cellar: :any,                 arm64_sonoma:   "2e190eb8b02ade5f5be5b15fb07b11ca2fee5a586597a279584e1198341c1cc2"
     sha256 cellar: :any,                 arm64_ventura:  "d8c24145ac1ceeea136217f23f2b887b95dee7e3fa174384e2bcd1aec5419f38"
     sha256 cellar: :any,                 arm64_monterey: "84c6e8c711bbf3c97c2b926c87d417558a164cf5870ccd9fe5420ac2d37cf1e5"
@@ -27,7 +28,7 @@ class Librtlsdr < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include "rtl-sdr.h"
 
       int main()
@@ -35,7 +36,7 @@ class Librtlsdr < Formula
         rtlsdr_get_device_count();
         return 0;
       }
-    EOS
+    C
     system ENV.cc, "test.c", "-L#{lib}", "-lrtlsdr", "-o", "test"
     system "./test"
   end

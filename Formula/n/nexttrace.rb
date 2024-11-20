@@ -1,8 +1,8 @@
 class Nexttrace < Formula
   desc "Open source visual route tracking CLI tool"
   homepage "https://nxtrace.github.io/NTrace-core/"
-  url "https://github.com/nxtrace/NTrace-core/archive/refs/tags/v1.3.2.tar.gz"
-  sha256 "30a22f9d94fafcb64a26bad490803a1434f5d695a4fc7d7dcbec73be7f0329f3"
+  url "https://github.com/nxtrace/NTrace-core/archive/refs/tags/v1.3.5.tar.gz"
+  sha256 "8a373935e92bf94959898ce4a6980269270ce5ca88cbe5fb04dd1b3bfeb620fd"
   license "GPL-3.0-only"
   head "https://github.com/nxtrace/NTrace-core.git", branch: "main"
 
@@ -14,13 +14,12 @@ class Nexttrace < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "a4ec666811db32583458e57ad1e23b0a750a77259a527707d7c8fc4725c3ff5c"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "d1dcf2460793c3f74470d755e29e1f870f1b78cc64ee9825cfcc542ac906a882"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "20ac6c59bd66dff27ddc8070b4c0e4d5a3235e9cd5426f8b93b95bb97c32a981"
-    sha256 cellar: :any_skip_relocation, sonoma:         "2d6af572a724e857db8c506722c9c48fb202fe6c8ef323487ae6d75fffbac396"
-    sha256 cellar: :any_skip_relocation, ventura:        "93bcac1a533c78e8f32b65cc007f4edf5a6f2f04f9ae53589565582b15760f32"
-    sha256 cellar: :any_skip_relocation, monterey:       "477a2f3218765a281542499d21c50ef57e2db350f8b6b1d0d462168633fda045"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e90f31d9c8689e87102573b8e21b0551a55a19a8bb0b5ec8187dcd4fee7d086c"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "33ee30f11117168da4010b9c58bd97aa72a1bb1639315f6add861fe7b34d007d"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "1b5bee2bef7ceb80340287776cd8c9613232d59f274a27332a7b0858f0dc10d0"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "655f5897e273bb725cc69063cc7a86333e76b4acd8b1f21a16165d79e2d56188"
+    sha256 cellar: :any_skip_relocation, sonoma:        "e196e386e5950104b094dc1c5704315c614bff0ac5b7168613281a502a69d0f1"
+    sha256 cellar: :any_skip_relocation, ventura:       "2a95597e78b4bc1093a9507fe988e463a18c1357d5f5ea31a523a9d3c86759bb"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "55d83647143535207d8207bf7e90b2f0bf50efcd5ac4edd93b1e36d64cfb6298"
   end
 
   # use "go" again after https://github.com/nxtrace/NTrace-core/issues/247 is fixed and released

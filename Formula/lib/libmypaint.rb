@@ -7,6 +7,7 @@ class Libmypaint < Formula
   revision 1
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "ada0de7fc29d5634da50e9a9dd05858fdb5fc839f6cfefb8dda3977ab7e9dd8c"
     sha256 cellar: :any,                 arm64_sonoma:   "bd3ed49871a7e59ee4731520d6d3852c7f53a4565f125153b13aa556998931fd"
     sha256 cellar: :any,                 arm64_ventura:  "45f120eb85a644dae61e2bcf2683256dc3cae8531fa59d339e07ff9a3ba1f135"
     sha256 cellar: :any,                 arm64_monterey: "b481fb4e3ed5cb542d1ef073a5852a0a65361f0825051302ccdd6bc224901d90"
@@ -37,8 +38,6 @@ class Libmypaint < Formula
   end
 
   def install
-    ENV.prepend_path "PERL5LIB", Formula["perl-xml-parser"].libexec/"lib/perl5" if OS.linux?
-
     system "./configure", "--disable-introspection",
                           "--without-glib",
                           *std_configure_args
@@ -46,14 +45,14 @@ class Libmypaint < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <mypaint-brush.h>
       int main() {
         MyPaintBrush *brush = mypaint_brush_new();
         mypaint_brush_unref(brush);
         return 0;
       }
-    EOS
+    C
 
     system ENV.cc, "test.c", "-I#{include}/libmypaint", "-L#{lib}", "-lmypaint", "-o", "test"
     system "./test"

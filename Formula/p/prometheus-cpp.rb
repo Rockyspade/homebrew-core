@@ -1,39 +1,44 @@
 class PrometheusCpp < Formula
   desc "Prometheus Client Library for Modern C++"
   homepage "https://github.com/jupp0r/prometheus-cpp"
-  url "https://github.com/jupp0r/prometheus-cpp.git",
-      tag:      "v1.2.4",
-      revision: "ad99e21f4706193670c42b36c9824dc997f4c475"
+  url "https://github.com/jupp0r/prometheus-cpp/releases/download/v1.3.0/prometheus-cpp-with-submodules.tar.gz"
+  sha256 "62bc2cc9772db2314dbaae506ae2a75c8ee897dab053d8729e86a637b018fdb6"
   license "MIT"
+  revision 1
   head "https://github.com/jupp0r/prometheus-cpp.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "d668756a9f2cce815bb21d4cc57f6650033e16c9f6075e182a83c9be2b8faf87"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "ed12e2d6e073c2cf5d8d944f38ba7b825c464db9cea604c786442ee87c68f2f7"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "ec2d1f82b26e4646b33f50555000040a2b60092ceb3e12b0141134644aa7e973"
-    sha256 cellar: :any_skip_relocation, sonoma:         "60fc60c44cc6a6ebcb497fbd1bf1e5b55d4edabfc8be33f7983409ffd8beeee0"
-    sha256 cellar: :any_skip_relocation, ventura:        "9ed018a937326f595e2d8b0901471e804bf1656249410f6d41d6e3d3a4ac9eb2"
-    sha256 cellar: :any_skip_relocation, monterey:       "d0a4bc233403aa98f488f60cb7e6d1d8f3d03348b88b7ded8e18c2fb4e59ff35"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "00a319b9c7930f5555e55783aa88a149b738d34565069e19b6141c20300e59ed"
+    sha256 cellar: :any,                 arm64_sequoia: "67fe748cad481abce5867c7402ea31ad4deaee191260205d8800abf5a892c3d4"
+    sha256 cellar: :any,                 arm64_sonoma:  "ab7bf9c8c6814af4fe56d2a669a602dbf2f3a802685527308c1d03d19772fd58"
+    sha256 cellar: :any,                 arm64_ventura: "a57c78acfdc6c2da03a6a86bfc67a198d171d0c6769cb4435efd51c07e36d8aa"
+    sha256 cellar: :any,                 sonoma:        "e8ee4564c89feef24f7abf08bd218dc6b69de9f40ebc69fc178f67661bc40c99"
+    sha256 cellar: :any,                 ventura:       "8d82c34b65dbc59e5b0817bc4cbe22745e2ba39eef9b2579b39cb31f55b51f9b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "4ed60a657d6508498016fb99c917682d5c5cf7c3931eb042d6cb3a248ed6d51b"
   end
 
   depends_on "cmake" => :build
+
   uses_from_macos "curl"
   uses_from_macos "zlib"
 
   def install
-    system "cmake", ".", *std_cmake_args
-    system "make", "install"
+    system "cmake", "-S", ".", "-B", "build",
+                    "-DBUILD_SHARED_LIBS=ON",
+                    "-DCMAKE_INSTALL_RPATH=#{rpath}",
+                    "-DENABLE_TESTING=OFF",
+                    *std_cmake_args
+    system "cmake", "--build", "build"
+    system "cmake", "--install", "build"
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <prometheus/registry.h>
       int main() {
         prometheus::Registry reg;
         return 0;
       }
-    EOS
+    CPP
     system ENV.cxx, "-std=c++14", "test.cpp", "-I#{include}", "-L#{lib}", "-lprometheus-cpp-core", "-o", "test"
     system "./test"
   end

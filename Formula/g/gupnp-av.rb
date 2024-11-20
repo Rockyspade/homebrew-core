@@ -6,6 +6,7 @@ class GupnpAv < Formula
   license "LGPL-2.1-or-later"
 
   bottle do
+    sha256 arm64_sequoia:  "8203e0c72dccb37f36313d030c3b0b381bc1c4cad74d1ddf64784ad41045bee0"
     sha256 arm64_sonoma:   "b0c78d7e0bbfad95966229cf39e650db5da0d3673a71b56658f894110514b761"
     sha256 arm64_ventura:  "33af0c7369b538b76818cbbb1df0fc5bd698036cd1a6e30d7c12d307defa0540"
     sha256 arm64_monterey: "2bf2c5d017d82c6e5564d9568440e2eddfc93263adee2e764aff9665267048ec"
@@ -37,7 +38,7 @@ class GupnpAv < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <libgupnp-av/gupnp-av.h>
 
       int main(int argc, char *argv[]) {
@@ -51,7 +52,7 @@ class GupnpAv < Formula
 
         return 0;
       }
-    EOS
+    C
 
     pkg_config_cflags = shell_output("pkg-config --cflags --libs gupnp-av-1.0 glib-2.0").chomp.split
     system ENV.cc, "test.c", *pkg_config_cflags, "-o", "test"

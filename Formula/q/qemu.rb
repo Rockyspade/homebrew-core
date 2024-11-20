@@ -1,8 +1,8 @@
 class Qemu < Formula
   desc "Generic machine emulator and virtualizer"
   homepage "https://www.qemu.org/"
-  url "https://download.qemu.org/qemu-9.0.2.tar.xz"
-  sha256 "a8c3f596aece96da3b00cafb74baafa0d14515eafb8ed1ee3f7f5c2d0ebf02b6"
+  url "https://download.qemu.org/qemu-9.1.1.tar.xz"
+  sha256 "7dc0f9da5491ff449500f3310063a36b619f236ee45706fd0846eb37d4bba889"
   license "GPL-2.0-only"
   head "https://gitlab.com/qemu-project/qemu.git", branch: "master"
 
@@ -12,13 +12,12 @@ class Qemu < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "f7c729dfe2f6ff174b0e68ef67f6904f7228167f9fa138f05ea56fcc876f2861"
-    sha256 arm64_ventura:  "20c6cc71639d1c2db5333ceeb9a5d8ddffbb96c02599a1f6fdca1ddfc088481e"
-    sha256 arm64_monterey: "80be85976762b70be78b797254e58bf095d49cc5bf8b3e28e61a8743c76f961e"
-    sha256 sonoma:         "8b4446ccb692293a7d6f7b5950739f2e33477e75d03e86c1400bdeb2ff9b328e"
-    sha256 ventura:        "9fd7800fc9eb9821615e556f53f0735d88455afef8baa2ed98c8f9eebbd840d5"
-    sha256 monterey:       "a3491a35f409c26099e6f2a4d1c640d1349ea23478bd72cd85e3b38e68e04902"
-    sha256 x86_64_linux:   "333b9bc3a3e36feae843fec7383187ee3799a2e443d4c644f4674064a6bc28cb"
+    sha256 arm64_sequoia: "4164411ddffba25e2640b896ee5c0c9d02dd17cd99b5488a992413f060dd6f26"
+    sha256 arm64_sonoma:  "0f3764292c3cf30b0f5b2c8636768feade7c733a8b61beea8109fa1ef7df86cd"
+    sha256 arm64_ventura: "ce0c8e9515e633976b053008d81d6bc00a2d414ce8b4db9f09a1334e292dd8e0"
+    sha256 sonoma:        "5a27f6e005e2628477cb4a3e6814d9af0f39acb7715c300a7d9e1e6b06fac255"
+    sha256 ventura:       "9a9dcb188db0e6706d5a200df9a76411f09fe4bf445da54512010d15de3527f1"
+    sha256 x86_64_linux:  "f123c277c416078a5373541fd1e1ead3fbf54e1dded03f32b27682da75821d3d"
   end
 
   depends_on "libtool" => :build
@@ -111,8 +110,8 @@ class Qemu < Formula
     end
 
     archs = %w[
-      aarch64 alpha arm cris hppa i386 m68k microblaze microblazeel mips
-      mips64 mips64el mipsel nios2 or1k ppc ppc64 riscv32 riscv64 rx
+      aarch64 alpha arm avr cris hppa i386 loongarch64 m68k microblaze microblazeel mips
+      mips64 mips64el mipsel or1k ppc ppc64 riscv32 riscv64 rx
       s390x sh4 sh4eb sparc sparc64 tricore x86_64 xtensa xtensaeb
     ]
     archs.each do |guest_arch|

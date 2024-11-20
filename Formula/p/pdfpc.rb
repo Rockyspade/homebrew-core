@@ -16,6 +16,7 @@ class Pdfpc < Formula
   end
 
   bottle do
+    sha256 arm64_sequoia:  "2a9add17232af69e9969cc6fa4a4c2546f032334ee2a5c82884ea91f1b8bd6d9"
     sha256 arm64_sonoma:   "37e68010fd59d6d822bc592edfefe7829e6308a3be011e04710e81289e45787a"
     sha256 arm64_ventura:  "fd6970c02ca367a6050696a949c2ccfc08cbb4cef034dbe189d57f66b2fc6dd3"
     sha256 arm64_monterey: "746f25f24ee4224d84988f30a3b146f54f11b1423a2baaea9d128b07f7459862"
@@ -55,7 +56,7 @@ class Pdfpc < Formula
     # Upstream currently uses webkit2gtk-4.0 (API for GTK 3 and libsoup 2)
     # but we only provide webkit2gtk-4.1 (API for GTK 3 and libsoup 3).
     # Issue ref: https://github.com/pdfpc/pdfpc/issues/671
-    inreplace "src/CMakeLists.txt", "webkit2gtk-4.0", "webkit2gtk-4.1"
+    inreplace "src/CMakeLists.txt", "webkit2gtk-4.0", "webkit2gtk-4.1" unless build.head?
 
     system "cmake", "-S", ".", "-B", "build",
                     "-DCMAKE_INSTALL_SYSCONFDIR=#{etc}",

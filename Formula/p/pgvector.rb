@@ -1,50 +1,55 @@
 class Pgvector < Formula
   desc "Open-source vector similarity search for Postgres"
   homepage "https://github.com/pgvector/pgvector"
-  url "https://github.com/pgvector/pgvector/archive/refs/tags/v0.7.4.tar.gz"
-  sha256 "0341edf89b1924ae0d552f617e14fb7f8867c0194ed775bcc44fa40288642583"
+  url "https://github.com/pgvector/pgvector/archive/refs/tags/v0.8.0.tar.gz"
+  sha256 "867a2c328d4928a5a9d6f052cd3bc78c7d60228a9b914ad32aa3db88e9de27b0"
   license "PostgreSQL"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "a251bbc3992e58169aa83d7a2753c9ddbad8d0dedd65929e386e6ed2034a2305"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "2360d6c6185c21e7928d24c393aebce0568a8ce3c5f5d5af40a4e84283b5bd5f"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "56be02b9338ff682781ab0f371f5ccbf45907eab6cfc4c60eddaa140e73c2477"
-    sha256 cellar: :any_skip_relocation, sonoma:         "11938beccda5271a79a663f261484d3f813f275ae82b5911ba83bdcbadf1f02c"
-    sha256 cellar: :any_skip_relocation, ventura:        "45cab40694323e8e7544530a78898fa0501dd7123ac72019bbf9bcc1b7e2d1e7"
-    sha256 cellar: :any_skip_relocation, monterey:       "5485765a2bc9c645504369b020049462c4c5d59350d215e89a3b840b4df70a61"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "dbff5b6c43f5d6f90446c96d65b34b26227a74a848abc9fe0ad73839cfb4121d"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "d0ea074a0dd35acc1957c1f2f6d90df297a16d7e47f94368b85e3a309e9540fe"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "01a8036c0a03daa290fca07e915e406356fd36cdbd084117e9246d772955b438"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "0d0edb94eda91ef957b4497c0173c33579f860843d6c105d5668f1ceb86d11a7"
+    sha256 cellar: :any_skip_relocation, sonoma:        "b9e229a72dbc9e7b8e4587389823caa307fc1ee0f2338e45140a49e4ece5c4eb"
+    sha256 cellar: :any_skip_relocation, ventura:       "21e40f77e8afca2fae9303cc45216b53ec79d48ebc3f8d7cd79b2fa8a22aa6ac"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7765039d7b20e78006e2ff2c3b197185a9c80e8b930a384b8e5feeb88eaf3afa"
   end
 
-  depends_on "postgresql@14"
+  depends_on "postgresql@14" => [:build, :test]
+  depends_on "postgresql@17" => [:build, :test]
 
-  def postgresql
-    Formula["postgresql@14"]
+  def postgresqls
+    deps.map(&:to_formula).sort_by(&:version).filter { |f| f.name.start_with?("postgresql@") }
   end
 
   def install
-    ENV["PG_CONFIG"] = postgresql.opt_bin/"pg_config"
-    system "make"
-    system "make", "install", "pkglibdir=#{lib/postgresql.name}",
-                              "datadir=#{share/postgresql.name}",
-                              "pkgincludedir=#{include/postgresql.name}"
+    postgresqls.each do |postgresql|
+      ENV["PG_CONFIG"] = postgresql.opt_bin/"pg_config"
+      system "make"
+      system "make", "install", "pkglibdir=#{lib/postgresql.name}",
+                                "datadir=#{share/postgresql.name}",
+                                "pkgincludedir=#{include/postgresql.name}"
+      system "make", "clean"
+    end
   end
 
   test do
     ENV["LC_ALL"] = "C"
-    pg_ctl = postgresql.opt_bin/"pg_ctl"
-    psql = postgresql.opt_bin/"psql"
-    datadir = testpath/postgresql.name
-    port = free_port
+    postgresqls.each do |postgresql|
+      pg_ctl = postgresql.opt_bin/"pg_ctl"
+      psql = postgresql.opt_bin/"psql"
+      port = free_port
 
-    system pg_ctl, "initdb", "-D", datadir
-    (datadir/"postgresql.conf").write <<~EOS, mode: "a+"
-      port = #{port}
-    EOS
-    system pg_ctl, "start", "-D", datadir, "-l", testpath/"log"
-    begin
-      system psql, "-p", port.to_s, "-c", "CREATE EXTENSION vector;", "postgres"
-    ensure
-      system pg_ctl, "stop", "-D", datadir
+      datadir = testpath/postgresql.name
+      system pg_ctl, "initdb", "-D", datadir
+      (datadir/"postgresql.conf").write <<~EOS, mode: "a+"
+        port = #{port}
+      EOS
+      system pg_ctl, "start", "-D", datadir, "-l", testpath/"log-#{postgresql.name}"
+      begin
+        system psql, "-p", port.to_s, "-c", "CREATE EXTENSION vector;", "postgres"
+      ensure
+        system pg_ctl, "stop", "-D", datadir
+      end
     end
   end
 end

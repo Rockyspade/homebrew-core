@@ -6,6 +6,7 @@ class Libass < Formula
   license "ISC"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "2c948ddd9b7a94dd267cdc24cd684903b292d26d6ce92e6d2d7c68136b071e4d"
     sha256 cellar: :any,                 arm64_sonoma:   "9e8889c7d434e4a56a0f9abbb1fded340dae984d05121ad5413715e3abb03fd3"
     sha256 cellar: :any,                 arm64_ventura:  "d0724c2ba6a6aa6f1ffb604a5cde5bf341e835369e72216042bbb2587acb83cf"
     sha256 cellar: :any,                 arm64_monterey: "f16d796553df4b3ae94c458ae687ce824ea8e66a75bd66ff6df2f0bfe4202ab7"
@@ -50,7 +51,7 @@ class Libass < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include "ass/ass.h"
       int main() {
         ASS_Library *library;
@@ -72,7 +73,7 @@ class Libass < Formula
           return 1;
         }
       }
-    EOS
+    CPP
     system ENV.cc, "test.cpp", "-I#{include}", "-L#{lib}", "-lass", "-o", "test"
     system "./test"
   end

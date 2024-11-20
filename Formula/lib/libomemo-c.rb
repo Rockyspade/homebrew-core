@@ -6,6 +6,7 @@ class LibomemoC < Formula
   license "GPL-3.0-only"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "706625428f96e1a3a56e49b9841d19ee1e7f64b197bbdcdc50135c40e80be326"
     sha256 cellar: :any,                 arm64_sonoma:   "73f2267cfaa0656f1f7e70dea6cafc155e08268d5f0b57ffcb34f92bcd53eb87"
     sha256 cellar: :any,                 arm64_ventura:  "dccc667b31642b280a1ae140c1626efc9a407476f9223008520a78282842478b"
     sha256 cellar: :any,                 arm64_monterey: "c90a3715e044536c4650463c4a1def1c66b3cd31231cae668d3bfa2e6c616218"
@@ -29,7 +30,7 @@ class LibomemoC < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <signal_protocol.h>
       #include <session_builder.h>
       #include <session_cipher.h>
@@ -100,7 +101,7 @@ class LibomemoC < Formula
 
         return 0;
       }
-    EOS
+    C
     pkg_config = shell_output("pkg-config --cflags --libs libomemo-c").chomp.split
     system ENV.cc, "test.c", *pkg_config, "-o", "test"
     system "./test"

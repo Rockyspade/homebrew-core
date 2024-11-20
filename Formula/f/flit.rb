@@ -3,28 +3,21 @@ class Flit < Formula
 
   desc "Simplified packaging of Python modules"
   homepage "https://github.com/pypa/flit"
-  url "https://files.pythonhosted.org/packages/b1/a6/e9227cbb501aee4fa4a52517d3868214036a7b085d96bd1e4bbfc67ad6c6/flit-3.9.0.tar.gz"
-  sha256 "d75edf5eb324da20d53570a6a6f87f51e606eee8384925cd66a90611140844c7"
+  url "https://files.pythonhosted.org/packages/03/46/f84b8815d161e7392d124d3de6e5880d1d36a74162a77a5e2839dc3c8c68/flit-3.10.1.tar.gz"
+  sha256 "9c6258ae76d218ce60f9e39a43ca42006a3abcc5c44ea6bb2a1daa13857a8f1a"
   license "BSD-3-Clause"
-  revision 6
   head "https://github.com/pypa/flit.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "aba06431b18d8c79686ce64ec9bbc2fcbd7149458bddfada2c0727e3b5d1fe1d"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "aba06431b18d8c79686ce64ec9bbc2fcbd7149458bddfada2c0727e3b5d1fe1d"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "aba06431b18d8c79686ce64ec9bbc2fcbd7149458bddfada2c0727e3b5d1fe1d"
-    sha256 cellar: :any_skip_relocation, sonoma:         "ef4b0958248b87dff6e4f54f467514118d39d96f4a05b9bf22344960d2557f3a"
-    sha256 cellar: :any_skip_relocation, ventura:        "ef4b0958248b87dff6e4f54f467514118d39d96f4a05b9bf22344960d2557f3a"
-    sha256 cellar: :any_skip_relocation, monterey:       "aba06431b18d8c79686ce64ec9bbc2fcbd7149458bddfada2c0727e3b5d1fe1d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "9d06f3ca05a6d51940e38b28f3a36c6a3e8f9dec69a75a2191d6457f0431b710"
+    sha256 cellar: :any_skip_relocation, all: "486150dd0f88e121b5edbe5525e1e01432d5791b8481f9ed3198ed48f26dc898"
   end
 
   depends_on "certifi"
-  depends_on "python@3.12"
+  depends_on "python@3.13"
 
   resource "charset-normalizer" do
-    url "https://files.pythonhosted.org/packages/63/09/c1bc53dab74b1816a00d8d030de5bf98f724c52c1635e07681d312f20be8/charset-normalizer-3.3.2.tar.gz"
-    sha256 "f30c3cb33b24454a82faecaf01b19c18562b1e89558fb6c56de4d9118a032fd5"
+    url "https://files.pythonhosted.org/packages/f2/4f/e1808dc01273379acc506d18f1504eb2d299bd4131743b9fc54d7be4df1e/charset_normalizer-3.4.0.tar.gz"
+    sha256 "223217c3d4f82c3ac5e29032b3f1c2eb0fb591b72161f86d93f5719079dae93e"
   end
 
   resource "docutils" do
@@ -33,13 +26,13 @@ class Flit < Formula
   end
 
   resource "flit-core" do
-    url "https://files.pythonhosted.org/packages/c4/e6/c1ac50fe3eebb38a155155711e6e864e254ce4b6e17fe2429b4c4d5b9e80/flit_core-3.9.0.tar.gz"
-    sha256 "72ad266176c4a3fcfab5f2930d76896059851240570ce9a98733b658cb786eba"
+    url "https://files.pythonhosted.org/packages/d5/ae/09427bea9227a33ec834ed5461432752fd5d02b14f93dd68406c91684622/flit_core-3.10.1.tar.gz"
+    sha256 "66e5b87874a0d6e39691f0e22f09306736b633548670ad3c09ec9db03c5662f7"
   end
 
   resource "idna" do
-    url "https://files.pythonhosted.org/packages/21/ed/f86a79a07470cb07819390452f178b3bef1d375f2ec021ecfc709fc7cf07/idna-3.7.tar.gz"
-    sha256 "028ff3aadf0609c1fd278d8ea3089299412a7a8b9bd005dd08b9f8285bcb5cfc"
+    url "https://files.pythonhosted.org/packages/f1/70/7703c29685631f5a7590aa73f1f1d3fa9a380e654b86af429e0934a32f7d/idna-3.10.tar.gz"
+    sha256 "12f65c9b470abda6dc35cf8e63cc574b1c52b11df2c86030af0ac09b01b13ea9"
   end
 
   resource "requests" do
@@ -48,13 +41,13 @@ class Flit < Formula
   end
 
   resource "tomli-w" do
-    url "https://files.pythonhosted.org/packages/49/05/6bf21838623186b91aedbda06248ad18f03487dc56fbc20e4db384abde6c/tomli_w-1.0.0.tar.gz"
-    sha256 "f463434305e0336248cac9c2dc8076b707d8a12d019dd349f5c1e382dd1ae1b9"
+    url "https://files.pythonhosted.org/packages/d4/19/b65f1a088ee23e37cdea415b357843eca8b1422a7b11a9eee6e35d4ec273/tomli_w-1.1.0.tar.gz"
+    sha256 "49e847a3a304d516a169a601184932ef0f6b61623fe680f836a2aa7128ed0d33"
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/43/6d/fa469ae21497ddc8bc93e5877702dca7cb8f911e337aca7452b5724f1bb6/urllib3-2.2.2.tar.gz"
-    sha256 "dd505485549a7a552833da5e6063639d0d177c04f23bc3864e41e5dc5f612168"
+    url "https://files.pythonhosted.org/packages/ed/63/22ba4ebfe7430b76388e7cd448d5478814d3032121827c12a2cc287e2260/urllib3-2.2.3.tar.gz"
+    sha256 "e7d814a81dad81e6caf2ec9fdedb284ecc9c73076b62654547cc64ccdcae26e9"
   end
 
   def install

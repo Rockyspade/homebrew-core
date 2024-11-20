@@ -6,6 +6,7 @@ class Libmobi < Formula
   license "LGPL-3.0-or-later"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "208651021ee3e089ea2c3665b2f94f9acc0ad7401205f9177d82381f2da261b5"
     sha256 cellar: :any,                 arm64_sonoma:   "d1fe8e0413649a0a838d650e614ef07010aa121e1ab3a2b360d8ba6da1124a77"
     sha256 cellar: :any,                 arm64_ventura:  "1f4ea76703406a4f5453ac1767100a8198d6bf14782c1a6a862fcb3e2dd5d908"
     sha256 cellar: :any,                 arm64_monterey: "4745216331bec2106dad3b68997ff46888b15ca74a19f4e6aafc510ed16daa26"
@@ -30,7 +31,7 @@ class Libmobi < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <mobi.h>
       int main() {
         MOBIData *m = mobi_init();
@@ -40,7 +41,7 @@ class Libmobi < Formula
         mobi_free(m);
         return 0;
       }
-    EOS
+    CPP
     system ENV.cxx, "test.cpp", "-I#{include}", "-L#{lib}", "-lmobi", "-o", "test"
     system "./test"
   end

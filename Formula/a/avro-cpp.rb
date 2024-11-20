@@ -11,6 +11,7 @@ class AvroCpp < Formula
   revision 4
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "68cc14a37de162f0006e51cd24bf8732037333c8b4f83d93281f5fd027322854"
     sha256 cellar: :any,                 arm64_sonoma:   "43b9420650c17df411a56b9ffa47824c265e909a116f63b5141d700f20ead267"
     sha256 cellar: :any,                 arm64_ventura:  "e3a3876b799400d284f39109717924563302d548de3508b93499047321982e4f"
     sha256 cellar: :any,                 arm64_monterey: "3d840f89e9fbef4334d1f3a1919f6c784ad787a108aabd4f156dd0ad5039add7"
@@ -25,15 +26,13 @@ class AvroCpp < Formula
   depends_on "boost"
 
   def install
-    cd "lang/c++" do
-      system "cmake", "-S", ".", "-B", "build", *std_cmake_args
-      system "cmake", "--build", "build"
-      system "cmake", "--install", "build"
-    end
+    system "cmake", "-S", "lang/c++", "-B", "build", *std_cmake_args
+    system "cmake", "--build", "build"
+    system "cmake", "--install", "build"
   end
 
   test do
-    (testpath/"cpx.json").write <<~EOS
+    (testpath/"cpx.json").write <<~JSON
       {
           "type": "record",
           "name": "cpx",
@@ -42,16 +41,16 @@ class AvroCpp < Formula
               {"name": "im", "type" : "double"}
           ]
       }
-    EOS
+    JSON
 
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include "cpx.hh"
 
       int main() {
         cpx::cpx number;
         return 0;
       }
-    EOS
+    CPP
 
     system bin/"avrogencpp", "-i", "cpx.json", "-o", "cpx.hh", "-n", "cpx"
     system ENV.cxx, "test.cpp", "-std=c++11", "-o", "test"

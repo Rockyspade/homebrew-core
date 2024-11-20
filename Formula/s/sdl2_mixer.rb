@@ -14,6 +14,7 @@ class Sdl2Mixer < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "fc52f206f42131895725481a89a6f5ba974a664c80fae801897bafb15e1d4b9e"
     sha256 cellar: :any,                 arm64_sonoma:   "972081963fe5bc4cf9bc169a233a3e303ad0390077f3c24ad3331e6512316812"
     sha256 cellar: :any,                 arm64_ventura:  "10782c49221f8f1625bf0d18ad3a66f179cb4b59a7cf8db111976f50db298d66"
     sha256 cellar: :any,                 arm64_monterey: "0e8a4d1a79d71d8a2c80232e98fffac350c3c37f8fe06838551522761d776082"
@@ -86,7 +87,7 @@ class Sdl2Mixer < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <stdlib.h>
       #include <SDL2/SDL_mixer.h>
 
@@ -97,7 +98,7 @@ class Sdl2Mixer < Formula
           Mix_Quit();
           return success == INIT_FLAGS ? EXIT_SUCCESS : EXIT_FAILURE;
       }
-    EOS
+    C
     system ENV.cc, "-I#{Formula["sdl2"].opt_include}/SDL2",
            "test.c", "-L#{lib}", "-lSDL2_mixer", "-o", "test"
     system "./test"

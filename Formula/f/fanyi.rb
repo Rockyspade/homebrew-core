@@ -1,43 +1,28 @@
 class Fanyi < Formula
   desc "Chinese and English translate tool in your command-line"
   homepage "https://github.com/afc163/fanyi"
-  url "https://registry.npmjs.org/fanyi/-/fanyi-8.0.3.tgz"
-  sha256 "5798b84e26584878024fa5038defe3d1a33d5d600c95290b6c54d1dd8cdef421"
+  url "https://registry.npmjs.org/fanyi/-/fanyi-9.0.7.tgz"
+  sha256 "1350cd20a2b461ea1ed8acd955f8ef7097c6436c1bdffac0efe622dc70ad4586"
   license "MIT"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "492499711ec5231ee325e0545e3ac88fe3807846ada190ddd0fa403e192c93bd"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "492499711ec5231ee325e0545e3ac88fe3807846ada190ddd0fa403e192c93bd"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "492499711ec5231ee325e0545e3ac88fe3807846ada190ddd0fa403e192c93bd"
-    sha256 cellar: :any_skip_relocation, sonoma:         "6b6e640b0079f8b9dbbfe64a76022d1fcf5785b8f5202fcc0d534034ab27bd04"
-    sha256 cellar: :any_skip_relocation, ventura:        "6b6e640b0079f8b9dbbfe64a76022d1fcf5785b8f5202fcc0d534034ab27bd04"
-    sha256 cellar: :any_skip_relocation, monterey:       "6b6e640b0079f8b9dbbfe64a76022d1fcf5785b8f5202fcc0d534034ab27bd04"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "069d7deffbebdf7583a77d75eeb2299a484cf07d5ef759a52414e71e42856fe7"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "2c57d1e565dc5dec910e10f45f362c19e56ae87b904c34b43e9963990ba384ce"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "2c57d1e565dc5dec910e10f45f362c19e56ae87b904c34b43e9963990ba384ce"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "2c57d1e565dc5dec910e10f45f362c19e56ae87b904c34b43e9963990ba384ce"
+    sha256 cellar: :any_skip_relocation, sonoma:        "35da6341e33ac6ebf7de22e8b43b57e7bc74890e77660f499f927e6cfa13ea84"
+    sha256 cellar: :any_skip_relocation, ventura:       "35da6341e33ac6ebf7de22e8b43b57e7bc74890e77660f499f927e6cfa13ea84"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "2c57d1e565dc5dec910e10f45f362c19e56ae87b904c34b43e9963990ba384ce"
   end
 
   depends_on "node"
 
-  on_macos do
-    depends_on "macos-term-size"
-  end
-
   def install
     system "npm", "install", *std_npm_args
-    bin.install_symlink Dir[libexec/"bin/*"]
-
-    term_size_vendor_dir = libexec/"lib/node_modules"/name/"node_modules/term-size/vendor"
-    rm_r(term_size_vendor_dir) # remove pre-built binaries
-
-    if OS.mac?
-      macos_dir = term_size_vendor_dir/"macos"
-      macos_dir.mkpath
-      # Replace the vendored pre-built term-size with one we build ourselves
-      ln_sf (Formula["macos-term-size"].opt_bin/"term-size").relative_path_from(macos_dir), macos_dir
-    end
+    bin.install_symlink libexec.glob("bin/*")
   end
 
   test do
-    assert_match "爱", shell_output("#{bin}/fanyi --no-say love 2>/dev/null")
+    assert_match "爱", shell_output("#{bin}/fanyi love 2>/dev/null")
+    assert_match version.to_s, shell_output("#{bin}/fanyi --version")
   end
 end

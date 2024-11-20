@@ -1,19 +1,18 @@
 class SingBox < Formula
   desc "Universal proxy platform"
   homepage "https://sing-box.sagernet.org"
-  url "https://github.com/SagerNet/sing-box/archive/refs/tags/v1.9.4.tar.gz"
-  sha256 "30652ce0151ef46f314b25df74b402278dd7c540ba0b7f1c2c66209314afad09"
+  url "https://github.com/SagerNet/sing-box/archive/refs/tags/v1.10.1.tar.gz"
+  sha256 "7ec6bfe18522f34c0c53aad7b2de2e1967f66c4091baf5674acecd78f0b81aac"
   license "GPL-3.0-or-later"
   head "https://github.com/SagerNet/sing-box.git", branch: "dev-next"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "005318887a5478b58a5a9c2556778a1d87058cf3b92e240c84ef77ec602e028c"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "b75a6992207042cb65cd3d5cf6277ecd0dd8010f3b2a82ce1b7fcaffb8d35164"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "aaf7c1e3c84a642a75861dc0af7c0e7fd4eb445035d7355715dcc3645067d5ff"
-    sha256 cellar: :any_skip_relocation, sonoma:         "f8e44e7ed928294e69780826bb6720aed6697763ebf6a60830453b3f6748a713"
-    sha256 cellar: :any_skip_relocation, ventura:        "cde5964494253b3ae1091182f54149d5eac9a74bd76ea17f2ea92753917f95f3"
-    sha256 cellar: :any_skip_relocation, monterey:       "844f956a5148c7873d503ac925d390fab8e93ffafc189253c87ba1fb0b2aaa6f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "482e746731cbea661113694af6522504d22fc0d4340d0f16c3f884e4a8a97a4e"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "5257bff63d6c5b1f4201daf95a2789ced6b52cb3a512f785fdcbe57352f0ff99"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "a38cdf648437d12763cbe0a002440cd9e7606f672ac815ce926b5452ee306432"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "3ab3b1c79aa039aafd86937ac8b962a43ec339ae195811121b1d4042145e1868"
+    sha256 cellar: :any_skip_relocation, sonoma:        "0281bf6b3ae12b1be6157daa9e65925f87821a52f463b2f98b0a60ddde9d3c6f"
+    sha256 cellar: :any_skip_relocation, ventura:       "351d003640a723881c4d442986ed3dbfc1cb22ef5f1eab4daefae98a1887a488"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7a54d9470e6096f20f82714643a9fd8104bc896ab446b6c2e41ffab68e6080db"
   end
 
   depends_on "go" => :build
@@ -33,7 +32,7 @@ class SingBox < Formula
 
   test do
     ss_port = free_port
-    (testpath/"shadowsocks.json").write <<~EOS
+    (testpath/"shadowsocks.json").write <<~JSON
       {
         "inbounds": [
           {
@@ -45,11 +44,11 @@ class SingBox < Formula
           }
         ]
       }
-    EOS
+    JSON
     server = fork { exec bin/"sing-box", "run", "-D", testpath, "-c", testpath/"shadowsocks.json" }
 
     sing_box_port = free_port
-    (testpath/"config.json").write <<~EOS
+    (testpath/"config.json").write <<~JSON
       {
         "inbounds": [
           {
@@ -68,7 +67,7 @@ class SingBox < Formula
           }
         ]
       }
-    EOS
+    JSON
     system bin/"sing-box", "check", "-D", testpath, "-c", "config.json"
     client = fork { exec bin/"sing-box", "run", "-D", testpath, "-c", "config.json" }
 

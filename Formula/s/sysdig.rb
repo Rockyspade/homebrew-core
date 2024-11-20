@@ -2,7 +2,7 @@ class Sysdig < Formula
   desc "System-level exploration and troubleshooting tool"
   homepage "https://sysdig.com/"
   license "Apache-2.0"
-  revision 1
+  revision 9
 
   stable do
     url "https://github.com/draios/sysdig/archive/refs/tags/0.38.1.tar.gz"
@@ -22,13 +22,12 @@ class Sysdig < Formula
   end
 
   bottle do
-    sha256                               arm64_sonoma:   "8e4846d08b79b566a1f2615475b2d6948fcdee501644a88c4fd1b7465639a681"
-    sha256                               arm64_ventura:  "9697d3cde4049ab5dc78ed7ea8627a44ea5cd21a15ff4ad140531c5a83cec470"
-    sha256                               arm64_monterey: "56fc109adde1dfde5469cb5014303c765724b3d068dcbf824433f6b42f39eeef"
-    sha256                               sonoma:         "66b55a6a7ab33a43978242810c48efd852e685ac20d4b994c725532203acda2c"
-    sha256                               ventura:        "ba6e4ab9306929967c7bb6651f7e0abb0b279181e32c576dff146888639394e0"
-    sha256                               monterey:       "f9f695fd9d666f34badab08e0c29e653773e58c91e16c5a3d0b7a909261338ba"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "61273d5d816077ed737c3996c40fee74b5b18dd69219b199d21f4ad3fb975f5c"
+    sha256                               arm64_sequoia: "b3668c7dddfb5eda1b56f6dd398ce57c9ba4e5bf00de74e9967804ba4c70687e"
+    sha256                               arm64_sonoma:  "b28c113795ca3376d346fceaed9f48d141270da773431d4336be1411c5ea8c1f"
+    sha256                               arm64_ventura: "d31cdef2e6fe756168ac8c48662ccdc234463be01f23d2ba3f198952d3a6aad8"
+    sha256                               sonoma:        "076463db2756ca1de4481c4d00cebc2f96dcd21fa2e773006e35cb37a6408847"
+    sha256                               ventura:       "8ba76ae7889099ba452fa3b6e3ea5710b111c128da59252986779e4687b75092"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "187faf8d4140cd48b16c536e541834e09926b2e38106ba2ae7d6dcee2a1933e8"
   end
 
   head do

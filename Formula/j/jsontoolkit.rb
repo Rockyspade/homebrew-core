@@ -6,6 +6,7 @@ class Jsontoolkit < Formula
   license "AGPL-3.0-only"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "4bdb1c92bc5d58c6ecff06644af109f714e087e7005bfd86db5cb623610d0be3"
     sha256 cellar: :any,                 arm64_sonoma:   "db44ed711e76947fdcb106dbc0501306e04cb649e66c523ad68b79513b5b5128"
     sha256 cellar: :any,                 arm64_ventura:  "cdfad362acd1612e6bfca265a162775f56839029cba214b98caa4dd68d65ca7f"
     sha256 cellar: :any,                 arm64_monterey: "ffe5e64bf78410c1467804c862b83156c47d455f53bbd941f256324f13ccb627"
@@ -33,7 +34,7 @@ class Jsontoolkit < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <sourcemeta/jsontoolkit/json.h>
       #include <sourcemeta/jsontoolkit/jsonl.h>
       #include <sourcemeta/jsontoolkit/jsonpointer.h>
@@ -85,7 +86,7 @@ class Jsontoolkit < Formula
         std::cout << "JSON Toolkit works!" << std::endl;
         return 0;
       }
-    EOS
+    CPP
 
     system ENV.cxx, "test.cpp", "-std=c++20", "-I#{include}",
        "-L#{lib}",

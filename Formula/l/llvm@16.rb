@@ -13,9 +13,11 @@ class LlvmAT16 < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "e1ce859ba79150008eaa5cab5aa6cd78da4e4955627c00c6f0f2b48779c379bc"
     sha256 cellar: :any,                 arm64_sonoma:   "e799fe5056da9a07d79474f7a7290e0a465474eb004cfc614775f290197e10e5"
     sha256 cellar: :any,                 arm64_ventura:  "1814e78f92d133918a597c4f7c30fef32f3665989951c1cefdda331eb4402ed1"
     sha256 cellar: :any,                 arm64_monterey: "37035d480d967046905bc5e1cb71b96310a3096b4b066e7542c22cccc4abaf3f"
+    sha256 cellar: :any,                 sequoia:        "631414eb9a75735243d652e4efe8a0fd73eee014d3aa904f614ec0f3a216c988"
     sha256 cellar: :any,                 sonoma:         "16844a4822d3afecf5783a368abf980636d8a3a110100ca4e8b06de383a44b56"
     sha256 cellar: :any,                 ventura:        "eec48597281d704edb178eccb4180ffaba79418ff7e478b138097a1a9b3aaa62"
     sha256 cellar: :any,                 monterey:       "332da3b9d1d8d75a82c77fc84802f72ba2e8f39db4728df3d4fa7c1dfb5bef08"
@@ -278,7 +280,7 @@ class LlvmAT16 < Formula
     assert_equal (lib/shared_library("libLLVM-#{soversion}")).to_s,
                  shell_output("#{bin}/llvm-config --libfiles").chomp
 
-    (testpath/"omptest.c").write <<~EOS
+    (testpath/"omptest.c").write <<~C
       #include <stdlib.h>
       #include <stdio.h>
       #include <omp.h>
@@ -289,7 +291,7 @@ class LlvmAT16 < Formula
           }
           return EXIT_SUCCESS;
       }
-    EOS
+    C
 
     system bin/"clang", "-L#{lib}", "-fopenmp", "-nobuiltininc",
                            "-I#{lib}/clang/#{llvm_version_major}/include",
@@ -305,23 +307,23 @@ class LlvmAT16 < Formula
     EOS
     assert_equal expected_result.strip, sorted_testresult.strip
 
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <stdio.h>
       int main()
       {
         printf("Hello World!\\n");
         return 0;
       }
-    EOS
+    C
 
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <iostream>
       int main()
       {
         std::cout << "Hello World!" << std::endl;
         return 0;
       }
-    EOS
+    CPP
 
     # Testing default toolchain and SDK location.
     system bin/"clang++", "-v",
@@ -332,9 +334,9 @@ class LlvmAT16 < Formula
     assert_equal "Hello World!", shell_output("./test").chomp
 
     # To test `lld`, we mock a broken `ld` to make sure it's not what's being used.
-    (testpath/"fake_ld.c").write <<~EOS
+    (testpath/"fake_ld.c").write <<~C
       int main() { return 1; }
-    EOS
+    C
     (testpath/"bin").mkpath
     system ENV.cc, "-v", "fake_ld.c", "-o", "bin/ld"
     with_env(PATH: "#{testpath}/bin:#{ENV["PATH"]}") do
@@ -419,19 +421,19 @@ class LlvmAT16 < Formula
         refute_match(/libunwind/, lib)
       end
 
-      (testpath/"test_plugin.cpp").write <<~EOS
+      (testpath/"test_plugin.cpp").write <<~CPP
         #include <iostream>
         __attribute__((visibility("default")))
         extern "C" void run_plugin() {
           std::cout << "Hello Plugin World!" << std::endl;
         }
-      EOS
-      (testpath/"test_plugin_main.c").write <<~EOS
+      CPP
+      (testpath/"test_plugin_main.c").write <<~C
         extern void run_plugin();
         int main() {
           run_plugin();
         }
-      EOS
+      C
       system bin/"clang++", "-v", "-o", "test_plugin.so",
              "-shared", "-fPIC", "test_plugin.cpp", "-L#{opt_lib}",
              "-stdlib=libc++", "-rtlib=compiler-rt",
@@ -464,7 +466,7 @@ class LlvmAT16 < Formula
     EOS
     system bin/"mlir-opt", "--split-input-file", "--verify-diagnostics", "test.mlir"
 
-    (testpath/"scanbuildtest.cpp").write <<~EOS
+    (testpath/"scanbuildtest.cpp").write <<~CPP
       #include <iostream>
       int main() {
         int *i = new int;
@@ -473,14 +475,14 @@ class LlvmAT16 < Formula
         std::cout << *i << std::endl;
         return 0;
       }
-    EOS
+    CPP
     assert_includes shell_output("#{bin}/scan-build make scanbuildtest 2>&1"),
                     "warning: Use of memory after it is freed"
 
-    (testpath/"clangformattest.c").write <<~EOS
+    (testpath/"clangformattest.c").write <<~C
       int    main() {
           printf("Hello world!"); }
-    EOS
+    C
     assert_equal "int main() { printf(\"Hello world!\"); }\n",
       shell_output("#{bin}/clang-format -style=google clangformattest.c")
 

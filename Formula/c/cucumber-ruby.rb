@@ -11,6 +11,7 @@ class CucumberRuby < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "35c03d4159dee347736ad005f035e07fe42efb5f9cd35da2c1df23083951507d"
     sha256 cellar: :any,                 arm64_sonoma:   "4000d689086674fe92eb5becd1734ea706ad7dbfbb8f906161e53e17f27da779"
     sha256 cellar: :any,                 arm64_ventura:  "d840d9a581273c19616d90e839a17ded69effe4f6f66b35bbf2eb00d9af0b77a"
     sha256 cellar: :any,                 arm64_monterey: "ed707ba23b5a2b13b109ca3ddcc1d01488825a0628f105d3872fad075015e97a"
@@ -20,7 +21,7 @@ class CucumberRuby < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "34227e49e2a9843381f9aff2d4500302a88e03e5af4ecf867b3b61380f3ee4d1"
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "ruby" # Requires >= Ruby 2.7
 
   uses_from_macos "libffi", since: :catalina

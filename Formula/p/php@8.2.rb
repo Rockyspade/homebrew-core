@@ -2,10 +2,11 @@ class PhpAT82 < Formula
   desc "General-purpose scripting language"
   homepage "https://www.php.net/"
   # Should only be updated if the new version is announced on the homepage, https://www.php.net/
-  url "https://www.php.net/distributions/php-8.2.22.tar.xz"
-  mirror "https://fossies.org/linux/www/php-8.2.22.tar.xz"
-  sha256 "8566229bc88ad1f4aadc10700ab5fbcec81587c748999d985f11cf3b745462df"
+  url "https://www.php.net/distributions/php-8.2.25.tar.xz"
+  mirror "https://fossies.org/linux/www/php-8.2.25.tar.xz"
+  sha256 "330b54876ea1d05ade12ee9726167332058bccd58dffa1d4e12117f6b4f616b9"
   license "PHP-3.01"
+  revision 1
 
   livecheck do
     url "https://www.php.net/downloads"
@@ -13,13 +14,12 @@ class PhpAT82 < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "38ed71cef858bce7cec469bfeeb24d94c120fdf4570ac4f6ead8a40de86477ae"
-    sha256 arm64_ventura:  "f9fa7942441d459e5813ba2665cd6195f9152e3c8a5ae9faff224512c001f7bb"
-    sha256 arm64_monterey: "7e21739e03f44e6f37719aa3304eb27c6f1f001e3dac7dac2bcdbdc0ee6b6cd7"
-    sha256 sonoma:         "0292176091d1bf75f3af5ea2c8d0821aaec8fc65ceb7dfdd8f8afdc12d94fc0a"
-    sha256 ventura:        "e1886532819e31afdac4b7cc9e3e8fc86af1712bb8a7daa6f4256091bb1fcf29"
-    sha256 monterey:       "73835cf81a1ff2d8044a42c35994c1d64c47718935d378b637f62774cf3cd628"
-    sha256 x86_64_linux:   "02755d79b5d09e41f038c63f6ea7be828f83f82224ccaa01c04144e65b8f7953"
+    sha256 arm64_sequoia: "985b0a59b77a0f58e4217c3c4cf437503e2896e78c69bacc164547e0db0b76b5"
+    sha256 arm64_sonoma:  "585ee19c8b59254795218369cd8e56aaf947a8f329a921c54aab9a318e2955a7"
+    sha256 arm64_ventura: "33acfb38f382dd3a5ac0827fb4556f548d9da978c2c329d2ff0d8c47dc561356"
+    sha256 sonoma:        "e7be34ae53129a8cfc6ba41474c4503a7042f7122a2926aee9b386961e4370ab"
+    sha256 ventura:       "e568b9df29e5266c51a782be222c0689f7247038caddd3993e8122062a160d85"
+    sha256 x86_64_linux:  "e392af5d4b0cb602c37c5e5c33df02da7526e627121e96cda00b96fce71eecf3"
   end
 
   keg_only :versioned_formula
@@ -40,7 +40,7 @@ class PhpAT82 < Formula
   depends_on "gd"
   depends_on "gettext"
   depends_on "gmp"
-  depends_on "icu4c"
+  depends_on "icu4c@76"
   depends_on "krb5"
   depends_on "libpq"
   depends_on "libsodium"
@@ -350,11 +350,11 @@ class PhpAT82 < Formula
       port_fpm = free_port
 
       expected_output = /^Hello world!$/
-      (testpath/"index.php").write <<~EOS
+      (testpath/"index.php").write <<~PHP
         <?php
         echo 'Hello world!' . PHP_EOL;
         var_dump(ldap_connect());
-      EOS
+      PHP
       main_config = <<~EOS
         Listen #{port}
         ServerName localhost:#{port}
@@ -402,7 +402,7 @@ class PhpAT82 < Formula
       pid = fork do
         exec Formula["httpd"].opt_bin/"httpd", "-X", "-f", "#{testpath}/httpd.conf"
       end
-      sleep 3
+      sleep 10
 
       assert_match expected_output, shell_output("curl -s 127.0.0.1:#{port}")
 
@@ -415,7 +415,7 @@ class PhpAT82 < Formula
       pid = fork do
         exec Formula["httpd"].opt_bin/"httpd", "-X", "-f", "#{testpath}/httpd-fpm.conf"
       end
-      sleep 3
+      sleep 10
 
       assert_match expected_output, shell_output("curl -s 127.0.0.1:#{port}")
     ensure

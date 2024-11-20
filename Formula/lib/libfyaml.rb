@@ -6,6 +6,7 @@ class Libfyaml < Formula
   license "MIT"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "4296a8c80863d912ba93d237d0635b4b6568dfaec713cd69d5424ea77ad4097e"
     sha256 cellar: :any,                 arm64_sonoma:   "f048b398ea675ff84cffed39be72aad7aebc2ff7b343291e82982e1d8aa299bc"
     sha256 cellar: :any,                 arm64_ventura:  "7e0abdbb0374744a92305e607e3fccee6ba6bc09f01906719ec91b721a7176a8"
     sha256 cellar: :any,                 arm64_monterey: "a4b6daf2e59d3361a9eeda457e5964672ecba38d7126c731684aec495db5bd2c"
@@ -24,7 +25,7 @@ class Libfyaml < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #ifdef HAVE_CONFIG_H
       #include "config.h"
       #endif
@@ -37,7 +38,7 @@ class Libfyaml < Formula
         std::cout << fy_library_version() << std::endl;
         return EXIT_SUCCESS;
       }
-    EOS
+    CPP
     system ENV.cxx, "test.cpp", "-I#{include}", "-L#{lib}", "-lfyaml", "-o", "test"
     assert_equal 0, $CHILD_STATUS.exitstatus
     assert_equal version.to_s, shell_output("#{testpath}/test").strip

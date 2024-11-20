@@ -4,20 +4,20 @@ class BoostAT185 < Formula
   url "https://github.com/boostorg/boost/releases/download/boost-1.85.0/boost-1.85.0-b2-nodocs.tar.xz"
   sha256 "09f0628bded81d20b0145b30925d7d7492fd99583671586525d5d66d4c28266a"
   license "BSL-1.0"
+  revision 2
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "12e44a16737f9336bec87c239bb520f25fd1d11a143e9587b453bb2807b64711"
-    sha256 cellar: :any,                 arm64_ventura:  "ba055d2da17d143e361321e89bc8e550e1d0c30e0543773d239936b6e124deed"
-    sha256 cellar: :any,                 arm64_monterey: "f0c595c7fba3daebbe62cb53ed0d979a528b60cea000e3c8283c9828611b8ccb"
-    sha256 cellar: :any,                 sonoma:         "da02f713a6ab5ed95d331bdfc6f552990ca8685dce822e344a0a009f657e7457"
-    sha256 cellar: :any,                 ventura:        "cfd001c1d9447d6730f712960ae3ed124255f638e08f929872f5d03b4f4944ef"
-    sha256 cellar: :any,                 monterey:       "5b4de1f3f1b5590dc38dc986697ef48631cdd8f0ddf07794759aaa3e5617bb07"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "121b8a642ad4b8ef81e4bb9094e7ae879cbf7846badc2cb563e6a9369c992d53"
+    sha256 cellar: :any,                 arm64_sequoia: "663d20076d5f0eca3aeaaad6e8b3dfb7face08b889e7aaf534205bb06c599d84"
+    sha256 cellar: :any,                 arm64_sonoma:  "349ee1eab75de938bf98b797b56062aedff7f007817dd13e6196176454e24c4f"
+    sha256 cellar: :any,                 arm64_ventura: "32994c90a2429d6ffbdeb5f504d266bf044e6e3c0048d8b4056bc77de0ed5b8c"
+    sha256 cellar: :any,                 sonoma:        "6d6e43ab14638792e56d3e5b1ebce85ac3e6fce5910a4067e0aeef6be095c492"
+    sha256 cellar: :any,                 ventura:       "9a408e7ff44e78626c2408df18fa9a006ee9095d8ad8b7f5faebb61173a6ab0a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "78218534456473132b31b8e7918bdcc65c094452096a3be240c06c83e0c9724b"
   end
 
   keg_only :versioned_formula
 
-  depends_on "icu4c"
+  depends_on "icu4c@76"
   depends_on "xz"
   depends_on "zstd"
 
@@ -35,11 +35,12 @@ class BoostAT185 < Formula
     end
 
     # libdir should be set by --prefix but isn't
-    icu4c_prefix = Formula["icu4c"].opt_prefix
+    icu4c = deps.find { |dep| dep.name.match?(/^icu4c(@\d+)?$/) }
+                .to_formula
     bootstrap_args = %W[
       --prefix=#{prefix}
       --libdir=#{lib}
-      --with-icu=#{icu4c_prefix}
+      --with-icu=#{icu4c.opt_prefix}
     ]
 
     # Handle libraries that will not be built.
@@ -64,9 +65,10 @@ class BoostAT185 < Formula
       link=shared,static
     ]
 
-    # Boost is using "clang++ -x c" to select C compiler which breaks C++14
-    # handling using ENV.cxx14. Using "cxxflags" and "linkflags" still works.
-    args << "cxxflags=-std=c++14"
+    # Boost is using "clang++ -x c" to select C compiler which breaks C++
+    # handling in superenv. Using "cxxflags" and "linkflags" still works.
+    # C++17 is due to `icu4c`.
+    args << "cxxflags=-std=c++17"
     args << "cxxflags=-stdlib=libc++" << "linkflags=-stdlib=libc++" if ENV.compiler == :clang
 
     system "./bootstrap.sh", *bootstrap_args
@@ -75,7 +77,7 @@ class BoostAT185 < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <boost/algorithm/string.hpp>
       #include <boost/iostreams/device/array.hpp>
       #include <boost/iostreams/device/back_inserter.hpp>
@@ -121,9 +123,9 @@ class BoostAT185 < Formula
 
         return 0;
       }
-    EOS
-    system ENV.cxx, "test.cpp", "-std=c++14", "-o", "test", "-L#{lib}", "-lboost_iostreams",
-                    "-L#{Formula["zstd"].opt_lib}", "-lzstd"
+    CPP
+    system ENV.cxx, "test.cpp", "-std=c++14", "-o", "test", "-I#{include}",
+                    "-L#{lib}", "-lboost_iostreams", "-L#{Formula["zstd"].opt_lib}", "-lzstd"
     system "./test"
   end
 end

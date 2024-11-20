@@ -2,12 +2,31 @@ class Curl < Formula
   desc "Get a file from an HTTP, HTTPS or FTP server"
   homepage "https://curl.se"
   # Don't forget to update both instances of the version in the GitHub mirror URL.
-  url "https://curl.se/download/curl-8.9.1.tar.bz2"
-  mirror "https://github.com/curl/curl/releases/download/curl-8_9_1/curl-8.9.1.tar.bz2"
-  mirror "http://fresh-center.net/linux/www/curl-8.9.1.tar.bz2"
-  mirror "http://fresh-center.net/linux/www/legacy/curl-8.9.1.tar.bz2"
-  sha256 "b57285d9e18bf12a5f2309fc45244f6cf9cb14734e7454121099dd0a83d669a3"
+  # `url` goes below this comment when the `stable` block is removed.
   license "curl"
+  revision 1
+
+  stable do
+    url "https://curl.se/download/curl-8.11.0.tar.bz2"
+    mirror "https://github.com/curl/curl/releases/download/curl-8_11_0/curl-8.11.0.tar.bz2"
+    mirror "http://fresh-center.net/linux/www/curl-8.11.0.tar.bz2"
+    mirror "http://fresh-center.net/linux/www/legacy/curl-8.11.0.tar.bz2"
+    sha256 "c95d5a1368803729345a632ce42cceeefd5f09c3b4d9582f858f6779f4b8b254"
+
+    # Remove the following patches with `stable` block on next release.
+    # Fix netrc parsing that affects git.
+    # https://github.com/curl/curl/issues/15496
+    patch do
+      url "https://github.com/curl/curl/commit/f5c616930b5cf148b1b2632da4f5963ff48bdf88.patch?full_index=1"
+      sha256 "fa1991cab62d62ef97a86aae215330e9df3d54d60dcf8338fdd98e758b87cc62"
+    end
+    # Fix support for larger netrc file or longer lines/tokens in it
+    # https://github.com/curl/curl/issues/15513
+    patch do
+      url "https://github.com/curl/curl/commit/0cdde0fdfbeb8c35420f6d03fa4b77ed73497694.patch?full_index=1"
+      sha256 "e1d10cb2327b4aa6b90eb153dce8b06fb4c683936edb9353fb2c9a4341cababd"
+    end
+  end
 
   livecheck do
     url "https://curl.se/download/"
@@ -15,13 +34,13 @@ class Curl < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "4d0bc66626fc78a034e365084de6f3eeee218cf57b1b184248b1c5e5e5b8785f"
-    sha256 cellar: :any,                 arm64_ventura:  "2cfa6df78dd8930d3325fa3261137b98e7c3203101eda4663547ed35ed4bf1c6"
-    sha256 cellar: :any,                 arm64_monterey: "e39baf7b3ab1c3fe02f3c1dfcd496f19b6cfa5bdab9938785449589592d737df"
-    sha256 cellar: :any,                 sonoma:         "a4869433de9e2a0cd1f62ca9adac05b2556875b232cae3c57fe9f5270102f3a2"
-    sha256 cellar: :any,                 ventura:        "fb8d735358f2a294c47ac76615c930b197cacefc92737b20a0c684d730e27a4c"
-    sha256 cellar: :any,                 monterey:       "cad6d2e6ed9918454c9986c1299c01409cc71212b23c334851b18494aa67e558"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "07004c1e8957c22da26a29908759d13ed9a2c11d5b08387ad24b9e599123d97a"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_sequoia: "0e473c47dbd796d60e564c40f6447f406bc325aae2d0c5085074a60e2466b257"
+    sha256 cellar: :any,                 arm64_sonoma:  "47b31a69fda0558adedb16bdac0d4003a3efd902a0f28a6615734dbf3c1042d1"
+    sha256 cellar: :any,                 arm64_ventura: "fa50c33145ed41a6de273ce0ea9af5491f975bb34c4c1f11dfb598bc899e0c77"
+    sha256 cellar: :any,                 sonoma:        "7dadb384a5a42e7a4b5607791b5e43209d825df771172aca4aea549bb8f09c8a"
+    sha256 cellar: :any,                 ventura:       "e92eb6ae945a5ff54db7e4564df57b98cf02b958a7b0efbf7872103076ffabf2"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "48c94b796c1615b3695ebea3b95b8f40168697e80122ca4f1266e410d3eca91c"
   end
 
   head do
@@ -34,9 +53,8 @@ class Curl < Formula
 
   keg_only :provided_by_macos
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "brotli"
-  depends_on "libidn2"
   depends_on "libnghttp2"
   depends_on "libssh2"
   depends_on "openssl@3"
@@ -46,6 +64,10 @@ class Curl < Formula
   uses_from_macos "krb5"
   uses_from_macos "openldap"
   uses_from_macos "zlib"
+
+  on_system :linux, macos: :monterey_or_older do
+    depends_on "libidn2"
+  end
 
   def install
     tag_name = "curl-#{version.to_s.tr(".", "_")}"
@@ -64,7 +86,6 @@ class Curl < Formula
       --with-ca-fallback
       --with-secure-transport
       --with-default-ssl-backend=openssl
-      --with-libidn2
       --with-librtmp
       --with-libssh2
       --without-libpsl
@@ -76,6 +97,18 @@ class Curl < Formula
       "--with-gssapi"
     else
       "--with-gssapi=#{Formula["krb5"].opt_prefix}"
+    end
+
+    args += if OS.mac? && MacOS.version >= :ventura
+      %w[
+        --with-apple-idn
+        --without-libidn2
+      ]
+    else
+      %w[
+        --without-apple-idn
+        --with-libidn2
+      ]
     end
 
     system "./configure", *args, *std_configure_args
@@ -90,6 +123,16 @@ class Curl < Formula
     filename = (testpath/"test.tar.gz")
     system bin/"curl", "-L", stable.url, "-o", filename
     filename.verify_checksum stable.checksum
+
+    # Check dependencies linked correctly
+    curl_features = shell_output("#{bin}/curl-config --features").split("\n")
+    %w[brotli GSS-API HTTP2 IDN libz SSL zstd].each do |feature|
+      assert_includes curl_features, feature
+    end
+    curl_protocols = shell_output("#{bin}/curl-config --protocols").split("\n")
+    %w[LDAPS RTMP SCP SFTP].each do |protocol|
+      assert_includes curl_protocols, protocol
+    end
 
     system libexec/"mk-ca-bundle.pl", "test.pem"
     assert_predicate testpath/"test.pem", :exist?

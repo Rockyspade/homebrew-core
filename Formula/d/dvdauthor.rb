@@ -13,6 +13,7 @@ class Dvdauthor < Formula
 
   bottle do
     rebuild 1
+    sha256 cellar: :any,                 arm64_sequoia:  "527ecacf46ecfaa771b7d5cb556e7d0002e331a79edad4250743c096babdc2f6"
     sha256 cellar: :any,                 arm64_sonoma:   "a0b32d9b7bac066918dbbe7aa04bd718751317bc6284c3d7d87fcf77051deb46"
     sha256 cellar: :any,                 arm64_ventura:  "03d576e3150005a3c6524683afa2d234ac698fc9da7645645f43afb42ffac95a"
     sha256 cellar: :any,                 arm64_monterey: "0db62ec5affa472a427aecab0add45800f986518df8aba5026e01aff8fbee17e"
@@ -28,7 +29,7 @@ class Dvdauthor < Formula
   # Dvdauthor will optionally detect ImageMagick or GraphicsMagick, too.
   # But we don't add either as deps because they are big.
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "freetype"
   depends_on "libdvdread"
   depends_on "libpng"
@@ -36,9 +37,7 @@ class Dvdauthor < Formula
   uses_from_macos "libxml2"
 
   def install
-    system "./configure", "--disable-dependency-tracking",
-                          "--prefix=#{prefix}",
-                          "--mandir=#{man}"
+    system "./configure", "--mandir=#{man}", *std_configure_args
     system "make"
     ENV.deparallelize # Install isn't parallel-safe
     system "make", "install"

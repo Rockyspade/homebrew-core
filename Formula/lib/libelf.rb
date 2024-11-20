@@ -9,6 +9,7 @@ class Libelf < Formula
   revision 1
 
   bottle do
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "4f4135950b4b898f046e748266d309126a4c87e0e86a19d476192f9619660819"
     sha256 cellar: :any_skip_relocation, arm64_sonoma:   "b5db356e6f8dc983b40424a17c9b73bfcbb442d08a6db8e952744b55aa53bb6e"
     sha256 cellar: :any_skip_relocation, arm64_ventura:  "839fa934a24ba7bff4bd8ed5d8e3440cd70db7027fa2b79201c32469d0947877"
     sha256 cellar: :any_skip_relocation, arm64_monterey: "3987585b99efe287bfe353b420ba423057e6bfb3a27d543f5f0bfe13f76ef42f"
@@ -58,7 +59,7 @@ class Libelf < Formula
                    "D8031C040CD8048656C6C6F20776F726C640A"
     File.binwrite(testpath/"elf", [elf_content].pack("H*"))
 
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <gelf.h>
       #include <fcntl.h>
       #include <stdio.h>
@@ -73,7 +74,7 @@ class Libelf < Formula
         printf("%d-bit ELF\\n", gelf_getclass(e) == ELFCLASS32 ? 32 : 64);
         return 0;
       }
-    EOS
+    C
 
     system ENV.cc, "test.c", "-L#{lib}", "-I#{include}/libelf",
                    "-lelf", "-o", "test"

@@ -1,8 +1,8 @@
 class NodeAT18 < Formula
   desc "Platform built on V8 to build network applications"
   homepage "https://nodejs.org/"
-  url "https://nodejs.org/dist/v18.20.4/node-v18.20.4.tar.xz"
-  sha256 "a76c7ea1b96aeb6963a158806260c8094b6244d64a696529d020547b9a95ca2a"
+  url "https://nodejs.org/dist/v18.20.5/node-v18.20.5.tar.xz"
+  sha256 "76037b9bad0ab9396349282dbfcec1b872ff7bd8c8d698853bebd982940858bf"
   license "MIT"
 
   livecheck do
@@ -11,13 +11,12 @@ class NodeAT18 < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "7c337fb805a9514a54c8095b2552e98722ae330d764b42f446646a5fad202939"
-    sha256 arm64_ventura:  "8bc5c8830486ba150dea2fc6d1b78f8a25a5f4b0c98f5534559edf41e89c1a57"
-    sha256 arm64_monterey: "74d61167b069210de31f17e3be2cc6ff60a00788976007e42beb23bda4be7315"
-    sha256 sonoma:         "c9d9984520b1b793563d1fa1cada6ee38b9582a282a6e9d1c4a24ab22b28aa8b"
-    sha256 ventura:        "63cefefafcd17a416e54963f5d39740cb2850593f0046ce9b5a30a37ad6aee24"
-    sha256 monterey:       "415d5afb5aaf3e8e428365ad8844335a0c77eda5f0f686950c17ee67eb2b8944"
-    sha256 x86_64_linux:   "1e9afb516b736af7765900fa4e908c9a00c740b71887910a22a7af005046a7aa"
+    sha256 arm64_sequoia: "434f258d8fc32a3b1fff91bb529069a51bf1e9c79e7d834c70685a408cd7e2ec"
+    sha256 arm64_sonoma:  "a09d36a1b0f782ebaa36e170f6789e314cf1c830989d0e7bf8da39ec35234c42"
+    sha256 arm64_ventura: "a5f3760650bec4fffc5f669c9b13dfceeb5e826748828740c142155e6240cf21"
+    sha256 sonoma:        "19d6b4a6582578ee3a1ce412da80c5f63c506874f571912d49e6a16f8b9ffd66"
+    sha256 ventura:       "67e2434b0f770cdf0b77832912e9d71d847529ff98085fbc995c7f2b299c9342"
+    sha256 x86_64_linux:  "a1fa241b673cf2269c80237c39ccf6687ea9b3e4dd2513fb1a8cc6c0fc73e2b2"
   end
 
   keg_only :versioned_formula
@@ -28,10 +27,10 @@ class NodeAT18 < Formula
 
   depends_on "pkg-config" => :build
   depends_on "python-setuptools" => :build
-  depends_on "python@3.12" => :build
+  depends_on "python@3.13" => :build
   depends_on "brotli"
   depends_on "c-ares"
-  depends_on "icu4c"
+  depends_on "icu4c@76"
   depends_on "libnghttp2"
   depends_on "libuv"
   depends_on "openssl@3"
@@ -52,11 +51,20 @@ class NodeAT18 < Formula
 
   fails_with gcc: "5"
 
+  # Backport support for ICU 76+
+  patch do
+    url "https://github.com/nodejs/node/commit/81517faceac86497b3c8717837f491aa29a5e0f9.patch?full_index=1"
+    sha256 "79a5489617665c5c88651a7dc364b8967bebdea5bdf361b85572d041a4768662"
+  end
+
+  # py3.13 build patch
+  patch :DATA
+
   def install
     ENV.llvm_clang if OS.mac? && (DevelopmentTools.clang_build_version <= 1100)
 
     # make sure subprocesses spawned by make are using our Python 3
-    ENV["PYTHON"] = which("python3.12")
+    ENV["PYTHON"] = which("python3.13")
 
     args = %W[
       --prefix=#{prefix}
@@ -117,3 +125,26 @@ class NodeAT18 < Formula
     assert_match "< hello >", shell_output("#{bin}/npx --yes cowsay hello")
   end
 end
+
+__END__
+diff --git a/configure b/configure
+index 711a3014..29ebe882 100755
+--- a/configure
++++ b/configure
+@@ -4,6 +4,7 @@
+ # Note that the mix of single and double quotes is intentional,
+ # as is the fact that the ] goes on a new line.
+ _=[ 'exec' '/bin/sh' '-c' '''
++command -v python3.13 >/dev/null && exec python3.13 "$0" "$@"
+ command -v python3.12 >/dev/null && exec python3.12 "$0" "$@"
+ command -v python3.11 >/dev/null && exec python3.11 "$0" "$@"
+ command -v python3.10 >/dev/null && exec python3.10 "$0" "$@"
+@@ -24,7 +25,7 @@ except ImportError:
+   from distutils.spawn import find_executable as which
+ 
+ print('Node.js configure: Found Python {}.{}.{}...'.format(*sys.version_info))
+-acceptable_pythons = ((3, 12), (3, 11), (3, 10), (3, 9), (3, 8), (3, 7), (3, 6))
++acceptable_pythons = ((3, 13), (3, 12), (3, 11), (3, 10), (3, 9), (3, 8), (3, 7), (3, 6))
+ if sys.version_info[:2] in acceptable_pythons:
+   import configure
+ else:

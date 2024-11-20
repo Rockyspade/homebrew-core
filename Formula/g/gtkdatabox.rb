@@ -7,6 +7,7 @@ class Gtkdatabox < Formula
   revision 1
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "5754a6b703bfc85c30adfe1f78b4f5e3416a4d9f04d9531d1c43fb584e136307"
     sha256 cellar: :any,                 arm64_sonoma:   "c4c95de47b74f0a924c88543dfbfc01999cf3491ce8bac5e77b0db2a265bb0e9"
     sha256 cellar: :any,                 arm64_ventura:  "058fb1cf99c7c1a34a9c7b81ebbb8720863009241ad47d69b47efb2f448ff84a"
     sha256 cellar: :any,                 arm64_monterey: "1951c01226523dbbf91a85816a64fed3377b9c4fec4180536b608b93151eafb0"
@@ -35,7 +36,7 @@ class Gtkdatabox < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <gtkdatabox.h>
 
       int main(int argc, char *argv[]) {
@@ -43,7 +44,7 @@ class Gtkdatabox < Formula
         GtkWidget *db = gtk_databox_new();
         return 0;
       }
-    EOS
+    C
 
     pkg_config_flags = shell_output("pkg-config --cflags --libs gtkdatabox").chomp.split
     system ENV.cc, "test.c", "-o", "test", *pkg_config_flags

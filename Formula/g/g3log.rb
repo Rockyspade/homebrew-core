@@ -6,6 +6,7 @@ class G3log < Formula
   license "Unlicense"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "c73ae14424645c0b8e0e928e4d2db3f43fc7fe992150bd70556fc81ce7d7addb"
     sha256 cellar: :any,                 arm64_sonoma:   "a589b330c4106cffafba1661ea1a436733cb9f7a9d37974cdf309b1198fec252"
     sha256 cellar: :any,                 arm64_ventura:  "2d3e3a65e75427ffe6846fcd9acfdd8234ee92fb0560d90a2413d91baf65d7be"
     sha256 cellar: :any,                 arm64_monterey: "f255d677369efba5b267a8baa59c50b8c9153ad26bba7d35cf8b2f0cf107e220"
@@ -24,7 +25,7 @@ class G3log < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS.gsub("TESTDIR", testpath)
+    (testpath/"test.cpp").write <<~CPP.gsub("TESTDIR", testpath)
       #include <g3log/g3log.hpp>
       #include <g3log/logworker.hpp>
       int main()
@@ -36,7 +37,7 @@ class G3log < Formula
         LOG(DEBUG) << "Hello World";
         return 0;
       }
-    EOS
+    CPP
     system ENV.cxx, "-std=c++17", "test.cpp", "-L#{lib}", "-lg3log", "-o", "test"
     system "./test"
     Dir.glob(testpath/"test.g3log.*.log").any?

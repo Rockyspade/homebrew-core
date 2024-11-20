@@ -6,6 +6,7 @@ class Ancient < Formula
   license "BSD-2-Clause"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "6f1107e987a8027289e5c8e7c95b71e85b75a94d0219df48eac31504bbb427b4"
     sha256 cellar: :any,                 arm64_sonoma:   "1dd610a8f47fb9887ed822f63899eb3cbadcad4d0be848aac8e4dd2bd12105ee"
     sha256 cellar: :any,                 arm64_ventura:  "cb400c604791468287b32dbb9d5f44b591f0ab9ca2cfccf4b12204eb7f1029ae"
     sha256 cellar: :any,                 arm64_monterey: "038e7397ac6c20fa7a424bf5565504fc669e986bda08600379c297c9e15bffc4"
@@ -19,16 +20,16 @@ class Ancient < Formula
   depends_on "autoconf-archive" => :build
   depends_on "automake" => :build
   depends_on "libtool" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
 
   def install
     system "./autogen.sh"
-    system "./configure", *std_configure_args, "--disable-silent-rules"
+    system "./configure", "--disable-silent-rules", *std_configure_args
     system "make", "install"
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <ancient/ancient.hpp>
 
       int main(int argc, char **argv)
@@ -36,7 +37,7 @@ class Ancient < Formula
         std::optional<ancient::Decompressor> decompressor;
         return 0;
       }
-    EOS
+    CPP
 
     system ENV.cxx, "-std=c++17", "test.cpp", "-I#{include}", "-L#{lib}", "-lancient", "-o", "test"
     system "./test"

@@ -8,6 +8,7 @@ class ColladaDom < Formula
   head "https://github.com/rdiankov/collada-dom.git", branch: "master"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "93ee168d5e413ac9709071615535b1e41a69104a256874a88c455b93a69473cd"
     sha256 cellar: :any,                 arm64_sonoma:   "a23c3731eff60bcd2dc079fa88da110bdfa807137fe18cdd7893677cd522fd3c"
     sha256 cellar: :any,                 arm64_ventura:  "5f851bdfae69110c8648205d9f44267c722bbd424a2727649a0442c82c625e30"
     sha256 cellar: :any,                 arm64_monterey: "46407af6b516e2a49f330278953d8d2fa6d0de217cfde68cfe53990f1dc5e33a"
@@ -18,7 +19,7 @@ class ColladaDom < Formula
   end
 
   depends_on "cmake" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "boost"
   depends_on "minizip"
   depends_on "uriparser"
@@ -39,7 +40,7 @@ class ColladaDom < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <iostream>
       #include <dae.h>
       #include <dae/daeDom.h>
@@ -51,7 +52,7 @@ class ColladaDom < Formula
         cout << GetCOLLADA_VERSION() << endl;
         return 0;
       }
-    EOS
+    CPP
     system ENV.cxx, "test.cpp", "-std=c++11", "-I#{include}/collada-dom2.5",
                     "-L#{lib}", "-lcollada-dom2.5-dp", "-o", "test"
 

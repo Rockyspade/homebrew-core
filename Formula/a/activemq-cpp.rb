@@ -8,6 +8,7 @@ class ActivemqCpp < Formula
   revision 2
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "9662d2f91d16d3077aabec66a532efde437d18987dd1a7be434e3c118a5e1eb9"
     sha256 cellar: :any,                 arm64_sonoma:   "9c0b1a20e016293fcd540c357d6d879c82446c00720b447ae4e1ee1d1eb546ad"
     sha256 cellar: :any,                 arm64_ventura:  "9b637874d78138b4debd3b45d1bbd54d79babf16bfdfbf9acc340103208262bd"
     sha256 cellar: :any,                 arm64_monterey: "aecbae4664dd780644ff782462ea5bcdcc592917dfad01dde5370a93db641319"
@@ -20,7 +21,7 @@ class ActivemqCpp < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "fa16d5eb67f51eb3d9e648447398db44713695f5e1c5279c70f7a2229e607a9a"
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "apr"
   depends_on "openssl@3"
 

@@ -1,8 +1,8 @@
 class EcflowUi < Formula
   desc "User interface for client/server workflow package"
   homepage "https://confluence.ecmwf.int/display/ECFLOW"
-  url "https://confluence.ecmwf.int/download/attachments/8650755/ecFlow-5.13.3-Source.tar.gz"
-  sha256 "a9ca7f032b8bd67e97d571d72ae1e24c8535bc6722af5f3357890e191a2c395b"
+  url "https://confluence.ecmwf.int/download/attachments/8650755/ecFlow-5.13.5-Source.tar.gz"
+  sha256 "f09e19534a14ae3746be301914c726ae51fe2d52ffc595d34d23fa845bd00ac3"
   license "Apache-2.0"
 
   livecheck do
@@ -11,13 +11,11 @@ class EcflowUi < Formula
   end
 
   bottle do
-    sha256                               arm64_sonoma:   "994fb3de9f302eea9ba4faba568dbed59a92fc7055e7f295a86512a2a569988e"
-    sha256                               arm64_ventura:  "472d25c86e97cfeff8a87bfdb1112c7940b0c99b2d666a805ed450a75db11772"
-    sha256                               arm64_monterey: "fb31e7ff923466415a4ec65d696788ed1c8e8d294450b4c38e9e0e5e57f9790c"
-    sha256                               sonoma:         "1675d8485b8876c252f11186a118cfe145ee361531d1342cf2f2b41a402de9a5"
-    sha256                               ventura:        "5449f3817a26bd050d8aeceea94852a8daa17aee2f2e7330791638430be4d7b8"
-    sha256                               monterey:       "120cf10d415f5f7c6b1a71a081d09714f04c36d14b2f80b579a65cdc51925991"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "077d0d4a27d44957b5210e83f4f90a4477d1639dbe41530c00283a468861fd57"
+    sha256                               arm64_sonoma:  "c6e5abfd5aab56b67276e21535a37b833ca1f7bc8286196bdb8c707090e34edd"
+    sha256                               arm64_ventura: "ec18cd2397b8b6cb6cc7c8928af6f91a98777c05f472995db3187377e4136965"
+    sha256                               sonoma:        "c7a798dd5ff7f5b438347d19ace2a19d93f08971d38d2e47b3e437c1124a12c2"
+    sha256                               ventura:       "dd7d4f5f256c9b18ac81029933f90fee86b3045d8db995cd2cc0bdfdf4dc8cb3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "6c592c4983963f0197663d46351f76c514ca2f4329ee092563db276e27394204"
   end
 
   depends_on "boost" => :build

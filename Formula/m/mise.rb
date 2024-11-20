@@ -1,8 +1,8 @@
 class Mise < Formula
   desc "Polyglot runtime manager (asdf rust clone)"
   homepage "https://mise.jdx.dev/"
-  url "https://github.com/jdx/mise/archive/refs/tags/v2024.8.11.tar.gz"
-  sha256 "f5dd6a1f66c0bb4c50ccf75944671b481c59d66af6a924de3f7faea3a8328cc3"
+  url "https://github.com/jdx/mise/archive/refs/tags/v2024.11.18.tar.gz"
+  sha256 "43ad97a8276b1d57cc3934d1d8d5dfbd2ff8c7c9f948cb1a9885833ea93a7504"
   license "MIT"
   head "https://github.com/jdx/mise.git", branch: "main"
 
@@ -12,13 +12,12 @@ class Mise < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "9d55be304eb6a35b22960587b2bb63eb6577721a8b77328d4ee91c8a5bb1238b"
-    sha256 cellar: :any,                 arm64_ventura:  "56e6c1cf0ecd9a20eaccdb26a42294c14cbab50860c8f60d05193a0aaf94f817"
-    sha256 cellar: :any,                 arm64_monterey: "f0426afada5ba49bf935587d9170479950bc61b1d921e934674b1642d15266f3"
-    sha256 cellar: :any,                 sonoma:         "2873def487997362f4c1cd57a74c7a5ef2fce25d6b02d33930d213c015565e52"
-    sha256 cellar: :any,                 ventura:        "b18a6478884e8e8f52e37f41897efc05acc132dc3ed26137204b069f8602e688"
-    sha256 cellar: :any,                 monterey:       "b388c41dda4ce8e42a8701a0914434d917cd8052fe6bd291fc9c538edd47eb50"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "45f844d3933e086b1574e68b39d70ef6d43b25de5205b25e81f4bd48e53a5705"
+    sha256 cellar: :any,                 arm64_sequoia: "7e97aef3e1877f4dbcf44b3034c96fff284ab77ab62d94d278266e91ee2fcbe8"
+    sha256 cellar: :any,                 arm64_sonoma:  "c5cf2dc314464f4e786b8f6b412e6abe4ddc5f6979b751cf3092b6994347d0ca"
+    sha256 cellar: :any,                 arm64_ventura: "41f5f15a8fedffcb096e8855cdf62d2b5debcde51cdef2bd5db3397d82909836"
+    sha256 cellar: :any,                 sonoma:        "e74ff0ed9dd91e9b334a07e8e239f05fbf70b5545ad51e2571cc3887e994b7d8"
+    sha256 cellar: :any,                 ventura:       "9350ce70f17494ab9ae565d64591882480393b5b65e99873e8b49c337bce919b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "33b7537bf920898960bf9650cf97ff13776fa9035af26deea0ac187f205bfe0b"
   end
 
   depends_on "pkg-config" => :build
@@ -26,6 +25,7 @@ class Mise < Formula
 
   depends_on "libgit2"
   depends_on "openssl@3"
+  depends_on "usage"
 
   uses_from_macos "bzip2"
 

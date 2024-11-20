@@ -1,19 +1,18 @@
 class Copa < Formula
   desc "Tool to directly patch container images given the vulnerability scanning results"
   homepage "https://github.com/project-copacetic/copacetic"
-  url "https://github.com/project-copacetic/copacetic/archive/refs/tags/v0.7.0.tar.gz"
-  sha256 "ce66b7befe2e69352cb1dff4ca9e99ee8ecc181f1870e6edc23c31975cc575bc"
+  url "https://github.com/project-copacetic/copacetic/archive/refs/tags/v0.9.0.tar.gz"
+  sha256 "aea5f31e67cdc8acceca3378992ca31afa16cba346f3eedeeacdf58e32457006"
   license "Apache-2.0"
   head "https://github.com/project-copacetic/copacetic.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "2dac392c4aa445ae31d661f44a4052c382ccb362ddd0bbc669241f5db0e9c5a4"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "221d0b9bd5a23212f5ce6b014563d12ea822ab43302434ae24f8dad5940ecc30"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "bbea3eb028053c4b73b5a57e4279734ec549953760c55184344fd1e8683ad450"
-    sha256 cellar: :any_skip_relocation, sonoma:         "948f8869d1f622f8268bc0b7cb12a6932d4d62b59aa36758b2b1422a34dbdb10"
-    sha256 cellar: :any_skip_relocation, ventura:        "7b81a20545d3089a371099021e70bf2d2d970f7f008b9f73f688d0d4d812717c"
-    sha256 cellar: :any_skip_relocation, monterey:       "c7e8b444e13902ee4282d0f25a917ef93e3d649b4f89e1fa19ef1667082d4360"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "265014d37f8eeabb8c85567426c4d4f1fb95ebccc8bb8b9eb75a40fae9546548"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "a95c2895d2e550c7001976021b4c21d0edbb9f980920bf866937cc8dee77b2ed"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "4ce1375c8207984464132251a3958b6afa6478d1c972e641c350324aa3ed61fe"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "1de37313fc5cec8dbb3a61a8efb7db1138eb8c68a198107d80de75c51f59b68f"
+    sha256 cellar: :any_skip_relocation, sonoma:        "60d381978bc4625af4789920d22f657b53683e28f15fe3fb2839cad6b21467cf"
+    sha256 cellar: :any_skip_relocation, ventura:       "931fbbe17ceb8d977d89edd91e467db9f6d98c39d8ff0b88b78129168c024083"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "16fffdbf34046746a49f6ed54cec4354565da846edc961e7937c13d7d2004618"
   end
 
   depends_on "go" => :build
@@ -31,13 +30,13 @@ class Copa < Formula
 
   test do
     assert_match "Project Copacetic: container patching tool", shell_output("#{bin}/copa help")
-    (testpath/"report.json").write <<~EOS
+    (testpath/"report.json").write <<~JSON
       {
         "SchemaVersion": 2,
         "ArtifactName": "nginx:1.21.6",
         "ArtifactType": "container_image"
       }
-    EOS
+    JSON
     output = shell_output("#{bin}/copa patch --image=mcr.microsoft.com/oss/nginx/nginx:1.21.6  \
                           --report=report.json 2>&1", 1)
     assert_match "Error: no scanning results for os-pkgs found", output

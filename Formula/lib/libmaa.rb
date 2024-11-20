@@ -12,6 +12,7 @@ class Libmaa < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "2b88aec983abd53f00f4fb93cae3234697551de075a45f36e8b4112d93f6dfcc"
     sha256 cellar: :any,                 arm64_sonoma:   "ffeb3a62fca07f8c095090d570b64165b442ab4e9debfab6475d7b6fdc2bdbe1"
     sha256 cellar: :any,                 arm64_ventura:  "90ab64584330817a8a5e11494945f1bcc67fac60733e4bea976d95a833341ce8"
     sha256 cellar: :any,                 arm64_monterey: "b3d1be0159e481318505912f1dd5e2d07e3d05122cf791e3743461595e2bd43b"
@@ -29,7 +30,7 @@ class Libmaa < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       /* basetest.c -- Test base64 and base26 numbers
        * Created: Sun Nov 10 11:51:11 1996 by faith@dict.org
        * Copyright 1996, 2002 Rickard E. Faith (faith@dict.org)
@@ -111,7 +112,7 @@ class Libmaa < Formula
 
          return 0;
       }
-    EOS
+    C
     system ENV.cc, "test.c", "-I#{include}", "-L#{lib}", "-lmaa", "-o", "test"
     system "./test"
   end

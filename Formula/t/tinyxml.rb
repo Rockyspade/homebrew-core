@@ -6,6 +6,7 @@ class Tinyxml < Formula
   license "Zlib"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "d9865bd3033992b304259880d063f35dd08c314ecf0f3a627a6dda616e946b8b"
     sha256 cellar: :any,                 arm64_sonoma:   "bc5be45bfaaab1e89a96c0fba01f026586cfd831d067a5a534b3c72de7026f83"
     sha256 cellar: :any,                 arm64_ventura:  "5ce481b9f659d845c681b7b88daac645064e622d9e3f93710f35ecc58821a4cf"
     sha256 cellar: :any,                 arm64_monterey: "aaed7baf7452fd109d0fd56329e123f22aa9cef10e03457be3c264558d2d48bc"
@@ -67,11 +68,11 @@ class Tinyxml < Formula
   end
 
   test do
-    (testpath/"test.xml").write <<~EOS
+    (testpath/"test.xml").write <<~XML
       <?xml version="1.0" ?>
       <Hello>World</Hello>
-    EOS
-    (testpath/"test.cpp").write <<~EOS
+    XML
+    (testpath/"test.cpp").write <<~CPP
       #include <tinyxml.h>
 
       int main()
@@ -80,7 +81,7 @@ class Tinyxml < Formula
         doc.LoadFile();
         return 0;
       }
-    EOS
+    CPP
     system ENV.cxx, "test.cpp", "-L#{lib}", "-ltinyxml", "-o", "test"
     system "./test"
   end

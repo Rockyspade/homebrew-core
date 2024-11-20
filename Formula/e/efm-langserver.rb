@@ -7,6 +7,7 @@ class EfmLangserver < Formula
   head "https://github.com/mattn/efm-langserver.git", branch: "master"
 
   bottle do
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "9f2519c8b0bd2c84a34ab41818136152b191813d12d6c79469d8dce1f80f1554"
     sha256 cellar: :any_skip_relocation, arm64_sonoma:   "acdd9f4c7834504e7e8c5078d64c5c602818cd9e51229cfc23c8c6a507d43eb5"
     sha256 cellar: :any_skip_relocation, arm64_ventura:  "acdd9f4c7834504e7e8c5078d64c5c602818cd9e51229cfc23c8c6a507d43eb5"
     sha256 cellar: :any_skip_relocation, arm64_monterey: "acdd9f4c7834504e7e8c5078d64c5c602818cd9e51229cfc23c8c6a507d43eb5"
@@ -23,7 +24,7 @@ class EfmLangserver < Formula
   end
 
   test do
-    (testpath/"config.yml").write <<~EOS
+    (testpath/"config.yml").write <<~YAML
       version: 2
       root-markers:
         - ".git/"
@@ -31,7 +32,7 @@ class EfmLangserver < Formula
         python:
           - lint-command: "flake8 --stdin-display-name ${INPUT} -"
             lint-stdin: true
-    EOS
+    YAML
     output = shell_output("#{bin}/efm-langserver -c #{testpath/"config.yml"} -d")
     assert_match "version: 2", output
     assert_match "lint-command: flake8 --stdin-display-name ${INPUT} -", output

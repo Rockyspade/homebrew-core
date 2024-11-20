@@ -4,6 +4,7 @@ class Zbar < Formula
   url "https://linuxtv.org/downloads/zbar/zbar-0.23.93.tar.bz2"
   sha256 "83be8f85fc7c288fd91f98d52fc55db7eedbddcf10a83d9221d7034636683fa0"
   license "LGPL-2.1-only"
+  revision 2
 
   livecheck do
     url :homepage
@@ -11,13 +12,12 @@ class Zbar < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "23bfbc0c9ae6d16727058825feb8147bb7384cd4307fb6f4642ff94c9cf99c13"
-    sha256 arm64_ventura:  "6d791bf71b217d0c7558f7becd6b38fcd6d3721002dd164bf01a23a356225259"
-    sha256 arm64_monterey: "c7f601f54d7c8609406cb2e1fcbbb4abd8321b58849c64ba5622a6b8ac68a850"
-    sha256 sonoma:         "bd76b39f1dc8bf551d535759fa3f86e9de3266a26939a42bca82cf9270ce3d87"
-    sha256 ventura:        "fd8701195bca0fbbaab5c5c28b06b93f79d3efb3f60a8a45ff927c95ba8f8e29"
-    sha256 monterey:       "b262f392f862ff8f4ba5808c70f77f2b857a95f392e8d2bad9e0c670b329e519"
-    sha256 x86_64_linux:   "b3f1842dfca655978646c83cdf8e58163ee2a3e5d1a9926314b5c8102817d528"
+    sha256 arm64_sequoia: "fe42da9d30318b93a75645b76806c1ffe684db56c7f6c0e608c718f9cc7f8f37"
+    sha256 arm64_sonoma:  "c6a2988931330f8b9330b259d53096e58b25c9c54a3dc167688774412f885993"
+    sha256 arm64_ventura: "22dcfaed8be4e8e396d6e7f6ca5b9dafc04d83e16c78674a665c0742ba9c0c67"
+    sha256 sonoma:        "63ecefc21c58f41dcc73346b81fd1defabf3f2db855ec4a18fd0b63ec0cd5326"
+    sha256 ventura:       "420f056fecb135dd17684d4f7c62825368e2a0a52df6aabbaaf9823c819d6ba6"
+    sha256 x86_64_linux:  "ecb7269a350f91339a4c6c05d014e27f38311431e54e948fa575aacb2056f03e"
   end
 
   head do
@@ -29,27 +29,39 @@ class Zbar < Formula
     depends_on "libtool" => :build
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "xmlto" => :build
+
   depends_on "imagemagick"
   depends_on "jpeg-turbo"
+
+  on_macos do
+    depends_on "fontconfig"
+    depends_on "freetype"
+    depends_on "gettext"
+    depends_on "glib"
+    depends_on "liblqr"
+    depends_on "libomp"
+    depends_on "libtool"
+    depends_on "little-cms2"
+  end
 
   on_linux do
     depends_on "dbus"
   end
 
-  fails_with gcc: "5" # imagemagick is built with GCC
-
   def install
     ENV["XML_CATALOG_FILES"] = etc/"xml/catalog"
+
     system "autoreconf", "--force", "--install", "--verbose" if build.head?
-    system "./configure", *std_configure_args,
-                          "--disable-silent-rules",
+
+    system "./configure", "--disable-silent-rules",
                           "--disable-video",
                           "--without-python",
                           "--without-qt",
                           "--without-gtk",
-                          "--without-x"
+                          "--without-x",
+                          *std_configure_args
     system "make", "install"
   end
 

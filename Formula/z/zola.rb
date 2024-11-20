@@ -6,6 +6,7 @@ class Zola < Formula
   license "MIT"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "4d79830a96d63b13b20a05393bf1c194e6d0b66f56e35afe53257d284cf09a25"
     sha256 cellar: :any,                 arm64_sonoma:   "72884ca2fcf1d9eb26232eacb7efc63597b801e4913b7acffc7feae396357ed5"
     sha256 cellar: :any,                 arm64_ventura:  "8a28ce287dcc749f5e812497c440ca7a5d6a2106edc88f2dbb196c5af811ffd4"
     sha256 cellar: :any,                 arm64_monterey: "ddb05cbd1b7fe5748812a1033b8c0f7f8377108fdfef24446a5c24c792bb6805"
@@ -15,7 +16,7 @@ class Zola < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "9d6138aa7ff35d309d8c8a3c17ab9552bb8b9465427701fc7cf5d869c2c6e940"
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "rust" => :build
   depends_on "oniguruma" # for onig_sys
 
@@ -32,12 +33,12 @@ class Zola < Formula
 
   test do
     system "yes '' | #{bin}/zola init mysite"
-    (testpath/"mysite/content/blog/_index.md").write <<~EOS
+    (testpath/"mysite/content/blog/_index.md").write <<~MARKDOWN
       +++
       +++
 
       Hi I'm Homebrew.
-    EOS
+    MARKDOWN
     (testpath/"mysite/templates/section.html").write <<~EOS
       {{ section.content | safe }}
     EOS

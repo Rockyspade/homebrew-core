@@ -1,30 +1,30 @@
 class Treefmt < Formula
   desc "One CLI to format the code tree"
   homepage "https://github.com/numtide/treefmt"
-  url "https://github.com/numtide/treefmt/archive/refs/tags/v2.0.4.tar.gz"
-  sha256 "474b4b1a07e871be7ea1b530c73770fa9a04d153a8d9ff36b87a65f374d83bbf"
+  url "https://github.com/numtide/treefmt/archive/refs/tags/v2.1.0.tar.gz"
+  sha256 "1a4d1727c7e2e792993654a54ca4144a2b0a6ac71c3d0812c5256ff14766aa86"
   license "MIT"
   head "https://github.com/numtide/treefmt.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "79aefb90a7267f36fd2c44d8f00c14539dd76039a0cee5980d7ed0e9109fde24"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "f73ab21e0eeb3bcbf5983d5fe7ded7a2ade98725761757e4947cf1d2516f5c14"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "4c8fec5f24018fab225c4a3c2cc14d4f50ad6c5b6bbc56cf73d5ba7cffbd69b5"
-    sha256 cellar: :any_skip_relocation, sonoma:         "fdd48d6cb13dd7eca916d245b39de518a2c20aad8d2b375a9c5eb1434902b491"
-    sha256 cellar: :any_skip_relocation, ventura:        "dec4fee39defd7c812c18fe34693b03e7b8b9c625b1453135239c417b2d09d8e"
-    sha256 cellar: :any_skip_relocation, monterey:       "86ef06a2d8b9fab4721c2d3137a5280eefdbfdb671e2c41de6ff49a9b98aa1da"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "0957ff4cfd5722eec7332c7b70c7eaec352ebaec053544735bdee832bc028687"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "f3a33046c58bfc3a23cc412097af985bb69b2651d88ad803b004710030eaa991"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "f3a33046c58bfc3a23cc412097af985bb69b2651d88ad803b004710030eaa991"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "f3a33046c58bfc3a23cc412097af985bb69b2651d88ad803b004710030eaa991"
+    sha256 cellar: :any_skip_relocation, sonoma:        "3640245943f477ba6ce2c3494a58779c6857e2bbabb3aa235a0362d364094401"
+    sha256 cellar: :any_skip_relocation, ventura:       "3640245943f477ba6ce2c3494a58779c6857e2bbabb3aa235a0362d364094401"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e5973e192989d0d8a2240d4ac2f4ed9765cda7ec0ff96af1cf08ee706057e653"
   end
 
   depends_on "go" => :build
 
   def install
-    ldflags = "-s -w -X git.numtide.com/numtide/treefmt/build.Version=#{version}"
+    ldflags = "-s -w -X github.com/numtide/treefmt/build.Version=#{version}"
     system "go", "build", *std_go_args(ldflags:)
   end
 
   test do
-    assert_match "error: could not find [treefmt.toml .treefmt.toml]", shell_output("#{bin}/treefmt 2>&1", 1)
+    output = shell_output("#{bin}/treefmt 2>&1", 1)
+    assert_match "failed to find treefmt config file: could not find [treefmt.toml .treefmt.toml]", output
     assert_match version.to_s, shell_output("#{bin}/treefmt --version")
   end
 end

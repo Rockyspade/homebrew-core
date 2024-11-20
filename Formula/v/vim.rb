@@ -2,8 +2,8 @@ class Vim < Formula
   desc "Vi 'workalike' with many additional features"
   homepage "https://www.vim.org/"
   # vim should only be updated every 50 releases on multiples of 50
-  url "https://github.com/vim/vim/archive/refs/tags/v9.1.0650.tar.gz"
-  sha256 "354db058c5209fd76fdd4589c0b34714e9785380aefb59f812ffd5a122e654ff"
+  url "https://github.com/vim/vim/archive/refs/tags/v9.1.0850.tar.gz"
+  sha256 "4bbd7480c2d5c577a77a070fa4a133e057c37f611adf47d9a317e50244d7caa4"
   license "Vim"
   head "https://github.com/vim/vim.git", branch: "master"
 
@@ -25,22 +25,22 @@ class Vim < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "c6c4666f9faea5b55285284beb58d9762df1abe57fcbf971e42178ee76121b6f"
-    sha256 arm64_ventura:  "305b45d3d91505534e3d02de29450a5123965f69e85917c4b092e8b97aebf7b3"
-    sha256 arm64_monterey: "9dbf3c233fe5c3d05246b0dfe25ad9f309185c069fa98fb1b3b81679b0e80ee3"
-    sha256 sonoma:         "3852d438aceb36e7560d531946e6fccf7aa503fd9e27e263a4e51a76efbb241c"
-    sha256 ventura:        "4f8e9143e6d90158ee2c06b7fe9eeabfa478574eab4042c992e194b4dafc3741"
-    sha256 monterey:       "98cb7180166d7254f6050fea36bc57f34153fb0f281b69d4995b6af60a6d96af"
-    sha256 x86_64_linux:   "69b9c1f438056d82fa5b8a8dba5233fc6fda49bd58bade861974f013f640d9b0"
+    sha256 arm64_sequoia: "080fc85b0be2c82c2e3afdabb12e6df5384d29aa85530b4f42855a096e8b709c"
+    sha256 arm64_sonoma:  "a321c19bfd32e3a66e5a7676bc059b99f5eee18f25855d820e3ecf0010809ddf"
+    sha256 arm64_ventura: "f4b7e8330328a9bd5daec9d2e8812f0d05aab71d056a151fa7193f5542604646"
+    sha256 sonoma:        "d5ba1f754cfbfbf7a06135be2dfab52b2f46964e937316283ed2c0c150c727ff"
+    sha256 ventura:       "4595ce6c86dd80d7551d166d01e5d86d6e1952af45df3509074528c1c2ae1c6e"
+    sha256 x86_64_linux:  "43671b39421f5cfeb84799b901a5b5d2efa8a330ab96c1911371c94531a22862"
   end
 
   depends_on "gettext"
   depends_on "libsodium"
   depends_on "lua"
   depends_on "ncurses"
-  depends_on "perl"
-  depends_on "python@3.12"
+  depends_on "python@3.13"
   depends_on "ruby"
+
+  uses_from_macos "perl"
 
   on_linux do
     depends_on "acl"
@@ -53,13 +53,15 @@ class Vim < Formula
     because: "vim and macvim both install vi* binaries"
 
   def install
-    ENV.prepend_path "PATH", Formula["python@3.12"].opt_libexec/"bin"
+    ENV.prepend_path "PATH", Formula["python@3.13"].opt_libexec/"bin"
 
     # https://github.com/Homebrew/homebrew-core/pull/1046
     ENV.delete("SDKROOT")
 
     # vim doesn't require any Python package, unset PYTHONPATH.
     ENV.delete("PYTHONPATH")
+
+    ENV.append_to_cflags "-mllvm -enable-constraint-elimination=0" if DevelopmentTools.clang_build_version == 1600
 
     # We specify HOMEBREW_PREFIX as the prefix to make vim look in the
     # the right place (HOMEBREW_PREFIX/share/vim/{vimrc,vimfiles}) for

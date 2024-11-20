@@ -6,6 +6,7 @@ class Octomap < Formula
   license "BSD-3-Clause"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "429f4b461e548ab14d2eecd4c1599bceb2791956ef53e98c0f7814b242d799d0"
     sha256 cellar: :any,                 arm64_sonoma:   "808dfdfdf000b3da4f5223c77d5520bdb5078cc867bd98c2c27f9c1351c30e2f"
     sha256 cellar: :any,                 arm64_ventura:  "908e29c2a7423b82e4ce8cbe612595f1ab57a3e0e481d70caca34c0cbd77951a"
     sha256 cellar: :any,                 arm64_monterey: "420b3e35f3bd06f4eb1b33af0f3c85ef21666b1c1ba8946b8c6b89508133bb1e"
@@ -25,7 +26,7 @@ class Octomap < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <cassert>
       #include <octomap/octomap.h>
       int main() {
@@ -33,7 +34,7 @@ class Octomap < Formula
         assert(tree.size() == 0);
         return 0;
       }
-    EOS
+    CPP
     system ENV.cxx, "test.cpp", "-I#{include}", "-L#{lib}",
                     "-loctomath", "-loctomap", "-o", "test"
     system "./test"

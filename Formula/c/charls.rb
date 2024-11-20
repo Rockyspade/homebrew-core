@@ -7,6 +7,7 @@ class Charls < Formula
   head "https://github.com/team-charls/charls.git", branch: "main"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "4c5a430f93616eee0bbf2464f5b950ebced3874e71fe95dd8c50c78d30752af8"
     sha256 cellar: :any,                 arm64_sonoma:   "76dca903581c658d0db0f4f7102cf6f766def35e259b8f5fd1b7b215f294b684"
     sha256 cellar: :any,                 arm64_ventura:  "2472b5bdd282eb272b5f83b1e09fac00a4285802abf5215a08af4b6e2d8a2f6a"
     sha256 cellar: :any,                 arm64_monterey: "e0ee8a676b172678dd39668e90fa18b348c3cdd3415e1e6d0aee0aa8cae7f7ba"
@@ -34,7 +35,7 @@ class Charls < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <charls/charls.h>
       #include <iostream>
 
@@ -43,7 +44,7 @@ class Charls < Formula
         std::cout << "ok" << std::endl;
         return 0;
       }
-    EOS
+    CPP
 
     system ENV.cxx, "test.cpp", "-std=c++14", "-I#{include}", "-L#{lib}", "-lcharls", "-o", "test"
     assert_equal "ok", shell_output(testpath/"test").chomp

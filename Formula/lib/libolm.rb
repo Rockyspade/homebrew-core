@@ -6,6 +6,7 @@ class Libolm < Formula
   license "Apache-2.0"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "2456df3a539bccba5a28804f4e63d73ca23a6f0fc5960f2132289d86cfda08a9"
     sha256 cellar: :any,                 arm64_sonoma:   "2dd9100bb3f29d104f285aa65085e786e4649709dbc66b057237085b3be32111"
     sha256 cellar: :any,                 arm64_ventura:  "a98d48d4e45696f2645160b4aa2f345b58e3c61656c13ae8ded57bf2854e2d14"
     sha256 cellar: :any,                 arm64_monterey: "2a8281300559d3538a102fd502f0e000c98d86acc6c35a99a0cb5294df7034f2"
@@ -26,7 +27,7 @@ class Libolm < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <iostream>
       #include <vector>
       #include <stdlib.h>
@@ -45,7 +46,7 @@ class Libolm < Formula
         cout << output;
         return 0;
       }
-    EOS
+    CPP
 
     system ENV.cc, "test.cpp", "-L#{lib}", "-lolm", "-lstdc++", "-o", "test"
     assert_equal "A2daxT/5zRU1zMffzfosRYxSGDcfQY3BNvLRmsH76KU", shell_output("./test").strip

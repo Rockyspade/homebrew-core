@@ -7,6 +7,7 @@ class Spglib < Formula
   revision 1
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "cc28d8bb51579426370ae21dfa69ffdb92d0c7a05023a1f6270c47b309165a62"
     sha256 cellar: :any,                 arm64_sonoma:   "8a2df8ea5096a46219d4cab39325fe79365a2dc68e9efc6a2dc2ea430b3f9efe"
     sha256 cellar: :any,                 arm64_ventura:  "8ace7d08ecd61605d682f2a5b87fb4a4010ee819a87c0177be207f6a5a305b1c"
     sha256 cellar: :any,                 arm64_monterey: "83311332c6f4685f7408c76ffedf5ae64644950cd011cfd371085f4f4022be85"
@@ -38,34 +39,34 @@ class Spglib < Formula
   end
 
   test do
-    (testpath / "test.c").write <<~EOS
+    (testpath / "test.c").write <<~C
       #include <stdio.h>
       #include <spglib.h>
       int main()
       {
         printf("%d.%d.%d", spg_get_major_version(), spg_get_minor_version(), spg_get_micro_version());
       }
-    EOS
+    C
 
-    (testpath / "CMakeLists.txt").write <<~EOS
+    (testpath / "CMakeLists.txt").write <<~CMAKE
       cmake_minimum_required(VERSION 3.6)
       project(test_spglib LANGUAGES C)
       find_package(Spglib CONFIG REQUIRED COMPONENTS shared)
       add_executable(test_c test.c)
       target_link_libraries(test_c PRIVATE Spglib::symspg)
-    EOS
+    CMAKE
     system "cmake", "-B", "build_shared"
     system "cmake", "--build", "build_shared"
     system "./build_shared/test_c"
 
     (testpath / "CMakeLists.txt").delete
-    (testpath / "CMakeLists.txt").write <<~EOS
+    (testpath / "CMakeLists.txt").write <<~CMAKE
       cmake_minimum_required(VERSION 3.6)
       project(test_spglib LANGUAGES C Fortran)
       find_package(Spglib CONFIG REQUIRED COMPONENTS static)
       add_executable(test_c test.c)
       target_link_libraries(test_c PRIVATE Spglib::symspg)
-    EOS
+    CMAKE
     system "cmake", "-B", "build_static"
     system "cmake", "--build", "build_static"
     system "./build_static/test_c"

@@ -1,18 +1,17 @@
 class NpmCheckUpdates < Formula
   desc "Find newer versions of dependencies than what your package.json allows"
   homepage "https://github.com/raineorshine/npm-check-updates"
-  url "https://registry.npmjs.org/npm-check-updates/-/npm-check-updates-17.0.6.tgz"
-  sha256 "125ead32a5b12f2bd38814b98e92b9bae1c0811a9c8ce5bc31a02fb306a194ab"
+  url "https://registry.npmjs.org/npm-check-updates/-/npm-check-updates-17.1.11.tgz"
+  sha256 "42618c93f913f3bea23be404dc1d16eb01751dec818da64b9a2a4aa97163f414"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "587484937d9e77e3a0e315a0f4f2f4c3fce5158eaf55a871d4e26a892d58aff1"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "587484937d9e77e3a0e315a0f4f2f4c3fce5158eaf55a871d4e26a892d58aff1"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "587484937d9e77e3a0e315a0f4f2f4c3fce5158eaf55a871d4e26a892d58aff1"
-    sha256 cellar: :any_skip_relocation, sonoma:         "deb9fcf496473cae60dbb60d407d84f4159cfbf4338c2d6956c0c1320cd187a1"
-    sha256 cellar: :any_skip_relocation, ventura:        "deb9fcf496473cae60dbb60d407d84f4159cfbf4338c2d6956c0c1320cd187a1"
-    sha256 cellar: :any_skip_relocation, monterey:       "deb9fcf496473cae60dbb60d407d84f4159cfbf4338c2d6956c0c1320cd187a1"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "587484937d9e77e3a0e315a0f4f2f4c3fce5158eaf55a871d4e26a892d58aff1"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "e0ecbc5d91909942121ed0553b6ac2b09e7bc69ab318792d1c80611af3e43e23"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "e0ecbc5d91909942121ed0553b6ac2b09e7bc69ab318792d1c80611af3e43e23"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "e0ecbc5d91909942121ed0553b6ac2b09e7bc69ab318792d1c80611af3e43e23"
+    sha256 cellar: :any_skip_relocation, sonoma:        "2f214e48a249fb4a240d5c5109441ec8dbc6f7c734cabd10421f0ea51ac43d39"
+    sha256 cellar: :any_skip_relocation, ventura:       "2f214e48a249fb4a240d5c5109441ec8dbc6f7c734cabd10421f0ea51ac43d39"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e0ecbc5d91909942121ed0553b6ac2b09e7bc69ab318792d1c80611af3e43e23"
   end
 
   depends_on "node"

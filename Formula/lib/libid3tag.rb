@@ -7,6 +7,7 @@ class Libid3tag < Formula
 
   bottle do
     rebuild 1
+    sha256 cellar: :any,                 arm64_sequoia:  "511a214c725978fd5596e7bb1a4c1b9846d3f95a59c1da05aa49ac687d997d07"
     sha256 cellar: :any,                 arm64_sonoma:   "ddcf954105ff32bf933c7989b29b275c73eff81c6f036aae28646aa282b2d693"
     sha256 cellar: :any,                 arm64_ventura:  "cb4c5b313fafc30aa641a61fb0aa8b84b8c7232d7eea9e6d55c486664d129dc2"
     sha256 cellar: :any,                 arm64_monterey: "1dc3d797b3838163199a5496cad1018c204c87559292dd716b309acd33b780d5"
@@ -29,7 +30,7 @@ class Libid3tag < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <id3tag.h>
 
       int main(int n, char** c) {
@@ -40,7 +41,7 @@ class Libid3tag < Formula
 
         return 0;
       }
-    EOS
+    C
 
     pkg_config_cflags = shell_output("pkg-config --cflags --libs id3tag").chomp.split
     system ENV.cc, "test.c", *pkg_config_cflags, "-o", "test"

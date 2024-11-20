@@ -1,18 +1,17 @@
 class Vitess < Formula
   desc "Database clustering system for horizontal scaling of MySQL"
   homepage "https://vitess.io"
-  url "https://github.com/vitessio/vitess/archive/refs/tags/v20.0.1.tar.gz"
-  sha256 "186028b1cf9e2087330b9cbe7d57c772c5b040156cb23b2056871a5bcd249232"
+  url "https://github.com/vitessio/vitess/archive/refs/tags/v21.0.0.tar.gz"
+  sha256 "a7c5c0391b2461fd78e3fee3362ca2473153d8e0b9c5bddf2c1cc066c2e29d3b"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "2b04ac8f89214d1b3ecaa764c7c152d880afa526b1084f850b5944b891ebe925"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "f2e73c2a9a4a740cd8a11f60189fa8f45cd456c315a407212fe2cb2523f2ffa2"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "e0ec0494abc32ec5549aab3a626bc16009453c0770a159a12889c2c96d48ead5"
-    sha256 cellar: :any_skip_relocation, sonoma:         "be5172d5a98636907ac7096987040d156db61a1340cbb87ec9b2296de66caee6"
-    sha256 cellar: :any_skip_relocation, ventura:        "42a8ff53845586831e60363445c18d3cd562cd0b41fd22f6da54469e9594a41f"
-    sha256 cellar: :any_skip_relocation, monterey:       "586f6a5f2c406008e5f125cffe59ff5fc3c987bd16fa35c51572e371153ec4a0"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ff51d7d5e7d198c9deb005f8f6b867298a02796768eb52b785b621716af4598e"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "cb4e19bd93f6189793480eae223553ad6ec8b1b5f1b29521714db8115b3f3776"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "db1b81a58cbd9663f1df39b32af1b23c9672b1db9ff1193909177985f85db542"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "19f2bf9bf62e846dd6748da2e40a94d07d6e840f13aab1ba50ec8cff0f4ab73f"
+    sha256 cellar: :any_skip_relocation, sonoma:        "2c7db58b223cac831550d683dd0f5830af901ee5a104bcc3ffca22d34a7e3c5e"
+    sha256 cellar: :any_skip_relocation, ventura:       "fd5274b11fce55904fe988861711534cb77ff1346e4e11083672742b66dae574"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d0d6b40a774930e3d01e5e86625f353b8c4d425af6fd54dc7b5d3288b5d5a4ef"
   end
 
   depends_on "go" => :build

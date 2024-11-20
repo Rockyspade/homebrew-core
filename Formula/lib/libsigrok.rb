@@ -41,6 +41,7 @@ class Libsigrok < Formula
   end
 
   bottle do
+    sha256                               arm64_sequoia:  "ce3817f9869539b5e7f9c19c9178211484b99ace89dd9ff7a26233013649acb6"
     sha256                               arm64_sonoma:   "531edfde4ad0fde8bc06d1380d62b85bed86415f2ea63f76706b2369f2fa70d1"
     sha256                               arm64_ventura:  "632dc0050579c516cadca7127de3b89104b0b16088735934a0857412c31a5b3e"
     sha256                               arm64_monterey: "09286cd2262fc0cfbfa1a29abfab61e92b88c0a031acee695b0eac837aaa44c1"
@@ -156,7 +157,7 @@ class Libsigrok < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <libsigrok/libsigrok.h>
 
       int main() {
@@ -169,14 +170,14 @@ class Libsigrok < Formula
         }
         return 0;
       }
-    EOS
+    C
     flags = shell_output("#{Formula["pkg-config"].opt_bin}/pkg-config --cflags --libs libsigrok").strip.split
     system ENV.cc, "test.c", "-o", "test", *flags
     system "./test"
 
-    system python3, "-c", <<~EOS
+    system python3, "-c", <<~C
       import sigrok.core as sr
       sr.Context.create()
-    EOS
+    C
   end
 end

@@ -2,34 +2,33 @@ class Breezy < Formula
   include Language::Python::Virtualenv
 
   desc "Version control system implemented in Python with multi-format support"
-  homepage "https://github.com/breezy-team/breezy"
-  url "https://files.pythonhosted.org/packages/bb/3f/f1b74d0e32c5455e53655bf095724d37e31b2f184b2dddb899cedbbb6c56/breezy-3.3.8.tar.gz"
-  sha256 "14d59bbdf86b66c17327eb79a5883b4c70cc7794ed34f3e8a0adfce64edc58bf"
+  homepage "https://www.breezy-vcs.org/"
+  url "https://files.pythonhosted.org/packages/c4/32/1e95fdf00568790cf6316eb729a99c7754bbcb1773384c46da959eddfef8/breezy-3.3.9.tar.gz"
+  sha256 "c2588bf217c8a4056987ecf6599f0ad9fb8484285953b2e61905141f43c3d5d8"
   license "GPL-2.0-or-later"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "edab49633772709291400f725343ba8cfe84aa826f27e91c31fbd0db0da5c6fe"
-    sha256 cellar: :any,                 arm64_ventura:  "73f514eaba1a5cdb3484576c194333750bcb78dcd9a58b8369f193389a7f6313"
-    sha256 cellar: :any,                 arm64_monterey: "ea1db54566f6c6d7382704537bfde477d022cd55aaee391cf92f41a58852855b"
-    sha256 cellar: :any,                 sonoma:         "a7b1c719596410c2325aae139aa61cae610fbbc11051e16001e57a72e747a69f"
-    sha256 cellar: :any,                 ventura:        "8255ce072473e845096bb43e378a34af9dc01a448ac62927e5120e5e9b91fa04"
-    sha256 cellar: :any,                 monterey:       "a8ccd1ba70ac273ca529e37a920482ef03b108844fab168abf4782f38b4a39b7"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c3535c3f987f6ed3e8824c74dd9efe6da885483db7a474890f15bde754d1c53a"
+    sha256 cellar: :any,                 arm64_sequoia: "632597502c8193a468b86edc1e926415e17945a044c55bc6eef0785cdafa025e"
+    sha256 cellar: :any,                 arm64_sonoma:  "32162b4e48bed6abd9223423de11fd10f3e512cb8076aa4b6d60788db4d4c0c4"
+    sha256 cellar: :any,                 arm64_ventura: "a7922bc0194274a0699ebaf107d4124b0ba660da338d178bff2c0ae4db7c7d53"
+    sha256 cellar: :any,                 sonoma:        "05fe3857ce2ab38a93f2697405bbbeced3d528c0f34a98cc3eedcda458e18d74"
+    sha256 cellar: :any,                 ventura:       "09cd865c9142a653f13c9eca3c7a070537a8d4af4fa9c3384067f75cd7ad1e2b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1e2e0d12ce6916e0db46a858a6a91d3f9a676ca7f5d078f2305fd83ffde43368"
   end
 
   depends_on "gettext" => :build
   depends_on "rust" => :build
   depends_on "libyaml"
-  depends_on "python@3.12"
+  depends_on "python@3.13"
 
   resource "configobj" do
-    url "https://files.pythonhosted.org/packages/cb/87/17d4c6d634c044ab08b11c0cd2a8a136d103713d438f8792d7be2c5148fb/configobj-5.0.8.tar.gz"
-    sha256 "6f704434a07dc4f4dc7c9a745172c1cad449feb548febd9f7fe362629c627a97"
+    url "https://files.pythonhosted.org/packages/f5/c4/c7f9e41bc2e5f8eeae4a08a01c91b2aea3dfab40a3e14b25e87e7db8d501/configobj-5.0.9.tar.gz"
+    sha256 "03c881bbf23aa07bccf1b837005975993c4ab4427ba57f959afdd9d1a2386848"
   end
 
   resource "dulwich" do
-    url "https://files.pythonhosted.org/packages/cf/ac/cf6420b90832c4ffbc88b92962dd0167c58632c2b8d508d5baf4ecb0c61d/dulwich-0.22.1.tar.gz"
-    sha256 "e36d85967cfbf25da1c7bc3d6921adc5baa976969d926aaf1582bd5fd7e94758"
+    url "https://files.pythonhosted.org/packages/da/47/c8bf38f8874829730775fbe5510b54087ff8529dbb9612bd144b76376ea7/dulwich-0.22.3.tar.gz"
+    sha256 "7968c7b8a877b614c46b5ee7c1b28411772123004d7cf6357e763ad2cbeb8254"
   end
 
   resource "fastbencode" do
@@ -48,18 +47,8 @@ class Breezy < Formula
   end
 
   resource "pyyaml" do
-    url "https://files.pythonhosted.org/packages/cd/e5/af35f7ea75cf72f2cd079c95ee16797de7cd71f29ea7c68ae5ce7be1eda0/PyYAML-6.0.1.tar.gz"
-    sha256 "bfdf460b1736c775f2ba9f6a92bca30bc2095067b8a9d77876d1fad6cc3b4a43"
-  end
-
-  resource "setuptools" do
-    url "https://files.pythonhosted.org/packages/0d/9d/c587bea18a7e40099857015baee4cece7aca32cd404af953bdeb95ac8e47/setuptools-70.1.1.tar.gz"
-    sha256 "937a48c7cdb7a21eb53cd7f9b59e525503aa8abaf3584c730dc5f7a5bec3a650"
-  end
-
-  resource "six" do
-    url "https://files.pythonhosted.org/packages/71/39/171f1c67cd00715f190ba0b100d606d440a28c93c7714febeca8b79af85e/six-1.16.0.tar.gz"
-    sha256 "1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"
+    url "https://files.pythonhosted.org/packages/54/ed/79a089b6be93607fa5cdaedf301d7dfb23af5f25c398d5ead2525b063e17/pyyaml-6.0.2.tar.gz"
+    sha256 "d584d9ec91ad65861cc08d42e834324ef890a082e591037abe114850ff7bbc3e"
   end
 
   resource "tzlocal" do
@@ -68,8 +57,8 @@ class Breezy < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/43/6d/fa469ae21497ddc8bc93e5877702dca7cb8f911e337aca7452b5724f1bb6/urllib3-2.2.2.tar.gz"
-    sha256 "dd505485549a7a552833da5e6063639d0d177c04f23bc3864e41e5dc5f612168"
+    url "https://files.pythonhosted.org/packages/ed/63/22ba4ebfe7430b76388e7cd448d5478814d3032121827c12a2cc287e2260/urllib3-2.2.3.tar.gz"
+    sha256 "e7d814a81dad81e6caf2ec9fdedb284ecc9c73076b62654547cc64ccdcae26e9"
   end
 
   def install
@@ -85,26 +74,25 @@ class Breezy < Formula
   end
 
   test do
-    brz = "#{bin}/brz"
     whoami = "Homebrew <homebrew@example.com>"
-    system brz, "whoami", whoami
+    system bin/"brz", "whoami", whoami
     assert_match whoami, shell_output("#{bin}/brz whoami")
 
     # Test bazaar compatibility
-    system brz, "init-repo", "sample"
-    system brz, "init", "sample/trunk"
+    system bin/"brz", "init-repo", "sample"
+    system bin/"brz", "init", "sample/trunk"
     touch testpath/"sample/trunk/test.txt"
     cd "sample/trunk" do
-      system brz, "add", "test.txt"
-      system brz, "commit", "-m", "test"
+      system bin/"brz", "add", "test.txt"
+      system bin/"brz", "commit", "-m", "test"
     end
 
     # Test git compatibility
-    system brz, "init", "--git", "sample2"
+    system bin/"brz", "init", "--git", "sample2"
     touch testpath/"sample2/test.txt"
     cd "sample2" do
-      system brz, "add", "test.txt"
-      system brz, "commit", "-m", "test"
+      system bin/"brz", "add", "test.txt"
+      system bin/"brz", "commit", "-m", "test"
     end
   end
 end

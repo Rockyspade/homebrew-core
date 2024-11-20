@@ -1,8 +1,8 @@
 class VulkanTools < Formula
   desc "Vulkan utilities and tools"
   homepage "https://github.com/KhronosGroup/Vulkan-Tools"
-  url "https://github.com/KhronosGroup/Vulkan-Tools/archive/refs/tags/v1.3.293.tar.gz"
-  sha256 "1b1215888fef99a7e071b3b92fa91fbadb4986f92b7abea4a12749dc3617eb62"
+  url "https://github.com/KhronosGroup/Vulkan-Tools/archive/refs/tags/v1.3.301.tar.gz"
+  sha256 "452a1693fdde1f175fc82e3461ebd09cb8285246972bc6dc206ad0f72f6a5acd"
   license "Apache-2.0"
   head "https://github.com/KhronosGroup/Vulkan-Tools.git", branch: "main"
 
@@ -12,17 +12,16 @@ class VulkanTools < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "0bce269842aea78981229c5e9f4daf0246c3b08fe470e4d6c4c6dbad80e2c22d"
-    sha256 cellar: :any,                 arm64_ventura:  "71705825ea5028ef2a2bedff8c3d2fa0f9730c8c09e1ba6ab2f3f92e4728e720"
-    sha256 cellar: :any,                 arm64_monterey: "2d4fd055e11ca40912ffd840bddca08a218f9ce08add9d6a22370b88927573ce"
-    sha256 cellar: :any,                 sonoma:         "18250816a8539480966e8fd12a53ec1107d1bb7a9b36814a07d0e9eac5eb2225"
-    sha256 cellar: :any,                 ventura:        "ff75baa9bf71c4bbc884cd2d200a232431f901872201f897279739bee4a83cdd"
-    sha256 cellar: :any,                 monterey:       "135f743eba3363a44c53d1c9bf3da4088063d3ddec053fea12a8e9ffc331ada2"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "3d9260b10af987042c1fd86e313d9703cd40ad13a7f854a67581109fc5881676"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "c72441ec7074f919043960b7a6591a57a46deabdb5399f1813c75ec01475c8bd"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "aa4fbb2a6dbeef14f9d08312821d0b410bf5de7f979a84c4682fd96d7969986a"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "4eaf9e252b184cf9edb02ad6a702b246d85828c8905aece9d8f278b045f2de4e"
+    sha256 cellar: :any_skip_relocation, sonoma:        "69c80ed2d26fcc51eb5cac03cf706673fdcbcd237b4bd50b1a42463565f85495"
+    sha256 cellar: :any_skip_relocation, ventura:       "3db415130b9eb50be3f8a7ceae2d356297b9ccbf5598b8d6bbc941dbf90ce8a6"
+    sha256                               x86_64_linux:  "68947f934c976c414fb9e904bccdf7736e124102798a9e4b8542390f2b2b0fe7"
   end
 
   depends_on "cmake" => :build
-  depends_on "python@3.12" => :build
+  depends_on "python@3.13" => :build
   depends_on "vulkan-volk" => :build
   depends_on "glslang"
   depends_on "vulkan-headers"

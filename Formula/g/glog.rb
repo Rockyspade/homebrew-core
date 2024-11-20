@@ -7,6 +7,7 @@ class Glog < Formula
   head "https://github.com/google/glog.git", branch: "master"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "ec3e50551d26e47f5171580fdc065b895db01fd90a4283e472a1d8ff01d53c54"
     sha256 cellar: :any,                 arm64_sonoma:   "c6eb9b8ce678f03a87a9864ea498434b44a206cd331322ed771824a71320a97a"
     sha256 cellar: :any,                 arm64_ventura:  "7f027456418cf100e83da0cab5dd2f01b03650d25727fc129ae8bfc80031469f"
     sha256 cellar: :any,                 arm64_monterey: "875364220b0fae1b16b63ff9811aa675d1fc55e47fd5ea64ecfb15ce063965b2"
@@ -29,7 +30,7 @@ class Glog < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <glog/logging.h>
       #include <iostream>
       #include <memory>
@@ -38,7 +39,7 @@ class Glog < Formula
         google::InitGoogleLogging(argv[0]);
         LOG(INFO) << "test";
       }
-    EOS
+    CPP
     system ENV.cxx, "-std=c++11", "test.cpp", "-I#{include}", "-L#{lib}",
                     "-lglog", "-I#{Formula["gflags"].opt_lib}",
                     "-L#{Formula["gflags"].opt_lib}", "-lgflags",

@@ -1,19 +1,18 @@
 class Litmusctl < Formula
   desc "Command-line interface for interacting with LitmusChaos"
   homepage "https://litmuschaos.io"
-  url "https://github.com/litmuschaos/litmusctl/archive/refs/tags/1.9.0.tar.gz"
-  sha256 "f1f60eb73eaa1a3627fb2b77422d76f767cbc81783fa18e191a15f48f2ce1513"
+  url "https://github.com/litmuschaos/litmusctl/archive/refs/tags/1.12.0.tar.gz"
+  sha256 "5193ecb7127991e4fe1cb1175ea0bd6f3d376f7fa42f213173fe3724113e772a"
   license "Apache-2.0"
   head "https://github.com/litmuschaos/litmusctl.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "1ce49aff5838d6f7fec4ed299b041e0433bd66c6accb891b5d2b79c81123ed3a"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "1f7326ef52702108ccdbcd6ebeed0a54b88ffb553ea5cc0aafb251b68126315c"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "6a2ba395a7a41eeae29454b6800a4503739a76429f616176169f7fb6144149ea"
-    sha256 cellar: :any_skip_relocation, sonoma:         "c17b58694f23c580271f18527eee7594f60407b02e95532f8448d262d76e39e1"
-    sha256 cellar: :any_skip_relocation, ventura:        "b48fd8db2e3e316cf74cbc41e535f9a3f51375ec3d5f760c8cd6d8ff5390c279"
-    sha256 cellar: :any_skip_relocation, monterey:       "e17666047fff029e4b29d3ef0cf7289915bbbc64f2a447f03cb09dd49cde0981"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "4858bac81a996125ab069c2794a9de8da61085ea50c85dc52bc151b3f21152dd"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "0a44f01ab6828433fb6aa72450dd29a710d20d6304553330e4a4c281e0d4e0d7"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "0a44f01ab6828433fb6aa72450dd29a710d20d6304553330e4a4c281e0d4e0d7"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "0a44f01ab6828433fb6aa72450dd29a710d20d6304553330e4a4c281e0d4e0d7"
+    sha256 cellar: :any_skip_relocation, sonoma:        "a93b3080ee63aeb0d5afa97e2cd8ac633afdbba4d7e809e138645f22f4470afa"
+    sha256 cellar: :any_skip_relocation, ventura:       "a93b3080ee63aeb0d5afa97e2cd8ac633afdbba4d7e809e138645f22f4470afa"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1a06bffa7b08469aaeff0dfaabf580125108fe9be988575adf65f495e020782b"
   end
 
   depends_on "go" => :build

@@ -1,9 +1,10 @@
 class Graphicsmagick < Formula
   desc "Image processing tools collection"
   homepage "http://www.graphicsmagick.org/"
-  url "https://downloads.sourceforge.net/project/graphicsmagick/graphicsmagick/1.3.44/GraphicsMagick-1.3.44.tar.xz"
-  sha256 "6ac28470d2fbd3d5f60859dd43f3cee2585e955e32896f892b4dc61dda101ea0"
+  url "https://downloads.sourceforge.net/project/graphicsmagick/graphicsmagick/1.3.45/GraphicsMagick-1.3.45.tar.xz"
+  sha256 "dcea5167414f7c805557de2d7a47a9b3147bcbf617b91f5f0f4afe5e6543026b"
   license "MIT"
+  revision 1
   head "http://hg.code.sf.net/p/graphicsmagick/code", using: :hg
 
   livecheck do
@@ -11,13 +12,13 @@ class Graphicsmagick < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "0db18d3ae35193225727676d138e5d852d28a026f92144bb536642650bc43040"
-    sha256 arm64_ventura:  "a942f2c4c3e10168cc908f19d39b6b1b3be18fac7d5ee88c6438b9b89467df44"
-    sha256 arm64_monterey: "4b13a24a1a3705684566b2d72c5c33a7fceca5ec7a8de9e917f0b0b404e7ddd5"
-    sha256 sonoma:         "fc66e5be23539aaf9df067ccc20fb46059ad71f429305fbd0d70ce84fc4a2010"
-    sha256 ventura:        "fc8afab6aa173309a3691e3e87e4e26a7ef354a6236e121580d68b89ea5189fa"
-    sha256 monterey:       "1fa1afa1668533d75458fa12760103270781df4650c6efd64cb3d374960fcb73"
-    sha256 x86_64_linux:   "2e95a143dd858c7e5059c243517384f76b856550998a55f35c4f7e5f0d09d1b0"
+    rebuild 1
+    sha256 arm64_sequoia: "f950843cfad9376677acb179ad6553531249d9e79b37a830eba929591beaac46"
+    sha256 arm64_sonoma:  "8b521ea1cf171f8fdb14b43f3b3d06699280569791a25d64aa73684062e06ed0"
+    sha256 arm64_ventura: "e0c9b6972e74fcc2d74037d907671ad6a2073553816beb11b8aacb9b554ec689"
+    sha256 sonoma:        "15ad3752ebc129fe21f9da7b729c2d90cf8c40ce824dc42f6725d31c139d2896"
+    sha256 ventura:       "104380c258558a7469b1b7133222740d00af867fe8d8a1dc36a419e6294a58b7"
+    sha256 x86_64_linux:  "b6e2fea1abc3ea05bc6c9a7837b1e5fb2257a35155fe0c539d1e3008d257879d"
   end
 
   depends_on "pkg-config" => :build
@@ -42,8 +43,6 @@ class Graphicsmagick < Formula
 
   def install
     args = %W[
-      --prefix=#{prefix}
-      --disable-dependency-tracking
       --disable-openmp
       --disable-static
       --enable-shared
@@ -56,11 +55,13 @@ class Graphicsmagick < Formula
       --without-wmf
       --with-jxl
     ]
-
     # versioned stuff in main tree is pointless for us
     inreplace "configure", "${PACKAGE_NAME}-${PACKAGE_VERSION}", "${PACKAGE_NAME}"
-    system "./configure", *args
+    system "./configure", *args, *std_configure_args
     system "make", "install"
+
+    # Avoid rebuilding dependents that hard-code the prefix.
+    inreplace (lib/"pkgconfig").glob("*.pc"), prefix, opt_prefix
   end
 
   test do

@@ -8,6 +8,7 @@ class Gexiv2 < Formula
   license "GPL-2.0-or-later"
 
   bottle do
+    sha256 cellar: :any, arm64_sequoia:  "5c0359ddfb69810924b8987d62a9e353455b76e4ee4c4739736764f1d45aa7c1"
     sha256 cellar: :any, arm64_sonoma:   "67e11e557d79c924eddda15dbca08e388946bf1f8d4ccb60e938901719f3c579"
     sha256 cellar: :any, arm64_ventura:  "afda771f7cb34bcdccda695f5b843d1acd188427e8b0dcb55e895f427efb515e"
     sha256 cellar: :any, arm64_monterey: "daef02de6a9fd13965b53543ecb568dbdfcccb69a9425f047fff2ae4bc28e457"
@@ -44,13 +45,13 @@ class Gexiv2 < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <gexiv2/gexiv2.h>
       int main() {
         GExiv2Metadata *metadata = gexiv2_metadata_new();
         return 0;
       }
-    EOS
+    C
 
     system ENV.cc, "test.c", "-o", "test",
                    "-I#{HOMEBREW_PREFIX}/include/glib-2.0",
@@ -59,13 +60,13 @@ class Gexiv2 < Formula
                    "-lgexiv2"
     system "./test"
 
-    (testpath/"test.py").write <<~EOS
+    (testpath/"test.py").write <<~PYTHON
       import gi
       gi.require_version('GExiv2', '0.10')
       from gi.repository import GExiv2
       exif = GExiv2.Metadata('#{test_fixtures("test.jpg")}')
       print(exif.try_get_gps_info())
-    EOS
+    PYTHON
     assert_equal "(longitude=0.0, latitude=0.0, altitude=0.0)\n", shell_output("#{python3} test.py")
   end
 end

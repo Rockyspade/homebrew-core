@@ -6,6 +6,7 @@ class Libconfini < Formula
   license "GPL-3.0-or-later"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "fbb299d21214fdc73d660ee6cc61ea6a6aff2d85558db6095558be0202c30440"
     sha256 cellar: :any,                 arm64_sonoma:   "34cbf810ecbd056e906847dafb23c8a8dba3d6f1af918c1a99e9b278b5c0af84"
     sha256 cellar: :any,                 arm64_ventura:  "6bdad3efe351d8dd2c80092ddcbeee38766d1a5cdc28b8ab797279bdb6af411a"
     sha256 cellar: :any,                 arm64_monterey: "1909d5da9729d0787b5178444f5da844a389c143f810edee022bec357f7d29a3"
@@ -22,7 +23,7 @@ class Libconfini < Formula
 
   test do
     (testpath/"test.ini").write "[users]\nknown_users = alice, bob, carol\n"
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <confini.h>
 
       static int callback (IniDispatch * disp, void * v_other) {
@@ -45,7 +46,7 @@ class Libconfini < Formula
         }
         return 0;
       }
-    EOS
+    C
 
     system ENV.cc, testpath/"test.c", "-I#{include}", "-L#{lib}", "-lconfini", "-o", "test"
     assert_match "Known Users: alice, bob, carol", shell_output(testpath/"test").chomp

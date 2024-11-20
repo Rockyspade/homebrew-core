@@ -1,8 +1,8 @@
 class Libadwaita < Formula
   desc "Building blocks for modern adaptive GNOME applications"
   homepage "https://gnome.pages.gitlab.gnome.org/libadwaita/"
-  url "https://download.gnome.org/sources/libadwaita/1.5/libadwaita-1.5.3.tar.xz"
-  sha256 "3b358635f7ea455d9fe75101373e34d2fba130d1590bd1a1c87ab1ccfba05f32"
+  url "https://download.gnome.org/sources/libadwaita/1.6/libadwaita-1.6.1.tar.xz"
+  sha256 "d00ac845a4545d92e6805e31095a51c68f9f4e02426900472084b0cddce3f833"
   license "LGPL-2.1-or-later"
 
   # libadwaita doesn't use GNOME's "even-numbered minor is stable" version
@@ -14,13 +14,12 @@ class Libadwaita < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "c3cb14fcac3fa0500a208619ab5d44c2fcdb6f3fb1cbc78efa252c8703b0b299"
-    sha256 arm64_ventura:  "0110bf5395a474b6e19efacc1d444de08d1566aca803562fe2d2df91e5bc9832"
-    sha256 arm64_monterey: "97289a99e39bdcf843b35fe18721a42d9ca24fda1fb10e4e620d0eced428b731"
-    sha256 sonoma:         "d5c7bd6dedeafa34e7bddd610f6521a36224495d978639ad60d2b9de6cc2686c"
-    sha256 ventura:        "d965440101b062f690cfe189fd0f949bae685cfd7df7f11ae3f7b4970807ccfd"
-    sha256 monterey:       "ccb771a2c091680fff484289b88b1dafde7b66ef8c509b0560cb3c480b266336"
-    sha256 x86_64_linux:   "b8efe52d28183d988cc25e27fd5fc81c793f6efabc6dbb2e0e543ab511bc31cb"
+    sha256 arm64_sequoia: "1d7006aa3789eca08befd2e8b718fcdd6b2bc8e84517b98a96b3009b28cfb0d9"
+    sha256 arm64_sonoma:  "a1f7e51680efa242eaf4404fc05b63231bf3dd6311ac71f7d9fc51e456b2fffa"
+    sha256 arm64_ventura: "fb19cb2f7c9f74427cac742140a03d217e5c0d6aae28f36b6355b594e8963188"
+    sha256 sonoma:        "82e00b8a68ceb393c444a2a439075fa857640e21542149628e43ab43e64e828f"
+    sha256 ventura:       "9d670362807fdbe6e4d30b750d43f9594072a62ce267c2ab7ae6505e17bc6137"
+    sha256 x86_64_linux:  "207077b66478916431a4b1029b0a72b8f6d7509464b8e3da3da26f569902f559"
   end
 
   depends_on "gettext" => :build
@@ -50,7 +49,7 @@ class Libadwaita < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <adwaita.h>
 
       int main(int argc, char *argv[]) {
@@ -58,7 +57,7 @@ class Libadwaita < Formula
         app = adw_application_new ("org.example.Hello", G_APPLICATION_DEFAULT_FLAGS);
         return g_application_run (G_APPLICATION (app), argc, argv);
       }
-    EOS
+    C
     flags = shell_output("#{Formula["pkg-config"].opt_bin}/pkg-config --cflags --libs libadwaita-1").strip.split
     system ENV.cc, "test.c", "-o", "test", *flags
     system "./test", "--help"

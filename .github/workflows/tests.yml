@@ -14,10 +14,15 @@ env:
   HOMEBREW_NO_INSTALL_FROM_API: 1
   HOMEBREW_TEST_BOT_ANALYTICS: 1
   HOMEBREW_ENFORCE_SBOM: 1
+  HOMEBREW_NO_BUILD_ERROR_ISSUES: 1
   GH_REPO: ${{github.repository}}
   GH_NO_UPDATE_NOTIFIER: 1
   GH_PROMPT_DISABLED: 1
   SCRIPTS_PATH: .github/workflows/scripts
+
+defaults:
+  run:
+    shell: bash -xeuo pipefail {0}
 
 concurrency:
   group: "tests-${{ github.ref }}"
@@ -56,7 +61,7 @@ jobs:
           key: style-cache-${{ matrix.stable && 'stable-' || 'master-' }}${{ github.sha }}
           restore-keys: style-cache-${{ matrix.stable && 'stable-' || 'master-' }}
 
-      - run: brew test-bot --only-tap-syntax
+      - run: brew test-bot --only-tap-syntax ${{ matrix.stable && '--stable' || '' }}
 
   formulae_detect:
     if: github.repository_owner == 'Homebrew' && github.event_name != 'push'
@@ -140,6 +145,8 @@ jobs:
       test-bot-dependents-args: ${{ steps.check-labels.outputs.test-bot-dependents-args }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Check for CI labels
         id: check-labels
@@ -212,7 +219,7 @@ jobs:
     timeout-minutes: ${{ matrix.timeout }}
     defaults:
       run:
-        shell: /bin/bash -e {0}
+        shell: /bin/bash -xeuo pipefail {0}
         working-directory: ${{matrix.workdir || github.workspace}}
     env:
       GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -254,6 +261,8 @@ jobs:
       test-bot-dependents-args: ${{ steps.check-labels.outputs.test-bot-dependents-args }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Check for CI labels
         id: check-labels
@@ -331,12 +340,13 @@ jobs:
     timeout-minutes: ${{ matrix.timeout }}
     defaults:
       run:
-        shell: /bin/bash -e {0}
+        shell: /bin/bash -xeuo pipefail {0}
         working-directory: ${{matrix.workdir || github.workspace}}
     env:
       GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       HOMEBREW_GITHUB_API_TOKEN: ${{secrets.GITHUB_TOKEN}}
       BOTTLES_DIR: ${{matrix.workdir || github.workspace}}/bottles
+      TESTING_FORMULAE: ${{matrix.testing_formulae}}
     steps:
       - name: Pre-test steps
         uses: Homebrew/actions/pre-build@master
@@ -345,7 +355,7 @@ jobs:
           cleanup: ${{ matrix.cleanup }}
           download-bottles: true
 
-      - run: brew test-bot ${{ needs.setup_dep_tests.outputs.test-bot-dependents-args }}
+      - run: brew test-bot ${{ needs.setup_dep_tests.outputs.test-bot-dependents-args }} --testing-formulae="$TESTING_FORMULAE"
         working-directory: ${{ env.BOTTLES_DIR }}
 
       - name: Steps summary and cleanup
@@ -364,8 +374,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check `tests` result
+        env:
+          TESTS_RESULT: ${{ needs.tests.result }}
+          DEPS_TESTS_RESULT: ${{ needs.test_deps.result }}
+          RUNNERS_PRESENT: ${{ needs.setup_runners.outputs.runners_present }}
+          SYNTAX_ONLY: ${{ needs.setup_tests.outputs.syntax-only }}
         run: |
-          result='${{ needs.tests.result }}'
+          result="${TESTS_RESULT}"
           # Silence lint error about backtick usage inside single quotes.
           # shellcheck disable=SC2016
           printf '::notice ::`tests` job status: %s\n' "$result"
@@ -377,11 +392,20 @@ jobs:
             # Silence lint error about backtick usage inside single quotes.
             # shellcheck disable=SC2016
             printf '::error ::`tests` job %s.\n' "$result"
+
+            deps_result="${DEPS_TESTS_RESULT}"
+            if [[ "$deps_result" = "skipped" ]]
+            then
+              # Silence lint error about backtick usage inside single quotes.
+              # shellcheck disable=SC2016
+              printf '::error ::`test_deps` job skipped. Do not merge until re-run with `CI-no-fail-fast-deps`\n'
+            fi
+
             exit 1
           fi
 
-          runners_present='${{ needs.setup_runners.outputs.runners_present }}'
-          syntax_only='${{ needs.setup_tests.outputs.syntax-only }}'
+          runners_present="${RUNNERS_PRESENT-}"
+          syntax_only="${SYNTAX_ONLY-}"
 
           # The tests job can be skipped only if the PR is syntax-only
           # or no runners were assigned.

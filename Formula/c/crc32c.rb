@@ -7,6 +7,7 @@ class Crc32c < Formula
   head "https://github.com/google/crc32c.git", branch: "main"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "8ea83fd9714095d17ddcb3b8a8f70d2c5694f35b7b6edc17aa8b32e6952295c8"
     sha256 cellar: :any,                 arm64_sonoma:   "df5ea233eee7c04d4c606c33132e5a769761ea6466f711832c22393ce0ce7170"
     sha256 cellar: :any,                 arm64_ventura:  "3ada0a95e5f4b33f6a5caf7e56d9bfe608b44f01c7fd1be0db8f30d4102a473d"
     sha256 cellar: :any,                 arm64_monterey: "f36a8347a3c402b0f13b407fe0c99e1a2b067722cebf22f62a2f9916be2118fe"
@@ -35,7 +36,7 @@ class Crc32c < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <cassert>
       #include <crc32c/crc32c.h>
       #include <cstdint>
@@ -48,7 +49,7 @@ class Crc32c < Formula
         assert(result == expected);
         return 0;
       }
-    EOS
+    CPP
 
     system ENV.cxx, "test.cpp", "-I#{include}", "-L#{lib}", "-lcrc32c", "-std=c++11", "-o", "test"
     system "./test"

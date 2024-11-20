@@ -7,6 +7,7 @@ class Libnxml < Formula
   head "https://github.com/bakulf/libnxml.git", branch: "master"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "3e49138d11e9bb15e135e9387bb4e1f1d55a7daa354b3caa245e9b25a1b5ace0"
     sha256 cellar: :any,                 arm64_sonoma:   "c7287e418f649ae7a95a152feb06cc43846a286ed8a5b511b490e4a2cac8d341"
     sha256 cellar: :any,                 arm64_ventura:  "6a57d9af9acf0588b0b58903248f8f116639f043bd6b1716d6592c459da3f658"
     sha256 cellar: :any,                 arm64_monterey: "c6887b727e4b7254d5d90c7018cd60c80681624eb0fafe6e8075a8d8313ef6a7"
@@ -30,12 +31,12 @@ class Libnxml < Formula
   end
 
   test do
-    (testpath/"test.xml").write <<~EOS
+    (testpath/"test.xml").write <<~XML
       <?xml version="1.0" encoding="UTF-8"?>
       <root>Hello world!<child>This is a child element.</child></root>
-    EOS
+    XML
 
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <nxml.h>
 
       int main(int argc, char **argv) {
@@ -68,7 +69,7 @@ class Libnxml < Formula
         nxmle_free(data);
         exit(0);
       }
-    EOS
+    C
 
     pkg_config_flags = shell_output("pkg-config --cflags --libs nxml").chomp.split
     system ENV.cc, "test.c", *pkg_config_flags, "-o", "test"

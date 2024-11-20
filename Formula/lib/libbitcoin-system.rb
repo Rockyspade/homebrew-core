@@ -6,6 +6,7 @@ class LibbitcoinSystem < Formula
   license "AGPL-3.0-or-later"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "cb0bbe2d1b5692e930dcb817ed09fa8b1fa392ede7eab0dc856c2d6fa7017c65"
     sha256 cellar: :any,                 arm64_sonoma:   "3324919582f6ab687cbf681f056347985f63c06c7f525e0aa283dc592197a000"
     sha256                               arm64_ventura:  "aed49e03846e0be62e5e605ca01179ba431dfb35d3f1b844ff8fce859549862f"
     sha256                               arm64_monterey: "0a300abdc05543b90b2b5db0e0d6117ca3d8c97cce089349350435d169321525"
@@ -19,7 +20,7 @@ class LibbitcoinSystem < Formula
 
   # About 2 years since request for release with support for recent `boost`.
   # Ref: https://github.com/libbitcoin/libbitcoin-system/issues/1234
-  deprecate! date: "2023-12-14", because: "uses deprecated `boost@1.76`"
+  disable! date: "2024-12-14", because: "uses deprecated `boost@1.76`"
 
   depends_on "autoconf" => :build
   depends_on "automake" => :build
@@ -57,7 +58,7 @@ class LibbitcoinSystem < Formula
 
   test do
     boost = Formula["boost@1.76"]
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <bitcoin/system.hpp>
       int main() {
         const auto block = bc::chain::block::genesis_mainnet();
@@ -68,7 +69,7 @@ class LibbitcoinSystem < Formula
         std::cout << message << std::endl;
         return 0;
       }
-    EOS
+    CPP
     system ENV.cxx, "-std=c++11", "test.cpp",
                     "-I#{boost.include}",
                     "-L#{lib}", "-lbitcoin-system",

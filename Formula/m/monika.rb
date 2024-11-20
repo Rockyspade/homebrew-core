@@ -7,6 +7,7 @@ class Monika < Formula
 
   bottle do
     rebuild 1
+    sha256                               arm64_sequoia:  "7479124ad18ecf3c9ed273cae783fc4c3a7ffa9077418fa218b29c365820e4c2"
     sha256                               arm64_sonoma:   "8d3b69446254d8e0d9667e7b08c6815357804538de8e91f3010829a3fde152e3"
     sha256                               arm64_ventura:  "df4846dbe84f5ec928764cad0f39a02c01ed08cb914a34e03d0a511e914c4868"
     sha256                               arm64_monterey: "191f1690fa6e465e29be220ca4ddc6da8edca36207e833ee77de90de725475d5"
@@ -40,7 +41,7 @@ class Monika < Formula
   end
 
   test do
-    (testpath/"config.yml").write <<~EOS
+    (testpath/"config.yml").write <<~YAML
       notifications:
         - id: 5b3052ed-4d92-4f5d-a949-072b3ebb2497
           type: desktop
@@ -51,7 +52,7 @@ class Monika < Formula
             - url: https://brew.sh
               body: {}
               timeout: 10000
-    EOS
+    YAML
 
     monika_stdout = (testpath/"monika.log")
     fork do

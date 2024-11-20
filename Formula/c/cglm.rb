@@ -6,6 +6,7 @@ class Cglm < Formula
   license "MIT"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "858e0700d3b6ad0fec38974be8559f9c968249a8edff4b2eb3c521ea0ccfe0d8"
     sha256 cellar: :any,                 arm64_sonoma:   "1ad803ddd6428b7c677461ae3eb1cbdcd291a351cac692cc8a37d2e648be6cab"
     sha256 cellar: :any,                 arm64_ventura:  "ccd1f2fc02fbe4ec93f827b51c63df903dfa6386001cfd35c5445f39a97213c4"
     sha256 cellar: :any,                 arm64_monterey: "f52fea8d00aa4b0d0b257af26d0055da43c8e28688f89423338f2904ff1ed0b8"
@@ -26,7 +27,7 @@ class Cglm < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <cglm/cglm.h>
       #include <assert.h>
 
@@ -40,7 +41,7 @@ class Cglm < Formula
         assert(glm_vec3_eqv_eps(r, z));
         return 0;
       }
-    EOS
+    C
     system ENV.cc, "-I#{include}", testpath/"test.c", "-o", "test"
     system "./test"
   end

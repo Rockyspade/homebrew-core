@@ -12,6 +12,7 @@ class Coinutils < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "750ce0c23f2af2c0387d6677502cfc0ae5d51e26abae222dc5f09330a971d697"
     sha256 cellar: :any,                 arm64_sonoma:   "5d9193efa0d87646822efcf4184544d50b3e0340d85fc65de79f24b170a09c37"
     sha256 cellar: :any,                 arm64_ventura:  "b041fbad7adfee8ff45bef91c76c6c154599b662199b350268acd4206b6c3790"
     sha256 cellar: :any,                 arm64_monterey: "1a3df4e2351ee15be1d0dd33f63516457cd82ec3ee25a018f53d79cbac19a2cc"
@@ -21,7 +22,7 @@ class Coinutils < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "c4edc2b29842e702e87695df91ab2044beec5cc72aaf454af76e8265eac83bef"
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "openblas"
 
   uses_from_macos "zlib"
@@ -51,13 +52,13 @@ class Coinutils < Formula
 
     testpath.install resource("homebrew-coin-or-tools-data-sample-p0201-mps")
 
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <CoinMpsIO.hpp>
       int main() {
         CoinMpsIO mpsIO;
         return mpsIO.readMps("#{testpath}/p0201.mps");
       }
-    EOS
+    CPP
 
     system ENV.cxx, "test.cpp", "-I#{opt_include}/coinutils/coin",
       "-L#{opt_lib}", "-lCoinUtils"

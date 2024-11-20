@@ -20,6 +20,7 @@ class Libgeotiff < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "bdd218c9fa26e091337f57d4cf1cf60293a885fe7a70d49e7ed62c973a66fb94"
     sha256 cellar: :any,                 arm64_sonoma:   "331afc789e13b0ccf8260d5c85d68d4cec97d11320fee880bf472c1326de0c27"
     sha256 cellar: :any,                 arm64_ventura:  "606dfa6c652bbd07c5dc8fbb2efea2fc8e29fd95fca9ea2ba11a3b70d0e1e6a8"
     sha256 cellar: :any,                 arm64_monterey: "3dfe3caf669b158e180892b06ccc81cb7eef1fafa76281b6235f697c8e6ed569"
@@ -49,7 +50,7 @@ class Libgeotiff < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include "geotiffio.h"
       #include "xtiffio.h"
       #include <stdlib.h>
@@ -75,7 +76,7 @@ class Libgeotiff < Formula
         XTIFFClose(tif);
         return 0;
       }
-    EOS
+    C
 
     system ENV.cc, "test.c", "-I#{include}", "-L#{lib}", "-lgeotiff",
                    "-L#{Formula["libtiff"].opt_lib}", "-ltiff", "-o", "test"

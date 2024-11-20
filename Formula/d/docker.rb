@@ -2,8 +2,8 @@ class Docker < Formula
   desc "Pack, ship and run any application as a lightweight container"
   homepage "https://www.docker.com/"
   url "https://github.com/docker/cli.git",
-      tag:      "v27.1.2",
-      revision: "d01f264bccd8bed2e3c038054a04b99533478ab8"
+      tag:      "v27.3.1",
+      revision: "ce1223035ac3ab8922717092e63a184cf67b493d"
   license "Apache-2.0"
   head "https://github.com/docker/cli.git", branch: "master"
 
@@ -13,13 +13,12 @@ class Docker < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "db8687f2df6b1e22271be35f26543af7aae7edda36710fa59e324d4931321fc6"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "e7fa9e6cdd8373e4273e40ef8e6f45712e256d05f7718d9ea33e00160c9126cb"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "c85d467f6e7298c9a267d550e1d0655f5f495a5f768cc8bb8be3491e08c6cd95"
-    sha256 cellar: :any_skip_relocation, sonoma:         "5da70e74096c17ab09e937a2254beef9d7d2c633957ff21000bff5d396c3ffe6"
-    sha256 cellar: :any_skip_relocation, ventura:        "f1f5e427c79ab5d7d51ffa6dcbbfcfc248cae037cca0632c4060b3dce231a2db"
-    sha256 cellar: :any_skip_relocation, monterey:       "4cd8a26236c01ccda274b46b5f81f3802bdf04bea042ff544ac776c20f689f34"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "feb7bc3d2de8054c1cbf3096e965d2d36ac655a433b5c2d085def040f850f5db"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "dcd25100f823e80d665ce0bed51fe5016a4839669cb8bbfbb2e5be0e26dcc545"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "dcd25100f823e80d665ce0bed51fe5016a4839669cb8bbfbb2e5be0e26dcc545"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "dcd25100f823e80d665ce0bed51fe5016a4839669cb8bbfbb2e5be0e26dcc545"
+    sha256 cellar: :any_skip_relocation, sonoma:        "d1ce47ef4f6ad9f17ac563ff39524beee77ad1b2baab58a4d4cac62b56367ce6"
+    sha256 cellar: :any_skip_relocation, ventura:       "d1ce47ef4f6ad9f17ac563ff39524beee77ad1b2baab58a4d4cac62b56367ce6"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "4f9af7f20c3d2b82d2146ffa6e1a524edfe8afc28251e4ed2dcbee01fe13f855"
   end
 
   depends_on "go" => :build

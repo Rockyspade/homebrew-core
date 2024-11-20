@@ -1,9 +1,9 @@
 class ArmNoneEabiGcc < Formula
   desc "GNU compiler collection for arm-none-eabi"
   homepage "https://gcc.gnu.org"
-  url "https://ftp.gnu.org/gnu/gcc/gcc-14.1.0/gcc-14.1.0.tar.xz"
-  mirror "https://ftpmirror.gnu.org/gcc/gcc-14.1.0/gcc-14.1.0.tar.xz"
-  sha256 "e283c654987afe3de9d8080bc0bd79534b5ca0d681a73a11ff2b5d3767426840"
+  url "https://ftp.gnu.org/gnu/gcc/gcc-14.2.0/gcc-14.2.0.tar.xz"
+  mirror "https://ftpmirror.gnu.org/gcc/gcc-14.2.0/gcc-14.2.0.tar.xz"
+  sha256 "a7b39bc69cbf9e25826c5a60ab26477001f7c08d85cec04bc0e29cabed6f3cc9"
   license "GPL-3.0-or-later" => { with: "GCC-exception-3.1" }
 
   livecheck do
@@ -11,13 +11,13 @@ class ArmNoneEabiGcc < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "1c17a9d51d7d0e2263e15765c63251a61e398ef21d5f724abfc00526c6f10e16"
-    sha256 arm64_ventura:  "fb45f7debbe40fa3acc9458f085f20f53852439fd44ab9ca5e6ac2adae6ac370"
-    sha256 arm64_monterey: "87cc000ec3d0d09184725feb8c3709db91107a28b48f4d82f353d4eedd550769"
-    sha256 sonoma:         "49eef076aac47c17db8e7a6dadcfa4de9c1f5d5208c8a7c624ec7d04ff3f2763"
-    sha256 ventura:        "2ee6439f2b81e4a3264a24195727ba76f533c3dcc228d9944524b8baa29f8259"
-    sha256 monterey:       "5954cd4cd6db92007bfdaf537a3eddc474bc51c4443c6565acc81560c309d3ad"
-    sha256 x86_64_linux:   "2a78b1d059e170c78663db6f8d59e81408044d829f6ad874c3e5cfa09f7e92a1"
+    rebuild 1
+    sha256 arm64_sequoia: "8e305ee8c0e20c1b564fccfc99323299cc6ffddaf11580d76147652877b9427a"
+    sha256 arm64_sonoma:  "ba090c0e1edf67f4c296b0736f846e91a88fd5f025a36d6c591318335ab3c5d3"
+    sha256 arm64_ventura: "c4781a8220513ae8349f095aafc98c0888c87e4a30ffec6b612db060925ab463"
+    sha256 sonoma:        "fb64dd7fe3f1649ebc44fd3c07cc037c82d5bd4912bc589da57a3aef68038744"
+    sha256 ventura:       "d9c0d10771917347fe966f9cb521ad475680edb26c8e44f2dd69c3b216d50e7d"
+    sha256 x86_64_linux:  "ef2a69f1cd4ece9bed1eabafd85cdae65bd5d7bdf165cd6ca6cbb8e967ca845b"
   end
 
   depends_on "arm-none-eabi-binutils"
@@ -41,6 +41,8 @@ class ArmNoneEabiGcc < Formula
                              "--with-ld=#{Formula["arm-none-eabi-binutils"].bin}/arm-none-eabi-ld",
                              "--enable-languages=c,c++,objc,lto",
                              "--enable-lto",
+                             "--enable-multilib",
+                             "--with-multilib-list=aprofile,rmprofile",
                              "--with-system-zlib",
                              "--with-zstd",
                              *std_configure_args
@@ -55,14 +57,14 @@ class ArmNoneEabiGcc < Formula
   end
 
   test do
-    (testpath/"test-c.c").write <<~EOS
+    (testpath/"test-c.c").write <<~C
       int main(void)
       {
         int i=0;
         while(i<10) i++;
         return i;
       }
-    EOS
+    C
     system bin/"arm-none-eabi-gcc", "-c", "-o", "test-c.o", "test-c.c"
     assert_match "file format elf32-littlearm",
                  shell_output("#{Formula["arm-none-eabi-binutils"].bin}/arm-none-eabi-objdump -a test-c.o")

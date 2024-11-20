@@ -3,7 +3,7 @@ class Paperkey < Formula
   homepage "https://www.jabberwocky.com/software/paperkey/"
   url "https://www.jabberwocky.com/software/paperkey/paperkey-1.6.tar.gz"
   sha256 "a245fd13271a8d2afa03dde979af3a29eb3d4ebb1fbcad4a9b52cf67a27d05f7"
-  license "GPL-2.0"
+  license "GPL-2.0-or-later"
 
   livecheck do
     url :homepage
@@ -11,6 +11,7 @@ class Paperkey < Formula
   end
 
   bottle do
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "c5f29efd5bd3c2ce18f744e141fbb9e3013a0474a3d391efcd1ccfdf31bc9c73"
     sha256 cellar: :any_skip_relocation, arm64_sonoma:   "b249d92841f7cada3fbbad6ebfa77672ba9ce1925f3e8d6b1169049e35d2c161"
     sha256 cellar: :any_skip_relocation, arm64_ventura:  "3334f86e54a5038f18b31f703a22981ef66b028cda73e2bc985db6a0c74a401e"
     sha256 cellar: :any_skip_relocation, arm64_monterey: "e56628d74d3ba424c3c801ee83d03408a8fe0e72644b493504c1511d84eea422"

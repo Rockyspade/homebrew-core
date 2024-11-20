@@ -1,10 +1,10 @@
 class MysqlAT80 < Formula
   desc "Open source relational database management system"
   homepage "https://dev.mysql.com/doc/refman/8.0/en/"
-  url "https://cdn.mysql.com/Downloads/MySQL-8.0/mysql-boost-8.0.39.tar.gz"
-  sha256 "93208da9814116d81a384eae42120fd6c2ed507f1696064c510bc36047050241"
+  url "https://cdn.mysql.com/Downloads/MySQL-8.0/mysql-boost-8.0.40.tar.gz"
+  sha256 "eb34a23d324584688199b4222242f4623ea7bca457a3191cd7a106c63a7837d9"
   license "GPL-2.0-only" => { with: "Universal-FOSS-exception-1.0" }
-  revision 1
+  revision 2
 
   livecheck do
     url "https://dev.mysql.com/downloads/mysql/8.0.html?tpl=files&os=src&version=8.0"
@@ -12,22 +12,21 @@ class MysqlAT80 < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "a1813910bcc6df5f2f8533da573baf48c9919f2a654f2737698fb10b759c4753"
-    sha256 arm64_ventura:  "9c45163ed2b71b6dfc6706769c2f0199d3273673e0f3ea14a9d347038f3dec31"
-    sha256 arm64_monterey: "8377256103122aa9ef3c67744559fbe7c4b37fc784e991e74a344138956dc712"
-    sha256 sonoma:         "9d62d0e134662ee49ad56b7eccf0324d91b7cf3a8710fea1d4750ad22fffe462"
-    sha256 ventura:        "ceeac8d9e3a6406a7e72ce0c1339a9344192f5730c2b658c5e44b58d0fe237bd"
-    sha256 monterey:       "fb77fa698062a9150fac4f7e6137720835d1f26305a81e2ef22b639efce7f4fb"
-    sha256 x86_64_linux:   "53dd31fd7b09579c160001b9981b8f6f54267c1fcbd79eb35732e2fcebb82074"
+    sha256 arm64_sequoia: "fe30827dfc0fee9443e5687bd2352f0eef65ea10e2f1d5ab1f5d9bca140cc25d"
+    sha256 arm64_sonoma:  "208ea81302be022ebaed62029b7a6a6b1405b4c91ab0c6f7ba1baeb5efa8d2a7"
+    sha256 arm64_ventura: "b2bc8b11bf8d78bb2447fe4f95126dd2ee906789506aafbc3bda5f75dd684d87"
+    sha256 sonoma:        "c061c785a53c2f008fb6b52e534ee186557c59b063a35ddb24749826d6e07c49"
+    sha256 ventura:       "b7dd4e44734a345538e4191460404bc8879bf4b5c78f04dde5ee879947a07caa"
+    sha256 x86_64_linux:  "682f90acc07696d7597bd2425afae03f72e4bdfc04ce46b2fe7bd713ef1f70f3"
   end
 
   keg_only :versioned_formula
 
   depends_on "bison" => :build
   depends_on "cmake" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "abseil"
-  depends_on "icu4c"
+  depends_on "icu4c@76"
   depends_on "libevent"
   depends_on "libfido2"
   depends_on "lz4"
@@ -60,24 +59,11 @@ class MysqlAT80 < Formula
   end
 
   def install
-    if OS.linux?
-      # Fix libmysqlgcs.a(gcs_logging.cc.o): relocation R_X86_64_32
-      # against `_ZN17Gcs_debug_options12m_debug_noneB5cxx11E' can not be used when making
-      # a shared object; recompile with -fPIC
-      ENV.append_to_cflags "-fPIC"
+    # Disable ABI checking
+    inreplace "cmake/abi_check.cmake", "RUN_ABI_CHECK 1", "RUN_ABI_CHECK 0" if OS.linux?
 
-      # Disable ABI checking
-      inreplace "cmake/abi_check.cmake", "RUN_ABI_CHECK 1", "RUN_ABI_CHECK 0"
-
-      # Work around build issue with Protobuf 22+ on Linux
-      # Ref: https://bugs.mysql.com/bug.php?id=113045
-      # Ref: https://bugs.mysql.com/bug.php?id=115163
-      inreplace "cmake/protobuf.cmake" do |s|
-        s.gsub! 'IF(APPLE AND WITH_PROTOBUF STREQUAL "system"', 'IF(WITH_PROTOBUF STREQUAL "system"'
-        s.gsub! ' INCLUDE REGEX "${HOMEBREW_HOME}.*")', ' INCLUDE REGEX "libabsl.*")'
-      end
-    end
-
+    icu4c = deps.find { |dep| dep.name.match?(/^icu4c(@\d+)?$/) }
+                .to_formula
     # -DINSTALL_* are relative to `CMAKE_INSTALL_PREFIX` (`prefix`)
     args = %W[
       -DCOMPILATION_COMMENT=Homebrew
@@ -89,11 +75,13 @@ class MysqlAT80 < Formula
       -DINSTALL_PLUGINDIR=lib/plugin
       -DMYSQL_DATADIR=#{datadir}
       -DSYSCONFDIR=#{etc}
+      -DBISON_EXECUTABLE=#{Formula["bison"].opt_bin}/bison
+      -DOPENSSL_ROOT_DIR=#{Formula["openssl@3"].opt_prefix}
+      -DWITH_ICU=#{icu4c.opt_prefix}
       -DWITH_SYSTEM_LIBS=ON
       -DWITH_BOOST=boost
       -DWITH_EDITLINE=system
       -DWITH_FIDO=system
-      -DWITH_ICU=system
       -DWITH_LIBEVENT=system
       -DWITH_LZ4=system
       -DWITH_PROTOBUF=system

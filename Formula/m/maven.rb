@@ -12,6 +12,7 @@ class Maven < Formula
   end
 
   bottle do
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "106bdaaec0342b1656442dd5d1521b3edf69df22576726110bf1d56af0d4bfef"
     sha256 cellar: :any_skip_relocation, arm64_sonoma:   "106bdaaec0342b1656442dd5d1521b3edf69df22576726110bf1d56af0d4bfef"
     sha256 cellar: :any_skip_relocation, arm64_ventura:  "106bdaaec0342b1656442dd5d1521b3edf69df22576726110bf1d56af0d4bfef"
     sha256 cellar: :any_skip_relocation, arm64_monterey: "106bdaaec0342b1656442dd5d1521b3edf69df22576726110bf1d56af0d4bfef"
@@ -47,7 +48,7 @@ class Maven < Formula
   end
 
   test do
-    (testpath/"pom.xml").write <<~EOS
+    (testpath/"pom.xml").write <<~XML
       <?xml version="1.0" encoding="UTF-8"?>
       <project xmlns="https://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="https://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
@@ -61,16 +62,16 @@ class Maven < Formula
           <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         </properties>
       </project>
-    EOS
+    XML
 
-    (testpath/"src/main/java/org/homebrew/MavenTest.java").write <<~EOS
+    (testpath/"src/main/java/org/homebrew/MavenTest.java").write <<~JAVA
       package org.homebrew;
       public class MavenTest {
         public static void main(String[] args) {
           System.out.println("Testing Maven with Homebrew!");
         }
       }
-    EOS
+    JAVA
 
     system bin/"mvn", "compile", "-Duser.home=#{testpath}"
   end

@@ -6,6 +6,7 @@ class Karn < Formula
   license "MIT"
 
   bottle do
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "56a2e364302364891e18fb7856a51e2d9bc3143ad3b98d59367b07e632ddd817"
     sha256 cellar: :any_skip_relocation, arm64_sonoma:   "95ff52d86e20f7f6a02c095f5ad5de883d40d80dc11b40551d9e9ebc8024a590"
     sha256 cellar: :any_skip_relocation, arm64_ventura:  "2ddacad3313683762032b2d8eb15463f175ed266c8774618c85950eb05492740"
     sha256 cellar: :any_skip_relocation, arm64_monterey: "2ddacad3313683762032b2d8eb15463f175ed266c8774618c85950eb05492740"
@@ -24,12 +25,12 @@ class Karn < Formula
   end
 
   test do
-    (testpath/".karn.yml").write <<~EOS
+    (testpath/".karn.yml").write <<~YAML
       ---
       #{testpath}:
         name: Homebrew Test
         email: test@brew.sh
-    EOS
+    YAML
     system "git", "init"
     system "git", "config", "--global", "user.name", "Test"
     system "git", "config", "--global", "user.email", "test@test.com"

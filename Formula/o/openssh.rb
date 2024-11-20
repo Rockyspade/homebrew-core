@@ -1,10 +1,10 @@
 class Openssh < Formula
   desc "OpenBSD freely-licensed SSH connectivity tools"
   homepage "https://www.openssh.com/"
-  url "https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-9.8p1.tar.gz"
-  mirror "https://cloudflare.cdn.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-9.8p1.tar.gz"
-  version "9.8p1"
-  sha256 "dd8bd002a379b5d499dfb050dd1fa9af8029e80461f4bb6c523c49973f5a39f3"
+  url "https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-9.9p1.tar.gz"
+  mirror "https://cloudflare.cdn.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-9.9p1.tar.gz"
+  version "9.9p1"
+  sha256 "b343fbcdbff87f15b1986e6e15d6d4fc9a7d36066be6b7fb507087ba8f966c02"
   license "SSH-OpenSSH"
 
   livecheck do
@@ -13,13 +13,13 @@ class Openssh < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "f484ac194ed2ff05cdaf496ee0367e937c4ddabc0361fb8320554517b64ac357"
-    sha256 arm64_ventura:  "324d887462c376b8f0dc5846551ba7f2db8cb774b2bbb5ec47bff5ce3a02db43"
-    sha256 arm64_monterey: "e39cea5297b10f417e37cfc9be250ba78cc9d5e16c3fb4eb8d8c399510bbef70"
-    sha256 sonoma:         "e2460518b0d5cae58bfbed8d6d1b697e062304e36e367ffc9747d1418e303eed"
-    sha256 ventura:        "9a13519bcfb152dfe990ef60cc6156bacc5093e8dcd8938d3de469c189d1d35b"
-    sha256 monterey:       "58e3046677e55eac1aa5c4a36b0fb9d08e3e51852033414705896e6cce6d774a"
-    sha256 x86_64_linux:   "f954c44e3a99c6811cfcd0325162bd727c6e5d675499cc5ea613df2878d2bc97"
+    rebuild 1
+    sha256 arm64_sequoia: "d7941094cacc59b5c2ab1d64343751205ef31b7f9517b19bb2a128d6c3583226"
+    sha256 arm64_sonoma:  "6305fa9baff789a76925f68d983a7b402f2db8b2652baab7775a97477975ff53"
+    sha256 arm64_ventura: "f8245cffebafb4f31939f333eb903fcf7db285bcf6c0257e84644384602d827a"
+    sha256 sonoma:        "ab855f72ee7b1443d30256c6098c7f8593a6779c7ae6e9e2e12f6082c7406920"
+    sha256 ventura:       "6c763c4b4f845df7bb4ee967a85108835fc6382920b6461c3487546f4fab60a7"
+    sha256 x86_64_linux:  "84eb498f82816692da68f55d9bbc02bf8d7fb575f40c7efa008b6e9ac0738079"
   end
 
   # Please don't resubmit the keychain patch option. It will never be accepted.
@@ -101,9 +101,18 @@ class Openssh < Formula
 
     buildpath.install resource("com.openssh.sshd.sb")
     (etc/"ssh").install "com.openssh.sshd.sb" => "org.openssh.sshd.sb"
+
+    # Don't hardcode Cellar paths in configuration files
+    inreplace etc/"ssh/sshd_config", prefix, opt_prefix
   end
 
   test do
+    (etc/"ssh").find do |pn|
+      next unless pn.file?
+
+      refute_match HOMEBREW_CELLAR.to_s, pn.read
+    end
+
     assert_match "OpenSSH_", shell_output("#{bin}/ssh -V 2>&1")
 
     port = free_port

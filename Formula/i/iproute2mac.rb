@@ -3,16 +3,17 @@ class Iproute2mac < Formula
 
   desc "CLI wrapper for basic network utilities on macOS - ip command"
   homepage "https://github.com/brona/iproute2mac"
-  url "https://github.com/brona/iproute2mac/releases/download/v1.5.3/iproute2mac-1.5.3.tar.gz"
-  sha256 "a5d790863b2ad92ff2e918908a82563898ee8165278ffa0b5e453437bd5ef9fb"
+  url "https://github.com/brona/iproute2mac/releases/download/v1.5.4/iproute2mac-1.5.4.tar.gz"
+  sha256 "9548ed9ead114a3a7095890c51e0e5b1d8ea1dd955692400e19fb97f1b6ad015"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "fd4d7c95e88fb3699ad1a90463316af86c78f056040a25ed463f9dd7190ba6a2"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, all: "231085d2b1c81ef0406d5f32239fe6edfb4f92e52ab0f3a4065221e318b2babc"
   end
 
   depends_on :macos
-  depends_on "python@3.12"
+  depends_on "python@3.13"
 
   def install
     libexec.install "src/iproute2mac.py"

@@ -9,6 +9,7 @@ class Bit < Formula
 
   bottle do
     rebuild 1
+    sha256                               arm64_sequoia:  "591d452238af32826df679aa962d6ce755294473c450bc5118dfac9e50a552f8"
     sha256                               arm64_sonoma:   "b69b3a7ba901fd29b6ef35d47b7248a4219b55336ad1cf04dd2f5cd8268387b8"
     sha256                               arm64_ventura:  "37e5de52910eb4d93ff0d8c1d4348b8d1131b691af23ec0db82be76ba32a6417"
     sha256                               arm64_monterey: "47b532eb0b388e861e2da67c40cf213d4795277c4f7be59cc949fbac656d0e5f"
@@ -55,9 +56,9 @@ class Bit < Formula
   end
 
   test do
-    (testpath/"Library/Caches/Bit/config/config.json").write <<~EOS
+    (testpath/"Library/Caches/Bit/config/config.json").write <<~JSON
       { "analytics_reporting": false, "error_reporting": false }
-    EOS
+    JSON
     output = shell_output("#{bin}/bit init --skip-update")
     assert_match "successfully initialized", output
   end

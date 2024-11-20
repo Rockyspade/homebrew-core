@@ -2,27 +2,27 @@ class ClangFormat < Formula
   desc "Formatting tools for C, C++, Obj-C, Java, JavaScript, TypeScript"
   homepage "https://clang.llvm.org/docs/ClangFormat.html"
   # The LLVM Project is under the Apache License v2.0 with LLVM Exceptions
-  license "Apache-2.0"
+  license "Apache-2.0" => { with: "LLVM-exception" }
   version_scheme 1
   head "https://github.com/llvm/llvm-project.git", branch: "main"
 
   stable do
-    url "https://github.com/llvm/llvm-project/releases/download/llvmorg-18.1.8/llvm-18.1.8.src.tar.xz"
-    sha256 "f68cf90f369bc7d0158ba70d860b0cb34dbc163d6ff0ebc6cfa5e515b9b2e28d"
+    url "https://github.com/llvm/llvm-project/releases/download/llvmorg-19.1.4/llvm-19.1.4.src.tar.xz"
+    sha256 "4fe1bc197ff13f33af6179f836ce1cf2ae9886b822974a736f3a20c8aed0c1b2"
 
     resource "clang" do
-      url "https://github.com/llvm/llvm-project/releases/download/llvmorg-18.1.8/clang-18.1.8.src.tar.xz"
-      sha256 "5724fe0a13087d5579104cedd2f8b3bc10a212fb79a0fcdac98f4880e19f4519"
+      url "https://github.com/llvm/llvm-project/releases/download/llvmorg-19.1.4/clang-19.1.4.src.tar.xz"
+      sha256 "b6d123a4435f1869af709f3288c4c4db48173acaf621088400d91521bc5aa225"
     end
 
     resource "cmake" do
-      url "https://github.com/llvm/llvm-project/releases/download/llvmorg-18.1.8/cmake-18.1.8.src.tar.xz"
-      sha256 "59badef592dd34893cd319d42b323aaa990b452d05c7180ff20f23ab1b41e837"
+      url "https://github.com/llvm/llvm-project/releases/download/llvmorg-19.1.4/cmake-19.1.4.src.tar.xz"
+      sha256 "dd13ce8eba6ece85cad567f028b8e16d72f3e142cdcbbd693ac23a88b4013803"
     end
 
     resource "third-party" do
-      url "https://github.com/llvm/llvm-project/releases/download/llvmorg-18.1.8/third-party-18.1.8.src.tar.xz"
-      sha256 "b76b810f3d3dc5d08e83c4236cb6e395aa9bd5e3ea861e8c319b216d093db074"
+      url "https://github.com/llvm/llvm-project/releases/download/llvmorg-19.1.4/third-party-19.1.4.src.tar.xz"
+      sha256 "97292083d9718d3a6bedbafddf2fa1740c2d9cba8c72ee8ea391a63f12c0a472"
     end
   end
 
@@ -33,13 +33,12 @@ class ClangFormat < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "6f9a261484afa3a336c77cbf026b3e2f24c4ef5247e2179598c5e0b6f4de2c48"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "8ea1ac8ea7cdc00dd98ef40cb19d6f206b1c0e0874e4a41543d967fb7a883bb4"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "4b06e209a1bd526599f634e97ff41f7a9bf01d9498f64b32ee6ea2eeebc65bab"
-    sha256 cellar: :any_skip_relocation, sonoma:         "b6ca9b11944c9babb5ae0535a69e45ceee868ae2407b2a8fd3be99ad559bd94a"
-    sha256 cellar: :any_skip_relocation, ventura:        "076c269305fe377fe1feb374fed85ebe94730791a41d4611df30d799585ace32"
-    sha256 cellar: :any_skip_relocation, monterey:       "0c46df83b0fcc7c94a22c7caa17c95a41964d36edb461773c93b00e160f2ab6d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5f82f4f4a721d3776c85941a9bd78b546ab6c0d50ec35d5346186b5f5d4c1d7f"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "24537717c66702cebaa7f941de4cc17ad8fa95e7ff1596bf94e8d33232da6b01"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "b02b7b95d14ea5645c34e8c82e396ad928a602d78c733204f6bbd4b75a26f4ed"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "a3f3ad055e04cf71831b122bb331941aa7ec580c3f0d07a7430e89ff524c923e"
+    sha256 cellar: :any_skip_relocation, sonoma:        "a4f12749e351600a8d4c9ab8a83e598f684d72ca43351ac9046a65da8c410ffc"
+    sha256 cellar: :any_skip_relocation, ventura:       "10cc54d92bb66a6cebce8f584ee1f6a9ac820012251f85636b70423e677d2066"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0b130849e223aa183d7ff781dbf8a7ad3ed7930ec4550f34a7c8cdd656859e9a"
   end
 
   depends_on "cmake" => :build
@@ -87,9 +86,9 @@ class ClangFormat < Formula
     system "git", "commit", "--allow-empty", "-m", "initial commit", "--quiet"
 
     # NB: below C code is messily formatted on purpose.
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       int         main(char *args) { \n   \t printf("hello"); }
-    EOS
+    C
     system "git", "add", "test.c"
 
     assert_equal "int main(char *args) { printf(\"hello\"); }\n",

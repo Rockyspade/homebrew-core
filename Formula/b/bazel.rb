@@ -1,8 +1,8 @@
 class Bazel < Formula
   desc "Google's own build tool"
   homepage "https://bazel.build/"
-  url "https://github.com/bazelbuild/bazel/releases/download/7.3.1/bazel-7.3.1-dist.zip"
-  sha256 "f0501f90c9fc74cd6933dbdc59e17b8d6272d6c09f8b8e3c428985c5897147c7"
+  url "https://github.com/bazelbuild/bazel/releases/download/7.4.1/bazel-7.4.1-dist.zip"
+  sha256 "83386618bc489f4da36266ef2620ec64a526c686cf07041332caff7c953afaf5"
   license "Apache-2.0"
 
   livecheck do
@@ -11,15 +11,14 @@ class Bazel < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "ca0f722957460ccfecf2f2549f1676399ea3e9b684fc28bf8c42781df97f9f19"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "f67b5cbf284cfaa1453cfbd19716b68d96f701fd942a32168a4acf2c30ebb3fb"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "f736e0d8aca2d7d35aa45d9f25d716a95aeaf83a773816b316e9353aea5d42a5"
-    sha256 cellar: :any_skip_relocation, sonoma:         "4941ebaa62b2381655ae80328a147411ef42f08d39d009422b3e46dda4786041"
-    sha256 cellar: :any_skip_relocation, ventura:        "8e00c48499edb5d2dbc15ea435178c077d8b22b3eb9afe97b64c0e4ca84478b1"
-    sha256 cellar: :any_skip_relocation, monterey:       "d1b8f1cd880b4656ded204763f583443cc06655dc9373c92597f6142c9f04b7e"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "cc775623baab8f83e293d5c9a15b2f264e8bbfc6985b9b0d34d675b1eca10604"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "e9769c3905214d37bc33ee022130d3eb53cf79332798f0d95b6fec7468d249ff"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "1c067b18f9ee1ef0a165bc868cb7a400c186bdc80025b84684e00f24057fad73"
+    sha256 cellar: :any_skip_relocation, sonoma:        "d4325cabb79e0f12b6c0cd0a549f869213c95c76e75bd7f9c1d35f8a6ef13b31"
+    sha256 cellar: :any_skip_relocation, ventura:       "d78d5d6463d35c897e1c56fe52a358108b8d9150e3249e5345161a565aa4dafa"
   end
 
-  depends_on "python@3.12" => :build
+  depends_on "python@3.13" => :build
   depends_on "openjdk@21"
 
   uses_from_macos "unzip"
@@ -35,7 +34,7 @@ class Bazel < Formula
     ENV["EXTRA_BAZEL_ARGS"] = "--tool_java_runtime_version=local_jdk"
     ENV["JAVA_HOME"] = Language::Java.java_home("21")
     # Force Bazel to use Homebrew python
-    ENV.prepend_path "PATH", Formula["python@3.12"].opt_libexec/"bin"
+    ENV.prepend_path "PATH", Formula["python@3.13"].opt_libexec/"bin"
 
     # Bazel clears environment variables other than PATH during build, which
     # breaks Homebrew's shim scripts that need HOMEBREW_* variables.
@@ -70,13 +69,13 @@ class Bazel < Formula
   test do
     touch testpath/"WORKSPACE"
 
-    (testpath/"ProjectRunner.java").write <<~EOS
+    (testpath/"ProjectRunner.java").write <<~JAVA
       public class ProjectRunner {
         public static void main(String args[]) {
           System.out.println("Hi!");
         }
       }
-    EOS
+    JAVA
 
     (testpath/"BUILD").write <<~EOS
       java_binary(

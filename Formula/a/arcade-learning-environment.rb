@@ -3,19 +3,19 @@ class ArcadeLearningEnvironment < Formula
 
   desc "Platform for AI research"
   homepage "https://github.com/Farama-Foundation/Arcade-Learning-Environment"
-  url "https://github.com/Farama-Foundation/Arcade-Learning-Environment/archive/refs/tags/v0.9.1.tar.gz"
-  sha256 "eaf60c7c3a6450decff3deee02b0c46224537d322cc2f77abed565a835f2d524"
+  url "https://github.com/Farama-Foundation/Arcade-Learning-Environment/archive/refs/tags/v0.10.1.tar.gz"
+  sha256 "7e0473de29b63f59054f8a165a968cf5a168bd9c07444d377a1f70401d268894"
   license "GPL-2.0-only"
   head "https://github.com/Farama-Foundation/Arcade-Learning-Environment.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "2c66ca8dc6877ca4ecd9406148f9966449e609d7b63987201623032fad2e962b"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "c47d6a2b25720585467ee85d20f01e5b858aa3a0af60e64ed170dd38bbb7689c"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "0ed8a7b7508464018414bf23e631fdaa3599769d9b35f3bc078388965da580e7"
-    sha256 cellar: :any_skip_relocation, sonoma:         "3819f81278dd9d54f34a0803c2d6e061f886848f06d3613fe2b26cb20d564753"
-    sha256 cellar: :any_skip_relocation, ventura:        "019a9596a7e5216ec35c0b0b6ae59a67c0e9148fd0ae6a8f0191c87a727ccce7"
-    sha256 cellar: :any_skip_relocation, monterey:       "a9fa5e4a90b2af1ee1d5d29dfc0a15a0db1ca155d346ba78c4a8aac99072bdc2"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "7a8b7a583376f261fd5e93ab4c185d8fce92c415117930938969646d0a66d30c"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "5d2dc919768a30ae5a1eb6c9f14fc17dc0c147d31f605da455c209c3c19a41d6"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "e6158a024610dcc4152be365fd0a2207d893c9cfbdb9f517738a9044aade0669"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "d8015a500d5336680a7abe821b1df3a5bdb5b33c19e233879523ab3ca2b85d85"
+    sha256 cellar: :any_skip_relocation, sonoma:        "83feffd8c4a60349927a1db51771d4b15e01e703e1a27b22c161a2269152789c"
+    sha256 cellar: :any_skip_relocation, ventura:       "bbbaa60dd14855a7bc812370a90fe5c7f50bf26eb0c71cfec076869b68389755"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3b8980ab1f4041955854a8801dfa13117fec012ce3a338ed52044ea84709e016"
   end
 
   depends_on "cmake" => :build
@@ -23,7 +23,7 @@ class ArcadeLearningEnvironment < Formula
   depends_on "python-setuptools" => :build
   depends_on macos: :catalina # requires std::filesystem
   depends_on "numpy"
-  depends_on "python@3.12"
+  depends_on "python@3.13"
   depends_on "sdl2"
 
   uses_from_macos "zlib"
@@ -37,7 +37,7 @@ class ArcadeLearningEnvironment < Formula
   end
 
   def python3
-    "python3.12"
+    "python3.13"
   end
 
   def install
@@ -75,14 +75,14 @@ class ArcadeLearningEnvironment < Formula
   end
 
   test do
-    (testpath/"roms.py").write <<~EOS
+    (testpath/"roms.py").write <<~PYTHON
       from ale_py.roms import get_all_rom_ids
       print(get_all_rom_ids())
-    EOS
+    PYTHON
     assert_match "adventure", shell_output("#{python3} roms.py")
 
     cp pkgshare/"tetris.bin", testpath
-    (testpath/"test.py").write <<~EOS
+    (testpath/"test.py").write <<~PYTHON
       from ale_py import ALEInterface, SDL_SUPPORT
       assert SDL_SUPPORT
 
@@ -90,7 +90,7 @@ class ArcadeLearningEnvironment < Formula
       ale.setInt("random_seed", 123)
       ale.loadROM("tetris.bin")
       assert len(ale.getLegalActionSet()) == 18
-    EOS
+    PYTHON
 
     output = shell_output("#{python3} test.py 2>&1")
     assert_match <<~EOS, output

@@ -1,9 +1,10 @@
 class Gdal < Formula
   desc "Geospatial Data Abstraction Library"
   homepage "https://www.gdal.org/"
-  url "https://github.com/OSGeo/gdal/releases/download/v3.9.2/gdal-3.9.2.tar.gz"
-  sha256 "c9767e79ca7245f704bfbcb47d771b2dc317d743536b78d648c3e92b95fbc21e"
+  url "https://github.com/OSGeo/gdal/releases/download/v3.10.0/gdal-3.10.0.tar.gz"
+  sha256 "946ef444489bedbc1b04bd4c115d67ae8d3f3e4a5798d5a2f1cb2a11014105b2"
   license "MIT"
+  revision 1
 
   livecheck do
     url "https://download.osgeo.org/gdal/CURRENT/"
@@ -11,13 +12,12 @@ class Gdal < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "ba208f2acb9007dae12e4b458599904d87badc6b5acb925caf3a4c672babaff8"
-    sha256 arm64_ventura:  "f13e22698304348823c2ba2c8bb44afdfae3c999653b69b88d080c770d1d755a"
-    sha256 arm64_monterey: "95066d4c79366656dfb7f088ef473b7314af15408c9032ebb479f35f33690934"
-    sha256 sonoma:         "c62abcab5c83e50d8f3832a71c8df4f379ce321ec9b9cf3fb58c52efa9a20181"
-    sha256 ventura:        "f9ea1d9afdd7feb0a202ba1bec27326217f9f75970937ca66ac5a4c300145255"
-    sha256 monterey:       "5349d6dc59f1b7fbd9f70a9e1705c919db764506864cdfb9dcf9f4924c9ade7d"
-    sha256 x86_64_linux:   "76dcf708838db8f957a789284b375c207300149e8f8e355f6bcaec19162793fe"
+    sha256 arm64_sequoia: "54aea694c1e1ba1c96ac4fd949d41387610e027144b521e126ee939ff71a5168"
+    sha256 arm64_sonoma:  "56bd79100e84c0edc8db1a0fadaafb3952b8128d2655f8273ee05de09e9c5933"
+    sha256 arm64_ventura: "1b67abc3493575365ae867cc4884c15be2b457999260e378d0766db4840a9db8"
+    sha256 sonoma:        "8a86f6e489a1989a881809d230ed32359310eaa7c84282feb36fec00877b5896"
+    sha256 ventura:       "a207082e25441b7b434e494dd7fcd7d8a2a2be2f962c5815d1e100865aee86a1"
+    sha256 x86_64_linux:  "f9c0d060c170745d0a0c0af44b8ce0ef1d45ff0abc72076a31f3d7384f01add5"
   end
 
   head do
@@ -44,6 +44,7 @@ class Gdal < Formula
   depends_on "json-c"
   depends_on "libaec"
   depends_on "libarchive"
+  depends_on "libdeflate"
   depends_on "libgeotiff"
   depends_on "libheif"
   depends_on "libkml"

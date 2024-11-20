@@ -3,22 +3,21 @@ class Pyinstaller < Formula
 
   desc "Bundle a Python application and all its dependencies"
   homepage "https://pyinstaller.org/"
-  url "https://files.pythonhosted.org/packages/5c/df/30b1f66d35defa37e676556acca4eb775b49637bb73054b0c31af134cd8a/pyinstaller-6.10.0.tar.gz"
-  sha256 "143840f8056ff7b910bf8f16f6cd92cc10a6c2680bb76d0a25d558d543d21270"
+  url "https://files.pythonhosted.org/packages/55/d4/54f5f5c73b803e6256ea97ffc6ba8a305d9a5f57f85f9b00b282512bf18a/pyinstaller-6.11.1.tar.gz"
+  sha256 "491dfb4d9d5d1d9650d9507daec1ff6829527a254d8e396badd60a0affcb72ef"
   license "GPL-2.0-or-later"
   head "https://github.com/pyinstaller/pyinstaller.git", branch: "develop"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "a3388ed6f59a3abbc81b26edc41f5b5bd99b9271a6f38e127cf77750f15b8f85"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "74f6268571e4252c615c5c7eb1a107adaeaa72777c43b310e2785d08ac98153e"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "c301668a3b25babf253ce9ada3518008064fc2f84b3b6fd253cbf6e72f628976"
-    sha256 cellar: :any_skip_relocation, sonoma:         "eebdbac8ca69726b6387e8e2ecf9ba94d287bc4f2c17b52476dc7c055b3e5223"
-    sha256 cellar: :any_skip_relocation, ventura:        "00c71cc368c6565d6a6bec53985bd729d72e2c48d869ea319df989cb78cbfe62"
-    sha256 cellar: :any_skip_relocation, monterey:       "34b4a2191dfa72043970f31e6c52cd19eaf35131fb5ba4f84b5086faa3c6c52a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "8c4298d59c77445c098f9737989205853007bef0065797f6eb1a1b2a41a41937"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "8052aa74552ec718de23f417304d6a9398f04e3f5fa561771c728b34a0edfa74"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "e30d4fb9ee32eb5fd4a34126deadaab56ab4b16bcf44e8c9b2c569d21e59ce5e"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "760f8bb9d5458554315f1473605230bc3b59ee16e0239c7d16e9d9d4788be5f6"
+    sha256 cellar: :any_skip_relocation, sonoma:        "81d25c2b49a062cdfda2296c419401751f0369ed03532f4e851cc6be9532773f"
+    sha256 cellar: :any_skip_relocation, ventura:       "20dd57ee3e134800991d2f58bf6285741b50b456e169adcc54deb577e86efc29"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "4e68541f4edcb4280d1d630d02c2635c7d2eab5b08a42fcb8ecca0288e9a6a55"
   end
 
-  depends_on "python@3.12"
+  depends_on "python@3.13"
 
   uses_from_macos "zlib"
 
@@ -33,35 +32,35 @@ class Pyinstaller < Formula
   end
 
   resource "packaging" do
-    url "https://files.pythonhosted.org/packages/51/65/50db4dda066951078f0a96cf12f4b9ada6e4b811516bf0262c0f4f7064d4/packaging-24.1.tar.gz"
-    sha256 "026ed72c8ed3fcce5bf8950572258698927fd1dbda10a5e981cdf0ac37f4f002"
+    url "https://files.pythonhosted.org/packages/d0/63/68dbb6eb2de9cb10ee4c9c14a0148804425e13c4fb20d61cce69f53106da/packaging-24.2.tar.gz"
+    sha256 "c228a6dc5e932d346bc5739379109d49e8853dd8223571c7c5b55260edc0b97f"
   end
 
   resource "pyinstaller-hooks-contrib" do
-    url "https://files.pythonhosted.org/packages/20/17/58309bc981794907429f352ed628008db5ead987dafc5b2bfb318804a949/pyinstaller_hooks_contrib-2024.8.tar.gz"
-    sha256 "29b68d878ab739e967055b56a93eb9b58e529d5b054fbab7a2f2bacf80cef3e2"
+    url "https://files.pythonhosted.org/packages/73/6a/9d0057e312b85fbd17a79e1c1955d115fd9bbc78b85bab757777c8ef2307/pyinstaller_hooks_contrib-2024.10.tar.gz"
+    sha256 "8a46655e5c5b0186b5e527399118a9b342f10513eb1425c483fa4f6d02e8800c"
   end
 
   resource "setuptools" do
-    url "https://files.pythonhosted.org/packages/5e/11/487b18cc768e2ae25a919f230417983c8d5afa1b6ee0abd8b6db0b89fa1d/setuptools-72.1.0.tar.gz"
-    sha256 "8d243eff56d095e5817f796ede6ae32941278f542e0f941867cc05ae52b162ec"
+    url "https://files.pythonhosted.org/packages/ed/22/a438e0caa4576f8c383fa4d35f1cc01655a46c75be358960d815bfbb12bd/setuptools-75.3.0.tar.gz"
+    sha256 "fba5dd4d766e97be1b1681d98712680ae8f2f26d7881245f2ce9e40714f1a686"
   end
 
   def install
     cd "bootloader" do
-      system "python3.12", "./waf", "all", "--no-universal2", "STRIP=/usr/bin/strip"
+      system "python3.13", "./waf", "all", "--no-universal2", "STRIP=/usr/bin/strip"
     end
     virtualenv_install_with_resources
   end
 
   test do
-    (testpath/"easy_install.py").write <<~EOS
+    (testpath/"easy_install.py").write <<~PYTHON
       """Run the EasyInstall command"""
 
       if __name__ == '__main__':
           from setuptools.command.easy_install import main
           main()
-    EOS
+    PYTHON
     system bin/"pyinstaller", "-F", "--distpath=#{testpath}/dist", "--workpath=#{testpath}/build",
                               "#{testpath}/easy_install.py"
     assert_predicate testpath/"dist/easy_install", :exist?

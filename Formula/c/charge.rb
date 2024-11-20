@@ -23,7 +23,7 @@ class Charge < Formula
 
   # Does not work with supported Node versions
   # Last release on 2020-03-12
-  deprecate! date: "2023-12-07", because: :unmaintained
+  disable! date: "2024-09-09", because: :unmaintained
 
   depends_on "node"
 
@@ -36,19 +36,19 @@ class Charge < Formula
   end
 
   test do
-    (testpath/"src/index.html.jsx").write <<~EOS
+    (testpath/"src/index.html.jsx").write <<~JS
       import Component from "./component.html.jsx"
 
       export default () => {
         return <Component message="Hello!" />
       }
-    EOS
+    JS
 
-    (testpath/"src/component.html.jsx").write <<~EOS
+    (testpath/"src/component.html.jsx").write <<~JS
       export default (props) => {
         return <p>{props.message}</p>
       }
-    EOS
+    JS
 
     system bin/"charge", "build", "src", "out"
     assert_predicate testpath/"out/index.html", :exist?

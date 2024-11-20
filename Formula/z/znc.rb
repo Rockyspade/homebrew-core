@@ -4,6 +4,7 @@ class Znc < Formula
   url "https://znc.in/releases/znc-1.9.1.tar.gz"
   sha256 "e8a7cf80e19aad510b4e282eaf61b56bc30df88ea2e0f64fadcdd303c4894f3c"
   license "Apache-2.0"
+  revision 2
 
   livecheck do
     url "https://znc.in/releases/"
@@ -11,26 +12,30 @@ class Znc < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "ee6eaf54730ba8dbb41db83afaf55dd576fb40d5d4d7240e91350b52bde15553"
-    sha256 arm64_ventura:  "b2b61efde97fb30819e20401df289b60b0785ebb50d59f6ed55e2d52883855f8"
-    sha256 arm64_monterey: "1ec419a63bc8bd6af046d8cab7cbc0faa0fd13385b90dea59c0d359548a41c91"
-    sha256 sonoma:         "97d86798faf0e95e85b1a7383c1e0ff4eacbce118af2ad76d6bcf10e1ffab337"
-    sha256 ventura:        "82d0ea87748360a70f0be47072f4a080396f8bc1bbce669d13dd68924fcdb40b"
-    sha256 monterey:       "21fa98d7aaa364cdc304fd4568897e241ec819441c345a3c1a9081703c722e3d"
-    sha256 x86_64_linux:   "f17e3e7b444ff827b864d63389e7e42e1cdbddfdd5faf0c1208d09ef62a86917"
+    rebuild 1
+    sha256 arm64_sequoia: "8e2a03b070797aebc5285ee44bc4f3b24b1e18ea7ede34b99c6d26ec6c10664e"
+    sha256 arm64_sonoma:  "9186e3d185f82706175bf4092af6e0ee4829c90d758b374e3acfe95201f0c7a7"
+    sha256 arm64_ventura: "0afd839114a50990b300740b36473128e79e15032f8b7074c1413c1efa763d97"
+    sha256 sonoma:        "0532ab7f343c502374a812274d63cceb96e88a44a278bfaac02024f7768809b7"
+    sha256 ventura:       "1124fe470899bc70a32f366b18edd5eb2d3d44827484b18113aa56664bebf7f2"
+    sha256 x86_64_linux:  "1d7d7ecea3de12210ed78b1178d3e5afd2aa93f9ffb1985fb0df4ed70d795f0c"
   end
 
   depends_on "cmake" => :build
-  depends_on "pkg-config" => :build
+  depends_on "gettext" => :build
+  depends_on "pkgconf" => :build
   depends_on "boost"
-  depends_on "icu4c"
+  depends_on "cctz"
+  depends_on "icu4c@76"
   depends_on "openssl@3"
-  depends_on "python@3.12"
+  depends_on "python@3.13"
 
   uses_from_macos "zlib"
 
   def install
-    python3 = "python3.12"
+    rm_r(["third_party/cctz", "third_party/googletest"])
+
+    python3 = "python3.13"
     xy = Language::Python.major_minor_version python3
 
     # Fixes: CMake Error: Problem with archive_write_header(): Can't create 'swigpyrun.h'

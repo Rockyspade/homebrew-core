@@ -11,6 +11,7 @@ class AtkmmAT228 < Formula
   end
 
   bottle do
+    sha256 cellar: :any, arm64_sequoia:  "666a7ab1c48c5013fe80065747861be3df354221fd8f2dc4fa6fc312961f3edc"
     sha256 cellar: :any, arm64_sonoma:   "f456190b4929828e7786823167e1b49e017314b86018a02d5730921db647b61f"
     sha256 cellar: :any, arm64_ventura:  "9258ea3392df7963c73faaeebb0d1daa29bef3e3d29a2fb3ba0ec75d70a5be9b"
     sha256 cellar: :any, arm64_monterey: "0c6cab78734bf9ba2566cc9226d100ac78fc7b50e3576df09bdccdca3cd17995"
@@ -22,7 +23,7 @@ class AtkmmAT228 < Formula
 
   depends_on "meson" => :build
   depends_on "ninja" => :build
-  depends_on "pkg-config" => [:build, :test]
+  depends_on "pkgconf" => [:build, :test]
 
   depends_on "at-spi2-core"
   depends_on "glib"
@@ -40,7 +41,7 @@ class AtkmmAT228 < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <atkmm/init.h>
 
       int main(int argc, char *argv[])
@@ -48,7 +49,7 @@ class AtkmmAT228 < Formula
          Atk::init();
          return 0;
       }
-    EOS
+    CPP
 
     flags = shell_output("pkg-config --cflags --libs atkmm-1.6").chomp.split
     system ENV.cxx, "-std=c++11", "test.cpp", "-o", "test", *flags

@@ -1,25 +1,24 @@
 class Mpv < Formula
   desc "Media player based on MPlayer and mplayer2"
   homepage "https://mpv.io"
-  url "https://github.com/mpv-player/mpv/archive/refs/tags/v0.38.0.tar.gz"
-  sha256 "86d9ef40b6058732f67b46d0bbda24a074fae860b3eaae05bab3145041303066"
+  url "https://github.com/mpv-player/mpv/archive/refs/tags/v0.39.0.tar.gz"
+  sha256 "2ca92437affb62c2b559b4419ea4785c70d023590500e8a52e95ea3ab4554683"
   license :cannot_represent
-  revision 2
+  revision 1
   head "https://github.com/mpv-player/mpv.git", branch: "master"
 
   bottle do
-    rebuild 1
-    sha256 arm64_sonoma:   "4dbf5f21d142921fd15db9e065d9a8676c4a20c4970b38decc75a698aeb55013"
-    sha256 arm64_ventura:  "d28db8e432434297ae11de44b9e1cd1f12dee57a2dee230b37ef04a82ffc532d"
-    sha256 arm64_monterey: "58a95b46e9b55f0739dc424a286a835f94ae02e1f29dccf97c03e6779870d2b1"
-    sha256 sonoma:         "dee2503d155630932ab26f9296c9f2fbe02135df9e6eaa7e85b329edb03427ef"
-    sha256 ventura:        "bcd8baa2f0376fb6979d5b5f690d04a250c3e4be6ed086c79d763f754e34f4de"
-    sha256 monterey:       "bbedc9e4e1b95a0db432bb6ab040af1b10de8c48a9619803c95b311bc286fb55"
-    sha256 x86_64_linux:   "3a1e0b8cc2f36392714bd044fae7066f54b353421c32c782a6f67a9736e4ffdc"
+    sha256 arm64_sequoia: "6ca65c7edfb41534bf8a22a8f17284717c699680c43e23246258f919ed2545ac"
+    sha256 arm64_sonoma:  "17e235319eb2611e7a828444a64954cc340effb0eb16b909b9d247a402c177c2"
+    sha256 arm64_ventura: "b4de2eb8f40a03737d705d157921d61e5f3a1f8be83e3d1bfde7144a29ab15af"
+    sha256 sonoma:        "ae496a7e51e9c5f4636b2f868b1371c157ca7010d6f353c70b3788b2a9381a44"
+    sha256 ventura:       "8c2c5be6917b47240078eabfc1208f54f4a621c8d74e7aee60e2acbcec000c55"
+    sha256 x86_64_linux:  "a80f7ba627052cc08ac3433bda05d6abf36220a5832f1d965c1f12facb7ae182"
   end
 
   depends_on "docutils" => :build
   depends_on "meson" => :build
+  depends_on "ninja" => :build
   depends_on "pkg-config" => [:build, :test]
   depends_on xcode: :build
   depends_on "ffmpeg"
@@ -68,7 +67,7 @@ class Mpv < Formula
     ENV["LC_ALL"] = "C"
 
     # force meson find ninja from homebrew
-    ENV["NINJA"] = Formula["ninja"].opt_bin/"ninja"
+    ENV["NINJA"] = which("ninja")
 
     # libarchive is keg-only
     ENV.prepend_path "PKG_CONFIG_PATH", Formula["libarchive"].opt_lib/"pkgconfig" if OS.mac?

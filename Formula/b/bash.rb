@@ -10,7 +10,7 @@ class Bash < Formula
     mirror "https://mirrors.kernel.org/gnu/bash/bash-5.2.tar.gz"
     mirror "https://mirrors.ocf.berkeley.edu/gnu/bash/bash-5.2.tar.gz"
     sha256 "a139c166df7ff4471c5e0733051642ee5556c1cc8a4a78f145583c5c81ab32fb"
-    version "5.2.32"
+    version "5.2.37"
 
     %w[
       001 f42f2fee923bc2209f406a1892772121c467f44533bedfe00a176139da5d310a
@@ -45,6 +45,11 @@ class Bash < Formula
       030 c3ff73230e123acdb5ac216921a386df8f74340459533d776d02811a1f76698f
       031 c2d1b7be2df771126105020af7fafa00fffd4deff4a4e45d60fc6a235bcba795
       032 7b9c77daeca93ff711781d7537234166e83ed9835ce1ee7dcd5742319c372a16
+      033 013ec6cc10ad98060a7c34ed5c11187bcc5bf4510f32de0d545db89a9a52a2e2
+      034 899fbb3b338048fe52a9c8252bf65ef1194cdff4f7a3fb3316f5f2396143232e
+      035 821a0a47fa692bb0a39482728b1b396bf951e2912768fea6f3026c813c1913e5
+      036 15c93f4936a5e5b88301f3ede767a23d3dd19635af2f3a91fb4cc0e560ca9057
+      037 8a2c1c3b5125d9ae5b47882f7d2ddf9648805f8c67c13aa5ea7efeac475cda94
     ].each_slice(2) do |p, checksum|
       patch :p0 do
         url "https://ftp.gnu.org/gnu/bash/bash-5.2-patches/bash52-#{p}"
@@ -93,13 +98,13 @@ class Bash < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "1f93264ad5646699b5554ad4a96ca1303a813876065d5c0782fa653f9a50ad83"
-    sha256 arm64_ventura:  "ea989ff2c61e7df3bcd0d38e37ad129d4430548e7adb27b3ec4454dd22d04dff"
-    sha256 arm64_monterey: "a5caba455076b5d77bd236b15bb81f3583de927ec2ef64c1484726045b28419f"
-    sha256 sonoma:         "d6e82bc0f21d7b40b9f86d4bdbbf64fbbfa2e81a91c73e937961ac440125037d"
-    sha256 ventura:        "eff1cd8839cbae9047ea96b0a47d389f268334e0bc28e2784be72c978839d3a4"
-    sha256 monterey:       "7b217658847a31a831fa8a10cd7555c96dd4e730904ee853a0cbffb5b38c7b85"
-    sha256 x86_64_linux:   "3356e96db216679c7b3fafcc805c8fddfe83be148d7cf6ece35c7d3ac59b0e5d"
+    rebuild 1
+    sha256 arm64_sequoia: "bbfa520d0ddc11d3230c85d3a542f1665d52e461dad651adca3e372939d80763"
+    sha256 arm64_sonoma:  "6f41bcb71005164c1c72f4117d2635d63bbfa4a8e01a599ad776e68b5dd7b3fa"
+    sha256 arm64_ventura: "93bf8f67f2a81606400d36057373d40ba8e78e13f6df52d0d03d99e811c8b965"
+    sha256 sonoma:        "2889699aab77b51ad10ebceb566b2e35368b1bf8e423e40452cca0482e06da85"
+    sha256 ventura:       "8edad046fe3f173f229ad667aa97c819a7491bbf716d19caf2924b0892412994"
+    sha256 x86_64_linux:  "cf656843709a32e900c8e4e971cf0d0c3c0c568215ded674b1fccf5b7154f97f"
   end
 
   def install
@@ -111,11 +116,20 @@ class Bash < Formula
     # Homebrew's bash instead of /bin/bash.
     ENV.append_to_cflags "-DSSH_SOURCE_BASHRC"
 
+    # Allow bash to find loadable modules in lib/bash.
+    ENV.append "LDFLAGS", "-Wl,-rpath,#{rpath(target: lib/"bash")}"
+    # FIXME: Setting `-rpath` flags don't seem to work on Linux.
+    ENV.prepend_path "HOMEBREW_RPATH_PATHS", rpath(target: lib/"bash") if OS.linux?
+
     system "./configure", "--prefix=#{prefix}"
     system "make", "install"
+
+    (include/"bash/builtins").install lib/"bash/loadables.h"
+    pkgshare.install lib.glob("bash/Makefile*")
   end
 
   test do
-    assert_equal "hello", shell_output("#{bin}/bash -c \"echo -n hello\"")
+    assert_equal "hello", shell_output("#{bin}/bash -c 'echo -n hello'")
+    assert_equal "csv is a shell builtin\n", shell_output("#{bin}/bash -c 'enable csv; type csv'")
   end
 end

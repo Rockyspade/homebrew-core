@@ -1,22 +1,21 @@
 class Dartsim < Formula
   desc "Dynamic Animation and Robotics Toolkit"
   homepage "https://dartsim.github.io/"
-  url "https://github.com/dartsim/dart/archive/refs/tags/v6.14.4.tar.gz"
-  sha256 "f5fc7f5cb1269cc127a1ff69be26247b9f3617ce04ff1c80c0f3f6abc7d9ab70"
+  url "https://github.com/dartsim/dart/archive/refs/tags/v6.15.0.tar.gz"
+  sha256 "bbf954e283f464f6d0a8a5ab43ce92fd49ced357ccdd986c7cb4c29152df8692"
   license "BSD-2-Clause"
 
   bottle do
-    sha256                               arm64_sonoma:   "2968a3ebda640c3bd79929c52ba4435528a60cd445c8bc62872ab0faacbad21e"
-    sha256                               arm64_ventura:  "da79facaef6b70d098589b22df75a1d3b7d6395663758a1459005e22496c9765"
-    sha256                               arm64_monterey: "6e3561edfe03f146623fee343381a328734301d4c905a10b7001359d3d33f14b"
-    sha256                               sonoma:         "b2b2317f71a894727f67612166af9c806d476c2b4a3e4f2b22b7e9aa046963aa"
-    sha256                               ventura:        "54a488353181fbe09453796c1941967cc4ac7e268e97a116c5108a1582da0a4c"
-    sha256                               monterey:       "ee2bcde574495fc446d5320c2ebfbe50a166191ab1f9278723b35d001af2a4f3"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "3d6029b69bef9a1a978c9101213b5b076d6c520c68ecc7ebe3763a2c8f9a5840"
+    sha256                               arm64_sequoia: "e535ad930fe32671752d6857924a7027a23b05c226d095adb2d3d090ebd6c40a"
+    sha256                               arm64_sonoma:  "2cfcce63b8f5efa854cf20e196a686b7d87efca67e17b436c2fac235b38a0ba9"
+    sha256                               arm64_ventura: "3c65ad8471fb493c412874b423fbd039ceda631dd6ab823b49c4e002e7ed20a6"
+    sha256                               sonoma:        "b62650e04e8d7938d63435472dc998ee188f5c0bd9e42d9cb0e77a1fe02e2c46"
+    sha256                               ventura:       "082d4233b947f2f43ef6232a62b531eea36c1e5484aca42d145ef5a74ac9373b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7f8f7901d2a25186e278030991f26c028aa3b62fe8cdefee42398b2480319774"
   end
 
   depends_on "cmake" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
 
   depends_on "assimp"
   depends_on "bullet"
@@ -64,18 +63,17 @@ class Dartsim < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <dart/dart.hpp>
       int main() {
         auto world = std::make_shared<dart::simulation::World>();
         assert(world != nullptr);
         return 0;
       }
-    EOS
+    CPP
     system ENV.cxx, "test.cpp", "-I#{Formula["eigen"].include}/eigen3",
                     "-I#{include}", "-L#{lib}", "-ldart",
                     "-L#{Formula["assimp"].opt_lib}", "-lassimp",
-                    "-L#{Formula["boost"].opt_lib}", "-lboost_system",
                     "-L#{Formula["libccd"].opt_lib}", "-lccd",
                     "-L#{Formula["fcl"].opt_lib}", "-lfcl",
                     "-std=c++17", "-o", "test"

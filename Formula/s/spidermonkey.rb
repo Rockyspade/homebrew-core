@@ -1,41 +1,40 @@
 class Spidermonkey < Formula
   desc "JavaScript-C Engine"
   homepage "https://spidermonkey.dev"
-  url "https://archive.mozilla.org/pub/firefox/releases/115.14.0esr/source/firefox-115.14.0esr.source.tar.xz"
-  version "115.14.0"
-  sha256 "8955e1b5db83200a70c6dea4b614e19328d92b406ec9a1bde2ea86333a74dab4"
+  url "https://archive.mozilla.org/pub/firefox/releases/128.4.0esr/source/firefox-128.4.0esr.source.tar.xz"
+  version "128.4.0"
+  sha256 "074014e1c26144e10707b12a271176a4b6b67021e91444b613edae38d188febc"
   license "MPL-2.0"
+  revision 1
   head "https://hg.mozilla.org/mozilla-central", using: :hg
 
   # Spidermonkey versions use the same versions as Firefox, so we simply check
   # Firefox ESR release versions.
   livecheck do
-    url "https://www.mozilla.org/en-US/firefox/releases/"
-    regex(/data-esr-versions=["']?v?(\d+(?:\.\d+)+)["' >]/i)
+    url "https://download.mozilla.org/?product=firefox-esr-latest-ssl"
+    strategy :header_match
   end
 
   bottle do
-    sha256 cellar: :any, arm64_sonoma:  "00665aa6fd4678321e5b41521926ca67b2e6f660934625e29672e48407db6cc6"
-    sha256 cellar: :any, arm64_ventura: "cf80750dc40c5cbd7d44a0bea6667fdd7d2b6eacbe19e07348365ee1a557325e"
-    sha256 cellar: :any, sonoma:        "be9af4d1d4774a810ac87256e0d3cc3fa1109047888880c6375518d26df64090"
-    sha256 cellar: :any, ventura:       "a416b8c8b9bc988b7ebd57cc099c9bb24b57d0a807105b00ea6514b317b4b8d8"
-    sha256               x86_64_linux:  "6f7591a273f7529bbbc00fc7db2afef99aa6b1ffe9e8ac3b88dd2691e6348673"
+    sha256 cellar: :any, arm64_sequoia: "61b7051e96d04b5b6ddacc8ee0800b243b4ea2453bd795c07980958f93f4d174"
+    sha256 cellar: :any, arm64_sonoma:  "88ab4784c34102c8fb93c8915cdcbd1ac7496460ffe84b5a30bea713d29be343"
+    sha256 cellar: :any, arm64_ventura: "ec7e958ab256a5962f4ba60c12b368dc8609d0f156ddf23657bb54612db09287"
+    sha256 cellar: :any, sonoma:        "88c0d75a9e74c2979b9e7afe93d4e615032508fa92c4ebd3b0ca26e2436b9f69"
+    sha256 cellar: :any, ventura:       "be20966c58859beea2f86f730aed999e4adb9222a2ff4350b94952e0adcd8c0e"
+    sha256               x86_64_linux:  "d0664eeb42fb30dceab87318b21513762cc47dda62a91b21e1870421fc08ad81"
   end
 
+  depends_on "cbindgen" => :build
   depends_on "pkg-config" => :build
-  depends_on "python@3.11" => :build # https://bugzilla.mozilla.org/show_bug.cgi?id=1857515
+  depends_on "python@3.13" => :build
   depends_on "rust" => :build
-  depends_on macos: :ventura # minimum SDK version 13.3
+  depends_on "icu4c@76"
+  depends_on "nspr"
   depends_on "readline"
 
   uses_from_macos "llvm" => :build # for llvm-objdump
   uses_from_macos "m4" => :build
   uses_from_macos "zlib"
-
-  on_linux do
-    depends_on "icu4c"
-    depends_on "nspr"
-  end
 
   conflicts_with "narwhal", because: "both install a js binary"
 
@@ -53,49 +52,56 @@ class Spidermonkey < Formula
   # Ref: https://discourse.gnome.org/t/gnome-45-to-depend-on-spidermonkey-115/16653
   patch do
     on_macos do
-      url "https://github.com/ptomato/mozjs/commit/9f778cec201f87fd68dc98380ac1097b2ff371e4.patch?full_index=1"
-      sha256 "a772f39e5370d263fd7e182effb1b2b990cae8c63783f5a6673f16737ff91573"
+      url "https://github.com/ptomato/mozjs/commit/c82346c4e19a73ed4c7f65a6b274fc2138815ae9.patch?full_index=1"
+      sha256 "0f1cd5f80b4ae46e614efa74a409133e8a69fff38220314f881383ba0adb0f87"
     end
   end
 
   def install
-    # Help the build script detect ld64 as it expects logs from LD_PRINT_OPTIONS=1 with -Wl,-version
-    if DevelopmentTools.clang_build_version >= 1500
-      inreplace "build/moz.configure/toolchain.configure", '"-Wl,--version"', '"-Wl,-ld_classic,--version"'
+    # Workaround for ICU 76+
+    # Issue ref: https://bugzilla.mozilla.org/show_bug.cgi?id=1927380
+    inreplace "js/moz.configure", '"icu-i18n >= 73.1"', '"icu-i18n >= 73.1 icu-uc"'
+
+    ENV.runtime_cpu_detection
+
+    if OS.mac?
+      inreplace "build/moz.configure/toolchain.configure" do |s|
+        # Help the build script detect ld64 as it expects logs from LD_PRINT_OPTIONS=1 with -Wl,-version
+        s.sub! '"-Wl,--version"', '"-Wl,-ld_classic,--version"' if DevelopmentTools.clang_build_version >= 1500
+        # Allow using brew libraries on macOS (not officially supported)
+        s.sub!(/^(\s*def no_system_lib_in_sysroot\(.*\n\s*if )bootstrapped and value:/, "\\1False:")
+        # Work around upstream only allowing build on limited macOS SDK (14.4 as of Spidermonkey 128)
+        s.sub!(/^(\s*def mac_sdk_min_version\(.*\n\s*return )"\d+(\.\d+)*"$/, "\\1\"#{MacOS.version}\"")
+      end
     end
 
     mkdir "brew-build" do
       args = %W[
         --prefix=#{prefix}
+        --enable-hardening
         --enable-optimize
         --enable-readline
         --enable-release
+        --enable-rust-simd
         --enable-shared-js
         --disable-bootstrap
         --disable-debug
         --disable-jemalloc
         --with-intl-api
+        --with-system-icu
+        --with-system-nspr
         --with-system-zlib
       ]
-      if OS.mac?
-        # Force build script to use Xcode install_name_tool
-        ENV["INSTALL_NAME_TOOL"] = DevelopmentTools.locate("install_name_tool")
-      else
-        # System libraries are only supported on Linux and build fails if args are used on macOS.
-        # Ref: https://bugzilla.mozilla.org/show_bug.cgi?id=1776255
-        args += %w[--with-system-icu --with-system-nspr]
-      end
 
       system "../js/src/configure", *args
-      system "make"
+      ENV.deparallelize { system "make" }
       system "make", "install"
     end
 
-    (lib/"libjs_static.ajs").unlink
+    rm(lib/"libjs_static.ajs")
 
     # Add an unversioned `js` to be used by dependents like `jsawk` & `plowshare`
-    ln_s bin/"js#{version.major}", bin/"js"
-    return unless OS.linux?
+    bin.install_symlink "js#{version.major}" => "js"
 
     # Avoid writing nspr's versioned Cellar path in js*-config
     inreplace bin/"js#{version.major}-config",

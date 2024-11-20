@@ -1,19 +1,12 @@
 class Fisher < Formula
   desc "Plugin manager for the Fish shell"
   homepage "https://github.com/jorgebucaran/fisher"
-  url "https://github.com/jorgebucaran/fisher/archive/refs/tags/4.4.4.tar.gz"
-  sha256 "856e490e35cb9b1f1f02d54c77c6f4e86eb6f97fb5cfd8883a9df7b1d148a8e6"
+  url "https://github.com/jorgebucaran/fisher/archive/refs/tags/4.4.5.tar.gz"
+  sha256 "73518f76a3537d744c6bd1bea7bd848b21b6676801dc5400fc00a4688d7a7964"
   license "MIT"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "a1a8d7644b008b6c42fc245366f11a8a5a13c95adc180816e82e366874f08092"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "a1a8d7644b008b6c42fc245366f11a8a5a13c95adc180816e82e366874f08092"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "a1a8d7644b008b6c42fc245366f11a8a5a13c95adc180816e82e366874f08092"
-    sha256 cellar: :any_skip_relocation, sonoma:         "a1a8d7644b008b6c42fc245366f11a8a5a13c95adc180816e82e366874f08092"
-    sha256 cellar: :any_skip_relocation, ventura:        "a1a8d7644b008b6c42fc245366f11a8a5a13c95adc180816e82e366874f08092"
-    sha256 cellar: :any_skip_relocation, monterey:       "a1a8d7644b008b6c42fc245366f11a8a5a13c95adc180816e82e366874f08092"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f8b727116c5d988b083398fc3fb250a104a9525d20bb063fa8901975f331dea7"
+    sha256 cellar: :any_skip_relocation, all: "14891cea79eaaec8482f370961e6950b16ceed386c7f26567cb5c1f37f42434c"
   end
 
   depends_on "fish"

@@ -4,8 +4,10 @@ class Yo < Formula
   url "https://registry.npmjs.org/yo/-/yo-5.0.0.tgz"
   sha256 "4395888eda54803a590d20d92b285c4abebd81402908b5becdf9cbc6cbeba65f"
   license "BSD-2-Clause"
+  head "https://github.com/yeoman/yo.git", branch: "main"
 
   bottle do
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "dec76e0ab001840b2d057f4ed4dbb084944cc44b662f93e811a5fdce9bd80904"
     sha256 cellar: :any_skip_relocation, arm64_sonoma:   "3952f75866cc905302121f85682493adffe8f27e1f4d32109fecfb1604692cd3"
     sha256 cellar: :any_skip_relocation, arm64_ventura:  "3952f75866cc905302121f85682493adffe8f27e1f4d32109fecfb1604692cd3"
     sha256 cellar: :any_skip_relocation, arm64_monterey: "3952f75866cc905302121f85682493adffe8f27e1f4d32109fecfb1604692cd3"

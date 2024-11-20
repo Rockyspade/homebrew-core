@@ -1,8 +1,8 @@
 class CodeCli < Formula
   desc "Command-line interface built-in Visual Studio Code"
   homepage "https://github.com/microsoft/vscode"
-  url "https://github.com/microsoft/vscode/archive/refs/tags/1.92.2.tar.gz"
-  sha256 "628968d97ae66aa31253e649088e108813900d76fe2ce07d6c2e5312473158b8"
+  url "https://github.com/microsoft/vscode/archive/refs/tags/1.95.3.tar.gz"
+  sha256 "46f9229de5c5be460168b16a47fe73936f4e1ee4d53c31d2ac5e0789c63d1522"
   license "MIT"
   head "https://github.com/microsoft/vscode.git", branch: "main"
 
@@ -12,13 +12,12 @@ class CodeCli < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "1c4db84d2703b0be453950f270b8cb8b866e850735ca5ec36322fd0d1913122a"
-    sha256 cellar: :any,                 arm64_ventura:  "694c122bbf8591b877c959178f2c1ed4b3fde01029ac0e57ef8b24a94b89ccbf"
-    sha256 cellar: :any,                 arm64_monterey: "e9568201e55662d7449faf405e6f15f7566d19456706ce5692e89341c5353279"
-    sha256 cellar: :any,                 sonoma:         "e95e7e44220d92b2bd078b2454fc3fea32633a6cb1811e8cf70a073629cf3916"
-    sha256 cellar: :any,                 ventura:        "1b2b5820a1c9375838336353f12a7dd7892966684742d2633dd76f32b2f9b663"
-    sha256 cellar: :any,                 monterey:       "11357f0e8218f9725859fa2010778e98cbdefbfa1f592ffa8fd4b7f458ca304c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "13fae3a64eed75ed798279fd11fdaa51070cc1a730441d3f3ba85a4bc4ec8955"
+    sha256 cellar: :any,                 arm64_sequoia: "ab5c94fbad0831db492ac8cb53702b1a9a440991a5efbc3623f66aab5e3317fd"
+    sha256 cellar: :any,                 arm64_sonoma:  "08c041e0b4c7d613e45053821357423c6a5abdb4288ca6e7d839efe6ec4c2902"
+    sha256 cellar: :any,                 arm64_ventura: "0e9eaeec7021bb549810bea2b697d29ab595fd062ede835a7c2234c918095870"
+    sha256 cellar: :any,                 sonoma:        "3fdfbe846a1ae32015fb6d9b66547f174b8cc809333bb51cb06ae2314833df31"
+    sha256 cellar: :any,                 ventura:       "4ca12d4634f36c1ec16ddc76d39ff49535a85911216513d2498a0879e92062c1"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ef3ef68e10ecf2b19252058b9de0c11d6421a547dd6f4021b79e4d0fbcd03913"
   end
 
   depends_on "rust" => :build
@@ -27,7 +26,7 @@ class CodeCli < Formula
   uses_from_macos "zlib"
 
   on_linux do
-    depends_on "pkg-config" => :build
+    depends_on "pkgconf" => :build
   end
 
   conflicts_with cask: "visual-studio-code"

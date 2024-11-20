@@ -3,29 +3,28 @@ class Locust < Formula
 
   desc "Scalable user load testing tool written in Python"
   homepage "https://locust.io/"
-  url "https://files.pythonhosted.org/packages/cf/f1/479fc56e48d6ab8479e619ddf3918a065dff800211312393c4f04180e993/locust-2.31.3.tar.gz"
-  sha256 "25f4603f24afa11ef1ee1f26b1c86a232eb9a1140be30b2a4642c12d7a7af8ae"
+  url "https://files.pythonhosted.org/packages/cc/4c/3f7ab09636188379d8d76748fe87ce115a36d725d2103a6f9c012e462408/locust-2.32.3.tar.gz"
+  sha256 "2b92df32c414a272dde321da4afd9e148b5fec32213fe2a260885a469374132b"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "79af9be3b149f36ecb23e3beedc2dab2374da2ab0ce94baef3ba60b07f3befb7"
-    sha256 cellar: :any,                 arm64_ventura:  "88938e800c2accfc33d0320cd6668c198f810517f7a4a2a7618c6fb91c727c36"
-    sha256 cellar: :any,                 arm64_monterey: "a285f501ba3078665c4918b562231aa2f98e5fd8f02676e1fe6f77bcfa020aa6"
-    sha256 cellar: :any,                 sonoma:         "15c8426fd0239fce22749e84288fbc98e9cd6281c347d3453f2a28af4160e82d"
-    sha256 cellar: :any,                 ventura:        "f09994b7b39e77e9d9126999f1774316da29c0bcd7b14eae8783330485ce7ee3"
-    sha256 cellar: :any,                 monterey:       "e44dd835ce408eee9740d5ccdabe2c2b54c2b2e355ab7fee0f32eb7bc4f51aff"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "161abdffa083b4a727203e9d8ff4b488fa68b291237cf2742a4864336b670f83"
+    sha256 cellar: :any,                 arm64_sequoia: "64d5a38c6ee32b25961f0f4fc6d9dcef22e83d3cdaa3de73508a2f0b2964c013"
+    sha256 cellar: :any,                 arm64_sonoma:  "24fdf638687cdd351af3423d3a736fc8f5cb9ac6969799334b65eecf702d1046"
+    sha256 cellar: :any,                 arm64_ventura: "31dc758347a4fc001795531ce4eb289bef57a5ea0a2f388167a7d18b01de2ef8"
+    sha256 cellar: :any,                 sonoma:        "decd353e99b40f00e45f93f5b5172b654f76d18c3e0efd8ed36933a122db8830"
+    sha256 cellar: :any,                 ventura:       "56e21d8582e040a97dcc92fcedc793ebff795fc9f14f283e5d9745d4d12f7368"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d97bb419e9f9c1295821458f6ea4d4901439d9ee11676d80bc5442a6c1327fda"
   end
 
   depends_on "cmake" => :build # for pyzmq
   depends_on "ninja" => :build # for pyzmq
   depends_on "certifi"
-  depends_on "python@3.12"
+  depends_on "python@3.13"
   depends_on "zeromq"
 
   resource "blinker" do
-    url "https://files.pythonhosted.org/packages/1e/57/a6a1721eff09598fb01f3c7cda070c1b6a0f12d63c83236edf79a440abcc/blinker-1.8.2.tar.gz"
-    sha256 "8f77b09d3bf7c795e969e9486f39c2c5e9c39d4ee07424be2bc594ece9642d83"
+    url "https://files.pythonhosted.org/packages/21/28/9b3f50ce0e048515135495f198351908d99540d69bfdc8c1d15b73dc55ce/blinker-1.9.0.tar.gz"
+    sha256 "b4ce2265a7abece45e7cc896e98dbebe6cead56bcf805a3d23136d145f5445bf"
   end
 
   resource "brotli" do
@@ -34,8 +33,8 @@ class Locust < Formula
   end
 
   resource "charset-normalizer" do
-    url "https://files.pythonhosted.org/packages/63/09/c1bc53dab74b1816a00d8d030de5bf98f724c52c1635e07681d312f20be8/charset-normalizer-3.3.2.tar.gz"
-    sha256 "f30c3cb33b24454a82faecaf01b19c18562b1e89558fb6c56de4d9118a032fd5"
+    url "https://files.pythonhosted.org/packages/f2/4f/e1808dc01273379acc506d18f1504eb2d299bd4131743b9fc54d7be4df1e/charset_normalizer-3.4.0.tar.gz"
+    sha256 "223217c3d4f82c3ac5e29032b3f1c2eb0fb591b72161f86d93f5719079dae93e"
   end
 
   resource "click" do
@@ -49,13 +48,13 @@ class Locust < Formula
   end
 
   resource "flask" do
-    url "https://files.pythonhosted.org/packages/41/e1/d104c83026f8d35dfd2c261df7d64738341067526406b40190bc063e829a/flask-3.0.3.tar.gz"
-    sha256 "ceb27b0af3823ea2737928a4d99d125a06175b8512c445cbd9a9ce200ef76842"
+    url "https://files.pythonhosted.org/packages/89/50/dff6380f1c7f84135484e176e0cac8690af72fa90e932ad2a0a60e28c69b/flask-3.1.0.tar.gz"
+    sha256 "5f873c5184c897c8d9d1b05df1e3d01b14910ce69607a117bd3277098a5836ac"
   end
 
   resource "flask-cors" do
-    url "https://files.pythonhosted.org/packages/40/6a/a8d56d60bcfa1ec3e4fdad81b45aafd508c3bd5c244a16526fa29139d7d4/flask_cors-4.0.1.tar.gz"
-    sha256 "eeb69b342142fdbf4766ad99357a7f3876a2ceb77689dc10ff912aac06c389e4"
+    url "https://files.pythonhosted.org/packages/4f/d0/d9e52b154e603b0faccc0b7c2ad36a764d8755ef4036acbf1582a67fb86b/flask_cors-5.0.0.tar.gz"
+    sha256 "5aadb4b950c4e93745034594d9f3ea6591f734bb3662e16e255ffbf5e89c88ef"
   end
 
   resource "flask-login" do
@@ -64,8 +63,8 @@ class Locust < Formula
   end
 
   resource "gevent" do
-    url "https://files.pythonhosted.org/packages/27/24/a3a7b713acfcf1177207f49ec25c665123f8972f42bee641bcc9f32961f4/gevent-24.2.1.tar.gz"
-    sha256 "432fc76f680acf7cf188c2ee0f5d3ab73b63c1f03114c7cd8a34cebbe5aa2056"
+    url "https://files.pythonhosted.org/packages/ab/75/a53f1cb732420f5e5d79b2563fc3504d22115e7ecfe7966e5cf9b3582ae7/gevent-24.11.1.tar.gz"
+    sha256 "8bd1419114e9e4a3ed33a5bad766afff9a3cf765cb440a582a1b3a9bc80c1aca"
   end
 
   resource "geventhttpclient" do
@@ -74,13 +73,13 @@ class Locust < Formula
   end
 
   resource "greenlet" do
-    url "https://files.pythonhosted.org/packages/17/14/3bddb1298b9a6786539ac609ba4b7c9c0842e12aa73aaa4d8d73ec8f8185/greenlet-3.0.3.tar.gz"
-    sha256 "43374442353259554ce33599da8b692d5aa96f8976d567d4badf263371fbe491"
+    url "https://files.pythonhosted.org/packages/2f/ff/df5fede753cc10f6a5be0931204ea30c35fa2f2ea7a35b25bdaf4fe40e46/greenlet-3.1.1.tar.gz"
+    sha256 "4ce3ac6cdb6adf7946475d7ef31777c26d94bccc377e070a7986bd2d5c515467"
   end
 
   resource "idna" do
-    url "https://files.pythonhosted.org/packages/21/ed/f86a79a07470cb07819390452f178b3bef1d375f2ec021ecfc709fc7cf07/idna-3.7.tar.gz"
-    sha256 "028ff3aadf0609c1fd278d8ea3089299412a7a8b9bd005dd08b9f8285bcb5cfc"
+    url "https://files.pythonhosted.org/packages/f1/70/7703c29685631f5a7590aa73f1f1d3fa9a380e654b86af429e0934a32f7d/idna-3.10.tar.gz"
+    sha256 "12f65c9b470abda6dc35cf8e63cc574b1c52b11df2c86030af0ac09b01b13ea9"
   end
 
   resource "itsdangerous" do
@@ -94,23 +93,23 @@ class Locust < Formula
   end
 
   resource "markupsafe" do
-    url "https://files.pythonhosted.org/packages/87/5b/aae44c6655f3801e81aa3eef09dbbf012431987ba564d7231722f68df02d/MarkupSafe-2.1.5.tar.gz"
-    sha256 "d283d37a890ba4c1ae73ffadf8046435c76e7bc2247bbb63c00bd1a709c6544b"
+    url "https://files.pythonhosted.org/packages/b2/97/5d42485e71dfc078108a86d6de8fa46db44a1a9295e89c5d6d4a06e23a62/markupsafe-3.0.2.tar.gz"
+    sha256 "ee55d3edf80167e48ea11a923c7386f4669df67d7994554387f84e7d8b0a2bf0"
   end
 
   resource "msgpack" do
-    url "https://files.pythonhosted.org/packages/08/4c/17adf86a8fbb02c144c7569dc4919483c01a2ac270307e2d59e1ce394087/msgpack-1.0.8.tar.gz"
-    sha256 "95c02b0e27e706e48d0e5426d1710ca78e0f0628d6e89d5b5a5b91a5f12274f3"
+    url "https://files.pythonhosted.org/packages/cb/d0/7555686ae7ff5731205df1012ede15dd9d927f6227ea151e901c7406af4f/msgpack-1.1.0.tar.gz"
+    sha256 "dd432ccc2c72b914e4cb77afce64aab761c1137cc698be3984eee260bcb2896e"
   end
 
   resource "psutil" do
-    url "https://files.pythonhosted.org/packages/18/c7/8c6872f7372eb6a6b2e4708b88419fb46b857f7a2e1892966b851cc79fc9/psutil-6.0.0.tar.gz"
-    sha256 "8faae4f310b6d969fa26ca0545338b21f73c6b15db7c4a8d934a5482faa818f2"
+    url "https://files.pythonhosted.org/packages/26/10/2a30b13c61e7cf937f4adf90710776b7918ed0a9c434e2c38224732af310/psutil-6.1.0.tar.gz"
+    sha256 "353815f59a7f64cdaca1c0307ee13558a0512f6db064e92fe833784f08539c7a"
   end
 
   resource "pyzmq" do
-    url "https://files.pythonhosted.org/packages/39/a3/3f8dac25b443ca527eddd9559b390bfb539f6ee6fb0b824427315dfe585d/pyzmq-26.1.0.tar.gz"
-    sha256 "6c5aeea71f018ebd3b9115c7cb13863dd850e98ca6b9258509de1246461a7e7f"
+    url "https://files.pythonhosted.org/packages/fd/05/bed626b9f7bb2322cdbbf7b4bd8f54b1b617b0d2ab2d3547d6e39428a48e/pyzmq-26.2.0.tar.gz"
+    sha256 "070672c258581c8e4f640b5159297580a9974b026043bd4ab0470be9ed324f1f"
   end
 
   resource "requests" do
@@ -119,18 +118,18 @@ class Locust < Formula
   end
 
   resource "setuptools" do
-    url "https://files.pythonhosted.org/packages/ce/ef/013ded5b0d259f3fa636bf35de186f0061c09fbe124020ce6b8db68c83af/setuptools-72.2.0.tar.gz"
-    sha256 "80aacbf633704e9c8bfa1d99fa5dd4dc59573efcf9e4042c13d3bcef91ac2ef9"
+    url "https://files.pythonhosted.org/packages/c8/db/722a42ffdc226e950c4757b3da7b56ff5c090bb265dccd707f7b8a3c6fee/setuptools-75.5.0.tar.gz"
+    sha256 "5c4ccb41111392671f02bb5f8436dfc5a9a7185e80500531b133f5775c4163ef"
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/43/6d/fa469ae21497ddc8bc93e5877702dca7cb8f911e337aca7452b5724f1bb6/urllib3-2.2.2.tar.gz"
-    sha256 "dd505485549a7a552833da5e6063639d0d177c04f23bc3864e41e5dc5f612168"
+    url "https://files.pythonhosted.org/packages/ed/63/22ba4ebfe7430b76388e7cd448d5478814d3032121827c12a2cc287e2260/urllib3-2.2.3.tar.gz"
+    sha256 "e7d814a81dad81e6caf2ec9fdedb284ecc9c73076b62654547cc64ccdcae26e9"
   end
 
   resource "werkzeug" do
-    url "https://files.pythonhosted.org/packages/02/51/2e0fc149e7a810d300422ab543f87f2bcf64d985eb6f1228c4efd6e4f8d4/werkzeug-3.0.3.tar.gz"
-    sha256 "097e5bfda9f0aba8da6b8545146def481d06aa7d3266e7448e2cccf67dd8bd18"
+    url "https://files.pythonhosted.org/packages/9f/69/83029f1f6300c5fb2471d621ab06f6ec6b3324685a2ce0f9777fd4a8b71e/werkzeug-3.1.3.tar.gz"
+    sha256 "60723ce945c19328679790e3282cc758aa4a6040e4bb330f53d30fa546d44746"
   end
 
   resource "zope-event" do
@@ -139,8 +138,8 @@ class Locust < Formula
   end
 
   resource "zope-interface" do
-    url "https://files.pythonhosted.org/packages/ab/45/70929649a48b49a71a470bdd84e078110fb5a91e5d74bfe07d65e02b4f03/zope.interface-7.0.1.tar.gz"
-    sha256 "f0f5fda7cbf890371a59ab1d06512da4f2c89a6ea194e595808123c863c38eff"
+    url "https://files.pythonhosted.org/packages/3c/f5/1079cab32302359cc09bd1dca9656e680601e0e8af9397322ab0fe85f368/zope.interface-7.1.1.tar.gz"
+    sha256 "4284d664ef0ff7b709836d4de7b13d80873dc5faeffc073abdb280058bfac5e3"
   end
 
   def install
@@ -151,7 +150,7 @@ class Locust < Formula
   end
 
   test do
-    (testpath/"locustfile.py").write <<~EOS
+    (testpath/"locustfile.py").write <<~PYTHON
       from locust import HttpUser, task
 
       class HelloWorldUser(HttpUser):
@@ -159,7 +158,7 @@ class Locust < Formula
           def hello_world(self):
               self.client.get("/headers")
               self.client.get("/ip")
-    EOS
+    PYTHON
 
     ENV["LOCUST_LOCUSTFILE"] = testpath/"locustfile.py"
     ENV["LOCUST_HOST"] = "http://httpbin.org"

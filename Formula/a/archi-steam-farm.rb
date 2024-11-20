@@ -1,11 +1,20 @@
 class ArchiSteamFarm < Formula
   desc "Application for idling Steam cards from multiple accounts simultaneously"
   homepage "https://github.com/JustArchiNET/ArchiSteamFarm"
-  url "https://github.com/JustArchiNET/ArchiSteamFarm.git",
-      tag:      "6.0.5.2",
-      revision: "03a5853a91358b7e7dccc0c17f87f2b26e4f872b"
   license "Apache-2.0"
   head "https://github.com/JustArchiNET/ArchiSteamFarm.git", branch: "main"
+
+  stable do
+    url "https://github.com/JustArchiNET/ArchiSteamFarm.git",
+        tag:      "6.0.8.7",
+        revision: "6dddaa59926c1e48419e5d374deef8aa712ad610"
+
+    # Backport support for .NET 9
+    patch do
+      url "https://github.com/JustArchiNET/ArchiSteamFarm/commit/1b626caa538605281c6a73cf8ab2b056bc771a39.patch?full_index=1"
+      sha256 "03f45f93b018194abd7a00857156de5a4737ed10cf7b816f251fffbbe76975f8"
+    end
+  end
 
   livecheck do
     url :stable
@@ -13,28 +22,45 @@ class ArchiSteamFarm < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "6a0864824db6989bb0da80c239aa844c890688b8e119ae5e663493dccca7bc43"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "4adae81a2c25e9c3988013a610bb27d44b270814ad43c8906f16103fd5eb8b59"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "3852db6cc542fe5b17dd81567d8672675a285b27af1f003c9d52fcc10979ec26"
-    sha256 cellar: :any_skip_relocation, sonoma:         "caf59bf9be59b829bd559615e2c369438e09459a144d57f59c8d1e03f46ba88a"
-    sha256 cellar: :any_skip_relocation, ventura:        "5ff652ec3525a2d224afd3168b3ffd379b80824caca1f1820e5af7ff4c369805"
-    sha256 cellar: :any_skip_relocation, monterey:       "ea363e87d3d0f7f902da4a389b86fe2e21f8cd3b36903904a93c843d2dbeb4ad"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "89360c4b7ec016776e2e8e6ef25c72ca037f1e16167f464551d6750aeb7e3d3b"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "960adeaff2e039c5c59e600bbbd996c1bf6d5b12594a2595989a55b3ccbdf8a0"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "e1db6b00c6a2fa5c3c7f953b5db7a9d7c1bb213a8ed266e6858e850b9c8690eb"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "6d8fc4fd032faaff8b6172dd324ed30179d6bf003bf05b63deb2b5dff86e8278"
+    sha256 cellar: :any_skip_relocation, ventura:       "c633fb38c5abf7af72a254306938c60a76a2b9b3aae00274c8dc85f40bdf74d5"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "035547ccccc53eaad19716b09a33b860d454c6f6326645709848a524f4338d54"
   end
 
+  depends_on "node" => :build
   depends_on "dotnet"
 
   def install
-    system "dotnet", "publish", "ArchiSteamFarm",
-           "--configuration", "Release",
-           "--framework", "net#{Formula["dotnet"].version.major_minor}",
-           "--output", libexec
+    plugins = %w[
+      ArchiSteamFarm.OfficialPlugins.ItemsMatcher
+      ArchiSteamFarm.OfficialPlugins.MobileAuthenticator
+    ]
 
-    (bin/"asf").write <<~EOS
-      #!/bin/sh
-      exec "#{Formula["dotnet"].opt_bin}/dotnet" "#{libexec}/ArchiSteamFarm.dll" "$@"
-    EOS
+    dotnet = Formula["dotnet"]
+    args = %W[
+      --configuration Release
+      --framework net#{dotnet.version.major_minor}
+      --no-self-contained
+      --use-current-runtime
+    ]
+    asf_args = %W[
+      --output #{libexec}
+      -p:AppHostRelativeDotNet=#{dotnet.opt_libexec.relative_path_from(libexec)}
+      -p:PublishSingleFile=true
+    ]
 
+    system "npm", "ci", "--no-progress", "--prefix", "ASF-ui"
+    system "npm", "run-script", "deploy", "--no-progress", "--prefix", "ASF-ui"
+
+    system "dotnet", "publish", "ArchiSteamFarm", *args, *asf_args
+    plugins.each do |plugin|
+      system "dotnet", "publish", plugin, *args, "--output", libexec/"plugins"/plugin
+    end
+
+    bin.install_symlink libexec/"ArchiSteamFarm" => "asf"
     etc.install libexec/"config" => "asf"
     rm_r(libexec/"config")
     libexec.install_symlink etc/"asf" => "config"

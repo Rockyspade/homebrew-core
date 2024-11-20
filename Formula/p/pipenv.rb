@@ -3,50 +3,54 @@ class Pipenv < Formula
 
   desc "Python dependency management tool"
   homepage "https://github.com/pypa/pipenv"
-  url "https://files.pythonhosted.org/packages/d1/67/c29cb9081e5648b754b7ec95482e348b4d616681a3f0ee402ca082b9be02/pipenv-2024.0.1.tar.gz"
-  sha256 "ae5a83fa5b66065cebd2bd8f73f0b281b3bd202a13d58cc644f0b9765128c990"
+  url "https://files.pythonhosted.org/packages/f1/2a/453a44f0c99ebd56ea041bb5063edf30edab0f2739d977b346c406ca20f5/pipenv-2024.4.0.tar.gz"
+  sha256 "87b82407a9e2de3cf32a742c131708d7460d5985076c6a9b3c11d774d2929fb1"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "b4f3ff7ff9085381dd9b4e353b2fb9e2f5944c6d4286334773ebcf39949c8118"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "b4f3ff7ff9085381dd9b4e353b2fb9e2f5944c6d4286334773ebcf39949c8118"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "b4f3ff7ff9085381dd9b4e353b2fb9e2f5944c6d4286334773ebcf39949c8118"
-    sha256 cellar: :any_skip_relocation, sonoma:         "90e8a8965b60fe69e4216861a103e18544b389c8b3842facf4cdb13b42399d1d"
-    sha256 cellar: :any_skip_relocation, ventura:        "5c6dea987d8777301e6b896dbae7023b8a27f09504c884830aaaccf1ae806bd9"
-    sha256 cellar: :any_skip_relocation, monterey:       "90e8a8965b60fe69e4216861a103e18544b389c8b3842facf4cdb13b42399d1d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "113b677c94fcd894672153ca2de4b74ae3bc71253d8719d650b5061f96f919a4"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "3ea25df0eb0ed154edd4cca9291882f7d1bb7d732adf033163f06d02d736e3be"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "3ea25df0eb0ed154edd4cca9291882f7d1bb7d732adf033163f06d02d736e3be"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "3ea25df0eb0ed154edd4cca9291882f7d1bb7d732adf033163f06d02d736e3be"
+    sha256 cellar: :any_skip_relocation, sonoma:        "f395c4fca21ee6c7e6873a417f741438f273b275e9da0b6e05489c1c5ba5cba5"
+    sha256 cellar: :any_skip_relocation, ventura:       "f395c4fca21ee6c7e6873a417f741438f273b275e9da0b6e05489c1c5ba5cba5"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "5847d7add40d9348e2db4f43152047782b7fe1f7fa46f2d639bc8c994a839a76"
   end
 
   depends_on "certifi"
-  depends_on "python@3.12"
+  depends_on "python@3.13"
 
   def python3
-    "python3.12"
+    "python3.13"
   end
 
   resource "distlib" do
-    url "https://files.pythonhosted.org/packages/c4/91/e2df406fb4efacdf46871c25cde65d3c6ee5e173b7e5a4547a47bae91920/distlib-0.3.8.tar.gz"
-    sha256 "1530ea13e350031b6312d8580ddb6b27a104275a31106523b8f123787f494f64"
+    url "https://files.pythonhosted.org/packages/0d/dd/1bec4c5ddb504ca60fc29472f3d27e8d4da1257a854e1d96742f15c1d02d/distlib-0.3.9.tar.gz"
+    sha256 "a60f20dea646b8a33f3e7772f74dc0b2d0772d2837ee1342a00645c81edf9403"
   end
 
   resource "filelock" do
-    url "https://files.pythonhosted.org/packages/06/ae/f8e03746f0b62018dcf1120f5ad0a1db99e55991f2cda0cf46edc8b897ea/filelock-3.14.0.tar.gz"
-    sha256 "6ea72da3be9b8c82afd3edcf99f2fffbb5076335a5ae4d03248bb5b6c3eae78a"
+    url "https://files.pythonhosted.org/packages/9d/db/3ef5bb276dae18d6ec2124224403d1d67bccdbefc17af4cc8f553e341ab1/filelock-3.16.1.tar.gz"
+    sha256 "c249fbfcd5db47e5e2d6d62198e565475ee65e4831e2561c8e313fa7eb961435"
+  end
+
+  resource "packaging" do
+    url "https://files.pythonhosted.org/packages/51/65/50db4dda066951078f0a96cf12f4b9ada6e4b811516bf0262c0f4f7064d4/packaging-24.1.tar.gz"
+    sha256 "026ed72c8ed3fcce5bf8950572258698927fd1dbda10a5e981cdf0ac37f4f002"
   end
 
   resource "platformdirs" do
-    url "https://files.pythonhosted.org/packages/f5/52/0763d1d976d5c262df53ddda8d8d4719eedf9594d046f117c25a27261a19/platformdirs-4.2.2.tar.gz"
-    sha256 "38b7b51f512eed9e84a22788b4bce1de17c0adb134d6becb09836e37d8654cd3"
+    url "https://files.pythonhosted.org/packages/13/fc/128cc9cb8f03208bdbf93d3aa862e16d376844a14f9a0ce5cf4507372de4/platformdirs-4.3.6.tar.gz"
+    sha256 "357fb2acbc885b0419afd3ce3ed34564c13c9b95c89360cd9563f73aa5e2b907"
   end
 
   resource "setuptools" do
-    url "https://files.pythonhosted.org/packages/aa/60/5db2249526c9b453c5bb8b9f6965fcab0ddb7f40ad734420b3b421f7da44/setuptools-70.0.0.tar.gz"
-    sha256 "f211a66637b8fa059bb28183da127d4e86396c991a942b028c6650d4319c3fd0"
+    url "https://files.pythonhosted.org/packages/ed/22/a438e0caa4576f8c383fa4d35f1cc01655a46c75be358960d815bfbb12bd/setuptools-75.3.0.tar.gz"
+    sha256 "fba5dd4d766e97be1b1681d98712680ae8f2f26d7881245f2ce9e40714f1a686"
   end
 
   resource "virtualenv" do
-    url "https://files.pythonhosted.org/packages/44/5a/cabd5846cb550e2871d9532def625d0771f4e38f765c30dc0d101be33697/virtualenv-20.26.2.tar.gz"
-    sha256 "82bf0f4eebbb78d36ddaee0283d43fe5736b53880b8a8cdcd37390a07ac3741c"
+    url "https://files.pythonhosted.org/packages/8c/b3/7b6a79c5c8cf6d90ea681310e169cf2db2884f4d583d16c6e1d5a75a4e04/virtualenv-20.27.1.tar.gz"
+    sha256 "142c6be10212543b32c6c45d3d3893dff89112cc588b7d0879ae5a1ec03a47ba"
   end
 
   def install

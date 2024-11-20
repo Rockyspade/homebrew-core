@@ -6,6 +6,7 @@ class Libdill < Formula
   license "MIT"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "cfe256a0ada19b9c8405be0b3b95885137548fe38e0f3938f28bb50b8245b561"
     sha256 cellar: :any,                 arm64_sonoma:   "e7e3f7443e7a91dc15164f1ddfba535a2d61992c9ea0e8ee6097e42f47742c5e"
     sha256 cellar: :any,                 arm64_ventura:  "b6196fd106aa6de14be8a61b18cdeb4244a721eaf03fb2512188d50248f9061a"
     sha256 cellar: :any,                 arm64_monterey: "091479e5dd7d08123896444b8a398cb4bec0b7ee72cc24bef0903919a2ceedd1"
@@ -49,7 +50,7 @@ class Libdill < Formula
     # Issue ref: https://github.com/sustrik/libdill/issues/208
     ENV["CC"] = Formula["llvm"].opt_bin/"clang" if Hardware::CPU.arm?
 
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <libdill.h>
       #include <stdio.h>
       #include <stdlib.h>
@@ -67,7 +68,7 @@ class Libdill < Formula
           msleep(now() + 5000);
           return 0;
       }
-    EOS
+    C
     system ENV.cc, "test.c", "-I#{include}", "-L#{lib}", "-ldill", "-o", "test"
     system "./test"
   end

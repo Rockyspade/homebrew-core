@@ -4,23 +4,23 @@ class Planck < Formula
   url "https://github.com/planck-repl/planck/archive/refs/tags/2.28.0.tar.gz"
   sha256 "44f52e170d9a319ec89d3f7a67a7bb8082354f3da385a83bd3c7ac15b70b9825"
   license "EPL-1.0"
+  revision 2
   head "https://github.com/planck-repl/planck.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "d191a614bd84bcc9d260923fa40aeaa05519773c758f2731fc12724c478a9b40"
-    sha256 cellar: :any,                 arm64_ventura:  "417db2a6168646c53b8bf748fc8920c97f41e362e463042fad5548106ae0b235"
-    sha256 cellar: :any,                 arm64_monterey: "a2d86b54405f284660eeb8199488b1892747d60aafdc453598d85cc8b2ddd84d"
-    sha256 cellar: :any,                 sonoma:         "2ea02808fba9f62cb10fa592381cbce8c2a737b3c634bcc6eaec1c94f4566633"
-    sha256 cellar: :any,                 ventura:        "26434fb97e32d2e244d5964e061ae7706ca416fafe6c4600c33548b5bb35f554"
-    sha256 cellar: :any,                 monterey:       "baa4b152e861f9f1579e64a84c925970a9a813c15d2006da864eeed74383016c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "716444d924733adfecb5382de8260cdc0537b49afee6e4a2622a49d1da4853c1"
+    sha256 cellar: :any,                 arm64_sequoia: "ab34e0ef0e2e78aa190ca2ba821bd8e4ccfc7f4ba3b79fc1d7a74c697095512e"
+    sha256 cellar: :any,                 arm64_sonoma:  "96f747019fe7702ddf88fa4d7d2267b6031436df2417073f3bbcabb8c6b5d66d"
+    sha256 cellar: :any,                 arm64_ventura: "342f71f4a83296fa7754cc6244c4979a8976f0a4a5a6ea1ebad661ad6d6e329e"
+    sha256 cellar: :any,                 sonoma:        "d8d0fd48c44530bc3ef14f7eaa733c596356a686c6acba27da55224a936d0172"
+    sha256 cellar: :any,                 ventura:       "0ed48e120f059d43836251a16464488a85e46826a428838317bdef1bda516bea"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3f73054a3ff20c391c8f63196e146ff267143c1c3f72a4177d205f63bd2a1aa6"
   end
 
   depends_on "clojure" => :build
   depends_on "cmake" => :build
   depends_on "pkg-config" => :build
   depends_on xcode: :build
-  depends_on "icu4c"
+  depends_on "icu4c@76"
   depends_on "libzip"
 
   uses_from_macos "vim" => :build # for xxd

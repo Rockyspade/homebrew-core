@@ -1,18 +1,12 @@
 class StructurizrCli < Formula
   desc "Command-line utility for Structurizr"
   homepage "https://structurizr.com"
-  url "https://github.com/structurizr/cli/releases/download/v2024.07.03/structurizr-cli.zip"
-  sha256 "d419e5221f3c8dbb1f92bda7420094905a1f6c651184dc49abb119f203de5e96"
+  url "https://github.com/structurizr/cli/releases/download/v2024.11.04/structurizr-cli.zip"
+  sha256 "5c4e9ded37501450da642fdb112607cf6ad5a5e2d17be6454571d50675d90361"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "84ed277ef96b4c4dfac7da213606e67eb369eb0412cac05c1dd109dfceda257b"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "84ed277ef96b4c4dfac7da213606e67eb369eb0412cac05c1dd109dfceda257b"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "84ed277ef96b4c4dfac7da213606e67eb369eb0412cac05c1dd109dfceda257b"
-    sha256 cellar: :any_skip_relocation, sonoma:         "84ed277ef96b4c4dfac7da213606e67eb369eb0412cac05c1dd109dfceda257b"
-    sha256 cellar: :any_skip_relocation, ventura:        "84ed277ef96b4c4dfac7da213606e67eb369eb0412cac05c1dd109dfceda257b"
-    sha256 cellar: :any_skip_relocation, monterey:       "84ed277ef96b4c4dfac7da213606e67eb369eb0412cac05c1dd109dfceda257b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ce28e4542a4cca86165691e7146a083c80e3495f528abc309489e8590f929ed9"
+    sha256 cellar: :any_skip_relocation, all: "19340dc955170ef3a78b2005896c37905cb44ad5cfb28e1caae9c0450ebd7f13"
   end
 
   depends_on "openjdk"

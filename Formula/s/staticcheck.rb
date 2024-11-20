@@ -8,6 +8,7 @@ class Staticcheck < Formula
   head "https://github.com/dominikh/go-tools.git", branch: "master"
 
   bottle do
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "279420fa5e4c90f00c6a98b7bac30248f2a40d917ea0cd7dde5bc0172d5ba5ae"
     sha256 cellar: :any_skip_relocation, arm64_sonoma:   "eb16ebbf5ca8c2e791c3ed79770e0b55a554caa1d243ea2fc7b745a56242c9e6"
     sha256 cellar: :any_skip_relocation, arm64_ventura:  "eb16ebbf5ca8c2e791c3ed79770e0b55a554caa1d243ea2fc7b745a56242c9e6"
     sha256 cellar: :any_skip_relocation, arm64_monterey: "eb16ebbf5ca8c2e791c3ed79770e0b55a554caa1d243ea2fc7b745a56242c9e6"
@@ -24,7 +25,7 @@ class Staticcheck < Formula
   end
 
   test do
-    (testpath/"test.go").write <<~EOS
+    (testpath/"test.go").write <<~GO
       package main
 
       import "fmt"
@@ -34,7 +35,7 @@ class Staticcheck < Formula
         x = 1
         fmt.Println(x)
       }
-    EOS
+    GO
     json_output = JSON.parse(shell_output("#{bin}/staticcheck -f json test.go", 1))
     assert_equal json_output["code"], "S1021"
   end

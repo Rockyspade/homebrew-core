@@ -1,18 +1,17 @@
 class Terragrunt < Formula
   desc "Thin wrapper for Terraform e.g. for locking state"
   homepage "https://terragrunt.gruntwork.io/"
-  url "https://github.com/gruntwork-io/terragrunt/archive/refs/tags/v0.66.9.tar.gz"
-  sha256 "853b132e85542db86d69c9738f856d8fda3d76d56614a16d99b333a947d4e915"
+  url "https://github.com/gruntwork-io/terragrunt/archive/refs/tags/v0.69.0.tar.gz"
+  sha256 "6a6bee543759b574089f983ee309bf2acca9dfa6ac9058798fc6d09dbe3cb860"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "e4dffc0c6d20bca944c71e2fe79a6f3fbcb22c279ae8fb6b82e1859455587b3c"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "e4dffc0c6d20bca944c71e2fe79a6f3fbcb22c279ae8fb6b82e1859455587b3c"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "e4dffc0c6d20bca944c71e2fe79a6f3fbcb22c279ae8fb6b82e1859455587b3c"
-    sha256 cellar: :any_skip_relocation, sonoma:         "e2e72603fa62fd27fa8ff282ac7852bb043a25baa4f5d7cd4c2e4cb04b0fd52d"
-    sha256 cellar: :any_skip_relocation, ventura:        "e2e72603fa62fd27fa8ff282ac7852bb043a25baa4f5d7cd4c2e4cb04b0fd52d"
-    sha256 cellar: :any_skip_relocation, monterey:       "e2e72603fa62fd27fa8ff282ac7852bb043a25baa4f5d7cd4c2e4cb04b0fd52d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "33d7386f3dd434149729dba5e5442cf85a1a8b06f543e6f46496005a6c743457"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "f02642c3cc4f68fbf524d39fa1b3b47b873584fe3cf6b92c94ba06c31d23e4d8"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "f02642c3cc4f68fbf524d39fa1b3b47b873584fe3cf6b92c94ba06c31d23e4d8"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "f02642c3cc4f68fbf524d39fa1b3b47b873584fe3cf6b92c94ba06c31d23e4d8"
+    sha256 cellar: :any_skip_relocation, sonoma:        "445002246d50c8a01cc5fe7427a1e0115482aca708c6ebba5757662f59344d58"
+    sha256 cellar: :any_skip_relocation, ventura:       "445002246d50c8a01cc5fe7427a1e0115482aca708c6ebba5757662f59344d58"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "aad9d5b71d3e8cc85f08616d0cfbc740de1764b327da1dde217b7286d09ee845"
   end
 
   depends_on "go" => :build

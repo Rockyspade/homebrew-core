@@ -7,6 +7,7 @@ class Jerryscript < Formula
   head "https://github.com/jerryscript-project/jerryscript.git", branch: "master"
 
   bottle do
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "59cb985f4ad6dae1b6829ca5776e03389391294a5d53a79bec12225bd4d90033"
     sha256 cellar: :any_skip_relocation, arm64_sonoma:   "cefb188b4e64c616b24fc6b7bffeac156cdcb2b7f32fe7f5fe1a84b5aa10c4bd"
     sha256 cellar: :any_skip_relocation, arm64_ventura:  "6fd5222f423cb3631821d682075287ffca06419089964788459ebfcfcd51eee8"
     sha256 cellar: :any_skip_relocation, arm64_monterey: "d9fc5ed6b4d4694e46177bad3a5b3b8b6542e088224e10a4797e7bff39313077"
@@ -28,18 +29,16 @@ class Jerryscript < Formula
       -DJERRY_CMDLINE=ON
     ]
 
-    mkdir "build" do
-      system "cmake", "..", *args
-      system "cmake", "--build", "."
-      system "make", "install"
-    end
+    system "cmake", "-S", ".", "-B", ".", *args
+    system "cmake", "--build", "."
+    system "cmake", "--install", "."
   end
 
   test do
     (testpath/"test.js").write "print('Hello, Homebrew!');"
     assert_equal "Hello, Homebrew!", shell_output("#{bin}/jerry test.js").strip
 
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <stdio.h>
       #include "jerryscript.h"
 
@@ -59,7 +58,7 @@ class Jerryscript < Formula
         jerry_cleanup();
         return (run_ok ? 0 : 1);
       }
-    EOS
+    C
     system ENV.cc, "test.c", "-o", "test", "-I#{include}", "-L#{lib}",
                    "-ljerry-core", "-ljerry-port-default", "-ljerry-ext", "-lm"
     assert_equal "1 + 2 = 3", shell_output("./test").strip, "JerryScript can add number"

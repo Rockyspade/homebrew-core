@@ -1,18 +1,17 @@
 class Actionlint < Formula
   desc "Static checker for GitHub Actions workflow files"
   homepage "https://rhysd.github.io/actionlint/"
-  url "https://github.com/rhysd/actionlint/archive/refs/tags/v1.7.1.tar.gz"
-  sha256 "f53808c46db1ac2aa579b00f4a12a8acdf6eaf85a382091ce051dea33b18d7b4"
+  url "https://github.com/rhysd/actionlint/archive/refs/tags/v1.7.4.tar.gz"
+  sha256 "3004bcb4615510e671c76a56259755ed616c3200fb73b0be0ca9c3d6ea09c73a"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "7c0c108779f28976420fccc0628a80b47abbce66a10292ffcc55bdc6750c2666"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "7c0c108779f28976420fccc0628a80b47abbce66a10292ffcc55bdc6750c2666"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "7c0c108779f28976420fccc0628a80b47abbce66a10292ffcc55bdc6750c2666"
-    sha256 cellar: :any_skip_relocation, sonoma:         "0524b6fe37c904c06ded09f171d6a71323a1ed3c568658f2fac65a64c2fa9954"
-    sha256 cellar: :any_skip_relocation, ventura:        "0524b6fe37c904c06ded09f171d6a71323a1ed3c568658f2fac65a64c2fa9954"
-    sha256 cellar: :any_skip_relocation, monterey:       "0524b6fe37c904c06ded09f171d6a71323a1ed3c568658f2fac65a64c2fa9954"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b2d56dfd91f6e3f4a50705e5040a9350744cf1e16d26ff8afb4261f9598e56f5"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "4800fafd738d38fd98e07e3c2ba1e46926f74f0a03f153eb40fdb639da44a910"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "4800fafd738d38fd98e07e3c2ba1e46926f74f0a03f153eb40fdb639da44a910"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "4800fafd738d38fd98e07e3c2ba1e46926f74f0a03f153eb40fdb639da44a910"
+    sha256 cellar: :any_skip_relocation, sonoma:        "213db714539ffe8befc312eeeefbc3f6f6169f3d110006e18be07b631d839291"
+    sha256 cellar: :any_skip_relocation, ventura:       "213db714539ffe8befc312eeeefbc3f6f6169f3d110006e18be07b631d839291"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "06c290ccc5d780a1dc747bd21e280b0021308f3d2f94a7c8a99ce7f3072e80d7"
   end
 
   depends_on "go" => :build

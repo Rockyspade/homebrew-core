@@ -1,38 +1,36 @@
 class ApacheArrow < Formula
   desc "Columnar in-memory analytics layer designed to accelerate big data"
   homepage "https://arrow.apache.org/"
-  url "https://www.apache.org/dyn/closer.lua?path=arrow/arrow-17.0.0/apache-arrow-17.0.0.tar.gz"
-  mirror "https://archive.apache.org/dist/arrow/arrow-17.0.0/apache-arrow-17.0.0.tar.gz"
-  sha256 "9d280d8042e7cf526f8c28d170d93bfab65e50f94569f6a790982a878d8d898d"
+  url "https://www.apache.org/dyn/closer.lua?path=arrow/arrow-18.0.0/apache-arrow-18.0.0.tar.gz"
+  mirror "https://archive.apache.org/dist/arrow/arrow-18.0.0/apache-arrow-18.0.0.tar.gz"
+  sha256 "abcf1934cd0cdddd33664e9f2d9a251d6c55239d1122ad0ed223b13a583c82a9"
   license "Apache-2.0"
-  revision 2
+  revision 1
   head "https://github.com/apache/arrow.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "45224340c35fc9c9dd805fbf873f832c7f7a1df8ca9f80e2dcd9e26bb758c5af"
-    sha256 cellar: :any,                 arm64_ventura:  "7f8945b88f024eb7568d32c50bd707bd81dfa80a0107e821ca0962d534d09a74"
-    sha256 cellar: :any,                 arm64_monterey: "3178e82de784db940047746ebaa2f4f93c2b42e4f5ee28cfb0c67e53b6bfdc48"
-    sha256 cellar: :any,                 sonoma:         "d57704b06f0f808398e230f086c7559dd5d8082ba50bffa52beaa132832e3c4d"
-    sha256 cellar: :any,                 ventura:        "9a142e24a8f98dcec4a5c3584ff2b45f04c68c5c14b45499009cb5ce9cee2a63"
-    sha256 cellar: :any,                 monterey:       "1143c182d6cda6839b78e97ecaa7c83cdb975b0a9ed4c653e814f1e96b81e2da"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "958f8228ef0e79d917575563f9f76afb46c44e64017cbb91cd142f91927e7086"
+    sha256 cellar: :any,                 arm64_sequoia: "c2ae79cb2ea4afc9f882e657e38d5673bf5baa78f89c6bfa59bdf9bbbfd390e8"
+    sha256 cellar: :any,                 arm64_sonoma:  "7fae9946652f09c39dfa5ce5482b4cdac00dc51b9000dec86450cde842ef76ec"
+    sha256 cellar: :any,                 arm64_ventura: "b3a45e70c9affc7621a78f4af768a4e55da4297b96c1e9feba32788ff3f79f89"
+    sha256 cellar: :any,                 sonoma:        "f385ef70b1050f8f2f99f276ff1a62974bbb363123abb6d8d6b85f63910785f9"
+    sha256 cellar: :any,                 ventura:       "0513be261ef9aad86f512a7ea4e612fb520fda50096d5e96daa6d6b608f32503"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "171a5c23a9f1fdba9e8098dd9d367ffaf1fcf9403c9255417205487510ae39cb"
   end
 
   depends_on "boost" => :build
   depends_on "cmake" => :build
+  depends_on "gflags" => :build
   depends_on "ninja" => :build
+  depends_on "rapidjson" => :build
+  depends_on "xsimd" => :build
   depends_on "abseil"
   depends_on "aws-sdk-cpp"
   depends_on "brotli"
-  depends_on "bzip2"
-  depends_on "c-ares"
-  depends_on "glog"
   depends_on "grpc"
   depends_on "llvm"
   depends_on "lz4"
   depends_on "openssl@3"
   depends_on "protobuf"
-  depends_on "rapidjson"
   depends_on "re2"
   depends_on "snappy"
   depends_on "thrift"
@@ -40,20 +38,19 @@ class ApacheArrow < Formula
   depends_on "zstd"
 
   uses_from_macos "python" => :build
+  uses_from_macos "bzip2"
   uses_from_macos "zlib"
 
-  fails_with gcc: "5"
+  on_macos do
+    depends_on "c-ares"
+  end
 
   def install
-    # Work around an Xcode 15 linker issue which causes linkage against LLVM's
-    # libunwind due to it being present in a library search path.
-    llvm = Formula["llvm"]
-    ENV.remove "HOMEBREW_LIBRARY_PATHS", llvm.opt_lib if DevelopmentTools.clang_build_version >= 1500
-
     # We set `ARROW_ORC=OFF` because it fails to build with Protobuf 27.0
     args = %W[
       -DCMAKE_INSTALL_RPATH=#{rpath}
-      -DLLVM_ROOT=#{llvm.opt_prefix}
+      -DLLVM_ROOT=#{Formula["llvm"].opt_prefix}
+      -DARROW_DEPENDENCY_SOURCE=SYSTEM
       -DARROW_ACERO=ON
       -DARROW_COMPUTE=ON
       -DARROW_CSV=ON
@@ -88,13 +85,13 @@ class ApacheArrow < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include "arrow/api.h"
       int main(void) {
         arrow::int64();
         return 0;
       }
-    EOS
+    CPP
     system ENV.cxx, "test.cpp", "-std=c++17", "-I#{include}", "-L#{lib}", "-larrow", "-o", "test"
     system "./test"
   end

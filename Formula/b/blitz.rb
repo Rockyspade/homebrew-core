@@ -7,6 +7,7 @@ class Blitz < Formula
   head "https://github.com/blitzpp/blitz.git", branch: "master"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "f5c76acfde9f6b4ff49baaaddad03106654788518afcebd6e15b1511c965fe92"
     sha256 cellar: :any,                 arm64_sonoma:   "c1ce7b13ac8453f28f88f8828e05210332135de7b38886318b1146b8ff7507c8"
     sha256 cellar: :any,                 arm64_ventura:  "c12b81ef4cb76e7ab76b557ef4a57ac431a6a39ab63bce8f1d786a6e2c316140"
     sha256 cellar: :any,                 arm64_monterey: "3403559216a7fe96f965537612fdbe8852810870a54c2ba96b6c0d15c9d03726"
@@ -32,7 +33,7 @@ class Blitz < Formula
   end
 
   test do
-    (testpath/"testfile.cpp").write <<~EOS
+    (testpath/"testfile.cpp").write <<~CPP
       #include <blitz/array.h>
       #include <cstdlib>
 
@@ -42,7 +43,7 @@ class Blitz < Formula
         A = 17, 2, 97;
         cout << "A = " << A << endl;
         return 0;}
-    EOS
+    CPP
 
     system ENV.cxx, "testfile.cpp", "-o", "testfile"
     output = shell_output("./testfile")

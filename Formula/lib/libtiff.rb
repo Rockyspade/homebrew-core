@@ -1,9 +1,9 @@
 class Libtiff < Formula
   desc "TIFF library and utilities"
   homepage "https://libtiff.gitlab.io/libtiff/"
-  url "https://download.osgeo.org/libtiff/tiff-4.6.0.tar.gz"
-  mirror "https://fossies.org/linux/misc/tiff-4.6.0.tar.gz"
-  sha256 "88b3979e6d5c7e32b50d7ec72fb15af724f6ab2cbf7e10880c360a77e4b5d99a"
+  url "https://download.osgeo.org/libtiff/tiff-4.7.0.tar.gz"
+  mirror "https://fossies.org/linux/misc/tiff-4.7.0.tar.gz"
+  sha256 "67160e3457365ab96c5b3286a0903aa6e78bdc44c4bc737d2e486bcecb6ba976"
   license "libtiff"
 
   livecheck do
@@ -12,15 +12,13 @@ class Libtiff < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "a9cafbce08b697fb25e326ea1dd3a0e01c3acc3f8f616e844940e49b33386ab3"
-    sha256 cellar: :any,                 arm64_ventura:  "12f3e1b0e5cd225a05d914692cf6de0f86f29ba1f51b806723237da2f85a7b13"
-    sha256 cellar: :any,                 arm64_monterey: "8a7ed5ea7efe9534f15bca3ae2134d9f35bd08372da5949c33d025f80ae1d47e"
-    sha256 cellar: :any,                 arm64_big_sur:  "53b3bed3893804a56efa2ef20af3c2087298ba313b44e4cc6531d0bcfc54aaa9"
-    sha256 cellar: :any,                 sonoma:         "a89a2671064dbf7af6b84a9f2d20546b3dff82ed4b6f95c17bdfe48ce6c615fc"
-    sha256 cellar: :any,                 ventura:        "7347c37cf98bec3f956296caee0ecee54e7bfcc7b32d6e2e02b9ae04c80e3ca6"
-    sha256 cellar: :any,                 monterey:       "8e3e1d5d4da3485867a6e0e2b35cf79e37f1b00e3e5399cf9b36996b1cbbff0c"
-    sha256 cellar: :any,                 big_sur:        "e0e6f2c0bc25665bfffb66505ebc9fc410aeeed3435edf770e9ecee88c7bc0e1"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "9a6e0bb56c39b72a33b0a5629dc3fd49e4f1391513bcf7d04a764523cc0321c8"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_sequoia: "5f771cedcb37119c3927c32d72589a66701db16fe3ef86b2daf9b87c3142b309"
+    sha256 cellar: :any,                 arm64_sonoma:  "7400825c55ab3f7aef5c0571d59bd62ffc509a5252784c08034df07995cb9e71"
+    sha256 cellar: :any,                 arm64_ventura: "b8952fb7bfabe979c42b9742cd959e5ba33bab2f8e44c536b9f5f6346190c33a"
+    sha256 cellar: :any,                 sonoma:        "5610196cb9396c468513adc5bc7c4834a3f475ff6f3ebd98f77e3f8b2123da3e"
+    sha256 cellar: :any,                 ventura:       "93fdbce17863cff383485295a955eae308f3bfc0f6b83d311645c5830a9964ac"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e873d7ab4e4159cd3ee973a2ec9cf7530fa3679abb8968832269dd206dea6859"
   end
 
   depends_on "jpeg-turbo"
@@ -41,10 +39,13 @@ class Libtiff < Formula
     ]
     system "./configure", *args
     system "make", "install"
+
+    # Avoid rebuilding dependents that hard-code the prefix.
+    inreplace lib/"pkgconfig/libtiff-4.pc", prefix, opt_prefix
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <tiffio.h>
 
       int main(int argc, char* argv[])
@@ -54,7 +55,7 @@ class Libtiff < Formula
         TIFFClose(out);
         return 0;
       }
-    EOS
+    C
     system ENV.cc, "test.c", "-L#{lib}", "-ltiff", "-o", "test"
     system "./test", "test.tif"
     assert_match(/ImageWidth.*10/, shell_output("#{bin}/tiffdump test.tif"))

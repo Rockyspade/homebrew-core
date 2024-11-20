@@ -1,19 +1,19 @@
 class Pqiv < Formula
   desc "Powerful image viewer with minimal UI"
   homepage "https://github.com/phillipberndt/pqiv"
-  url "https://github.com/phillipberndt/pqiv/archive/refs/tags/2.13.1.tar.gz"
-  sha256 "1db8567f75884dfc5dd41208f309b11e4e4ca48ecad537915885b64aa03857a4"
+  url "https://github.com/phillipberndt/pqiv/archive/refs/tags/2.13.2.tar.gz"
+  sha256 "154cbbe0a62be12cee23b0a46a86b2305d8128fd19924308ad5e9d22fa5ad4f7"
   license "GPL-3.0-or-later"
+  revision 2
   head "https://github.com/phillipberndt/pqiv.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "e6f3087028f4d04ca7347ebb3148ce7929c4a57800ff39fe68551cfa63ad9203"
-    sha256 cellar: :any,                 arm64_ventura:  "53e710b8e390c8c337300c6e19a4bd733cf633f338b109c00660d09e12c99c9a"
-    sha256 cellar: :any,                 arm64_monterey: "3ae1a16b54299b2dd3da5a4acf2d6281ebedff149b10465f5c740fe7701498a6"
-    sha256 cellar: :any,                 sonoma:         "bad2754af3a373e363387c9d191729f5a355c63a483d3265656a335098b40980"
-    sha256 cellar: :any,                 ventura:        "5fad3776b05dbb2efd7fb21bbb79259da1c3a54b994e7a3dcbc5525769167faf"
-    sha256 cellar: :any,                 monterey:       "fe3a78c6d3cbe81e5ed5914dcfba29048cab230373a617e07b4ab9c71697e91c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "768372bfe3a90bed0b57dd04f48e018c0fca37207519fd103b520deb0accf4e5"
+    sha256 cellar: :any,                 arm64_sequoia: "e44986d59fbbfadb05ec2d40c769eb87deac34da0a21291a3ad933dd30af109c"
+    sha256 cellar: :any,                 arm64_sonoma:  "021459c868cb76745936d836395a26210307ad99b7145f4ad365eb18c97fc9a1"
+    sha256 cellar: :any,                 arm64_ventura: "c0d57afe7ac1a17e4e3430fe0e07ebb6edafca503f2725f49ba9942e553f7a77"
+    sha256 cellar: :any,                 sonoma:        "ca0cb5916c301360054b74d1ce2732273fce60f3b03d96b0fb9ca774f6bff32e"
+    sha256 cellar: :any,                 ventura:       "4e7dbe5ea248fd4bd10c0fec39ac71680cab1a019b7501a3d8b3a28a9f9b89ef"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9ad555fc865b2af09114d0e8132435f9b166696bfdc8ed588e26b19cb5531f99"
   end
 
   depends_on "pkg-config" => :build

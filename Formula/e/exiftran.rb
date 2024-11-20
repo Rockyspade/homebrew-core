@@ -13,6 +13,7 @@ class Exiftran < Formula
 
   bottle do
     rebuild 1
+    sha256 cellar: :any,                 arm64_sequoia:  "66bbdb1194918c7a35edce9ec143a5ff05cc719e129e6e613cd5e600da2fbced"
     sha256 cellar: :any,                 arm64_sonoma:   "53793d2d72884e10ddf5d26a6af3b0c4b3fe28f8b28e4f96127612a2ca5c1a44"
     sha256 cellar: :any,                 arm64_ventura:  "00bbfab43b25d8747630f7a724302fa81a0cf142872c015e5083b24773678cf2"
     sha256 cellar: :any,                 arm64_monterey: "102fc92b15a47eaa70d675d6ab35dc54376dafa8f094acebc48178307f969064"
@@ -24,7 +25,7 @@ class Exiftran < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "9d32a9b73cd9ea5dca9d5a34ce6e9b6c9684ae38617045fd87b172d5d9ac6a75"
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
 
   depends_on "jpeg-turbo"
   depends_on "libexif"

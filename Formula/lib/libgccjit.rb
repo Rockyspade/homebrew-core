@@ -2,18 +2,19 @@ class Libgccjit < Formula
   desc "JIT library for the GNU compiler collection"
   homepage "https://gcc.gnu.org/"
   license "GPL-3.0-or-later" => { with: "GCC-exception-3.1" }
+  revision 1
   head "https://gcc.gnu.org/git/gcc.git", branch: "master"
 
   stable do
-    url "https://ftp.gnu.org/gnu/gcc/gcc-14.1.0/gcc-14.1.0.tar.xz"
-    mirror "https://ftpmirror.gnu.org/gcc/gcc-14.1.0/gcc-14.1.0.tar.xz"
-    sha256 "e283c654987afe3de9d8080bc0bd79534b5ca0d681a73a11ff2b5d3767426840"
+    url "https://ftp.gnu.org/gnu/gcc/gcc-14.2.0/gcc-14.2.0.tar.xz"
+    mirror "https://ftpmirror.gnu.org/gcc/gcc-14.2.0/gcc-14.2.0.tar.xz"
+    sha256 "a7b39bc69cbf9e25826c5a60ab26477001f7c08d85cec04bc0e29cabed6f3cc9"
 
     # Branch from the Darwin maintainer of GCC, with a few generic fixes and
     # Apple Silicon support, located at https://github.com/iains/gcc-14-branch
     patch do
-      url "https://raw.githubusercontent.com/Homebrew/formula-patches/82b5c1cd38826ab67ac7fc498a8fe74376a40f4a/gcc/gcc-14.1.0.diff"
-      sha256 "1529cff128792fe197ede301a81b02036c8168cb0338df21e4bc7aafe755305a"
+      url "https://raw.githubusercontent.com/Homebrew/formula-patches/f30c309442a60cfb926e780eae5d70571f8ab2cb/gcc/gcc-14.2.0-r2.diff"
+      sha256 "6c0a4708f35ccf2275e6401197a491e3ad77f9f0f9ef5761860768fa6da14d3d"
     end
   end
 
@@ -22,14 +23,13 @@ class Libgccjit < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 arm64_sonoma:   "394d7b476675980e4bd124bf8e68cc4d08fcc0db75bc823364e528b77b4c2174"
-    sha256 arm64_ventura:  "00c0f0e9be625347be39e62984919449783c624c016f47b5d4736ff47f252514"
-    sha256 arm64_monterey: "907de47c56d4110a89e0dc424f3cfd52f3f9024ab3c6e4c53b9539db179cf70a"
-    sha256 sonoma:         "a94723569025ad5adf3230a16f07e25a66825e33463b97e708c1dae9d8379202"
-    sha256 ventura:        "c310412e89977ecf17b585e4f6f104f83adf6f55304faf93e924a976f5be72a3"
-    sha256 monterey:       "2f0e5101d7802f9930747cadd42f9a1fde1671dfdcc72544022675a493e12cf1"
-    sha256 x86_64_linux:   "ed53353bf766855493709b72d81c1cd6ba9efa91b4005c3c45fb74e6e77898e6"
+    sha256 arm64_sequoia: "52905f08739ef5b43a3c51c6a9be7befa915d1d5c9a74f1e6fcafa1048926f1f"
+    sha256 arm64_sonoma:  "19083279161321c45f2c05cf3800de97a2976056344ee62a936c9e2d80a7146b"
+    sha256 arm64_ventura: "9a41de72cb4140ba963a24b0e7916c7d8291f7c6c2c095a9a9522371e44a9a27"
+    sha256 sequoia:       "248d6a97fe62b914bd47807f6de0263112c9b80e6c0fd928f342214b9db80645"
+    sha256 sonoma:        "afdf195ab432568a33f36ba8b6180a6f1c23106825219635ebd406c5f9989ec5"
+    sha256 ventura:       "4c4c9a49250919da00c7f0488da19905ad1cf2ab426a0fb1171e1177302577e9"
+    sha256 x86_64_linux:  "76a465bf2a563f690cf457fd5f8fbcbf7be6109053f029356195f7336fd58d0c"
   end
 
   # The bottles are built on systems with the CLT installed, and do not work
@@ -130,7 +130,7 @@ class Libgccjit < Formula
   end
 
   test do
-    (testpath/"test-libgccjit.c").write <<~EOS
+    (testpath/"test-libgccjit.c").write <<~C
       #include <libgccjit.h>
       #include <stdlib.h>
       #include <stdio.h>
@@ -179,7 +179,7 @@ class Libgccjit < Formula
           gcc_jit_result_release (result);
           return 0;
       }
-    EOS
+    C
 
     gcc_major_ver = Formula["gcc"].any_installed_version.major
     gcc = Formula["gcc"].opt_bin/"gcc-#{gcc_major_ver}"

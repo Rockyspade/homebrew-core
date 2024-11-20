@@ -1,8 +1,8 @@
 class Clarinet < Formula
   desc "Command-line tool and runtime for the Clarity smart contract language"
   homepage "https://www.hiro.so/clarinet"
-  url "https://github.com/hirosystems/clarinet/archive/refs/tags/v2.8.0.tar.gz"
-  sha256 "96e40ff639015e23fe7b1d72f746420e232019e59a0c83c0b822c799752e81ba"
+  url "https://github.com/hirosystems/clarinet/archive/refs/tags/v2.11.2.tar.gz"
+  sha256 "e1bd51d80dec29b67c144761d1afbd99f1289a822a60bd86c1e8489147dcc404"
   license "GPL-3.0-only"
   head "https://github.com/hirosystems/clarinet.git", branch: "main"
 
@@ -12,13 +12,12 @@ class Clarinet < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "d892135a03f615db1d585de0791955386aece0c2a9939594cf8bb9d190bfbbf2"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "801b8b1fdcd448b17638667ed3d7b5969a1063191ca662c09121b52967795915"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "2e7d970f02caa250d78c49acfe530e3ad838b936ec44f5f80d0dd77f37310f19"
-    sha256 cellar: :any_skip_relocation, sonoma:         "0e08d1e334f800472f31e30d0c45d0e78a320127c96f7ebc2f689ef4b942b1ba"
-    sha256 cellar: :any_skip_relocation, ventura:        "536dbecc539c08ece5ab74af7c38f5c870a81c42d2c09b28ec3d13d21f550a9c"
-    sha256 cellar: :any_skip_relocation, monterey:       "69ddf68ec4cf857e819cc92c43c442b38fc80930d48d0525351a85855e861ed6"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "aa1709a82e2d588be0d98358ab75e16df3b70b0f1ad59da611496bddef169903"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "2a3c79e89409ff0022f5839aeb8353699a99d30d147670c021e8065ebe63f2d8"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "575448cc006e65fe36e6344ac6c7b73c68127b595cb5b5c22fbc372c0cf0d624"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "2f74491e32e150828e35841184bce68c3389c8dce18daa18e91dd4a59e82170a"
+    sha256 cellar: :any_skip_relocation, sonoma:        "c15fe3d0138789be0bd529d21d2b32d1c6407f40a35a9f9bd1b2024deb416014"
+    sha256 cellar: :any_skip_relocation, ventura:       "06a889b767424c97b100e57890fcd0229f6be7450bf7ac8e760d12a960cb0116"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "bf62976b0fd58db62e452f689bbc377a1d9a7ce42eb5369d02f053677f1db986"
   end
 
   depends_on "rust" => :build

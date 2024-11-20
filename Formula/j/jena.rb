@@ -1,25 +1,20 @@
 class Jena < Formula
   desc "Framework for building semantic web and linked data apps"
   homepage "https://jena.apache.org/"
-  url "https://www.apache.org/dyn/closer.lua?path=jena/binaries/apache-jena-5.1.0.tar.gz"
-  mirror "https://archive.apache.org/dist/jena/binaries/apache-jena-5.1.0.tar.gz"
-  sha256 "2ec367a3fb362852b293128dee49532df9855aefe3b5724257d4c53d7fceb21e"
+  url "https://www.apache.org/dyn/closer.lua?path=jena/binaries/apache-jena-5.2.0.tar.gz"
+  mirror "https://archive.apache.org/dist/jena/binaries/apache-jena-5.2.0.tar.gz"
+  sha256 "33659ba971c02fbedfbbd9214e06fb04e7b498b82653445c7fd28de0a9af6005"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "13242c46df5bef7fde15f051ae719b70763fc44d39e49c43a9ce2257c0ee73a0"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "13242c46df5bef7fde15f051ae719b70763fc44d39e49c43a9ce2257c0ee73a0"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "13242c46df5bef7fde15f051ae719b70763fc44d39e49c43a9ce2257c0ee73a0"
-    sha256 cellar: :any_skip_relocation, sonoma:         "13242c46df5bef7fde15f051ae719b70763fc44d39e49c43a9ce2257c0ee73a0"
-    sha256 cellar: :any_skip_relocation, ventura:        "13242c46df5bef7fde15f051ae719b70763fc44d39e49c43a9ce2257c0ee73a0"
-    sha256 cellar: :any_skip_relocation, monterey:       "13242c46df5bef7fde15f051ae719b70763fc44d39e49c43a9ce2257c0ee73a0"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "bc6ede1a41b42bc10b71462009a35bda25cfb9808d1636be2cf6e7676259f781"
+    sha256 cellar: :any_skip_relocation, all: "b69212cbd2a3d9337a7f82a0a15542f260e5b95daf0938b113e869f859795d30"
   end
 
   depends_on "openjdk"
 
   conflicts_with "pwntools", because: "both install `update` binaries"
   conflicts_with "samba", because: "both install `tdbbackup` binaries"
+  conflicts_with "tdb", because: "both install `tdbbackup`, `tdbdump` binaries"
 
   def install
     env = {

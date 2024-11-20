@@ -4,12 +4,12 @@ class Audacious < Formula
   license "BSD-2-Clause"
 
   stable do
-    url "https://distfiles.audacious-media-player.org/audacious-4.4.tar.bz2"
-    sha256 "aadc5d26ea2954236a00153e424094d9e6eb55c5c324c08fd0491b7c2ae2f830"
+    url "https://distfiles.audacious-media-player.org/audacious-4.4.2.tar.bz2"
+    sha256 "34509504f8c93b370420d827703519f0681136672e42d56335f26f7baec95005"
 
     resource "plugins" do
-      url "https://distfiles.audacious-media-player.org/audacious-plugins-4.4.tar.bz2"
-      sha256 "3caf3a5fe5b6f2808f461f85132fbff4ae22a53ef9f3d26d9e6030f6c6d5baa2"
+      url "https://distfiles.audacious-media-player.org/audacious-plugins-4.4.2.tar.bz2"
+      sha256 "50f494693b6b316380fa718c667c128aa353c01e954cd77a65c9d8aedf18d4bd"
     end
   end
 
@@ -19,13 +19,11 @@ class Audacious < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "e03058224d658019e61fbbc1c04a385e26e470ec902c6cdeb7d033b72614bf73"
-    sha256 arm64_ventura:  "f1cff5889746668db16352051f62bff287fd0c29f343de04f2d06d61851ef72c"
-    sha256 arm64_monterey: "79546d5bd47b5f3a5c44f73f89ff223301139f213e519c553ca76c564ee795c7"
-    sha256 sonoma:         "873a17be51d0898e05fa87a46b781822a0a22d31480e0bb25cb5bc18bed11279"
-    sha256 ventura:        "cd34f079dc5b8268ac03b5762ea1716b7a4ebc1145b4f1e64f22894111f68d66"
-    sha256 monterey:       "b1056a92f3c10f9d818e27d60e54f4ce9b0f42812a18a76510555b596a499986"
-    sha256 x86_64_linux:   "695f2ae08a9e8b2e3e34358b64eaa566d39121334abf57c913323ccbeb9e5483"
+    sha256 arm64_sonoma:  "175406bb546a436b6cbda5ebe04b0e5ac50477c1bd58714099f0f01bd6e84b91"
+    sha256 arm64_ventura: "46c010fa84f5cafc5fec4a801f90f0c037c281fb22f98704e2ebf115d34f2bf5"
+    sha256 sonoma:        "9f957874a1c773d74d0d6d4f3905445bd8aa17b2da8f3283abd78db80cd9e109"
+    sha256 ventura:       "1d013dc84b5bf5b5e2ae5d09b8a549bec8894086820fdd2ce08d7c82f5aab107"
+    sha256 x86_64_linux:  "40de28638c36168cd3f540c6d01647739fdbffae3850b518e0e49ead956eaaab"
   end
 
   head do
@@ -39,7 +37,7 @@ class Audacious < Formula
   depends_on "gettext" => :build
   depends_on "meson" => :build
   depends_on "ninja" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "faad2"
   depends_on "ffmpeg"
   depends_on "flac"
@@ -89,7 +87,7 @@ class Audacious < Formula
       -Dgtk=false
     ]
 
-    system "meson", "setup", "build", *std_meson_args, *args, "-Ddbus=false"
+    system "meson", "setup", "build", "-Ddbus=false", *args, *std_meson_args
     system "meson", "compile", "-C", "build", "--verbose"
     system "meson", "install", "-C", "build"
 
@@ -100,7 +98,7 @@ class Audacious < Formula
       ]
 
       ENV.prepend_path "PKG_CONFIG_PATH", lib/"pkgconfig"
-      system "meson", "setup", "build", *std_meson_args, *args
+      system "meson", "setup", "build", *args, *std_meson_args
       system "meson", "compile", "-C", "build", "--verbose"
       system "meson", "install", "-C", "build"
     end
@@ -109,7 +107,8 @@ class Audacious < Formula
   def caveats
     <<~EOS
       audtool does not work due to a broken dbus implementation on macOS, so it is not built.
-      GTK+ GUI is not built by default as the Qt GUI has better integration with macOS, and the GTK GUI would take precedence if present.
+      GTK+ GUI is not built by default as the Qt GUI has better integration with macOS,
+      and the GTK GUI would take precedence if present.
     EOS
   end
 

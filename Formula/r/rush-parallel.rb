@@ -1,18 +1,17 @@
 class RushParallel < Formula
   desc "Cross-platform command-line tool for executing jobs in parallel"
   homepage "https://github.com/shenwei356/rush"
-  url "https://github.com/shenwei356/rush/archive/refs/tags/v0.5.4.tar.gz"
-  sha256 "fe1d1a453b1ce64f6d27d1e89bef253ef7be2938cb901508d2845d71329b8ec5"
+  url "https://github.com/shenwei356/rush/archive/refs/tags/v0.6.0.tar.gz"
+  sha256 "58f1998c7d03daa30aea7a29c57893c87399d1d722dc5d2349ad3b4f7dc599bc"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "40ae91dc1e12fb564c3e791c2484937211745cae520bd7afe6ac553221e4e3dd"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "8eb2972f00a67f44620b71e945786b7c936048253401821195e9f1da48562a25"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "1d684175ef6390184f794494da96856b71d05f653466c071f8591cbbf8104cc7"
-    sha256 cellar: :any_skip_relocation, sonoma:         "6655a733b87ded915ed853f68da54d83dab8e81a47e29aaa60b2e9e750dad26e"
-    sha256 cellar: :any_skip_relocation, ventura:        "79ae0c05e3938abe0e2fb2c74fec5df4729058da51db0d355a19df6f1085759a"
-    sha256 cellar: :any_skip_relocation, monterey:       "a44ba3b59449d97952f58b13c0a00cb162a459a19e4286937e61e431393bc369"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "06bad101c2c6dac097ca77664128d918500efa593b190ae735e6b115d99f2a98"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "60d17b7ba77afa1f69547b491b183921e93087bf00f5b67d3545ec1045649ac8"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "98d1a7b2392afe59e044a22f802a4756921d791bb7c19add7ff4cfd0410c9328"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "565b9c748fb390ad26d643667a39d367ccef0283fe2efc254851435fe809eda4"
+    sha256 cellar: :any_skip_relocation, sonoma:        "ec9f2329e80810f6af6392316219255902ec8823ef74ea08a3b6767e54a7aeed"
+    sha256 cellar: :any_skip_relocation, ventura:       "bb3d19ddf3ca86e90d1e4142634486a32bdc5f87a3ae7ccd793a4159f9093ca6"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "10167861f53542b5aeb2c07fc73a484886f7fa28ac3d3cce108f2d813ae38a44"
   end
 
   depends_on "go" => :build

@@ -1,8 +1,8 @@
 class QtMariadb < Formula
   desc "Qt SQL Database Driver"
   homepage "https://www.qt.io/"
-  url "https://download.qt.io/official_releases/qt/6.7/6.7.0/submodules/qtbase-everywhere-src-6.7.0.tar.xz"
-  sha256 "11b2e29e2e52fb0e3b453ea13bbe51a10fdff36e1c192d8868c5a40233b8b254"
+  url "https://download.qt.io/official_releases/qt/6.7/6.7.3/submodules/qtbase-everywhere-src-6.7.3.tar.xz"
+  sha256 "8ccbb9ab055205ac76632c9eeddd1ed6fc66936fc56afc2ed0fd5d9e23da3097"
   license any_of: ["GPL-2.0-only", "GPL-3.0-only", "LGPL-3.0-only"]
 
   livecheck do
@@ -10,13 +10,11 @@ class QtMariadb < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "d51cea93c1a36f62f478e3537a22d2f8b9541c307395de583301c7c6218383a6"
-    sha256 cellar: :any,                 arm64_ventura:  "3e2e06d269b1e226e2f0129d5486384839801b40e67c13243fbda67449b1f4b3"
-    sha256 cellar: :any,                 arm64_monterey: "20f6f47da2c6541d9112c4fc16738ac55f548a329e203a4999ff36ef9b5b2799"
-    sha256 cellar: :any,                 sonoma:         "c50004f0294f40b19e688d8853cf6332868a88611dc0958644dc4fa6bdebc911"
-    sha256 cellar: :any,                 ventura:        "6555a485056ca5cd22213822bbbdb1eb9eb402430088d06308cb1a4fd132f800"
-    sha256 cellar: :any,                 monterey:       "4aa6fb95ff29f7921b05d22c46a4becd46711ba3a1585e313bca7b48294b20f8"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "205482604ed56cdebee53e2460d7aaf5821f493c0aa693e985229d211721a514"
+    sha256 cellar: :any,                 arm64_sonoma:  "36df0a8bb8e0085f4dd4c3431ecc198edcb0e3a579160e565cdda35cbfec6cf1"
+    sha256 cellar: :any,                 arm64_ventura: "82acaa2afe947a56264be5673dc7dedbff76cc6cd2cce32241794920296d5f49"
+    sha256 cellar: :any,                 sonoma:        "f66b1041ae0f2861b81d6e728b893517c7a6246aa0c1f46742a97f27734f8db3"
+    sha256 cellar: :any,                 ventura:       "e5e0fd4650fd6dc4936ec257dbbc9275a8d0d603bef546c1020c9b21edb2e3dc"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "fe26e8dedfa68195ae611d654ec004731e975e6c1ae99b6655c9ce88f840bd48"
   end
 
   depends_on "cmake" => [:build, :test]
@@ -49,7 +47,7 @@ class QtMariadb < Formula
   end
 
   test do
-    (testpath/"CMakeLists.txt").write <<~EOS
+    (testpath/"CMakeLists.txt").write <<~CMAKE
       cmake_minimum_required(VERSION #{Formula["cmake"].version})
       project(test VERSION 1.0.0 LANGUAGES CXX)
       set(CMAKE_CXX_STANDARD 17)
@@ -62,7 +60,7 @@ class QtMariadb < Formula
           main.cpp
       )
       target_link_libraries(test PRIVATE Qt6::Core Qt6::Sql)
-    EOS
+    CMAKE
 
     (testpath/"test.pro").write <<~EOS
       QT       += core sql
@@ -74,7 +72,7 @@ class QtMariadb < Formula
       SOURCES += main.cpp
     EOS
 
-    (testpath/"main.cpp").write <<~EOS
+    (testpath/"main.cpp").write <<~CPP
       #include <QCoreApplication>
       #include <QtSql>
       #include <cassert>
@@ -86,7 +84,7 @@ class QtMariadb < Formula
         assert(db.isValid());
         return 0;
       }
-    EOS
+    CPP
 
     system "cmake", "-S", ".", "-B", "build", "-DCMAKE_BUILD_TYPE=Debug"
     system "cmake", "--build", "build"

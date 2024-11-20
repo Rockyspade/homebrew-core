@@ -1,18 +1,18 @@
 class Libspelling < Formula
   desc "Spellcheck library for GTK 4"
   homepage "https://gitlab.gnome.org/GNOME/libspelling"
-  url "https://gitlab.gnome.org/GNOME/libspelling/-/archive/0.2.1/libspelling-0.2.1.tar.bz2"
-  sha256 "5393a9b93fda445598348a47c42d1ad13586c0bcf35dfd257afd613fd31812c1"
+  url "https://gitlab.gnome.org/GNOME/libspelling/-/archive/0.4.4/libspelling-0.4.4.tar.bz2"
+  sha256 "9b2adc84b7cb964588ee55f70a8c61fea942f894a89f41af9a186c7b17abbc5a"
   license "LGPL-2.1-or-later"
+  revision 1
 
   bottle do
-    sha256 cellar: :any, arm64_sonoma:   "0b67d9b2b9d9b93e5a71cd91c413444c656e8a30f6477f18f4386bdf30fb9187"
-    sha256 cellar: :any, arm64_ventura:  "b66212b63da3b6f4b08f43c0aa91867c6519264bfef080a64213397910f457b4"
-    sha256 cellar: :any, arm64_monterey: "fa750d80d38e7dcf30ec59ffaf63e0fbe2d13f0586c28732072e5b1a6836a663"
-    sha256 cellar: :any, sonoma:         "53c748d558f513ad1e98da4c6f956fb39421e51c6d35503b4ab2b6b5bccace15"
-    sha256 cellar: :any, ventura:        "82747b3e4fd94dd53bc8a7bde8487bee99bd86252e58a014b10878389fcfa65e"
-    sha256 cellar: :any, monterey:       "c5cff6a0fc0b2ddc1a75e04f4ed0cc3197f571b80170522383b6fdf3d60577a6"
-    sha256               x86_64_linux:   "59f65192b18ebed20951c1aae5af463dec1206eef1bc4779114f5bf06c01d785"
+    sha256 arm64_sequoia: "544f99d7226d07a24a0b5c878f057f3d38f5d24ecf32a7f724be39e0ed58e2d2"
+    sha256 arm64_sonoma:  "7dc5d4e683e46fd2f960ed171b9748611fce54d0921f3cdf7cb206f662bed35c"
+    sha256 arm64_ventura: "6fed5f819f45aa5de2ce58bd899a551a34f264de0f36401d7103c54556c42894"
+    sha256 sonoma:        "ba9c7208ff52fa9c14a33a3f25a392d9d6c423ef84b13feb04176e4e1ff6faf3"
+    sha256 ventura:       "f7f40f4b3530a5e7b6fae7cf7538dbd36c25a2ad577862d372d0d0e0e2f7ddba"
+    sha256 x86_64_linux:  "42e881b76bb593fd772dff4a53a348469d6bf653e274209fef15820917c1773a"
   end
 
   depends_on "gobject-introspection" => :build
@@ -25,7 +25,7 @@ class Libspelling < Formula
   depends_on "glib"
   depends_on "gtk4"
   depends_on "gtksourceview5"
-  depends_on "icu4c"
+  depends_on "icu4c@76"
   depends_on "pango"
 
   on_macos do
@@ -36,21 +36,25 @@ class Libspelling < Formula
     depends_on "harfbuzz"
   end
 
+  on_linux do
+    depends_on "sysprof"
+  end
+
   def install
-    system "meson", "setup", "build", "-Ddocs=false", *std_meson_args
+    system "meson", "setup", "build", "-Ddocs=false", "-Dsysprof=#{OS.linux?}", *std_meson_args
     system "meson", "compile", "-C", "build", "--verbose"
     system "meson", "install", "-C", "build"
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <libspelling.h>
 
       int main(int argc, char *argv[]) {
         SpellingChecker *checker = spelling_checker_get_default();
         return 0;
       }
-    EOS
+    C
 
     pkg_config_cflags = shell_output("pkg-config --cflags --libs libspelling-1").chomp.split
     system ENV.cc, "test.c", *pkg_config_cflags, "-o", "test"

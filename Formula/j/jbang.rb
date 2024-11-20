@@ -1,18 +1,12 @@
 class Jbang < Formula
   desc "Tool to create, edit and run self-contained source-only Java programs"
   homepage "https://jbang.dev/"
-  url "https://github.com/jbangdev/jbang/releases/download/v0.117.1/jbang-0.117.1.zip"
-  sha256 "28b66273d5ff4057ed37a2dfda5b49b549768e8bed6e0ea335015eea8d28c67c"
+  url "https://github.com/jbangdev/jbang/releases/download/v0.121.0/jbang-0.121.0.zip"
+  sha256 "4ffa57f26c713cde084b728a64b1c79b74465e6b8e043175e3b6c364377613c8"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "8ab784d8fb46f220d5b9d2efc2f808d5ee3fe7157e00e4aa1b4bdbacaf9c1ae4"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "8ab784d8fb46f220d5b9d2efc2f808d5ee3fe7157e00e4aa1b4bdbacaf9c1ae4"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "8ab784d8fb46f220d5b9d2efc2f808d5ee3fe7157e00e4aa1b4bdbacaf9c1ae4"
-    sha256 cellar: :any_skip_relocation, sonoma:         "8ab784d8fb46f220d5b9d2efc2f808d5ee3fe7157e00e4aa1b4bdbacaf9c1ae4"
-    sha256 cellar: :any_skip_relocation, ventura:        "8ab784d8fb46f220d5b9d2efc2f808d5ee3fe7157e00e4aa1b4bdbacaf9c1ae4"
-    sha256 cellar: :any_skip_relocation, monterey:       "8ab784d8fb46f220d5b9d2efc2f808d5ee3fe7157e00e4aa1b4bdbacaf9c1ae4"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "48b6d07e4a603a02d26232d82e5ea9d28c74d418b4594aaa83ca2306b19d4a3e"
+    sha256 cellar: :any_skip_relocation, all: "12f2a604b5561b8a854ed43337a636d2f48e25a28dde8d950e5f13e01d27eb37"
   end
 
   depends_on "openjdk"

@@ -1,8 +1,8 @@
 class Ncdu < Formula
   desc "NCurses Disk Usage"
   homepage "https://dev.yorhel.nl/ncdu"
-  url "https://dev.yorhel.nl/download/ncdu-2.5.tar.gz"
-  sha256 "7f49de25024abab1af1ff22b3b8542c0d158e018fe0e96074fd94b0e1e6d31a5"
+  url "https://dev.yorhel.nl/download/ncdu-2.7.tar.gz"
+  sha256 "b218cc14a2bb9852cf951db4e21aec8980e7a8c3aca097e3aa3417f20eb93000"
   license "MIT"
   head "https://g.blicky.net/ncdu.git", branch: "zig"
 
@@ -12,19 +12,19 @@ class Ncdu < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "1cba8bbb35dc36a9686ff4182b395969cf1de154652b2d6134c2836e531b169a"
-    sha256 cellar: :any,                 arm64_ventura:  "8478d4058dc184f43368ca19c32aecf5a7be3a4f7175fb41a59f5202f170288f"
-    sha256 cellar: :any,                 arm64_monterey: "4abb7c99e405c3b4d7ef4179e60d7c4ab518a307df825db3dd60859ea3ae7d55"
-    sha256 cellar: :any,                 sonoma:         "520c686c473bc3b7b8dc780449d463dc31f79f981e493e06fbe862c8c9fa2c0b"
-    sha256 cellar: :any,                 ventura:        "b56d7f67705f119b611268352a7befa25bf464187644fbafe427526d31019418"
-    sha256 cellar: :any,                 monterey:       "bcd6481c81cae50583faad16cd085541abfad8b592bca93ad4a3d7b0ed99bd00"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "bb76582ce7c7cd84b8b994839d50672c2c14db35ca06469a5d09215bdfb6a3dd"
+    sha256 cellar: :any,                 arm64_sequoia: "94e8907cf6b72057a4cc6913ff0a8b942172f82f231384dc2659c2476ffa7a8e"
+    sha256 cellar: :any,                 arm64_sonoma:  "1041490c1b919a6d63c9108ff77ed89f62fc12c766ca2be16068a2da553abb94"
+    sha256 cellar: :any,                 arm64_ventura: "dbd4d5e5b8d15bfc0923ed9bf43040e04e9f32e8d8d32cae75a26ef1dbc35b3b"
+    sha256 cellar: :any,                 sonoma:        "43a6e24ab5ff83297138f2aec826aa6ccc57ca64b8eb3b2f87e64ad7b60b155d"
+    sha256 cellar: :any,                 ventura:       "4ffc8d1553dbe38037cb3019c4607afb3c0b22399cc72a6d41b37c2f1a0db4af"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "bed452df75f7c3eab2ace9ed72104d9a12bc0f75241ab562a1a023b5e5aa9416"
   end
 
   depends_on "pkg-config" => :build
   depends_on "zig" => :build
   # Without this, `ncdu` is unusable when `TERM=tmux-256color`.
   depends_on "ncurses"
+  depends_on "zstd"
 
   def install
     # Fix illegal instruction errors when using bottles on older CPUs.

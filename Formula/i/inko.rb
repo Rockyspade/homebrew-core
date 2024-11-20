@@ -1,19 +1,18 @@
 class Inko < Formula
   desc "Safe and concurrent object-oriented programming language"
   homepage "https://inko-lang.org/"
-  url "https://releases.inko-lang.org/0.16.0.tar.gz"
-  sha256 "7850dc9b0f6e544977a6eb3854022131f30e49e43b99f47cc5aefb77e0b97c32"
+  url "https://releases.inko-lang.org/0.17.1.tar.gz"
+  sha256 "752c1881b7029f76f7a900ace23fbc5b81e1ceebea214c7f998c03284fd92dba"
   license "MPL-2.0"
   head "https://github.com/inko-lang/inko.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "124068300521f4cd528f4c5c52ed90793e2e87d96584ad7b6e113a39bc868053"
-    sha256 cellar: :any,                 arm64_ventura:  "5a0a458153eed98bb9abcb55b330566895303fa97e47d9602a4dd9a0a7fe542c"
-    sha256 cellar: :any,                 arm64_monterey: "e39be7fa100cbf341c629d63c27a2852b5185996f4182d07948c5fe053815f28"
-    sha256 cellar: :any,                 sonoma:         "5496e292a1a0c997d4dc9b2186fad744477f6a099e4a2cef5af26fbffba62952"
-    sha256 cellar: :any,                 ventura:        "2946c18386aa5b8580ba3090bcb04ddf1aa83897b0dd3aa9c640e0d63ab45440"
-    sha256 cellar: :any,                 monterey:       "f59fd21bf0a37707ab4e4449426120fc117bcaf98a533291356c078891f19cc7"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c7523e21bcda9eb359d1a208a4e9a71a147b6b3984c5e125a109c739ff8f7721"
+    sha256 cellar: :any,                 arm64_sequoia: "a6a054979919629af9dc5b93c3caa53863e8035085c9d0f4816d0ceaead78133"
+    sha256 cellar: :any,                 arm64_sonoma:  "17e298645d17fc2f4b0aaa29d622be52b5ef2c467e65fa044eec038cc726749b"
+    sha256 cellar: :any,                 arm64_ventura: "4f19eba4d1fd8a58ed8b21b56c1b8dd8912f6768e62d6d617bd1cf2d9de5a2fb"
+    sha256 cellar: :any,                 sonoma:        "cb722f459dc312af8b58b861afb37d4cbcfb3bd506ed3ddca32c0bfd8acc15eb"
+    sha256 cellar: :any,                 ventura:       "84c3dc1eb5b4e187055055c654f523d8c6be3d59f992857aa3dd4433013cad70"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "afedc35fa2c235553e564dba014a3840e38de0dee25b271f67c83208da1cacb6"
   end
 
   depends_on "coreutils" => :build
@@ -38,11 +37,11 @@ class Inko < Formula
 
   test do
     (testpath/"hello.inko").write <<~EOS
-      import std.stdio (STDOUT)
+      import std.stdio (Stdout)
 
       class async Main {
         fn async main {
-          STDOUT.new.print('Hello, world!')
+          Stdout.new.print('Hello, world!')
         }
       }
     EOS

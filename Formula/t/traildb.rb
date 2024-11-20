@@ -12,6 +12,7 @@ class Traildb < Formula
 
   bottle do
     rebuild 1
+    sha256 arm64_sequoia:  "6855e108a52b0df9a4f13492f09ccf0d8ae7efcb2b25441f88a9d1e214137c4c"
     sha256 arm64_sonoma:   "54903d470c8c610d59b4122f43e3c0292781c8949d5ba8e141f59362e1beb16e"
     sha256 arm64_ventura:  "fc31267f2145da6af9f4cf19609bebd1e4e5f7e468549bb2adbdfd40bd3b50ad"
     sha256 arm64_monterey: "f34fd4ae7821c7f82a44e374e4c07603a63ec224c5ddb441c38e0defcaaeb4a7"
@@ -44,7 +45,7 @@ class Traildb < Formula
 
   test do
     # Check that the library has been installed correctly
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <traildb.h>
       #include <assert.h>
       int main() {
@@ -56,7 +57,7 @@ class Traildb < Formula
         tdb* t1 = tdb_init();
         assert(tdb_open(t1, path) == 0);
       }
-    EOS
+    C
     system ENV.cc, "test.c", "-L#{lib}", "-ltraildb", "-o", "test"
     system "./test"
 

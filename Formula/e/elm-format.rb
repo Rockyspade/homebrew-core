@@ -8,6 +8,7 @@ class ElmFormat < Formula
   head "https://github.com/avh4/elm-format.git", branch: "main"
 
   bottle do
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "39551d3762854b22e3db540e1eb0187484cf50ce30233a70289ae0d6d29e1c27"
     sha256 cellar: :any_skip_relocation, arm64_sonoma:   "25f339b466676ecaa1be5b3d5fa0d49a1ea6c4a8593be06837e85695a93bebff"
     sha256 cellar: :any_skip_relocation, arm64_ventura:  "81d3cdebad68b53ebe6d615e9362359a433c371804e38c9ac274a6657ab4a972"
     sha256 cellar: :any_skip_relocation, arm64_monterey: "d95da1452e810b7b381ae898269325caa6da8a3224de231479a515ad9e8aaf6f"
@@ -20,7 +21,7 @@ class ElmFormat < Formula
   end
 
   # Has been using pre-built GHC due to needing specific patch version of GHC
-  deprecate! date: "2024-07-27", because: "does not build with any GHC formula"
+  deprecate! date: "2024-07-27", because: :does_not_build
 
   depends_on "cabal-install" => :build
   depends_on "haskell-stack" => :build

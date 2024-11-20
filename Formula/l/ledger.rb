@@ -25,6 +25,21 @@ class Ledger < Formula
       url "https://github.com/ledger/ledger/commit/46207852174feb5c76c7ab894bc13b4f388bf501.patch?full_index=1"
       sha256 "8aaf8daf4748f359946c64488c96345f4a4bdf928f6ec7a1003610174428599f"
     end
+
+    # Backport fixes to build with `boost` 1.86.0
+    # Ref: https://github.com/ledger/ledger/pull/2381
+    patch do
+      url "https://github.com/ledger/ledger/commit/ad93c185644cfcb14fe4a673e74a0cb5c954a4b4.patch?full_index=1"
+      sha256 "3d2db6b116cd7e8a1051ac7f92853f72c145ff0487f2f4e12e650ee7ec9e67b0"
+    end
+    patch do
+      url "https://github.com/ledger/ledger/commit/4f4cc1688a8e8a7c03f18603cc5a4159d9c89ca3.patch?full_index=1"
+      sha256 "938d62974ee507b851239b6525c98c8cb1c81e24e8ae2939d4675d97a8ec8f67"
+    end
+    patch do
+      url "https://github.com/ledger/ledger/commit/5320c9f719a309ddacdbe77181cabeb351949013.patch?full_index=1"
+      sha256 "9794113b28eabdcfc8b900eafc8dc2c0698409c0b3d856083ed5e38818289ba1"
+    end
   end
 
   livecheck do
@@ -33,22 +48,22 @@ class Ledger < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "d7fa6f760b136e2104925d5e0126baa56994691e111a486be71b88048acfa2ad"
-    sha256 cellar: :any,                 arm64_ventura:  "9706d5b3817874dc3c3fc3696ff5c7ce1418e20b15dafaaa21d612e80b3688b3"
-    sha256 cellar: :any,                 arm64_monterey: "37d03c5f94bcc3bf843ffd5c6206a2869093f0f7010c2dc91b52a6553c1d5b70"
-    sha256 cellar: :any,                 sonoma:         "d55ed9442b00f1db45976256fdabc1876a3b9d7d00e58ddb1533702a32682619"
-    sha256 cellar: :any,                 ventura:        "5d95809213044fc8056ca3b642c21d22b3ca2ebce5750fd6a7477e2d96dc55af"
-    sha256 cellar: :any,                 monterey:       "f51d0330df39298a2a313b7c25b3bfa0b6a110471b954d630d02910108d237a1"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "71a5e1d2c1d8a3c8841191e3a2d6f1a0932cdfe7bdfd9df55e1681af1f349704"
+    rebuild 2
+    sha256 cellar: :any,                 arm64_sequoia: "a23d59fe87c4eb5e668c0636de0286b1a9ff8f5d1e823e066b5c74315a63a68b"
+    sha256 cellar: :any,                 arm64_sonoma:  "218ed68a0e22d7bd204f95da731524bc8aa2655ef6120abd408939bf5d994709"
+    sha256 cellar: :any,                 arm64_ventura: "4ddcb1fccd738eb25f3f34d7d385a6f01f6d33bf6171ad4c04cb273b165bc385"
+    sha256 cellar: :any,                 sonoma:        "c9c7cdde58c09a55707cc4275ae657324aa207dc8eeed4b41edc41cc02f3907b"
+    sha256 cellar: :any,                 ventura:       "2339d91e5735e72342ccb4e0890ad19e24e5018e4e5050a09e57a3d3639b98e3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1ffcf606599116dd135bb202d28aada69e978b017ef2f22735b9b68549919509"
   end
 
   depends_on "cmake" => :build
   depends_on "texinfo" => :build # for makeinfo
-  depends_on "boost@1.85"
+  depends_on "boost"
   depends_on "gmp"
   depends_on "gpgme"
   depends_on "mpfr"
-  depends_on "python@3.12"
+  depends_on "python@3.13"
 
   uses_from_macos "mandoc" => :build
   uses_from_macos "libedit"
@@ -59,13 +74,13 @@ class Ledger < Formula
 
   def install
     ENV.cxx11
-    ENV.prepend_path "PATH", Formula["python@3.12"].opt_libexec/"bin"
+    ENV.prepend_path "PATH", Formula["python@3.13"].opt_libexec/"bin"
 
     args = %W[
       --jobs=#{ENV.make_jobs}
       --output=build
       --prefix=#{prefix}
-      --boost=#{Formula["boost@1.85"].opt_prefix}
+      --boost=#{Formula["boost"].opt_prefix}
       --
       -DBUILD_DOCS=1
       -DBUILD_WEB_DOCS=1

@@ -2,8 +2,8 @@ class Tanka < Formula
   desc "Flexible, reusable and concise configuration for Kubernetes using Jsonnet"
   homepage "https://tanka.dev"
   url "https://github.com/grafana/tanka.git",
-      tag:      "v0.28.0",
-      revision: "80ffbfd423f988b14641ee38fc158919c45d8586"
+      tag:      "v0.29.0",
+      revision: "b44bdc9a210e4b9c734afa89e9a049c4112576ae"
   license "Apache-2.0"
   head "https://github.com/grafana/tanka.git", branch: "main"
 
@@ -13,13 +13,12 @@ class Tanka < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "d929808064b439b98161009f51cb3e98f157b49ae9db83ef1f9bfe91d5c6dfa1"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "d929808064b439b98161009f51cb3e98f157b49ae9db83ef1f9bfe91d5c6dfa1"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "d929808064b439b98161009f51cb3e98f157b49ae9db83ef1f9bfe91d5c6dfa1"
-    sha256 cellar: :any_skip_relocation, sonoma:         "c8ef553cc70b809287dfd987255255103234f13a27097ea2499699522ffcd09e"
-    sha256 cellar: :any_skip_relocation, ventura:        "c8ef553cc70b809287dfd987255255103234f13a27097ea2499699522ffcd09e"
-    sha256 cellar: :any_skip_relocation, monterey:       "c8ef553cc70b809287dfd987255255103234f13a27097ea2499699522ffcd09e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "8c5c6b0b911dedd01a9bd4780c1f2052efc14f5bc80c155385933209b9899fe6"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "0e03063feba293dc9e5051d27e0784f1f458fcd695479e5a8793d4ce24ca3e09"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "0e03063feba293dc9e5051d27e0784f1f458fcd695479e5a8793d4ce24ca3e09"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "0e03063feba293dc9e5051d27e0784f1f458fcd695479e5a8793d4ce24ca3e09"
+    sha256 cellar: :any_skip_relocation, sonoma:        "8883266f9e1b8f760896bd165a85b9527494fecabec9ed75cd39f935105da752"
+    sha256 cellar: :any_skip_relocation, ventura:       "8883266f9e1b8f760896bd165a85b9527494fecabec9ed75cd39f935105da752"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f64b687b36d2554eedc0465aaa58e27647eefcf255469a979dff8aff4ea6f4c1"
   end
 
   depends_on "go" => :build

@@ -1,8 +1,8 @@
 class Openjdk < Formula
   desc "Development kit for the Java programming language"
   homepage "https://openjdk.java.net/"
-  url "https://github.com/openjdk/jdk22u/archive/refs/tags/jdk-22.0.2-ga.tar.gz"
-  sha256 "c423015bda77bea13e0a13f4dc705972c2185c3c6e6e30b183f733f2b95aa1a4"
+  url "https://github.com/openjdk/jdk23u/archive/refs/tags/jdk-23.0.1-ga.tar.gz"
+  sha256 "0e058ae2956871aafc5be33960b6e0f8dd954d234d590d249bcb3b619b579a0a"
   license "GPL-2.0-only" => { with: "Classpath-exception-2.0" }
 
   livecheck do
@@ -11,20 +11,20 @@ class Openjdk < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_sonoma:   "a358fe408c5c64524cabed4da75a1d16175ebedc0477ef3870e3db75a0800302"
-    sha256 cellar: :any, arm64_ventura:  "08278518189b954b7e2abe25283ef2a50b7de0a4e0bde6fbb890066aa7568dbd"
-    sha256 cellar: :any, arm64_monterey: "10c80312e091cbc90ce66a61da051f0320f96752aeefa4aafdae3a402ba8b738"
-    sha256 cellar: :any, sonoma:         "9f84e386dcc5dca1ecdab63724b6dffc967e8a212ef4673d981ec60b733ce43b"
-    sha256 cellar: :any, ventura:        "b73fa3f093d1153afa5baf376346521d7cc863fe679287b7abf57a180aa7a651"
-    sha256 cellar: :any, monterey:       "84795b272691e9ee02b9a0bb9fba35552c1ae8d3b977be2468dc71e57aa4e42f"
-    sha256               x86_64_linux:   "8493873d21bcda50b1cf5644a2e7582fddf1ac6936ed23e1d2c6ada6d10ee7eb"
+    sha256 cellar: :any, arm64_sequoia: "5cba5c9149f823770a7aa5ddd12f8e0d48263284bfc8151b066d9c60b5945f04"
+    sha256 cellar: :any, arm64_sonoma:  "176f8199a78576ee2c58ff0991fe39715f5bfa2b3696f1524dd02d189b2bbecb"
+    sha256 cellar: :any, arm64_ventura: "28f082ca3d5a172b9991546169f74fbe1f69a9dbd3e96dc0fe02aa35e0332454"
+    sha256 cellar: :any, sonoma:        "0af938cb313d757ceadccb67ecb37ea8744de3a672ec23ee7fd19afd1ed9ff98"
+    sha256 cellar: :any, ventura:       "c682b196a6eb18f671c7f995d9c48ce8e88db01767822283f4ab3f74b3c51ce6"
+    sha256               x86_64_linux:  "873413e010c1bf4a928801aa74bd8d20fb8053a6bc303a74486ad17653d35e9e"
   end
 
   keg_only :shadowed_by_macos
 
   depends_on "autoconf" => :build
   depends_on "pkg-config" => :build
-  depends_on xcode: :build
+  depends_on xcode: :build # for metal
+  depends_on "freetype"
   depends_on "giflib"
   depends_on "harfbuzz"
   depends_on "jpeg-turbo"
@@ -40,7 +40,6 @@ class Openjdk < Formula
   on_linux do
     depends_on "alsa-lib"
     depends_on "fontconfig"
-    depends_on "freetype"
     depends_on "libx11"
     depends_on "libxext"
     depends_on "libxi"
@@ -56,24 +55,31 @@ class Openjdk < Formula
   resource "boot-jdk" do
     on_macos do
       on_arm do
-        url "https://download.java.net/java/GA/jdk22.0.1/c7ec1332f7bb44aeba2eb341ae18aca4/8/GPL/openjdk-22.0.1_macos-aarch64_bin.tar.gz"
-        sha256 "b949a3bc13e3c5152ab55d12e699dfa6c8b00bedeb8302b13be4aec3ee734351"
+        url "https://download.java.net/java/GA/jdk22.0.2/c9ecb94cd31b495da20a27d4581645e8/9/GPL/openjdk-22.0.2_macos-aarch64_bin.tar.gz"
+        sha256 "3dab98730234e1a87aec14bcb8171d2cae101e96ff4eed1dab96abbb08e843fd"
       end
       on_intel do
-        url "https://download.java.net/java/GA/jdk22.0.1/c7ec1332f7bb44aeba2eb341ae18aca4/8/GPL/openjdk-22.0.1_macos-x64_bin.tar.gz"
-        sha256 "5daa4f9894cc3a617a5f9fe2c48e5391d3a2e672c91e1597041672f57696846f"
+        url "https://download.java.net/java/GA/jdk22.0.2/c9ecb94cd31b495da20a27d4581645e8/9/GPL/openjdk-22.0.2_macos-x64_bin.tar.gz"
+        sha256 "e8b3ec7a7077711223d31156e771f11723cd7af31c2017f1bd2eda20855940fb"
       end
     end
     on_linux do
       on_arm do
-        url "https://download.java.net/java/GA/jdk22.0.1/c7ec1332f7bb44aeba2eb341ae18aca4/8/GPL/openjdk-22.0.1_linux-aarch64_bin.tar.gz"
-        sha256 "0887c42b9897f889415a6f7b88549d38af99f6ef2d1117199de012beab0631eb"
+        url "https://download.java.net/java/GA/jdk22.0.2/c9ecb94cd31b495da20a27d4581645e8/9/GPL/openjdk-22.0.2_linux-aarch64_bin.tar.gz"
+        sha256 "25fba2bd5585e1e9923134dc827f2bd5a2beaca3d242ae00b7e68c152faf7ba6"
       end
       on_intel do
-        url "https://download.java.net/java/GA/jdk22.0.1/c7ec1332f7bb44aeba2eb341ae18aca4/8/GPL/openjdk-22.0.1_linux-x64_bin.tar.gz"
-        sha256 "133c8b65113304904cdef7c9103274d141cfb64b191ff48ceb6528aca25c67b1"
+        url "https://download.java.net/java/GA/jdk22.0.2/c9ecb94cd31b495da20a27d4581645e8/9/GPL/openjdk-22.0.2_linux-x64_bin.tar.gz"
+        sha256 "41536f115668308ecf4eba92aaf6acaeb0936225828b741efd83b6173ba82963"
       end
     end
+  end
+
+  # Fix build with `--with-harfbuzz=system`.
+  # https://github.com/openjdk/jdk/pull/19739
+  patch do
+    url "https://github.com/openjdk/jdk/commit/ba5a4670b8ad86fefb41a939752754bf36aac9dc.patch?full_index=1"
+    sha256 "ff6c66f3fa81bef3fb18e88196c520cfa867aa5d57ebf26574635723b4d06d16"
   end
 
   def install
@@ -97,6 +103,7 @@ class Openjdk < Formula
       --with-version-build=#{revision}
       --without-version-opt
       --without-version-pre
+      --with-freetype=system
       --with-giflib=system
       --with-harfbuzz=system
       --with-lcms=system
@@ -112,8 +119,13 @@ class Openjdk < Formula
     args += if OS.mac?
       ldflags << "-headerpad_max_install_names"
 
+      # Allow unbundling `freetype` on macOS
+      inreplace "make/autoconf/lib-freetype.m4", '= "xmacosx"', '= ""'
+
       %W[
         --enable-dtrace
+        --with-freetype-include=#{Formula["freetype"].opt_include}
+        --with-freetype-lib=#{Formula["freetype"].opt_lib}
         --with-sysroot=#{MacOS.sdk_path}
       ]
     else
@@ -121,11 +133,14 @@ class Openjdk < Formula
         --with-x=#{HOMEBREW_PREFIX}
         --with-cups=#{HOMEBREW_PREFIX}
         --with-fontconfig=#{HOMEBREW_PREFIX}
-        --with-freetype=system
         --with-stdc++lib=dynamic
       ]
     end
     args << "--with-extra-ldflags=#{ldflags.join(" ")}"
+
+    if DevelopmentTools.clang_build_version == 1600
+      args << "--with-extra-cflags=-mllvm -enable-constraint-elimination=0"
+    end
 
     system "bash", "configure", *args
 
@@ -156,13 +171,13 @@ class Openjdk < Formula
   end
 
   test do
-    (testpath/"HelloWorld.java").write <<~EOS
+    (testpath/"HelloWorld.java").write <<~JAVA
       class HelloWorld {
         public static void main(String args[]) {
           System.out.println("Hello, world!");
         }
       }
-    EOS
+    JAVA
 
     system bin/"javac", "HelloWorld.java"
 

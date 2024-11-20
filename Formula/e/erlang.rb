@@ -3,8 +3,8 @@ class Erlang < Formula
   homepage "https://www.erlang.org/"
   # Download tarball from GitHub; it is served faster than the official tarball.
   # Don't forget to update the documentation resource along with the url!
-  url "https://github.com/erlang/otp/releases/download/OTP-26.2.5/otp_src_26.2.5.tar.gz"
-  sha256 "de155c4ad9baab2b9e6c96dbd03bf955575a04dd6feee9c08758beb28484c9f6"
+  url "https://github.com/erlang/otp/releases/download/OTP-27.1.2/otp_src_27.1.2.tar.gz"
+  sha256 "1772e9fa07b2b020ed5911d6ce78b251dfb6ed8509ed7de9d372e96b87251d14"
   license "Apache-2.0"
 
   livecheck do
@@ -13,20 +13,18 @@ class Erlang < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "c431396f5317abe1127f09e050f09b9e95b19ba1a5182a21fc5a77699bcd7e13"
-    sha256 cellar: :any,                 arm64_ventura:  "110213139fc017f108a06e1f206a5ddf7272d5807c4764ead9dd5cf6db1e620b"
-    sha256 cellar: :any,                 arm64_monterey: "f69832dec4aaf28bbb576bf0b6d4e09365ba9ab8e5f70116f58873db576c57ce"
-    sha256 cellar: :any,                 sonoma:         "f0de0d4ee8cba0a67d9c90489fa2da82e12b2e3c4649643a8952ab88b4ec7b57"
-    sha256 cellar: :any,                 ventura:        "a339941ffc01c6eac2bc0d6ef07601466573de08cb5e9765e59a56ac9168a16c"
-    sha256 cellar: :any,                 monterey:       "0ca685f448bb8ea692a2f61d283420c29a82c674923f6ec408cc6ab879db19df"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "3b2d280cd03af37844d763fb9e1c1955be8e203cc7f65271e4e65b2143b07c99"
+    sha256 cellar: :any,                 arm64_sequoia: "326521aed7110caaac878526bf3b76d8fffbd98c0203e7937baae9fd85d1d40a"
+    sha256 cellar: :any,                 arm64_sonoma:  "af5c5bfa8c2419742925351a46e81e2d4eb847c10462f0c258c9b9f6712110d1"
+    sha256 cellar: :any,                 arm64_ventura: "191cfde91d8c0c2a73b4d083f54fe1e73e59fd149795a77b4c315bc4c186f830"
+    sha256 cellar: :any,                 sonoma:        "826fd0c84c6550c7df9704c2d2d6a0f2a5373540940bd347bf4fde33203ffd92"
+    sha256 cellar: :any,                 ventura:       "aa00106e6ac9f72380125ad8dd9a6f15fe0863b7c3355dbe2491fd73a1f55105"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "70a76b5ea33537be50047fcee0612e90afb97e7ff93cb74b50925d411c393370"
   end
 
   head do
     url "https://github.com/erlang/otp.git", branch: "master"
 
     depends_on "autoconf" => :build
-    depends_on "automake" => :build
     depends_on "libtool" => :build
   end
 
@@ -35,14 +33,28 @@ class Erlang < Formula
   depends_on "wxwidgets" # for GUI apps like observer
 
   uses_from_macos "libxslt" => :build
+  uses_from_macos "ncurses"
+  uses_from_macos "zlib"
+
+  on_linux do
+    depends_on "mesa-glu"
+  end
 
   resource "html" do
-    url "https://github.com/erlang/otp/releases/download/OTP-26.2.5/otp_doc_html_26.2.5.tar.gz"
-    mirror "https://fossies.org/linux/misc/otp_doc_html_26.2.5.tar.gz"
-    sha256 "7c9c99695f8b0218f655ec154954bac1d70e25fe3d54810cf81590e1eb711e47"
+    url "https://github.com/erlang/otp/releases/download/OTP-27.1.2/otp_doc_html_27.1.2.tar.gz"
+    mirror "https://fossies.org/linux/misc/otp_doc_html_27.1.2.tar.gz"
+    sha256 "a46eea48eab01404eddd649f044bd30f5e4fb432df94be26345410590d1c3f53"
+  end
+
+  # https://github.com/erlang/otp/blob/#{version}/make/ex_doc_link
+  resource "ex_doc" do
+    url "https://github.com/elixir-lang/ex_doc/releases/download/v0.34.1/ex_doc_otp_26"
+    sha256 "d1e09ef6772132f36903fbb1c13d6972418b74ff2da71ab8e60fa3770fc56ec7"
   end
 
   def install
+    ex_doc_url = (buildpath/"make/ex_doc_link").read.strip
+    odie "`ex_doc` resource needs updating!" if ex_doc_url != resource("ex_doc").url
     odie "html resource needs to be updated" if version != resource("html").version
 
     # Unset these so that building wx, kernel, compiler and
@@ -54,11 +66,6 @@ class Erlang < Formula
 
     args = %W[
       --enable-dynamic-ssl-lib
-      --enable-hipe
-      --enable-shared-zlib
-      --enable-smp-support
-      --enable-threads
-      --enable-wx
       --with-odbc=#{Formula["unixodbc"].opt_prefix}
       --with-ssl=#{Formula["openssl@3"].opt_prefix}
       --without-javac
@@ -73,6 +80,10 @@ class Erlang < Formula
     system "./configure", *std_configure_args, *args
     system "make"
     system "make", "install"
+    resource("ex_doc").stage do |r|
+      (buildpath/"bin").install File.basename(r.url) => "ex_doc"
+    end
+    chmod "+x", "bin/ex_doc"
 
     # Build the doc chunks (manpages are also built by default)
     ENV.deparallelize { system "make", "docs", "DOC_TARGETS=chunks" }

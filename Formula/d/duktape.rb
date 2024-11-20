@@ -11,6 +11,7 @@ class Duktape < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "3d744482873a3e4aee3ba9a4471a7d75c1065519466e1730169b2d47a6ef8a18"
     sha256 cellar: :any,                 arm64_sonoma:   "8afe806970354b4fafeb1e390d3823964c2fe969d5ae9498612a1c0422cea24f"
     sha256 cellar: :any,                 arm64_ventura:  "cb5c28b480f4948b1c058146568829a0a31a082ee5646af9f1c9d163f8fea00a"
     sha256 cellar: :any,                 arm64_monterey: "50433844eb30fed82c204f4ad5b0fe58f70f6ab3fdcaf88f58df1080cc65d3cd"
@@ -34,7 +35,7 @@ class Duktape < Formula
     (testpath/"test.js").write "console.log('Hello Homebrew!');"
     assert_equal "Hello Homebrew!", shell_output("#{bin}/duk test.js").strip
 
-    (testpath/"test.cc").write <<~EOS
+    (testpath/"test.cc").write <<~CPP
       #include <stdio.h>
       #include "duktape.h"
 
@@ -45,7 +46,7 @@ class Duktape < Formula
         duk_destroy_heap(ctx);
         return 0;
       }
-    EOS
+    CPP
     system ENV.cc, "test.cc", "-o", "test", "-I#{include}", "-L#{lib}", "-lduktape", "-lm"
     assert_equal "1 + 2 = 3", shell_output("./test").strip, "Duktape can add number"
   end

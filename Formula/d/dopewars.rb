@@ -6,6 +6,7 @@ class Dopewars < Formula
   license "GPL-2.0-or-later"
 
   bottle do
+    sha256 arm64_sequoia:  "5e19478fc233eac61d8c45e6b671f1853c0b4f95777a4a2d99ad1ed6eac6d38a"
     sha256 arm64_sonoma:   "8cb9bfd69260ceae6ce8a5062fcba8ee7aa4edcb7191dc048c0d03ca13a783aa"
     sha256 arm64_ventura:  "f6c44772360736b7f1aabbee2da0371fcef2435309a4a632d870e53af1e0729b"
     sha256 arm64_monterey: "076caa9d67e4e4f3fd0067ae16097631c0b0eaf6e243f9a78c48c70214b915f8"
@@ -17,7 +18,7 @@ class Dopewars < Formula
     sha256 x86_64_linux:   "7a543edc764a62a6b9c5e9884acb00b034e4631248f9c6b44e4c0cd8483f4e50"
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
 
   depends_on "glib"
 

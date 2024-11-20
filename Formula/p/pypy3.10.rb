@@ -1,9 +1,10 @@
 class Pypy310 < Formula
   desc "Implementation of Python 3 in Python"
   homepage "https://pypy.org/"
-  url "https://downloads.python.org/pypy/pypy3.10-v7.3.16-src.tar.bz2"
-  sha256 "4a3a3177d0a1f51d59982bb981d1d485403bda3419d5437b9e077f55f59424ff"
+  url "https://downloads.python.org/pypy/pypy3.10-v7.3.17-src.tar.bz2"
+  sha256 "6ad74bc578e9c6d3a8a1c51503313058e3c58c35df86f7485453c4be6ab24bf7"
   license "MIT"
+  revision 1
   head "https://github.com/pypy/pypy.git", branch: "main"
 
   livecheck do
@@ -12,13 +13,12 @@ class Pypy310 < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "ade823aa590461009d952824a9f19a74cae00dfd2842cd3816cf07aefec95a1b"
-    sha256 cellar: :any,                 arm64_ventura:  "0d02fa763dbbc79e6df6264310d2c28e6323eb151e2be156bbb5e1e770e318d1"
-    sha256 cellar: :any,                 arm64_monterey: "fbf24ed94c122e648ebc761da85c3c114708822601e57fb82cd839f9f4c77220"
-    sha256 cellar: :any,                 sonoma:         "b09861a9c9d4ec530fd1e9679c6deae9174b9ed5c2958011f9acfa97006412aa"
-    sha256 cellar: :any,                 ventura:        "1888faab65c74715f6fb049f0c92cfcaca5f7c009d243d591ce7e11e5bf4fbce"
-    sha256 cellar: :any,                 monterey:       "3d8db5b2bfed31b89b2a18ab01048edc683a0074ee13ac9486fb4e9fda8a5ec7"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "0e9894e2100fce3941dd92a83c037a49ed0276b0fe1106de627260e34c014579"
+    sha256 cellar: :any,                 arm64_sequoia: "311b947a1528ae90983edc2176864a00865fb678c13c2286efe24075463a1796"
+    sha256 cellar: :any,                 arm64_sonoma:  "8276c86a74591aec5dcd72722caeaa9c5a950f922b77c5ac20fc1147e21698b5"
+    sha256 cellar: :any,                 arm64_ventura: "9e80dff6aaa3e465055533fe201daa041baf2e24af5ea96dca4951b56a171589"
+    sha256 cellar: :any,                 sonoma:        "cbac71c93a07a6e926836763d9d67662b157a12525ce5c333504a4e10eff14f6"
+    sha256 cellar: :any,                 ventura:       "f8216079a9bc035470ac314f3dacaab40839ea20edc53b8fea250af4128612e3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c4032a756625270ffb7945d97b0116ac7e9acb1e5731eab7590241874f2fb12d"
   end
 
   depends_on "pkg-config" => :build
@@ -26,7 +26,7 @@ class Pypy310 < Formula
   depends_on "gdbm"
   depends_on "openssl@3"
   depends_on "sqlite"
-  depends_on "tcl-tk"
+  depends_on "tcl-tk@8"
   depends_on "xz"
 
   uses_from_macos "bzip2"
@@ -49,12 +49,6 @@ class Pypy310 < Formula
     sha256 "7fd9972f96db22c8077a1ee2691b172c8089b17a5652a44494a9ecb0d78f9149"
   end
 
-  # Fix mismatch in test definition of ncurses
-  patch do
-    url "https://github.com/pypy/pypy/commit/13e2004d86a3431d27a2ac98c7d591473ca9ef9c.patch?full_index=1"
-    sha256 "b84c2593f10cb4698f21ff8cb5b7318f718f92f2c35eef271ccb2d504d9436d6"
-  end
-
   # Build fixes:
   # - Disable Linux tcl-tk detection since the build script only searches system paths.
   #   When tcl-tk is not found, it uses unversioned `-ltcl -ltk`, which breaks build.
@@ -71,11 +65,13 @@ class Pypy310 < Formula
 
   def install
     # The `tcl-tk` library paths are hardcoded and need to be modified for non-/usr/local prefix
+    tcltk = Formula["tcl-tk@8"]
     inreplace "lib_pypy/_tkinter/tklib_build.py" do |s|
-      s.gsub! "/usr/local/opt/tcl-tk/", Formula["tcl-tk"].opt_prefix/""
-      # We moved `tcl-tk` headers to `include/tcl-tk`.
+      s.gsub! "['/usr/local/opt/tcl-tk/include']", "[]"
+      # We moved `tcl-tk` headers to `include/tcl-tk` and versioned TCL 8
       # TODO: upstream this.
-      s.gsub! "/include'", "/include/tcl-tk'"
+      s.gsub! "(homebrew + '/include')", "('#{tcltk.opt_include}/tcl-tk')"
+      s.gsub! "(homebrew + '/opt/tcl-tk/lib')", "('#{tcltk.opt_lib}')"
     end
 
     if OS.mac?

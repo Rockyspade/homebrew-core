@@ -1,27 +1,26 @@
 class Libpulsar < Formula
   desc "Apache Pulsar C++ library"
   homepage "https://pulsar.apache.org/"
-  url "https://dlcdn.apache.org/pulsar/pulsar-client-cpp-3.5.1/apache-pulsar-client-cpp-3.5.1.tar.gz"
-  mirror "https://archive.apache.org/dist/pulsar/pulsar-client-cpp-3.5.1/apache-pulsar-client-cpp-3.5.1.tar.gz"
-  sha256 "d24990757319dfa9c9e5d3263f60105dd9e12ddeaf1396d6b397f87dab2fd7d1"
+  url "https://dlcdn.apache.org/pulsar/pulsar-client-cpp-3.6.0/apache-pulsar-client-cpp-3.6.0.tar.gz"
+  mirror "https://archive.apache.org/dist/pulsar/pulsar-client-cpp-3.6.0/apache-pulsar-client-cpp-3.6.0.tar.gz"
+  sha256 "522ca67bc911fcd4c0c9e4278628c9167b614a887c63fb04b04370156254d3b3"
   license "Apache-2.0"
-  revision 5
+  revision 3
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "31235e016147dce60e42ebe38efc86ea9185b089fa78d9de807a31eaf890c333"
-    sha256 cellar: :any,                 arm64_ventura:  "9954362c21d03a5556663cb277fbf632708de0782e742aa77f9570d27a63f64c"
-    sha256 cellar: :any,                 arm64_monterey: "66601937942211c4300222bc06fc11a716097f5492ba4b4bdd4284d92adeb02a"
-    sha256 cellar: :any,                 sonoma:         "0cdebd1de70f1577de2a2ba0c1eb34a265e5182ff22f5ef3ce10fdcb4b2cf6c1"
-    sha256 cellar: :any,                 ventura:        "1d5dd1113863efb7eba46ad7d7c1ce6d0efbf83b7f56db2929a76fa8cf78b4a8"
-    sha256 cellar: :any,                 monterey:       "039b0f9a03714d1eaf2f1199e9dccd9e308b0fb08467d9ec46860a4d4b5828a5"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6dde36fec55d9ba93066e26274048c3776f88840c5a29c241609ab029a3b0ab6"
+    sha256 cellar: :any,                 arm64_sequoia: "29e1d2754eefb335d901ab5878f07113fb473de3e80c440dd30cabd9c3e46c0b"
+    sha256 cellar: :any,                 arm64_sonoma:  "ed30f70676852c031d57e4aa014ef8f4b5f0d68eaa82956fbeeee8e3cd78c743"
+    sha256 cellar: :any,                 arm64_ventura: "56ba5abcb1a5004e8388f45001c6881a008fac8d5065aecc06fc2df39e2cef09"
+    sha256 cellar: :any,                 sonoma:        "7065abc593ef929783442ba62b3616eda4e4c546f2238366c5ac0860430aa2f6"
+    sha256 cellar: :any,                 ventura:       "a78aaafae59aa21c03a56feab640f5b8179b221a068fd0cbb8cda07ba1a3f5a0"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "4e988998856c14cee75a14a6a8d77baade48238a306d1072df5bf807bb35a048"
   end
 
+  depends_on "boost" => :build
   depends_on "cmake" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
 
   depends_on "abseil"
-  depends_on "boost"
   depends_on "openssl@3"
   depends_on "protobuf"
   depends_on "snappy"
@@ -43,14 +42,14 @@ class Libpulsar < Formula
   end
 
   test do
-    (testpath/"test.cc").write <<~EOS
+    (testpath/"test.cc").write <<~CPP
       #include <pulsar/Client.h>
 
       int main (int argc, char **argv) {
         pulsar::Client client("pulsar://localhost:6650");
         return 0;
       }
-    EOS
+    CPP
 
     system ENV.cxx, "-std=gnu++11", "test.cc", "-L#{lib}", "-lpulsar", "-o", "test"
     system "./test"

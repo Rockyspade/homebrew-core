@@ -1,18 +1,17 @@
 class Libpanel < Formula
   desc "Dock/panel library for GTK 4"
   homepage "https://gitlab.gnome.org/GNOME/libpanel"
-  url "https://download.gnome.org/sources/libpanel/1.6/libpanel-1.6.0.tar.xz"
-  sha256 "b773494a3c69300345cd8e27027448d1189183026cc137802f886417c6ea30b6"
+  url "https://download.gnome.org/sources/libpanel/1.8/libpanel-1.8.1.tar.xz"
+  sha256 "b87b8fa9b79768cc704243793f0158a040a1e46d37b9889188545a7f7dcaa6fb"
   license "LGPL-3.0-or-later"
 
   bottle do
-    sha256 arm64_sonoma:   "f128a9f64a77bf5cd52335cf1bdbca30d5c5d72c4ab50db59381817e63b2e199"
-    sha256 arm64_ventura:  "2690f378bfe0dca66e25e5ba37df69c79059fca808fb4a33e1e4a0a11883da17"
-    sha256 arm64_monterey: "db427b5bd6ec77fe44a009b73b6a8b4a05c038674177f370a274bf0b221b5b9e"
-    sha256 sonoma:         "2184f1d539a8861ef0dc83942b0c57aa61747a2f1deea7f634eeecec623b8f44"
-    sha256 ventura:        "aadc359a7f15b4c3b2dffd9080e7a60d9358daa00c912cad5544b05566aefc75"
-    sha256 monterey:       "473b09c921351aa3de20e02546b2eadc395f91291fab6a5df01911b82896851d"
-    sha256 x86_64_linux:   "3fc32643880bc018a9f829ebbf34038b66ba5231c333fcaa956a8b5289e06ff9"
+    sha256 arm64_sequoia: "7a09e359ed1ef3c48218bd445177d2305c76bb265e51ffbed0d82bef3f16eb74"
+    sha256 arm64_sonoma:  "a1ad121a497fe726f704c0bb2d7545a39ff4b98fb86a34265b7e41048e236526"
+    sha256 arm64_ventura: "728291f360407ba8d12656e8e68b70f6efb1e1194ffb2895450169c5903c7912"
+    sha256 sonoma:        "f1abe0c09638d991f4b345eca5bc1f8f10b1d49007419a5b19881c18298b9351"
+    sha256 ventura:       "b70a3ef9d1251533a353c1ef8b065d489ab0e7e0bf788e2f65a81ec93d5063a1"
+    sha256 x86_64_linux:  "3801d73802a9192ead0368ec17bc5ce7f90381c1e686de59a262889eefbf82fe"
   end
 
   depends_on "gettext" => :build
@@ -40,14 +39,14 @@ class Libpanel < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <libpanel.h>
 
       int main(int argc, char *argv[]) {
         uint major = panel_get_major_version();
         return 0;
       }
-    EOS
+    C
     flags = shell_output("#{Formula["pkg-config"].opt_bin}/pkg-config --cflags --libs libpanel-1").strip.split
     flags += shell_output("#{Formula["pkg-config"].opt_bin}/pkg-config --cflags --libs libadwaita-1").strip.split
     system ENV.cc, "test.c", "-o", "test", *flags

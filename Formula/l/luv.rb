@@ -7,6 +7,7 @@ class Luv < Formula
   head "https://github.com/luvit/luv.git", branch: "master"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "6fc436592e7512c75133cd501da7005a0ca564122198a20cdb28305ea0dc7f4d"
     sha256 cellar: :any,                 arm64_sonoma:   "8eee983f433b14404e806a25d9d9d6a37dea290ecd07676eea143c244aa81b7c"
     sha256 cellar: :any,                 arm64_ventura:  "5b52e62605db4618b943a313b7dc27fa1ca4d606289f773a934d62aa841ce822"
     sha256 cellar: :any,                 arm64_monterey: "4ead7a7d5a515244136e919f531d24f1b9ea4ed01847476b0f1b50d5bcede873"
@@ -54,7 +55,7 @@ class Luv < Formula
   end
 
   test do
-    (testpath/"test.lua").write <<~EOS
+    (testpath/"test.lua").write <<~LUA
       local uv = require('luv')
       local timer = uv.new_timer()
       timer:start(1000, 0, function()
@@ -63,7 +64,7 @@ class Luv < Formula
       end)
       print("Sleeping");
       uv.run()
-    EOS
+    LUA
 
     expected = <<~EOS
       Sleeping

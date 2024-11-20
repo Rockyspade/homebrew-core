@@ -1,19 +1,18 @@
 class AstGrep < Formula
   desc "Code searching, linting, rewriting"
   homepage "https://github.com/ast-grep/ast-grep"
-  url "https://github.com/ast-grep/ast-grep/archive/refs/tags/0.26.2.tar.gz"
-  sha256 "e5273fb95b0538e8534e865c619bf8d5098098232273bf58269210c3397bfaf7"
+  url "https://github.com/ast-grep/ast-grep/archive/refs/tags/0.30.0.tar.gz"
+  sha256 "e8248c2f4a3ed8e9a7386dc0ad953f6245166c3939b1bc1be5a8aa42eaa0132e"
   license "MIT"
   head "https://github.com/ast-grep/ast-grep.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "1f281644bf0bf317df20c31f6b14c5c199905dda64446ff68aa5c500e0881505"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "9f05475ee20ee02567d882c698ea08b506557a8efd07f2cebc30ffd60e19074d"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "3b94ec0b0bb17c0352220f8728614826f47a0d049d8ee848fe433a2059675ec7"
-    sha256 cellar: :any_skip_relocation, sonoma:         "d58178207435ddd73fb996e410a204d424fc4807f7f4b2586f88c36bd5cfc2a7"
-    sha256 cellar: :any_skip_relocation, ventura:        "5496439fcd8ab4f732557b527473cdbff94f5cab18bd5c2ba049f0249cebe8a9"
-    sha256 cellar: :any_skip_relocation, monterey:       "aa64027258bbdb80570e8f9bcdbd0dad26f29ca3b240b60441ee69f9dfc9a002"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "92ead80525c3a4fd205c3549c58cf7a45645aee4cc6c039a7fddc18778dcfea1"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "e703a8263472bf0e229dd8931987358fdd9ca15799db92e8c9dcee14ed172cab"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "7414c1e6b2f52a900c4f0addb143285cad7a84ff57c21aaf128fe94e72832211"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "153cd3cca19951b30be0b91ddc15c698c45abc0f4f92e1abe1c6d1d7da7758d3"
+    sha256 cellar: :any_skip_relocation, sonoma:        "d0c96886f777c489be72519429942e9d3f097f265deecf3c487571eb40f4cbec"
+    sha256 cellar: :any_skip_relocation, ventura:       "7755fdc7ecf936c0d533b9ef98b2f205e0eda2a083aa21b390c5429d67c901f7"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e978974c722a35885efb1141911ebaab0b84e8a35fbe44e399da3e3b3e6e2854"
   end
 
   depends_on "rust" => :build
@@ -22,7 +21,7 @@ class AstGrep < Formula
     system "cargo", "install", *std_cargo_args(path: "crates/cli")
 
     generate_completions_from_executable(bin/"ast-grep", "completions")
-    generate_completions_from_executable(bin/"sg", "completions")
+    generate_completions_from_executable(bin/"sg", "completions", base_name: "sg")
   end
 
   test do

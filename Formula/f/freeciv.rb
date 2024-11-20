@@ -1,9 +1,10 @@
 class Freeciv < Formula
   desc "Free and Open Source empire-building strategy game"
   homepage "https://freeciv.org/"
-  url "https://downloads.sourceforge.net/project/freeciv/Freeciv%203.1/3.1.2/freeciv-3.1.2.tar.xz"
-  sha256 "7ab19d218a023306091a34e5c3bc3fd70981d8ebc4b9542c1646827dede55828"
+  url "https://downloads.sourceforge.net/project/freeciv/Freeciv%203.1/3.1.3/freeciv-3.1.3.tar.xz"
+  sha256 "741086fa94574374c7c27480f77ee68e5b538bfb2eff85004fa8c87b312c7f2f"
   license "GPL-2.0-or-later"
+  revision 1
 
   livecheck do
     url :stable
@@ -11,13 +12,12 @@ class Freeciv < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "b7162ce0379dfbe1e2ec91c12522440eb1be2683c8b174f870fcebc20bf8a68d"
-    sha256 arm64_ventura:  "8c7b90207942264128cd60c0a374a0ae72c953da6be2e3f205a4aab8a431b76c"
-    sha256 arm64_monterey: "ad9ef0dc1940fa154c346c487a120fa37a2590ce0e91f9947cb1a8d6eaea60c8"
-    sha256 sonoma:         "c35ba1e4befb8609e2a0b1ad111a9e4308582a68c3b6b08732d4120caed44fab"
-    sha256 ventura:        "ed923f2a702eb2ba87e801339b03bc30387d0e9bd60ada5a014584686c642a72"
-    sha256 monterey:       "6f7c5e1a7b041322c559d1aae0e40a77d09f70e3e93125ce941d9fc1d3e17b31"
-    sha256 x86_64_linux:   "32b2b6cab1b82d3863f0db79617dcb41519604e6f8e0dbb4ca81fe74e224ca64"
+    sha256 arm64_sequoia: "6d1abb30bcc4fe1b8a6128b6c8a02558750b62a35d2ce17c928ecc02b2ab5346"
+    sha256 arm64_sonoma:  "0e828f0b58d3837f9265aa8acf05ef832d928f302dc72c71393e70ce7f0a77a4"
+    sha256 arm64_ventura: "ce9a0ad779b079b543ec361637ab54b86132e524a065619e2a68950ecd1afb4c"
+    sha256 sonoma:        "445ba91f66a470a6d4c71c9e48e6784379d202ed6c4e56846560725a1bd197d6"
+    sha256 ventura:       "ca8709bcc0ab6cbf1ae3a985f050fe37a5fa27489a05b78c41a08f843c2f0855"
+    sha256 x86_64_linux:  "d9df907c1502e60e3dec825d65968a702618fa1bf300f43d554b13f9b4386b5f"
   end
 
   head do
@@ -39,7 +39,7 @@ class Freeciv < Formula
   depends_on "glib"
   depends_on "gtk+3"
   depends_on "harfbuzz"
-  depends_on "icu4c"
+  depends_on "icu4c@76"
   depends_on "pango"
   depends_on "readline"
   depends_on "sdl2"

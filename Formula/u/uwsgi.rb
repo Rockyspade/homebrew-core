@@ -1,25 +1,24 @@
 class Uwsgi < Formula
   desc "Full stack for building hosting services"
   homepage "https://uwsgi-docs.readthedocs.io/en/latest/"
-  url "https://files.pythonhosted.org/packages/3a/7a/4c910bdc9d32640ba89f8d1dc256872c2b5e64830759f7dc346815f5b3b1/uwsgi-2.0.26.tar.gz"
-  sha256 "86e6bfcd4dc20529665f5b7777193cdc48622fb2c59f0a7f1e3dc32b3882e7f9"
+  url "https://files.pythonhosted.org/packages/24/c2/d58480aadc9a1f420dd96fc43cf0dcd8cb5ededb95cab53743529c23b6cd/uwsgi-2.0.28.tar.gz"
+  sha256 "79ca1891ef2df14508ab0471ee8c0eb94bd2d51d03f32f90c4bbe557ab1e99d0"
   license "GPL-2.0-or-later"
   head "https://github.com/unbit/uwsgi.git", branch: "master"
 
   bottle do
-    sha256 arm64_sonoma:   "27e371c3f7bb193ac9cb226169915a0e0dc7146b1ebade6e5cd8d106a545a4e1"
-    sha256 arm64_ventura:  "14b4231f0554bb1b5a306ab8d6eba456894c72a7e3e9ba38e232224840b14f7c"
-    sha256 arm64_monterey: "0fd8a39e407a683d5651821ac6abc4db208df0791116b6c449ea48a9031bf0f5"
-    sha256 sonoma:         "b6970777bb9d9d039df5409e5920a1ef8599afa2d8f8aace25ae600f32f9255e"
-    sha256 ventura:        "e03c2f0e7665d047aaf52a17752248de26539e428e20fa71d51e3e6349a038a0"
-    sha256 monterey:       "fbb82ab342ab97f23cbf909d2d812657a6ff714ffd6c6e7ca8a7522b2891f5c6"
-    sha256 x86_64_linux:   "052a7b88f365576d5505f51a53c7ac1085c6c671696d4107875722bbecd4e73b"
+    sha256 arm64_sequoia: "f57a1a48e3c6a9e34a580a47448ef9b4f7859b307871efcacc7fb30ac80269ff"
+    sha256 arm64_sonoma:  "9a19faaa101548dc4a49f8c9cc187cd7ada753a8752867073af55f1bc1fcbd59"
+    sha256 arm64_ventura: "3ddd8691d4daf943cc326623d205ae7b4b7a751d1199e4119474becc166e6b0d"
+    sha256 sonoma:        "91ac6f68d094cfb448ff535b849ce94461e7f84331d5c53d6de313a93c330648"
+    sha256 ventura:       "8ff239f69cbc9fbb85c9ba4296f4805b96d9b146237b481c11ee82cfb411e2fe"
+    sha256 x86_64_linux:  "837e3580174d833939e92f51d97664d092d0cd4e4f1ad167429f743aaeed865b"
   end
 
   depends_on "pkg-config" => :build
   depends_on "openssl@3"
-  depends_on "pcre" # PCRE2 issue: https://github.com/unbit/uwsgi/issues/2486
-  depends_on "python@3.12"
+  depends_on "pcre2"
+  depends_on "python@3.13"
   depends_on "sqlite"
   depends_on "yajl"
 
@@ -31,6 +30,10 @@ class Uwsgi < Formula
 
   on_linux do
     depends_on "linux-pam"
+  end
+
+  def python3
+    "python3.13"
   end
 
   def install
@@ -49,7 +52,6 @@ class Uwsgi < Formula
       embedded_plugins = null
     EOS
 
-    python3 = "python3.12"
     system python3, "uwsgiconfig.py", "--verbose", "--build", "brew"
 
     plugins = %w[airbrake alarm_curl asyncio cache
@@ -89,18 +91,18 @@ class Uwsgi < Formula
   end
 
   test do
-    (testpath/"helloworld.py").write <<~EOS
+    (testpath/"helloworld.py").write <<~PYTHON
       def application(env, start_response):
         start_response('200 OK', [('Content-Type','text/html')])
         return [b"Hello World"]
-    EOS
+    PYTHON
 
     port = free_port
 
     pid = fork do
       exec "#{bin}/uwsgi --http-socket 127.0.0.1:#{port} --protocol=http --plugin python3 -w helloworld"
     end
-    sleep 2
+    sleep 4
 
     begin
       assert_match "Hello World", shell_output("curl localhost:#{port}")

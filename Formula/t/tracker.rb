@@ -6,7 +6,7 @@ class Tracker < Formula
       tag:      "3.6.0",
       revision: "624ef729966f2d9cf748321bd7bac822489fa8ed"
   license all_of: ["LGPL-2.1-or-later", "GPL-2.0-or-later"]
-  revision 1
+  revision 3
 
   # Tracker doesn't follow GNOME's "even-numbered minor is stable" version
   # scheme but they do appear to use 90+ minor/patch versions, which may
@@ -17,13 +17,12 @@ class Tracker < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "a786b2b3491a5703f792f0011716e5cb7ecee55928caffb765a2b6ac3f55cab3"
-    sha256 arm64_ventura:  "277812e0fda3fd75fada5fe36ad2809755f35605ad2550988ea5a1634ffaad7c"
-    sha256 arm64_monterey: "bc1401fea1e7c77ee3a1706c029aba7cde648b9228cfca990d1cd098f9e51bdb"
-    sha256 sonoma:         "cf05c52e47410b399d2f52827d64027aa802009bee0db70a970a72009cfc5b2c"
-    sha256 ventura:        "cdc13ce4c3b905226af7150eab017ad9eb08e3d894ed69e928b360cf218707c5"
-    sha256 monterey:       "8a728aee6d68011f8bd3a071bb11edd3710996e45b8e1f2991d141f296ed1fe5"
-    sha256 x86_64_linux:   "fd31fdf16061831cc0057d07f7dd89a7958c4895020fb7e4d9a058a984c2220a"
+    sha256 arm64_sequoia: "7bc9ae43638dc877591fddf360e63423faca1c263a80eaec7016c56c526c7891"
+    sha256 arm64_sonoma:  "97c7afc9f1177586a46d70761edd999dfb89db9e824750894dbc357dceb26a53"
+    sha256 arm64_ventura: "49f5ca10fcc3bb45bb6c82a20b5c112fefd5e8c94b81e0f1abdbe1aa80b1810c"
+    sha256 sonoma:        "85b6515fcef419b02070410794f79047fb646aa1fa12693d94b7a1b349f6cdda"
+    sha256 ventura:       "17e2d6239703864d719f29322f28d0e17b588a99b3b40dead296242c4857642d"
+    sha256 x86_64_linux:  "83e5feea79a2bc65e893cd9dd6cbc7204d30f9dd51f857ce49c6e02aa67ae89e"
   end
 
   depends_on "gobject-introspection" => :build
@@ -35,7 +34,7 @@ class Tracker < Formula
 
   depends_on "dbus"
   depends_on "glib"
-  depends_on "icu4c"
+  depends_on "icu4c@76"
   depends_on "json-glib"
   depends_on "libsoup"
   depends_on "sqlite"
@@ -69,7 +68,7 @@ class Tracker < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <libtracker-sparql/tracker-sparql.h>
 
       gint main(gint argc, gchar *argv[]) {
@@ -110,9 +109,11 @@ class Tracker < Formula
 
         return 0;
       }
-    EOS
+    C
 
-    ENV.prepend_path "PKG_CONFIG_PATH", Formula["icu4c"].opt_lib/"pkgconfig" if OS.mac?
+    icu4c = deps.find { |dep| dep.name.match?(/^icu4c(@\d+)?$/) }
+                .to_formula
+    ENV.prepend_path "PKG_CONFIG_PATH", icu4c.opt_lib/"pkgconfig"
     flags = shell_output("pkg-config --cflags --libs tracker-sparql-3.0").chomp.split
     system ENV.cc, "test.c", "-o", "test", *flags
     system "./test"

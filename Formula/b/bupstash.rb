@@ -7,6 +7,7 @@ class Bupstash < Formula
   revision 1
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "a1955968ad1ced6369767619595453bcd9260fa963878cec01f51ed10ae0f4f9"
     sha256 cellar: :any,                 arm64_sonoma:   "282702198d0383461a3827c2727a2cef576f7e68cf32f88af49fd1591602e0ed"
     sha256 cellar: :any,                 arm64_ventura:  "5c75007fe3422c999e4843325a6d7939850e60266485ae78b514b4f56f19114f"
     sha256 cellar: :any,                 arm64_monterey: "31c1594f63290770e6b4e5e624c24a471fc905a4484da6d0c6675371e093b22c"
@@ -16,7 +17,7 @@ class Bupstash < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "b61eb9cbb571a97f1064e6b0e0766e2fc19e1b7691ab8cc988ea4db67f8d5182"
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "rust" => :build
   depends_on "libsodium"
 

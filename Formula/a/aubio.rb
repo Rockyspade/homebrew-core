@@ -12,6 +12,7 @@ class Aubio < Formula
   end
 
   bottle do
+    sha256 arm64_sequoia:  "cfd2854886939bf7e0ed2a8a1bae86903f52b039cab6cba3dc8cdf8e0a6ed873"
     sha256 arm64_sonoma:   "861126445e0643c4135a942e9d95b858597ee35acae313a66248e434477820b9"
     sha256 arm64_ventura:  "68979803b19d987f8e6c007e5f0f8d15a5d2e40783d0f8b1f2df811d1850d989"
     sha256 arm64_monterey: "e7eab620a5f855dd1a3ed279451fa58e53c6efc186a597131c81d9d73acaa3e5"
@@ -22,7 +23,7 @@ class Aubio < Formula
   end
 
   depends_on "libtool" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "python-setuptools" => :build
   depends_on "libsndfile"
   depends_on "numpy"
@@ -64,7 +65,7 @@ class Aubio < Formula
     system bin/"aubiocut", "--verbose", "02DayIsDone.aif"
     system bin/"aubioonset", "--verbose", "02DayIsDone.aif"
 
-    (testpath/"test.py").write <<~EOS
+    (testpath/"test.py").write <<~PYTHON
       import aubio
       src = aubio.source('#{testpath}/02DayIsDone.aif')
       total_frames = 0
@@ -74,7 +75,7 @@ class Aubio < Formula
         if read < src.hop_size:
           break
       print(total_frames)
-    EOS
+    PYTHON
     assert_equal "8680056", shell_output("#{python3} test.py").chomp
   end
 end

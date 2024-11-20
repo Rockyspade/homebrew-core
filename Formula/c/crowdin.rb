@@ -1,8 +1,8 @@
 class Crowdin < Formula
   desc "Command-line tool that allows to manage your resources with crowdin.com"
   homepage "https://support.crowdin.com/cli-tool/"
-  url "https://github.com/crowdin/crowdin-cli/releases/download/4.1.1/crowdin-cli.zip"
-  sha256 "129446127f9cb5e16de2d9fbd1bc9c22b2088e4f9950eda7e522b5e0773642ad"
+  url "https://github.com/crowdin/crowdin-cli/releases/download/4.3.0/crowdin-cli.zip"
+  sha256 "07387cb2b30a4c74da037f7ab0f01b2025ca189ff333e218303f75cdf3cb73b2"
   license "MIT"
 
   livecheck do
@@ -11,13 +11,7 @@ class Crowdin < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "4c1fd43e8a5b439262c0e32e0247c814a3dff85ba34a4f684fb3fb52cefd2f1d"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "4c1fd43e8a5b439262c0e32e0247c814a3dff85ba34a4f684fb3fb52cefd2f1d"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "4c1fd43e8a5b439262c0e32e0247c814a3dff85ba34a4f684fb3fb52cefd2f1d"
-    sha256 cellar: :any_skip_relocation, sonoma:         "4c1fd43e8a5b439262c0e32e0247c814a3dff85ba34a4f684fb3fb52cefd2f1d"
-    sha256 cellar: :any_skip_relocation, ventura:        "4c1fd43e8a5b439262c0e32e0247c814a3dff85ba34a4f684fb3fb52cefd2f1d"
-    sha256 cellar: :any_skip_relocation, monterey:       "4c1fd43e8a5b439262c0e32e0247c814a3dff85ba34a4f684fb3fb52cefd2f1d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e6f011ecfcdbc0e3e02477208447de2f08248628ee190ea85b4c549197602e53"
+    sha256 cellar: :any_skip_relocation, all: "0d73271afc5dd5d621418c13f60d78d3bbf6442d59501724afd80e38183d188e"
   end
 
   depends_on "openjdk"
@@ -28,7 +22,7 @@ class Crowdin < Formula
   end
 
   test do
-    (testpath/"crowdin.yml").write <<~EOS
+    (testpath/"crowdin.yml").write <<~YAML
       "project_id": "12"
       "api_token": "54e01--your-personal-token--2724a"
       "base_path": "."
@@ -42,7 +36,7 @@ class Crowdin < Formula
           "translation" : "/%two_letters_code%/%original_file_name%"
         }
       ]
-    EOS
+    YAML
 
     system bin/"crowdin", "init"
 

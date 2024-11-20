@@ -8,6 +8,7 @@ class Condure < Formula
   license "Apache-2.0"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "5dbd83cd3a803509a0cc5b3d0cdc7d3dbe09cc47ea085d2576e35852aa13f40e"
     sha256 cellar: :any,                 arm64_sonoma:   "b61e13bb29181ff457ce6a5b1b9156d370a31fabfd61767f94dfbef580469c7a"
     sha256 cellar: :any,                 arm64_ventura:  "a3d123a19dc1da1b031ae987ea84a517e3d1d6940206dce616e40a1122c3ac57"
     sha256 cellar: :any,                 arm64_monterey: "4fd31572d6268c0d6bcc5993b23f50a7f75306316ddc3ed0cfe6dd7ed439d325"
@@ -17,10 +18,10 @@ class Condure < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "00527a59f46952f13cb4a1af03af0dcf3d894dd1582828bcb3152ab5b070ac93"
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "rust" => :build
   depends_on "cython" => :test # use brew cython as building it in test can cause time out
-  depends_on "python@3.12" => :test
+  depends_on "python@3.13" => :test
   depends_on "openssl@3"
   depends_on "zeromq"
 
@@ -52,13 +53,13 @@ class Condure < Formula
     ipcfile = testpath/"client"
     runfile = testpath/"test.py"
 
-    python3 = "python3.12"
+    python3 = "python3.13"
     ENV.append_path "PYTHONPATH", Formula["cython"].opt_libexec/Language::Python.site_packages(python3)
     venv = virtualenv_create(testpath/"vendor", python3)
     venv.pip_install resources.reject { |r| r.name == "pyzmq" }
     venv.pip_install(resource("pyzmq"), build_isolation: false)
 
-    runfile.write <<~EOS
+    runfile.write <<~PYTHON
       import threading
       from urllib.request import urlopen
       import tnetstring
@@ -90,7 +91,7 @@ class Condure < Formula
       with urlopen('http://localhost:10000/test') as f:
         body = f.read()
         assert(body == b'test response\\n')
-    EOS
+    PYTHON
 
     pid = fork do
       exec bin/"condure", "--listen", "10000,req", "--zclient-req", "ipc://#{ipcfile}"

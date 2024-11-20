@@ -3,10 +3,11 @@ class LibbitcoinNode < Formula
   homepage "https://github.com/libbitcoin/libbitcoin-node"
   url "https://github.com/libbitcoin/libbitcoin-node/archive/refs/tags/v3.8.0.tar.gz"
   sha256 "49a2c83a01c3fe2f80eb22dd48b2a2ea77cbb963bcc5b98f07d0248dbb4ee7a9"
-  license "AGPL-3.0"
+  license "AGPL-3.0-or-later"
   revision 1
 
   bottle do
+    sha256 arm64_sequoia:  "7c10e910f41ba2ef7150fac8778aebfab7e561f517adb19c2b3def228559c2d8"
     sha256 arm64_sonoma:   "af98941d96c71ee8c0c6f155e5cc1d1cb1a6fed85eae311a663671f0baf8fc4d"
     sha256 arm64_ventura:  "b77eab1650d04674e86c7b794bc0e96f70fffcb2549008bdba0f278c1aa4b589"
     sha256 arm64_monterey: "456c03407d6cb891359d728d6303b2d668bc1a1cf7cfe0d878874fc110b40a65"
@@ -20,7 +21,7 @@ class LibbitcoinNode < Formula
 
   # About 2 years since request for release with support for recent `boost`.
   # Ref: https://github.com/libbitcoin/libbitcoin-system/issues/1234
-  deprecate! date: "2023-12-14", because: "uses deprecated `boost@1.76`"
+  disable! date: "2024-12-14", because: "uses deprecated `boost@1.76`"
 
   depends_on "autoconf" => :build
   depends_on "automake" => :build
@@ -46,7 +47,7 @@ class LibbitcoinNode < Formula
 
   test do
     boost = Formula["boost@1.76"]
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <bitcoin/node.hpp>
       int main() {
         libbitcoin::node::settings configuration;
@@ -55,7 +56,7 @@ class LibbitcoinNode < Formula
         assert(configuration.refresh_transactions == true);
         return 0;
       }
-    EOS
+    CPP
     system ENV.cxx, "-std=c++11", "test.cpp", "-o", "test",
                     "-I#{boost.include}",
                     "-L#{Formula["libbitcoin"].opt_lib}", "-lbitcoin-system",

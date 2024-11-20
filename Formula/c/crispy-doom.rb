@@ -7,6 +7,7 @@ class CrispyDoom < Formula
   head "https://github.com/fabiangreffrath/crispy-doom.git", branch: "master"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "b9b035b756e9b42de763784b2d232e18edd11778a9417f61155011aafef3c03e"
     sha256 cellar: :any,                 arm64_sonoma:   "5c440e871b1498809e4372de33366c2c3df9e740bb8b541f9e414e4d96de50fe"
     sha256 cellar: :any,                 arm64_ventura:  "10f31a1dabdaa5709e63146e3ebb56008afce374116da948002b7e611b35f26b"
     sha256 cellar: :any,                 arm64_monterey: "327d92bb2cad988d5835718b372a77322f2aa7ba507200767e4d5dbb5c278545"
@@ -18,7 +19,7 @@ class CrispyDoom < Formula
 
   depends_on "autoconf" => :build
   depends_on "automake" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "fluid-synth"
   depends_on "libpng"
   depends_on "libsamplerate"
@@ -29,11 +30,10 @@ class CrispyDoom < Formula
   uses_from_macos "zlib"
 
   def install
-    system "autoreconf", "-fiv"
-    system "./configure", "--prefix=#{prefix}",
-                          "--disable-dependency-tracking",
-                          "--disable-silent-rules",
-                          "--disable-sdltest"
+    system "autoreconf", "--force", "--install", "--verbose"
+    system "./configure", "--disable-silent-rules",
+                          "--disable-sdltest",
+                          *std_configure_args
     system "make", "install", "execgamesdir=#{bin}"
   end
 

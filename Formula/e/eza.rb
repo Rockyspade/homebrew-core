@@ -1,22 +1,21 @@
 class Eza < Formula
   desc "Modern, maintained replacement for ls"
   homepage "https://github.com/eza-community/eza"
-  url "https://github.com/eza-community/eza/archive/refs/tags/v0.19.0.tar.gz"
-  sha256 "440fff093c23635d7c1a9955d42489a2f5c5839a0e85a03e39daeca39e9dbf84"
-  license "MIT"
+  url "https://github.com/eza-community/eza/archive/refs/tags/v0.20.8.tar.gz"
+  sha256 "10c32537e1c6d8dcd55d60e223dfb127dbec4c969132aeb503b2548213ef8541"
+  license "EUPL-1.2"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "33ea0327ed69ed9041f6f8137fba5abda723579105951673ea1aa1764af8ad99"
-    sha256 cellar: :any,                 arm64_ventura:  "7a59d2fddbd57fe0aab40ae2397758b859345ea6b1cacfd2fc602013809c9f31"
-    sha256 cellar: :any,                 arm64_monterey: "73f7e0334d97fdd1aeac7cdebbe1b0f18f14cdebff36df0f15f5d37b9227bba6"
-    sha256 cellar: :any,                 sonoma:         "7087f92ce8579ef43ea3be4398277ff5a40c9c71e10622ab8486fd416bbac1c7"
-    sha256 cellar: :any,                 ventura:        "0859deeee2dd8d3728bfe28ce143ab8b2f10d7d2a6a6b0fadfe244347e65875c"
-    sha256 cellar: :any,                 monterey:       "397ae990fddf597ed12817735a026b7244fee7b3280bdd13952fa81f5933c496"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "289d853bdf0fc321841799422f67464b589fe220149bdd35a78b1706ecb996d9"
+    sha256 cellar: :any,                 arm64_sequoia: "27a5529f35b6cc383e6f75cec41ac930ee31afd647ce8ed9444dff6c30471504"
+    sha256 cellar: :any,                 arm64_sonoma:  "b63b38aebb33371f41212fdc5e89f1013f3293b04c8dd9921704f349f4b9c6ea"
+    sha256 cellar: :any,                 arm64_ventura: "fa0ec590098e61a1b4be13533080a799fe9b5e9b0cdc3face86f00fc4347ea15"
+    sha256 cellar: :any,                 sonoma:        "0e9e9e365730257d279e00de33eb3349593fadc520469b60ba1bf25ab8c3c169"
+    sha256 cellar: :any,                 ventura:       "1d242c5c81983aa49e3ea7d3766e7e3da66e5587bb9145765a297a2f6990aa85"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "6a9bb0b6d2692fc794e62781a494730cedcc1fa09246bd6816ad034c8fdb3954"
   end
 
   depends_on "pandoc" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "rust" => :build
   depends_on "libgit2"
 

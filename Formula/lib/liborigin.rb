@@ -11,6 +11,7 @@ class Liborigin < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "72deab19a18c880f934d4d31980bc5a302de0a5aa5b6f0d9108b8272770eb0e2"
     sha256 cellar: :any,                 arm64_sonoma:   "6b2321d3a34333dd2412625fb5710244eb6ec6d14b0dbeb920bfedc2be8a2452"
     sha256 cellar: :any,                 arm64_ventura:  "c03e70300f707b2eb9df6c967d9a57f7a2c642c6ab579e431586398959af7c7b"
     sha256 cellar: :any,                 arm64_monterey: "5cc7c81fa2c9f7c5e43a523c73ede1f85f50c2163d5ae177e89438f39f17379c"
@@ -29,7 +30,7 @@ class Liborigin < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <iostream>
       #include <liborigin/OriginFile.h>
 
@@ -37,7 +38,7 @@ class Liborigin < Formula
           std::cout << "liborigin version: " << liboriginVersionString() << std::endl;
           return 0;
       }
-    EOS
+    CPP
 
     system ENV.cxx, "-std=c++11", "test.cpp", "-L#{lib}", "-lorigin", "-o", "test"
     assert_match version.to_s, shell_output("./test")

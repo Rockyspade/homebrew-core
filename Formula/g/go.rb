@@ -1,9 +1,9 @@
 class Go < Formula
   desc "Open source programming language to build simple/reliable/efficient software"
   homepage "https://go.dev/"
-  url "https://go.dev/dl/go1.23.0.src.tar.gz"
-  mirror "https://fossies.org/linux/misc/go1.23.0.src.tar.gz"
-  sha256 "42b7a8e80d805daa03022ed3fde4321d4c3bf2c990a144165d01eeecd6f699c6"
+  url "https://go.dev/dl/go1.23.3.src.tar.gz"
+  mirror "https://fossies.org/linux/misc/go1.23.3.src.tar.gz"
+  sha256 "8d6a77332487557c6afa2421131b50f83db4ae3c579c3bc72e670ee1f6968599"
   license "BSD-3-Clause"
   head "https://go.googlesource.com/go.git", branch: "master"
 
@@ -21,14 +21,12 @@ class Go < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 arm64_sonoma:   "5cc408349e666ae1c8ee789d057990f523a0cb8cc51919a913eb0df64e410d43"
-    sha256 arm64_ventura:  "5cc408349e666ae1c8ee789d057990f523a0cb8cc51919a913eb0df64e410d43"
-    sha256 arm64_monterey: "5cc408349e666ae1c8ee789d057990f523a0cb8cc51919a913eb0df64e410d43"
-    sha256 sonoma:         "68252d4fc1abb13c66c9ee088c1f97628beecac65b6c1223cf72dd517adab1b1"
-    sha256 ventura:        "68252d4fc1abb13c66c9ee088c1f97628beecac65b6c1223cf72dd517adab1b1"
-    sha256 monterey:       "68252d4fc1abb13c66c9ee088c1f97628beecac65b6c1223cf72dd517adab1b1"
-    sha256 x86_64_linux:   "8dc5e2fbbb380bd1b1f41b2be7bd1faa61b8d071231d4b193a23f1e6353f28ef"
+    sha256 arm64_sequoia: "1bbc1e16a0048f6d42a0522361eded589d4efeda3e2bc7527a3ca5bc65e8d7e7"
+    sha256 arm64_sonoma:  "1bbc1e16a0048f6d42a0522361eded589d4efeda3e2bc7527a3ca5bc65e8d7e7"
+    sha256 arm64_ventura: "1bbc1e16a0048f6d42a0522361eded589d4efeda3e2bc7527a3ca5bc65e8d7e7"
+    sha256 sonoma:        "958572c546b50d470c31869a39b067f667e716ee00c7eb1c84b79a16caf7a2fa"
+    sha256 ventura:       "958572c546b50d470c31869a39b067f667e716ee00c7eb1c84b79a16caf7a2fa"
+    sha256 x86_64_linux:  "5a0c729ae281c1dbba38ebb9258c9329a0028b6ce4b407b7eaf57538abc47f34"
   end
 
   # Don't update this unless this version cannot bootstrap the new version.
@@ -100,7 +98,7 @@ class Go < Formula
   test do
     assert_equal "local", shell_output("#{bin}/go env GOTOOLCHAIN").strip
 
-    (testpath/"hello.go").write <<~EOS
+    (testpath/"hello.go").write <<~GO
       package main
 
       import "fmt"
@@ -108,7 +106,7 @@ class Go < Formula
       func main() {
           fmt.Println("Hello World")
       }
-    EOS
+    GO
 
     # Run go fmt check for no errors then run the program.
     # This is a a bare minimum of go working as it uses fmt, build, and run.
@@ -119,7 +117,7 @@ class Go < Formula
       system bin/"go", "build", "hello.go"
     end
 
-    (testpath/"hello_cgo.go").write <<~EOS
+    (testpath/"hello_cgo.go").write <<~GO
       package main
 
       /*
@@ -132,7 +130,7 @@ class Go < Formula
       func main() {
           C.hello()
       }
-    EOS
+    GO
 
     # Try running a sample using cgo without CC or CXX set to ensure that the
     # toolchain's default choice of compilers work

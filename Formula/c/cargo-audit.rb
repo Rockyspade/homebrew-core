@@ -1,10 +1,10 @@
 class CargoAudit < Formula
   desc "Audit Cargo.lock files for crates with security vulnerabilities"
   homepage "https://rustsec.org/"
-  url "https://github.com/RustSec/rustsec/archive/refs/tags/cargo-audit/v0.20.0.tar.gz"
-  sha256 "695e8d0526bbc672d227a7f8b4592a5fd6641a9e819767146a8a4e3a32e57e5c"
+  url "https://github.com/rustsec/rustsec/archive/refs/tags/cargo-audit/v0.21.0.tar.gz"
+  sha256 "343242874edd00c2aa49c7481af0c4735ebcf682d04710f0c02a56a9015f6092"
   license any_of: ["Apache-2.0", "MIT"]
-  head "https://github.com/RustSec/rustsec.git", branch: "main"
+  head "https://github.com/rustsec/rustsec.git", branch: "main"
 
   livecheck do
     url :stable
@@ -12,13 +12,12 @@ class CargoAudit < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "1124eb92d944eb6d971e6269385754db411444f50e95f85d5ad12f53c8520477"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "a98d087a97d3d66ca26ca0e44dd8ddb9fef6e015460b82a3a53d553e232eb2d7"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "962ca301dad1b250a79ad59ee1c468b9318507c91bde1755b1bfb87c9f9fa34f"
-    sha256 cellar: :any_skip_relocation, sonoma:         "29fdb64dddf8db4ce4cdbaad7fee584729acd1c5d440063a4c40eb30afb76407"
-    sha256 cellar: :any_skip_relocation, ventura:        "9a813f39367920a092ec08bc15ea2bc7ad450d69f38f9ade8f9ea47173a43133"
-    sha256 cellar: :any_skip_relocation, monterey:       "8d8f4575de5e3b4ccbd9b8ff130fcebb6fd9052e0a877c0bc2bb3803284c6f03"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "69fe721c469556d29af06370804dc626aa24144192e0fde013893c4a94ddb2ea"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "0d8b35b5ed9aaaa17e8b67f037a02823477b81f0510880469dfb19e8dfdac53b"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "a71c3d0f60e9a03f06736ef8da99cd3972bb843c4ee0a0eec5d5c9616ed309c9"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "b6147d9a1d314491ec1944b9c14a812a781ba0f0f98e8efe536eb162b54dc0a0"
+    sha256 cellar: :any_skip_relocation, sonoma:        "b4869aa826a6e54647453f3ff38902de373f533a2c9a9bb8e020109c0364b9f5"
+    sha256 cellar: :any_skip_relocation, ventura:       "f7ebf6b00cfce35080e30e96ee1f42d81e2ce50dc56909c1109dcfa3684fe751"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "99578791cd07f067b67f092cd7e6362dffbff0ed7e542ce5bc055d25cf2bc8bf"
   end
 
   depends_on "rust" => :build
@@ -27,7 +26,7 @@ class CargoAudit < Formula
   uses_from_macos "zlib"
 
   on_linux do
-    depends_on "pkg-config" => :build
+    depends_on "pkgconf" => :build
   end
 
   def install

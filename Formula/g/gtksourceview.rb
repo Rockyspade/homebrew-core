@@ -21,7 +21,7 @@ class Gtksourceview < Formula
   disable! date: "2024-01-21", because: :unmaintained
 
   depends_on "intltool" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "gettext"
   depends_on "gtk+"
 
@@ -68,14 +68,14 @@ class Gtksourceview < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <gtksourceview/gtksourceview.h>
 
       int main(int argc, char *argv[]) {
         GtkWidget *widget = gtk_source_view_new();
         return 0;
       }
-    EOS
+    C
     ENV.libxml2
     atk = Formula["atk"]
     cairo = Formula["cairo"]

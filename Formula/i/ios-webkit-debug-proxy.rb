@@ -7,6 +7,7 @@ class IosWebkitDebugProxy < Formula
   head "https://github.com/google/ios-webkit-debug-proxy.git", branch: "master"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "b8ca23a0fe897b848f8fbe19273bf1e78793f7b0f9ec2ff9399173f4d8af7f1a"
     sha256 cellar: :any,                 arm64_sonoma:   "e94dd8359b362248a2add9bb60bdd7eaf096290b5fada5d73b8c8cfa86ea79da"
     sha256 cellar: :any,                 arm64_ventura:  "c74be0abfd3c227042b2be63c13207a9e6b72c228ab9c027d1f8c0ecd89f6abe"
     sha256 cellar: :any,                 arm64_monterey: "34da6aa20a69ca6f79afff001898af9994b697331815b44ae572a05c25dda7e4"
@@ -37,9 +38,9 @@ class IosWebkitDebugProxy < Formula
     return if OS.linux? && ENV["HOMEBREW_GITHUB_ACTIONS"]
 
     base_port = free_port
-    (testpath/"config.csv").write <<~EOS
+    (testpath/"config.csv").write <<~CSV
       null:#{base_port},:#{base_port + 1}-#{base_port + 101}
-    EOS
+    CSV
 
     fork do
       exec "#{bin}/ios_webkit_debug_proxy", "-c", testpath/"config.csv"

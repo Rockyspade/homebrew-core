@@ -1,19 +1,18 @@
 class Fzf < Formula
   desc "Command-line fuzzy finder written in Go"
   homepage "https://github.com/junegunn/fzf"
-  url "https://github.com/junegunn/fzf/archive/refs/tags/v0.54.3.tar.gz"
-  sha256 "6413f3916f8058b396820f9078b1336d94c72cbae39c593b1d16b83fcc4fdf74"
+  url "https://github.com/junegunn/fzf/archive/refs/tags/v0.56.3.tar.gz"
+  sha256 "fc7bf3fcfdc3c9562237d1e82196618201a39b3fd6bf3364149516b288f5a24a"
   license "MIT"
   head "https://github.com/junegunn/fzf.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "18acafd043413bfb61c6edef50bb70f9ff42b0748427b1f36e7466f772c54681"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "a04b7d26d831530f6d053ef0adf5513b8eda7030e5a067d4154b7a7bb04e7438"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "77f351cc6ffa324710c89da3093c18ac8495f57ddf2b948e382ceda744a51aa6"
-    sha256 cellar: :any_skip_relocation, sonoma:         "4807b5b09a1d0af31e75aa3f749acdf84e29275be040953d16060b29b6572e4a"
-    sha256 cellar: :any_skip_relocation, ventura:        "e8d6cd2506a64b290525b6ed9641e39344a2de657490b7939e88814287fb12c6"
-    sha256 cellar: :any_skip_relocation, monterey:       "6e501ed855756c98853a246c68e4b6ee23472365c3dcc1054ce11edc143ccbdf"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6addbb4c0a34e4325df4c754dc79c6544e13149c2bd8f6b813ce543e77b31edb"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "5950deebde5f28640f560d325d24a2de3733ceee67018ea871bd892c72c7cc02"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "5950deebde5f28640f560d325d24a2de3733ceee67018ea871bd892c72c7cc02"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "5950deebde5f28640f560d325d24a2de3733ceee67018ea871bd892c72c7cc02"
+    sha256 cellar: :any_skip_relocation, sonoma:        "d966b27087cf6f532ebfc3b0d049e4ef04378bd2b3c2c8381016b37c762b9e1a"
+    sha256 cellar: :any_skip_relocation, ventura:       "d966b27087cf6f532ebfc3b0d049e4ef04378bd2b3c2c8381016b37c762b9e1a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "4634fa4ef2deba42f297111e2f6a3104963d83a7d24767ccf6d2b9ce74ed9d13"
   end
 
   depends_on "go" => :build

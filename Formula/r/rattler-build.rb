@@ -1,8 +1,8 @@
 class RattlerBuild < Formula
   desc "Universal conda package builder"
   homepage "https://github.com/prefix-dev/rattler-build"
-  url "https://github.com/prefix-dev/rattler-build/archive/refs/tags/v0.20.0.tar.gz"
-  sha256 "7e0b5d4e0aa77a8887d7441249d40f378261d74337c4e36fb3dd9340e8c365fb"
+  url "https://github.com/prefix-dev/rattler-build/archive/refs/tags/v0.31.0.tar.gz"
+  sha256 "d6eb02246ae83e4b6d7d89c62867232aabe19613aa66a4888fe29cd96c8a5f31"
   license "BSD-3-Clause"
   head "https://github.com/prefix-dev/rattler-build.git", branch: "main"
 
@@ -15,13 +15,12 @@ class RattlerBuild < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "420f1ade3e49423277acba49bebd6ca56a77e498504428c3094cfbb271390bad"
-    sha256 cellar: :any,                 arm64_ventura:  "0a54a85e7376a78933a2136031e943a36b3743f2c94c68bc5c87bf2cbb47cec8"
-    sha256 cellar: :any,                 arm64_monterey: "79ed5cdb4ae28c68f89524337b44f1d49c79a7915d555706218773accea0c955"
-    sha256 cellar: :any,                 sonoma:         "d64e31d6e19b3329cdae8da1cbccca10a429414e9c3fc4d4711bdbe53564a4d0"
-    sha256 cellar: :any,                 ventura:        "2ecb0433626e38ec597c2831a85b8b2f79da2560a5b6491c628fa63d3909bcf8"
-    sha256 cellar: :any,                 monterey:       "1191eb2f1dbbed49dc2fbbc4387f60626d849f1450ac17d0d29c40dab478ea08"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b72ecb25882979d8163e752d369361516a6c6fcdfaeba7052d8bd2ea47c32b15"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "8d62e588af52994aab445c055247edb8473d736986853dc361986cd483efecc0"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "8e43c4d80258d089d961c9cd8c897896eb633fa80c29cd35d4db262cd872812c"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "c9dba3dfb9cfd4f48c1bb4949e853e2bd182cfd40f4fb1144405a45d563e468f"
+    sha256 cellar: :any_skip_relocation, sonoma:        "cec9f2b73b20358a74ee8b7202856d5ae5324e2452a8db1fd851c4c6f206d8c6"
+    sha256 cellar: :any_skip_relocation, ventura:       "4b100081ada3b6920c43ea481ebbe6fce9dabe449aaab6ad5d58f6ade2993573"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f7efd0b8c5fb89eaffe7d452d4260ff6493647fb9490c5d2a1d09b17d932fec0"
   end
 
   depends_on "pkg-config" => :build
@@ -39,7 +38,7 @@ class RattlerBuild < Formula
   end
 
   test do
-    (testpath/"recipe"/"recipe.yaml").write <<~EOS
+    (testpath/"recipe"/"recipe.yaml").write <<~YAML
       package:
         name: test-package
         version: '0.1.0'
@@ -60,7 +59,7 @@ class RattlerBuild < Formula
         - script:
           - test -f "$PREFIX/bin/hello"
           - hello | grep "Hello World!"
-    EOS
+    YAML
     system bin/"rattler-build", "build", "--recipe", "recipe/recipe.yaml"
     assert_predicate testpath/"output/noarch/test-package-0.1.0-buildstring.conda", :exist?
 

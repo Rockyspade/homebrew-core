@@ -3,8 +3,8 @@ class Trino < Formula
 
   desc "Distributed SQL query engine for big data"
   homepage "https://trino.io"
-  url "https://search.maven.org/remotecontent?filepath=io/trino/trino-server/454/trino-server-454.tar.gz", using: :nounzip
-  sha256 "a958ae6f890aacb02255c69881077c873760d87a3a21f39c1a766e8cf8da7558"
+  url "https://search.maven.org/remotecontent?filepath=io/trino/trino-server/464/trino-server-464.tar.gz", using: :nounzip
+  sha256 "2c57d2d59674aeee267195c4dc8d5dba5faa2ff462a34477c7094747ca79c7ae"
   license "Apache-2.0"
 
   livecheck do
@@ -13,21 +13,22 @@ class Trino < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "b3ddc1b597bf12cf430a82b263ec5db3a2f8bd853626570a3eee4baf9894823c"
+    sha256 cellar: :any_skip_relocation, all: "9d62c998207a38491d69cd1b65437cae6b3b3e9a17ea2d3519447f042949ab2f"
   end
 
   depends_on "gnu-tar" => :build
   depends_on "openjdk"
-  depends_on "python@3.12"
+
+  uses_from_macos "python"
 
   resource "trino-src" do
-    url "https://github.com/trinodb/trino/archive/refs/tags/454.tar.gz", using: :nounzip
-    sha256 "ddefec517e9ae9504d0fcf7fa15bfac541820c1da8b3cef65cce87b09aa4030f"
+    url "https://github.com/trinodb/trino/archive/refs/tags/464.tar.gz", using: :nounzip
+    sha256 "0eaa56c13a79119652458d7d94ce72f0e14ccfe20e6ce88fb937662cf6e1acfc"
   end
 
   resource "trino-cli" do
-    url "https://search.maven.org/remotecontent?filepath=io/trino/trino-cli/454/trino-cli-454-executable.jar"
-    sha256 "a096a0d2a6b6fa8f1e20cdcdf67cbf1962ec0a745621482606713d58eb0dcdbc"
+    url "https://search.maven.org/remotecontent?filepath=io/trino/trino-cli/464/trino-cli-464-executable.jar"
+    sha256 "f6721ed63be46510dc6c18436da30cebd7e70656eb5db1598d5bcc9a509ac99f"
   end
 
   def install
@@ -52,7 +53,7 @@ class Trino < Formula
       inreplace libexec/"etc/jvm.config", %r{^-agentpath:/usr/lib/trino/bin/libjvmkill.so$\n}, ""
     end
 
-    rewrite_shebang detected_python_shebang, libexec/"bin/launcher.py"
+    rewrite_shebang detected_python_shebang(use_python_from_path: true), libexec/"bin/launcher.py"
     (bin/"trino-server").write_env_script libexec/"bin/launcher", Language::Java.overridable_java_home_env
 
     resource("trino-cli").stage do

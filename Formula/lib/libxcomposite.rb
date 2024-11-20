@@ -6,6 +6,7 @@ class Libxcomposite < Formula
   license "MIT"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "da32d7ca9d60bea76c4c75ac3ac601601794a44689b7e7ecd0bb076730516202"
     sha256 cellar: :any,                 arm64_sonoma:   "5bb05841f68025cbe9d0db5f308f1065025a1ee118a6f8b9796774f936a518e1"
     sha256 cellar: :any,                 arm64_ventura:  "b0c612dfb969ecf35178c2182cd9fcc5f9506ec3f31f7b1960daccf5765966be"
     sha256 cellar: :any,                 arm64_monterey: "9b0e2df221f534feb43981325bcf9a76b1842568e334b5b39e1e05a62e151be8"
@@ -36,7 +37,7 @@ class Libxcomposite < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include "X11/Xlib.h"
       #include "X11/extensions/Xcomposite.h"
 
@@ -47,7 +48,7 @@ class Libxcomposite < Formula
         XCompositeReleaseOverlayWindow(d, s);
         return 0;
       }
-    EOS
+    C
     system ENV.cc, "test.c", "-I#{include}", "-L#{lib}", "-lXcomposite"
     assert_equal 0, $CHILD_STATUS.exitstatus
   end

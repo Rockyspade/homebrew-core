@@ -8,6 +8,7 @@ class GoAT120 < Formula
 
   bottle do
     rebuild 1
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "6fa23aea0aeed267195266f0242cd459f5027339d5485aa6eae3073736608e4c"
     sha256 cellar: :any_skip_relocation, arm64_sonoma:   "2b7719f9f65d0176b3016a973a9c9ee179ed204465670f550aea36878335e644"
     sha256 cellar: :any_skip_relocation, arm64_ventura:  "2b7719f9f65d0176b3016a973a9c9ee179ed204465670f550aea36878335e644"
     sha256 cellar: :any_skip_relocation, arm64_monterey: "2b7719f9f65d0176b3016a973a9c9ee179ed204465670f550aea36878335e644"
@@ -47,7 +48,7 @@ class GoAT120 < Formula
   end
 
   test do
-    (testpath/"hello.go").write <<~EOS
+    (testpath/"hello.go").write <<~GO
       package main
 
       import "fmt"
@@ -55,7 +56,7 @@ class GoAT120 < Formula
       func main() {
           fmt.Println("Hello World")
       }
-    EOS
+    GO
 
     # Run go fmt check for no errors then run the program.
     # This is a a bare minimum of go working as it uses fmt, build, and run.
@@ -66,7 +67,7 @@ class GoAT120 < Formula
       system bin/"go", "build", "hello.go"
     end
 
-    (testpath/"hello_cgo.go").write <<~EOS
+    (testpath/"hello_cgo.go").write <<~GO
       package main
 
       /*
@@ -79,7 +80,7 @@ class GoAT120 < Formula
       func main() {
           C.hello()
       }
-    EOS
+    GO
 
     # Try running a sample using cgo without CC or CXX set to ensure that the
     # toolchain's default choice of compilers work

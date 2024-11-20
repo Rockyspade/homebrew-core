@@ -4,25 +4,24 @@ class MetaPackageManager < Formula
 
   desc "Wrapper around all package managers with a unifying CLI"
   homepage "https://kdeldycke.github.io/meta-package-manager/"
-  url "https://files.pythonhosted.org/packages/4f/7c/f31914ddedbd51616fb0e765bc1d25a8c4ec038a12c4f0b76206ce928443/meta_package_manager-5.18.0.tar.gz"
-  sha256 "010c6503a003ccca8b73450f7d913b90036f5b92553fad745b7c01a366127a16"
+  url "https://files.pythonhosted.org/packages/fb/34/f5770a43e38c7dc9220586c8a8434775f4fa6a8ab8732ed5677b284f6357/meta_package_manager-5.19.0.tar.gz"
+  sha256 "e482b64ff36d0a4307691e4af015b2a6d16b4ad7b3634b2acd0bb3fd27185b65"
   license "GPL-2.0-or-later"
   head "https://github.com/kdeldycke/meta-package-manager.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "3c661aa41d72985951d4db1da5810416857b6305206e1f5c8b22cae8455e4132"
-    sha256 cellar: :any,                 arm64_ventura:  "b9a0d76db9f4f79a387eb3ff13979477e3247775c800a01672c176cd8d6513fc"
-    sha256 cellar: :any,                 arm64_monterey: "7f351c590968660a291334c80c435722e2da62197b3a85f135ad7039eceab124"
-    sha256 cellar: :any,                 sonoma:         "17daff7efaf73e349f31b6dc731a075714ebee056c7529a9f52f2d98cb41975d"
-    sha256 cellar: :any,                 ventura:        "3c5606b1e6ae7f440349f3dce78e9540d30018131318db7e1095ed2b1e89eaa1"
-    sha256 cellar: :any,                 monterey:       "ec84124a46c934a405783e24a13254c8ee218e3f996ba186337aba2cb8f41dae"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "4bf62d59352b048d003ca1bb22ee0893cf1fb9b50a18b6b17328c8e0f48c481e"
+    sha256 cellar: :any,                 arm64_sequoia: "9f80424ef07d33a56507599496504b68801589d95d605c1bf0838aa453a1f1bf"
+    sha256 cellar: :any,                 arm64_sonoma:  "40bf73f649dcf30bd3e116ccdccacbe63ebf61618c8a24d6209bfd3ae311844d"
+    sha256 cellar: :any,                 arm64_ventura: "f0ab724ff775627fd2a716270c2e45838defd983203b0defdbefc7f0562e5cec"
+    sha256 cellar: :any,                 sonoma:        "47e7f479a924bee06b2e994d18d9a46c56f99993190913e31f41ae6ca1a955d4"
+    sha256 cellar: :any,                 ventura:       "40f92c72901076bf2fd224366a83cf1b1075e56995f3a329f96a5726c438f45f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3cd1a7bcccf3f49658136f48be9adb80047474209e9974e2b1abb653a4012d68"
   end
 
   depends_on "rust" => :build # for rpds-py
   depends_on "certifi"
   depends_on "libyaml"
-  depends_on "python@3.12"
+  depends_on "python@3.13"
 
   uses_from_macos "libxml2"
   uses_from_macos "libxslt"
@@ -33,18 +32,18 @@ class MetaPackageManager < Formula
   end
 
   resource "attrs" do
-    url "https://files.pythonhosted.org/packages/39/31/ca3e2de55503d8ad75985865629f69a2c376a44428c5df1450b749d30751/attrs-24.1.0.tar.gz"
-    sha256 "adbdec84af72d38be7628e353a09b6a6790d15cd71819f6e9d7b0faa8a125745"
+    url "https://files.pythonhosted.org/packages/fc/0f/aafca9af9315aee06a89ffde799a10a582fe8de76c563ee80bbcdc08b3fb/attrs-24.2.0.tar.gz"
+    sha256 "5cfb1b9148b5b086569baec03f20d7b6bf3bcacc9a42bebf87ffaaca362f6346"
   end
 
   resource "beartype" do
-    url "https://files.pythonhosted.org/packages/96/15/4e623478a9628ad4cee2391f19aba0b16c1dd6fedcb2a399f0928097b597/beartype-0.18.5.tar.gz"
-    sha256 "264ddc2f1da9ec94ff639141fbe33d22e12a9f75aa863b83b7046ffff1381927"
+    url "https://files.pythonhosted.org/packages/6f/e1/00515b97afa3993b4a314e4bc168fbde0917fd5845435cb6f16a19770746/beartype-0.19.0.tar.gz"
+    sha256 "de42dfc1ba5c3710fde6c3002e3bd2cad236ed4d2aabe876345ab0b4234a6573"
   end
 
   resource "boltons" do
-    url "https://files.pythonhosted.org/packages/7a/fb/214de4d813f566849956915ff07ee60f2b86424f294525e60e01c460d4d2/boltons-24.0.0.tar.gz"
-    sha256 "7153feccaea1ff2e1472f68d4b57fadb796a2ee49d29f638f1c9cd8fb5ebd916"
+    url "https://files.pythonhosted.org/packages/84/76/dfc34232b3e88634025563f52a430be0838182647c063f99569086922554/boltons-24.1.0.tar.gz"
+    sha256 "4a49b7d57ee055b83a458c8682a2a6f199d263a8aa517098bda9bab813554b87"
   end
 
   resource "boolean-py" do
@@ -53,13 +52,13 @@ class MetaPackageManager < Formula
   end
 
   resource "bracex" do
-    url "https://files.pythonhosted.org/packages/ac/f1/ac657fd234f4ee61da9d90f2bae7d6078074de2f97cb911743faa8d10a91/bracex-2.5.tar.gz"
-    sha256 "0725da5045e8d37ea9592ab3614d8b561e22c3c5fde3964699be672e072ab611"
+    url "https://files.pythonhosted.org/packages/d6/6c/57418c4404cd22fe6275b8301ca2b46a8cdaa8157938017a9ae0b3edf363/bracex-2.5.post1.tar.gz"
+    sha256 "12c50952415bfa773d2d9ccb8e79651b8cdb1f31a42f6091b804f6ba2b4a66b6"
   end
 
   resource "charset-normalizer" do
-    url "https://files.pythonhosted.org/packages/63/09/c1bc53dab74b1816a00d8d030de5bf98f724c52c1635e07681d312f20be8/charset-normalizer-3.3.2.tar.gz"
-    sha256 "f30c3cb33b24454a82faecaf01b19c18562b1e89558fb6c56de4d9118a032fd5"
+    url "https://files.pythonhosted.org/packages/f2/4f/e1808dc01273379acc506d18f1504eb2d299bd4131743b9fc54d7be4df1e/charset_normalizer-3.4.0.tar.gz"
+    sha256 "223217c3d4f82c3ac5e29032b3f1c2eb0fb591b72161f86d93f5719079dae93e"
   end
 
   resource "click" do
@@ -68,8 +67,8 @@ class MetaPackageManager < Formula
   end
 
   resource "click-extra" do
-    url "https://files.pythonhosted.org/packages/f1/88/461ca2fda952351b95746cfa65f4a472f3758f9f1d5394328d4722151876/click_extra-4.9.0.tar.gz"
-    sha256 "2005199222c1b0d7b18b30372b5652ad01ce54e140a7a2d6e1c5b1a391cf891f"
+    url "https://files.pythonhosted.org/packages/53/15/54b0203cb67cdb79f017e2ab57fbc5e77033e82e8e41afe0ae9c14ca3848/click_extra-4.11.3.tar.gz"
+    sha256 "1e475fc6ac4cf319b63d7ff6d9f156974feec000164b6a96d7107e6e3ff97832"
   end
 
   resource "cloup" do
@@ -83,13 +82,23 @@ class MetaPackageManager < Formula
   end
 
   resource "cyclonedx-python-lib" do
-    url "https://files.pythonhosted.org/packages/0b/8e/cb9126ff14d239337b8eb57a5535676796eaf293c0c00b6b3ab680cadd15/cyclonedx_python_lib-7.5.1.tar.gz"
-    sha256 "00cfe1e58452698650ae08b8f4389f7b1ec203a3e1c50cbf6ca6d320941dfb3f"
+    url "https://files.pythonhosted.org/packages/5f/5e/92fbc03f1ab980ccd2b942e3b3cda0c60a5828a673837b4ee1eaceb924a0/cyclonedx_python_lib-8.4.0.tar.gz"
+    sha256 "1d86efc1e81c0fd01141658b8aed5248c4f4d8d300d7ced9e1dfc39abeafc0a9"
   end
 
   resource "defusedxml" do
     url "https://files.pythonhosted.org/packages/0f/d5/c66da9b79e5bdb124974bfe172b4daf3c984ebd9c2a06e2b8a4dc7331c72/defusedxml-0.7.1.tar.gz"
     sha256 "1bb3032db185915b62d7c6209c5a8792be6a32ab2fedacc84e01b52c51aa3e69"
+  end
+
+  resource "distro" do
+    url "https://files.pythonhosted.org/packages/fc/f8/98eea607f65de6527f8a2e8885fc8015d3e6f5775df186e443e0964a11c3/distro-1.9.0.tar.gz"
+    sha256 "2fa77c6fd8940f116ee1d6b94a2f90b13b5ea8d019b98bc8bafdcabcdd9bdbed"
+  end
+
+  resource "extra-platforms" do
+    url "https://files.pythonhosted.org/packages/e0/a7/7fb81009b351e4f3194806cad083515bc11d9df0c86d731c7913840598fa/extra_platforms-1.6.0.tar.gz"
+    sha256 "dbef8d68019362690bd87fcb98ea287e7d381d7b1758a500d66abea320485234"
   end
 
   resource "fqdn" do
@@ -98,13 +107,13 @@ class MetaPackageManager < Formula
   end
 
   resource "idna" do
-    url "https://files.pythonhosted.org/packages/21/ed/f86a79a07470cb07819390452f178b3bef1d375f2ec021ecfc709fc7cf07/idna-3.7.tar.gz"
-    sha256 "028ff3aadf0609c1fd278d8ea3089299412a7a8b9bd005dd08b9f8285bcb5cfc"
+    url "https://files.pythonhosted.org/packages/f1/70/7703c29685631f5a7590aa73f1f1d3fa9a380e654b86af429e0934a32f7d/idna-3.10.tar.gz"
+    sha256 "12f65c9b470abda6dc35cf8e63cc574b1c52b11df2c86030af0ac09b01b13ea9"
   end
 
-  resource "isodate" do
-    url "https://files.pythonhosted.org/packages/db/7a/c0a56c7d56c7fa723988f122fa1f1ccf8c5c4ccc48efad0d214b49e5b1af/isodate-0.6.1.tar.gz"
-    sha256 "48c5881de7e8b0a0d648cb024c8062dc84e7b840ed81e864c7614fd3c127bde9"
+  resource "iniconfig" do
+    url "https://files.pythonhosted.org/packages/d7/4b/cbd8e699e64a6f16ca3a8220661b5f83792b3017d0f79807cb8708d33913/iniconfig-2.0.0.tar.gz"
+    sha256 "2d91e135bf72d31a410b17c16da610a82cb55f6b0477d1a902134b24a455b8b3"
   end
 
   resource "isoduration" do
@@ -123,8 +132,8 @@ class MetaPackageManager < Formula
   end
 
   resource "jsonschema-specifications" do
-    url "https://files.pythonhosted.org/packages/f8/b9/cc0cc592e7c195fb8a650c1d5990b10175cf13b4c97465c72ec841de9e4b/jsonschema_specifications-2023.12.1.tar.gz"
-    sha256 "48a76787b3e70f5ed53f1160d2b81f586e4ca6d1548c5de7085d1682674764cc"
+    url "https://files.pythonhosted.org/packages/10/db/58f950c996c793472e336ff3655b13fbcf1e3b359dcf52dcf3ed3b52c352/jsonschema_specifications-2024.10.1.tar.gz"
+    sha256 "0f38b83639958ce1152d02a7f062902c41c8fd20d558b0c34344292d417ae272"
   end
 
   resource "lark-parser" do
@@ -133,13 +142,13 @@ class MetaPackageManager < Formula
   end
 
   resource "license-expression" do
-    url "https://files.pythonhosted.org/packages/04/75/d0b021ce2ab2eb9f28151dbae650e5ec4bca23f375b973c3807f3009c56f/license-expression-30.3.0.tar.gz"
-    sha256 "1295406f736b4f395ff069aec1cebfad53c0fcb3cf57df0f5ec58fc7b905aea5"
+    url "https://files.pythonhosted.org/packages/c7/97/df5570fe2f1046bb5f6eeed55815ef11e371e9310d53bd94ec8efe4173f4/license_expression-30.4.0.tar.gz"
+    sha256 "6464397f8ed4353cc778999caec43b099f8d8d5b335f282e26a9eb9435522f05"
   end
 
   resource "lxml" do
-    url "https://files.pythonhosted.org/packages/63/f7/ffbb6d2eb67b80a45b8a0834baa5557a14a5ffce0979439e7cd7f0c4055b/lxml-5.2.2.tar.gz"
-    sha256 "bb2dc4898180bea79863d5487e5f9c7c34297414bad54bcd0f0852aee9cfdb87"
+    url "https://files.pythonhosted.org/packages/e7/6b/20c3a4b24751377aaa6307eb230b66701024012c29dd374999cc92983269/lxml-5.3.0.tar.gz"
+    sha256 "4e109ca30d1edec1ac60cdbe341905dc3b8f55b16855e03a54aaf59e51ec8c6f"
   end
 
   resource "mergedeep" do
@@ -148,13 +157,23 @@ class MetaPackageManager < Formula
   end
 
   resource "more-itertools" do
-    url "https://files.pythonhosted.org/packages/01/33/77f586de725fc990d12dda3d4efca4a41635be0f99a987b9cc3a78364c13/more-itertools-10.3.0.tar.gz"
-    sha256 "e5d93ef411224fbcef366a6e8ddc4c5781bc6359d43412a65dd5964e46111463"
+    url "https://files.pythonhosted.org/packages/51/78/65922308c4248e0eb08ebcbe67c95d48615cc6f27854b6f2e57143e9178f/more-itertools-10.5.0.tar.gz"
+    sha256 "5482bfef7849c25dc3c6dd53a6173ae4795da2a41a80faea6700d9f5846c5da6"
   end
 
   resource "packageurl-python" do
-    url "https://files.pythonhosted.org/packages/56/c5/c0f3ac14fd44f9b344069397fbe79aad1fd2c69220d145447c6c29cb541d/packageurl_python-0.15.6.tar.gz"
-    sha256 "cbc89afd15d5f4d05db4f1b61297e5b97a43f61f28799f6d282aff467ed2ee96"
+    url "https://files.pythonhosted.org/packages/68/7d/0bd319dc94c7956b4d864e87d3dc03739f125ce174671e3128edd566a63e/packageurl_python-0.16.0.tar.gz"
+    sha256 "69e3bf8a3932fe9c2400f56aaeb9f86911ecee2f9398dbe1b58ec34340be365d"
+  end
+
+  resource "packaging" do
+    url "https://files.pythonhosted.org/packages/d0/63/68dbb6eb2de9cb10ee4c9c14a0148804425e13c4fb20d61cce69f53106da/packaging-24.2.tar.gz"
+    sha256 "c228a6dc5e932d346bc5739379109d49e8853dd8223571c7c5b55260edc0b97f"
+  end
+
+  resource "pluggy" do
+    url "https://files.pythonhosted.org/packages/96/2d/02d4312c973c6050a18b314a5ad0b3210edb65a906f868e31c111dede4a6/pluggy-1.5.0.tar.gz"
+    sha256 "2cffa88e94fdc978c4c574f15f9e59b7f4201d439195c3715ca9e2486f1d0cf1"
   end
 
   resource "ply" do
@@ -163,13 +182,18 @@ class MetaPackageManager < Formula
   end
 
   resource "py-serializable" do
-    url "https://files.pythonhosted.org/packages/17/67/b3f82dfbaaee8888380db391cdb870b95b034de5ac10634e5e6cafd50d3e/py_serializable-1.1.0.tar.gz"
-    sha256 "3311ab39063b131caca0fb75e2038153682e55576c67f24a2de72d402dccb6e0"
+    url "https://files.pythonhosted.org/packages/16/cf/6e482507764034d6c41423a19f33fdd59655052fdb2ca4358faa3b0bcfd1/py_serializable-1.1.2.tar.gz"
+    sha256 "89af30bc319047d4aa0d8708af412f6ce73835e18bacf1a080028bb9e2f42bdb"
   end
 
   resource "pyparsing" do
-    url "https://files.pythonhosted.org/packages/46/3a/31fd28064d016a2182584d579e033ec95b809d8e220e74c4af6f0f2e8842/pyparsing-3.1.2.tar.gz"
-    sha256 "a1bac0ce561155ecc3ed78ca94d3c9378656ad4c94c1270de543f621420f94ad"
+    url "https://files.pythonhosted.org/packages/8c/d5/e5aeee5387091148a19e1145f63606619cb5f20b83fccb63efae6474e7b2/pyparsing-3.2.0.tar.gz"
+    sha256 "cbf74e27246d595d9a74b186b810f6fbb86726dbf3b9532efb343f6d7294fe9c"
+  end
+
+  resource "pytest" do
+    url "https://files.pythonhosted.org/packages/8b/6c/62bbd536103af674e227c41a8f3dcd022d591f6eed5facb5a0f31ee33bbc/pytest-8.3.3.tar.gz"
+    sha256 "70b98107bd648308a7952b06e6ca9a50bc660be218d53c257cc1fc94fda10181"
   end
 
   resource "python-dateutil" do
@@ -178,13 +202,13 @@ class MetaPackageManager < Formula
   end
 
   resource "pyyaml" do
-    url "https://files.pythonhosted.org/packages/cd/e5/af35f7ea75cf72f2cd079c95ee16797de7cd71f29ea7c68ae5ce7be1eda0/PyYAML-6.0.1.tar.gz"
-    sha256 "bfdf460b1736c775f2ba9f6a92bca30bc2095067b8a9d77876d1fad6cc3b4a43"
+    url "https://files.pythonhosted.org/packages/54/ed/79a089b6be93607fa5cdaedf301d7dfb23af5f25c398d5ead2525b063e17/pyyaml-6.0.2.tar.gz"
+    sha256 "d584d9ec91ad65861cc08d42e834324ef890a082e591037abe114850ff7bbc3e"
   end
 
   resource "rdflib" do
-    url "https://files.pythonhosted.org/packages/0d/a3/63740490a392921a611cfc05b5b17bffd4259b3c9589c7904a4033b3d291/rdflib-7.0.0.tar.gz"
-    sha256 "9995eb8569428059b8c1affd26b25eac510d64f5043d9ce8c84e0d0036e995ae"
+    url "https://files.pythonhosted.org/packages/62/b6/4cee25689c7a3dfafeb481d358e74696fe3a8543da4cb2c1b71c0cb6583d/rdflib-7.1.1.tar.gz"
+    sha256 "164de86bd3564558802ca983d84f6616a4a1a420c7a17a8152f5016076b2913e"
   end
 
   resource "referencing" do
@@ -208,8 +232,8 @@ class MetaPackageManager < Formula
   end
 
   resource "rpds-py" do
-    url "https://files.pythonhosted.org/packages/2f/fe/5217efe981c2ae8647b503ba3b8f55efc837df62f63667572b4bb75b30bc/rpds_py-0.19.1.tar.gz"
-    sha256 "31dd5794837f00b46f4096aa8ccaa5972f73a938982e32ed817bb520c465e520"
+    url "https://files.pythonhosted.org/packages/23/80/afdf96daf9b27d61483ef05b38f282121db0e38f5fd4e89f40f5c86c2a4f/rpds_py-0.21.0.tar.gz"
+    sha256 "ed6378c9d66d0de903763e7706383d60c33829581f0adff47b6535f1802fa6db"
   end
 
   resource "semantic-version" do
@@ -228,8 +252,8 @@ class MetaPackageManager < Formula
   end
 
   resource "spdx-tools" do
-    url "https://files.pythonhosted.org/packages/32/d8/a67445be5981469fdbaf7f765f53c920f699e7e512cc931b650a935c3199/spdx-tools-0.8.2.tar.gz"
-    sha256 "aea4ac9c2c375e7f439b1cef5ff32ef34914c083de0f61e08ed67cd3d9deb2a9"
+    url "https://files.pythonhosted.org/packages/f1/99/3470b28dc4b64fd29db3b1dcf5e84c743ec88e25ea7b214794f5930f0319/spdx-tools-0.8.3.tar.gz"
+    sha256 "68b8f9ce2893b5216bd90b2e63f1c821c2884e4ebc4fd295ebbf1fa8b8a94b93"
   end
 
   resource "tabulate" do
@@ -238,13 +262,13 @@ class MetaPackageManager < Formula
   end
 
   resource "tomli-w" do
-    url "https://files.pythonhosted.org/packages/49/05/6bf21838623186b91aedbda06248ad18f03487dc56fbc20e4db384abde6c/tomli_w-1.0.0.tar.gz"
-    sha256 "f463434305e0336248cac9c2dc8076b707d8a12d019dd349f5c1e382dd1ae1b9"
+    url "https://files.pythonhosted.org/packages/d4/19/b65f1a088ee23e37cdea415b357843eca8b1422a7b11a9eee6e35d4ec273/tomli_w-1.1.0.tar.gz"
+    sha256 "49e847a3a304d516a169a601184932ef0f6b61623fe680f836a2aa7128ed0d33"
   end
 
   resource "types-python-dateutil" do
-    url "https://files.pythonhosted.org/packages/61/c5/c3a4d72ffa8efc2e78f7897b1c69ec760553246b67d3ce8c4431fac5d4e3/types-python-dateutil-2.9.0.20240316.tar.gz"
-    sha256 "5d2f2e240b86905e40944dd787db6da9263f0deabef1076ddaed797351ec0202"
+    url "https://files.pythonhosted.org/packages/31/f8/f6ee4c803a7beccffee21bb29a71573b39f7037c224843eff53e5308c16e/types-python-dateutil-2.9.0.20241003.tar.gz"
+    sha256 "58cb85449b2a56d6684e41aeefb4c4280631246a0da1a719bdbe6f3fb0317446"
   end
 
   resource "uri-template" do
@@ -258,13 +282,13 @@ class MetaPackageManager < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/43/6d/fa469ae21497ddc8bc93e5877702dca7cb8f911e337aca7452b5724f1bb6/urllib3-2.2.2.tar.gz"
-    sha256 "dd505485549a7a552833da5e6063639d0d177c04f23bc3864e41e5dc5f612168"
+    url "https://files.pythonhosted.org/packages/ed/63/22ba4ebfe7430b76388e7cd448d5478814d3032121827c12a2cc287e2260/urllib3-2.2.3.tar.gz"
+    sha256 "e7d814a81dad81e6caf2ec9fdedb284ecc9c73076b62654547cc64ccdcae26e9"
   end
 
   resource "wcmatch" do
-    url "https://files.pythonhosted.org/packages/ea/c4/55e0d36da61d7b8b2a49fd273e6b296fd5e8471c72ebbe438635d1af3968/wcmatch-8.5.2.tar.gz"
-    sha256 "a70222b86dea82fb382dd87b73278c10756c138bd6f8f714e2183128887b9eb2"
+    url "https://files.pythonhosted.org/packages/41/ab/b3a52228538ccb983653c446c1656eddf1d5303b9cb8b9aef6a91299f862/wcmatch-10.0.tar.gz"
+    sha256 "e72f0de09bba6a04e0de70937b0cf06e55f36f37b3deb422dfaf854b867b840a"
   end
 
   resource "wcwidth" do
@@ -273,13 +297,13 @@ class MetaPackageManager < Formula
   end
 
   resource "webcolors" do
-    url "https://files.pythonhosted.org/packages/b3/bf/cfe993a8acab0976a08cfa1a0a23cf9ce212b8c52cca40fbcca6e994acea/webcolors-24.6.0.tar.gz"
-    sha256 "1d160d1de46b3e81e58d0a280d0c78b467dc80f47294b91b1ad8029d2cedb55b"
+    url "https://files.pythonhosted.org/packages/7b/29/061ec845fb58521848f3739e466efd8250b4b7b98c1b6c5bf4d40b419b7e/webcolors-24.11.1.tar.gz"
+    sha256 "ecb3d768f32202af770477b8b65f318fa4f566c22948673a977b00d589dd80f6"
   end
 
   resource "xmltodict" do
-    url "https://files.pythonhosted.org/packages/39/0d/40df5be1e684bbaecdb9d1e0e40d5d482465de6b00cbb92b84ee5d243c7f/xmltodict-0.13.0.tar.gz"
-    sha256 "341595a488e3e01a85a9d8911d8912fd922ede5fecc4dce437eb4b6c8d037e56"
+    url "https://files.pythonhosted.org/packages/50/05/51dcca9a9bf5e1bce52582683ce50980bcadbc4fa5143b9f2b19ab99958f/xmltodict-0.14.2.tar.gz"
+    sha256 "201e7c28bb210e374999d1dde6382923ab0ed1a8a5faeece48ab525b7810a553"
   end
 
   def install

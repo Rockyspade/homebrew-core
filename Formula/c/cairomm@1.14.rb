@@ -11,6 +11,7 @@ class CairommAT114 < Formula
   end
 
   bottle do
+    sha256 cellar: :any, arm64_sequoia:  "87bd872e7129feb2db9ca965fe5e065ebef30f6a196f0c80d8012b60cef66bf2"
     sha256 cellar: :any, arm64_sonoma:   "cf8e7aa143ab206a8986997621217fc40e219d23a88e09d5a3d1ee1ce58d78c2"
     sha256 cellar: :any, arm64_ventura:  "76dbfad402d8573c6acfdbbf785ce70eb13e626318aa0c8f241864b43a8c8ee2"
     sha256 cellar: :any, arm64_monterey: "bd41c2293acda52bcef8fa7332b90860007ecb37b864677f59d624f1fff457df"
@@ -22,7 +23,7 @@ class CairommAT114 < Formula
 
   depends_on "meson" => :build
   depends_on "ninja" => :build
-  depends_on "pkg-config" => [:build, :test]
+  depends_on "pkgconf" => [:build, :test]
   depends_on "cairo"
   depends_on "libpng"
   depends_on "libsigc++@2"
@@ -34,7 +35,7 @@ class CairommAT114 < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <cairomm/cairomm.h>
 
       int main(int argc, char *argv[])
@@ -43,7 +44,7 @@ class CairommAT114 < Formula
          Cairo::RefPtr<Cairo::Context> cr = Cairo::Context::create(surface);
          return 0;
       }
-    EOS
+    CPP
 
     pkg_config_cflags = shell_output("pkg-config --cflags --libs cairo cairomm-1.0").chomp.split
     system ENV.cxx, "-std=c++11", "test.cpp", *pkg_config_cflags, "-o", "test"

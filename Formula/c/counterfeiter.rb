@@ -1,19 +1,23 @@
 class Counterfeiter < Formula
   desc "Tool for generating self-contained, type-safe test doubles in go"
   homepage "https://github.com/maxbrunsfeld/counterfeiter"
-  url "https://github.com/maxbrunsfeld/counterfeiter/archive/refs/tags/v6.8.1.tar.gz"
-  sha256 "6a939a96a6957aa5866abe6368b798c0ec14574c8aa2ada002311e8895989aa7"
+  url "https://github.com/maxbrunsfeld/counterfeiter/archive/refs/tags/v6.10.0.tar.gz"
+  sha256 "ad966cd565108ce4c0d5283199e79e2792a68b28a82227a10823343634e88e53"
   license "MIT"
   head "https://github.com/maxbrunsfeld/counterfeiter.git", branch: "master"
 
+  livecheck do
+    url :stable
+    strategy :github_latest
+  end
+
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "a017ffd8f7d823ab015c3d805e37814a775e480b80fa56e5cd981948d3ba20bb"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "a017ffd8f7d823ab015c3d805e37814a775e480b80fa56e5cd981948d3ba20bb"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "a017ffd8f7d823ab015c3d805e37814a775e480b80fa56e5cd981948d3ba20bb"
-    sha256 cellar: :any_skip_relocation, sonoma:         "ac78e9d85cd584241c58e632e0ef1bdad9f8698b7e8f5029593000db9c31d1b4"
-    sha256 cellar: :any_skip_relocation, ventura:        "ac78e9d85cd584241c58e632e0ef1bdad9f8698b7e8f5029593000db9c31d1b4"
-    sha256 cellar: :any_skip_relocation, monterey:       "ac78e9d85cd584241c58e632e0ef1bdad9f8698b7e8f5029593000db9c31d1b4"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b0592c3d3b5d8def4655c2fa208db90d341dd3f8ade5659f54ebbca88c8ff1d0"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "c328ef7ed297c5c6328333b27b793119ee40adcbd9be010f0effd7bc94310d06"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "c328ef7ed297c5c6328333b27b793119ee40adcbd9be010f0effd7bc94310d06"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "c328ef7ed297c5c6328333b27b793119ee40adcbd9be010f0effd7bc94310d06"
+    sha256 cellar: :any_skip_relocation, sonoma:        "ddaf67b243801ea59a47079a02da8858b98e5391c2574a14d1f57bbf88050311"
+    sha256 cellar: :any_skip_relocation, ventura:       "ddaf67b243801ea59a47079a02da8858b98e5391c2574a14d1f57bbf88050311"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "2e080a73cf9249171a3cb8f4363f6fcd1e5fa6135b59180ea3495046823e4cf0"
   end
 
   depends_on "go"

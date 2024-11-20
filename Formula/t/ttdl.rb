@@ -1,18 +1,17 @@
 class Ttdl < Formula
   desc "Terminal Todo List Manager"
   homepage "https://github.com/VladimirMarkelov/ttdl"
-  url "https://github.com/VladimirMarkelov/ttdl/archive/refs/tags/v4.4.0.tar.gz"
-  sha256 "81a5509551e92e496c712c4bc31d6f9c234f8e74ef15e2fb7adb4ea4c5111727"
+  url "https://github.com/VladimirMarkelov/ttdl/archive/refs/tags/v4.5.0.tar.gz"
+  sha256 "33284fba39f21c3bdd15a7463b8990521ab8faf3af7c2f4f1a28dd7e338f24f7"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "6d076743d534376cf35df8a7fa098ebed82833e8fea2ad76c40cdbfad056a3da"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "90e2af86d8dd6dc045a537c7e135cee2a38a6a6a3b8e9f9c49c79e4b6d9dff5b"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "3916f04548d75a33a4909f97bf4fe3165f2372759bb614b767c4c5c0f97c7502"
-    sha256 cellar: :any_skip_relocation, sonoma:         "5b06a2eb99a279c42de2d741aa0bf46a30d71ca00182c9357c7dac59e662fee1"
-    sha256 cellar: :any_skip_relocation, ventura:        "e0d7cd83dea19ef26cec5e5f796adbbbd47ac5e16d11359cc39c457fcb660491"
-    sha256 cellar: :any_skip_relocation, monterey:       "cc6f46137a8cc0568e7c1839b81a144ed631e43c1f1f35de9c1150346b4b1558"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "02c5b9e72c4db10b48356a2c4b65658503ff32063503c03e14a44c3bfd787e34"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "3d79f99e0d5651e0193b62989a5b7d6b970c561c2aa61e1965d1627a576c7f63"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "06e2d55f2fabe8b4bc2ef490d683fbbebe1f35da4442c6a0f1583901a0a0b6fc"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "41ff03c7ea0dc00121c03fe5dac029e99b538601f4644b2625d80906546dbdc2"
+    sha256 cellar: :any_skip_relocation, sonoma:        "5010752b2763a80dd8538e1954532cc86cd93fd86c26c14b29d437b985a4aaee"
+    sha256 cellar: :any_skip_relocation, ventura:       "670de03bcebb74ed7709496b7d592d09b7938e9421e10c9aeabdbdb07fbb00ca"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "96aaede9b361e70e42949c1e2304910d0435fa94288b356fb11d12a84938fc1d"
   end
 
   depends_on "rust" => :build

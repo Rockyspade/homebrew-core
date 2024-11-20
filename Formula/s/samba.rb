@@ -4,9 +4,10 @@ class Samba < Formula
   # option. The shared folder appears in the guest as "\\10.0.2.4\qemu".
   desc "SMB/CIFS file, print, and login server for UNIX"
   homepage "https://www.samba.org/"
-  url "https://download.samba.org/pub/samba/stable/samba-4.20.4.tar.gz"
-  sha256 "3a92e97eaeb345b6b32232f503e14d34f03a7aa64c451fe8c258a11bbda908e5"
+  url "https://download.samba.org/pub/samba/stable/samba-4.21.1.tar.gz"
+  sha256 "bd02f55da538358c929505b21fdd8aeba53027eab14c849432a53ed0bae1c7c2"
   license "GPL-3.0-or-later"
+  revision 1
 
   livecheck do
     url "https://www.samba.org/samba/download/"
@@ -14,14 +15,12 @@ class Samba < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 arm64_sonoma:   "94ab2a15519e5f655908e26079912f5890c16d928c9c9d874694452df38ccb91"
-    sha256 arm64_ventura:  "dc064ca99f0d19cf3a099c5231f6736e5ab82457680a5460f201a28071899c90"
-    sha256 arm64_monterey: "9486fe1324110797dc276c4e42fd0efcb09f1c78ec0ed4a8370068642f1aff9c"
-    sha256 sonoma:         "174105356bebc5300c04585df774f646e0b0921cbee82adb01d152ddea65bec2"
-    sha256 ventura:        "3fbebb4a3f23e51b0bd75e26ce6e81acc131b3afc083db5972419d8291e3273f"
-    sha256 monterey:       "9e686e93dcec5f11428b13fb7a2237e7737cc12ee19ad566bacfca757167d050"
-    sha256 x86_64_linux:   "85261a8a9bd4cb96935936777f4c52139c74550f69b8145ada825ebcf3af946d"
+    sha256 arm64_sequoia: "1021749f660ecbc998b2b06cb0ad640028154b283c97e1fa3a013f11b8f638f8"
+    sha256 arm64_sonoma:  "4b4d7e94785fa300fe6dbd3b3e204c5b7983e33287e1a10bb647cb97fbea011d"
+    sha256 arm64_ventura: "f12753e6e2f29e358a1fe948548c8df5ee9d80d9a587d10301f1d5e2f33a465a"
+    sha256 sonoma:        "e9a36a1dac8c28277187f24335c41f4f21cbdb36507696c7a84b33c7aedd195a"
+    sha256 ventura:       "e634c9346a0a8dadf34054cdf8d49493a6c80f9fe3b135c99f328e3a48da57b5"
+    sha256 x86_64_linux:  "20441a7172a0268c230a62c927c50b20e3b677ccc8c83fb4dcf39dfb54362ed6"
   end
 
   depends_on "bison" => :build
@@ -30,10 +29,10 @@ class Samba < Formula
   depends_on "gnutls"
   # icu4c can get linked if detected by pkg-config and there isn't a way to force disable
   # without disabling spotlight support. So we just enable the feature for all systems.
-  depends_on "icu4c"
+  depends_on "icu4c@76"
   depends_on "krb5"
-  depends_on "ldb"
   depends_on "libtasn1"
+  depends_on "lmdb"
   depends_on "popt"
   depends_on "readline"
   depends_on "talloc"
@@ -64,6 +63,9 @@ class Samba < Formula
   end
 
   def install
+    # Skip building test that fails on ARM with error: initializer element is not a compile-time constant
+    inreplace "lib/ldb/wscript", /\('test_ldb_comparison_fold',$/, "\\0 enabled=False," if Hardware::CPU.arm?
+
     # avoid `perl module "Parse::Yapp::Driver" not found` error on macOS 10.xx (not required on 11)
     if !OS.mac? || MacOS.version < :big_sur
       ENV.prepend_create_path "PERL5LIB", buildpath/"lib/perl5"
@@ -77,6 +79,7 @@ class Samba < Formula
     ENV.append "LDFLAGS", "-Wl,-rpath,#{lib}/private" if OS.linux?
     system "./configure",
            "--bundled-libraries=NONE",
+           "--private-libraries=!ldb",
            "--disable-cephfs",
            "--disable-cups",
            "--disable-iprint",
@@ -100,13 +103,13 @@ class Samba < Formula
            "--localstatedir=#{var}"
     system "make"
     system "make", "install"
-    if OS.mac?
-      # macOS has its own SMB daemon as /usr/sbin/smbd, so rename our smbd to samba-dot-org-smbd to avoid conflict.
-      # samba-dot-org-smbd is used by qemu.rb .
-      # Rename profiles as well to avoid conflicting with /usr/bin/profiles
-      mv sbin/"smbd", sbin/"samba-dot-org-smbd"
-      mv bin/"profiles", bin/"samba-dot-org-profiles"
-    end
+    return unless OS.mac?
+
+    # macOS has its own SMB daemon as /usr/sbin/smbd, so rename our smbd to samba-dot-org-smbd to avoid conflict.
+    # samba-dot-org-smbd is used by qemu.rb .
+    # Rename profiles as well to avoid conflicting with /usr/bin/profiles
+    mv sbin/"smbd", sbin/"samba-dot-org-smbd"
+    mv bin/"profiles", bin/"samba-dot-org-profiles"
   end
 
   def caveats

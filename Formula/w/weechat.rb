@@ -1,19 +1,19 @@
 class Weechat < Formula
   desc "Extensible IRC client"
   homepage "https://www.weechat.org"
-  url "https://weechat.org/files/src/weechat-4.4.1.tar.xz"
-  sha256 "e5de0bd14c2a57a505813a83c3d372648d2d9573dc72836857bf28717326936c"
+  url "https://weechat.org/files/src/weechat-4.4.3.tar.xz"
+  sha256 "295612f8dc24af28c918257d3014eb53342a5d077d5e3d9a3eadf303bd8febfa"
   license "GPL-3.0-or-later"
+  revision 1
   head "https://github.com/weechat/weechat.git", branch: "master"
 
   bottle do
-    sha256 arm64_sonoma:   "3b7b1eea1449997f40d7dee9c41e0ebe6382d63a51fea7bbfbec5281b7efe9e5"
-    sha256 arm64_ventura:  "7ba8997849e0fbdc63fc3cf59ed5dc79a9b07de8c83aa0042b0565279ccb022e"
-    sha256 arm64_monterey: "ce3887744d3e6820743b86b527579838e016b494366c4eafcfa61c21f30e022b"
-    sha256 sonoma:         "6768eb9da03e9c652495c0e28d1a719c4eed3f399f95ddd1e13fc62ff0f689a2"
-    sha256 ventura:        "800d0ca666bed6dbb5c5f58f6a19292814192af6714a3d985310abff52bbe50a"
-    sha256 monterey:       "1a97e1908554cbe5dd04a9b74420e8d1e123943becf1431dc6b09173b097c86d"
-    sha256 x86_64_linux:   "05816a6d42f00a19824cb1840aeccc1674037492172ea0caa012616fb6bcc7d2"
+    sha256 arm64_sequoia: "9cacde305627d8658022b0313c9dd7d12033a6e6fc14a2d37190d15bf3e04d3b"
+    sha256 arm64_sonoma:  "9f3b5c57ba2d43bff0332b436d86a574b7293246c5a71c62f57e8183db7d8787"
+    sha256 arm64_ventura: "caa314956a5b9decc181db8c61265dfaf6ceec5fc3500170dfef2a7975e26d29"
+    sha256 sonoma:        "ca6d5340d259308d95e997d521ea5deb4d4311d0789ca7340b3f69e4c030b377"
+    sha256 ventura:       "296535cd4f2c21516459e1ccf736c668eb5d8eb04672e89629955bb596cbba0c"
+    sha256 x86_64_linux:  "ba6c3551dcc8fe598e511f7bf833caa8d6003de83d2c3c04639a53f60289fe58"
   end
 
   depends_on "asciidoctor" => :build
@@ -27,7 +27,7 @@ class Weechat < Formula
   depends_on "lua"
   depends_on "ncurses"
   depends_on "perl"
-  depends_on "python@3.12"
+  depends_on "python@3.13"
   depends_on "ruby"
   depends_on "zstd"
 
@@ -40,7 +40,7 @@ class Weechat < Formula
   end
 
   def python3
-    which("python3.12")
+    which("python3.13")
   end
 
   def install

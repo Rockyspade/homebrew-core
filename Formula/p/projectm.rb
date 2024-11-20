@@ -6,6 +6,7 @@ class Projectm < Formula
   license "LGPL-2.1-or-later"
 
   bottle do
+    sha256 arm64_sequoia:  "a579de759ddbc2ca8b39a3dfc1cd7d2b936369790efaeda1c59efdbd63db5b2f"
     sha256 arm64_sonoma:   "a854f24612ce8bd9456d71f42d0e02bdca89fe39e4d8a4009f56f06536255f72"
     sha256 arm64_ventura:  "f3f6b5e3b0d40bcc55658e7f06f16ae49eb4cdc449772b5dc526a84e40c965e0"
     sha256 arm64_monterey: "a8dae00eb95d2123fda97a19085933944cc35cc1bb2eceaad0b2bb8555e4f961"
@@ -43,7 +44,7 @@ class Projectm < Formula
     assert_predicate prefix/"share/projectM/config.inp", :exist?
     assert_predicate prefix/"share/projectM/presets", :exist?
 
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <libprojectM/projectM.hpp>
       #include <SDL2/SDL.h>
       #include <stdlib.h>
@@ -69,7 +70,7 @@ class Projectm < Formula
         // if we get this far without crashing we're in good shape
         return 0;
       }
-    EOS
+    CPP
     flags = shell_output("pkg-config libprojectM sdl2 --cflags --libs").split
     system ENV.cxx, "-std=c++11", "test.cpp", "-o", "test", *flags
 

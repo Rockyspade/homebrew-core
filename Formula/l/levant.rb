@@ -7,6 +7,7 @@ class Levant < Formula
   head "https://github.com/hashicorp/levant.git", branch: "main"
 
   bottle do
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "cea6e51299dcb25689bb89534f249efced99ea5caf759edca53099bd0507a978"
     sha256 cellar: :any_skip_relocation, arm64_sonoma:   "a8cb3d327f3a6c17677eab41ee6563397989c678c6db90894684c2e0979a46ff"
     sha256 cellar: :any_skip_relocation, arm64_ventura:  "c58edcdb61ded77c7f1852bfa19f172d9c72bfa5de19afac3b351f73af2e98e8"
     sha256 cellar: :any_skip_relocation, arm64_monterey: "36afeec80aadd0c4eec3df654890e5675006f0b291f7c0072a77e212fc08598a"
@@ -29,14 +30,14 @@ class Levant < Formula
   end
 
   test do
-    (testpath/"template.nomad").write <<~EOS
+    (testpath/"template.nomad").write <<~HCL
       resources {
           cpu    = [[.resources.cpu]]
           memory = [[.resources.memory]]
       }
-    EOS
+    HCL
 
-    (testpath/"variables.json").write <<~EOS
+    (testpath/"variables.json").write <<~JSON
       {
         "resources":{
           "cpu":250,
@@ -46,7 +47,7 @@ class Levant < Formula
           }
         }
       }
-    EOS
+    JSON
 
     assert_match "resources {\n    cpu    = 250\n    memory = 512\n}\n",
       shell_output("#{bin}/levant render -var-file=#{testpath}/variables.json #{testpath}/template.nomad")

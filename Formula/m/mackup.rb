@@ -9,16 +9,11 @@ class Mackup < Formula
   head "https://github.com/lra/mackup.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "dac4b2e6a5dbb4b99eeb476ca7a80d7b313dab3f733474ab24c6ad02bee7637e"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "dac4b2e6a5dbb4b99eeb476ca7a80d7b313dab3f733474ab24c6ad02bee7637e"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "dac4b2e6a5dbb4b99eeb476ca7a80d7b313dab3f733474ab24c6ad02bee7637e"
-    sha256 cellar: :any_skip_relocation, sonoma:         "dac4b2e6a5dbb4b99eeb476ca7a80d7b313dab3f733474ab24c6ad02bee7637e"
-    sha256 cellar: :any_skip_relocation, ventura:        "dac4b2e6a5dbb4b99eeb476ca7a80d7b313dab3f733474ab24c6ad02bee7637e"
-    sha256 cellar: :any_skip_relocation, monterey:       "dac4b2e6a5dbb4b99eeb476ca7a80d7b313dab3f733474ab24c6ad02bee7637e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "edcad6afdb1201c9d64101252384cb1d5b61b5430cf5deabd184510d84f6b6da"
+    rebuild 2
+    sha256 cellar: :any_skip_relocation, all: "48147c55dcef0d94cd60ca788872d0eb45f504b5f661b32a1ceb6da73164e6cc"
   end
 
-  depends_on "python@3.12"
+  depends_on "python@3.13"
 
   resource "docopt" do
     url "https://files.pythonhosted.org/packages/a2/55/8f8cab2afd404cf578136ef2cc5dfb50baa1761b68c9da1fb1e4eed343c9/docopt-0.6.2.tar.gz"

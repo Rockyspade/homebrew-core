@@ -1,18 +1,17 @@
 class Fnt < Formula
   desc "Apt for fonts, the missing font manager for macOS/linux"
   homepage "https://github.com/alexmyczko/fnt"
-  url "https://github.com/alexmyczko/fnt/archive/refs/tags/1.6.tar.gz"
-  sha256 "fc799acaa3cb9d038b26d753fb86e8cc5c09ffc3f3164c458b4d84827494c81e"
+  url "https://github.com/alexmyczko/fnt/archive/refs/tags/1.8.tar.gz"
+  sha256 "9d0888ead98aae4d47ecb23d8208d4d48faea1c1628d49d00cea7c795afb8b65"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "c6cd82cb4d413c71869f4dca03328912c5f32f6b1f1e30fb229cc39cb9e972c3"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "c6cd82cb4d413c71869f4dca03328912c5f32f6b1f1e30fb229cc39cb9e972c3"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "c6cd82cb4d413c71869f4dca03328912c5f32f6b1f1e30fb229cc39cb9e972c3"
-    sha256 cellar: :any_skip_relocation, sonoma:         "a55fcbfa443ac93d1171748db6e6edafde0040f83d6ec1270a6a475af8104fb2"
-    sha256 cellar: :any_skip_relocation, ventura:        "a55fcbfa443ac93d1171748db6e6edafde0040f83d6ec1270a6a475af8104fb2"
-    sha256 cellar: :any_skip_relocation, monterey:       "a55fcbfa443ac93d1171748db6e6edafde0040f83d6ec1270a6a475af8104fb2"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c6cd82cb4d413c71869f4dca03328912c5f32f6b1f1e30fb229cc39cb9e972c3"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "5c203667f19a6d4c8380bea8d798f2796562bf5cf8a7e3e0110ea44c0714984b"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "5c203667f19a6d4c8380bea8d798f2796562bf5cf8a7e3e0110ea44c0714984b"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "5c203667f19a6d4c8380bea8d798f2796562bf5cf8a7e3e0110ea44c0714984b"
+    sha256 cellar: :any_skip_relocation, sonoma:        "ee0fc8f0dd7c4b3d122d870fb2e3c8591d33f69c8510dd85bf7dda90e2e0205f"
+    sha256 cellar: :any_skip_relocation, ventura:       "ee0fc8f0dd7c4b3d122d870fb2e3c8591d33f69c8510dd85bf7dda90e2e0205f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "5c203667f19a6d4c8380bea8d798f2796562bf5cf8a7e3e0110ea44c0714984b"
   end
 
   depends_on "chafa"

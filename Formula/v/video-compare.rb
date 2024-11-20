@@ -1,18 +1,17 @@
 class VideoCompare < Formula
   desc "Split screen video comparison tool using FFmpeg and SDL2"
   homepage "https://github.com/pixop/video-compare"
-  url "https://github.com/pixop/video-compare/archive/refs/tags/20240818.tar.gz"
-  sha256 "29155c67c90307153e2b3c4a909083c9a7def710e3c0c4c9a7ffaa50398195d4"
+  url "https://github.com/pixop/video-compare/archive/refs/tags/20241025.tar.gz"
+  sha256 "95a14ae51f714f72ff3c863f8045ad16ffc5294adad9537083421f37938e395d"
   license "GPL-2.0-only"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "a17fdb0881d933cb289dbb2a2889fde7cd8007fb377d90041e2db9bb348c2c16"
-    sha256 cellar: :any,                 arm64_ventura:  "907933adc8eab74c9f21b6a5d55d005c9306facb9729544f4bc4f7523ea86364"
-    sha256 cellar: :any,                 arm64_monterey: "fb2b305e62ef1b7792b85ffba6f927a372da008945856e3ccd70b950fdf471aa"
-    sha256 cellar: :any,                 sonoma:         "1afbaf0dfb2766bc9091938f1bb398edd36251bb2d79ca97e2c1aebe780965be"
-    sha256 cellar: :any,                 ventura:        "a61bcbab0b10c4e36960e3a73bb7f38c59c8d98dc6febbbdfa9590536a2d3f7c"
-    sha256 cellar: :any,                 monterey:       "c5070b7597b576ea6a5fb1f681441893baef91fccdd5de485528892704e5b069"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "2693198a2dcc0078619c740c50a4b14d084a9ff3f59a3a8e3a6bded165c46ee5"
+    sha256 cellar: :any,                 arm64_sequoia: "2ba7e9478c19ad39a26da60ba902d350a7ef849c005a6ccba1fe1701e4b02dbe"
+    sha256 cellar: :any,                 arm64_sonoma:  "a00b35a2210acbce7f6c5927bfd4ffbd92eeb2f097e5951eea23411f50d57a5d"
+    sha256 cellar: :any,                 arm64_ventura: "2d274294ee9842f7d85c3ddcc3874fc308741e14d7967d5d5bc41641bf25b8e4"
+    sha256 cellar: :any,                 sonoma:        "eb0155b5af9e11388d726fbbe4a10ef1ce96f764d1610e6cfef71f66a7c23164"
+    sha256 cellar: :any,                 ventura:       "d9e1293e19acfed4a2f4d0fc025d5e3e9f2e1acd58cacaec0be9353e659b8fa7"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "923ad632e895c63dc533ef01c55b6fa3c793289dedd328dd351ae930f44e8525"
   end
 
   depends_on "ffmpeg"

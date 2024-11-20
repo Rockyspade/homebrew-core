@@ -3,10 +3,11 @@ class LibbitcoinBlockchain < Formula
   homepage "https://github.com/libbitcoin/libbitcoin-blockchain"
   url "https://github.com/libbitcoin/libbitcoin-blockchain/archive/refs/tags/v3.8.0.tar.gz"
   sha256 "e7a3f2d2ea8275946218d734cd3d5d805c61e69eb29d1fb16e3064554bd2b584"
-  license "AGPL-3.0"
+  license "AGPL-3.0-or-later"
   revision 1
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "872a37910f440a950ae0f4e9307e7c022c05fa521bf44a34c9bf1d048b08c96b"
     sha256 cellar: :any,                 arm64_sonoma:   "98b05bbaaa471ed07081871007711a310f4d3cadcde0fd6ac7390f89d4fb4f1d"
     sha256                               arm64_ventura:  "643036ef5fdad2d2686dfd0e943e7427f2921a679ca6b65dc2d7520702f607b6"
     sha256                               arm64_monterey: "87003f5fe6734526014672e39ffa2e9654962fa068aff56fac817b31b1191b47"
@@ -20,7 +21,7 @@ class LibbitcoinBlockchain < Formula
 
   # About 2 years since request for release with support for recent `boost`.
   # Ref: https://github.com/libbitcoin/libbitcoin-system/issues/1234
-  deprecate! date: "2023-12-14", because: "uses deprecated `boost@1.76`"
+  disable! date: "2024-12-14", because: "uses deprecated `boost@1.76`"
 
   depends_on "autoconf" => :build
   depends_on "automake" => :build
@@ -44,7 +45,7 @@ class LibbitcoinBlockchain < Formula
 
   test do
     boost = Formula["boost@1.76"]
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <bitcoin/blockchain.hpp>
       int main() {
         static const auto default_block_hash = libbitcoin::hash_literal("14508459b221041eab257d2baaa7459775ba748246c8403609eb708f0e57e74b");
@@ -54,7 +55,7 @@ class LibbitcoinBlockchain < Formula
         assert(instance.hash() == default_block_hash);
         return 0;
       }
-    EOS
+    CPP
     system ENV.cxx, "-std=c++11", "test.cpp", "-o", "test",
                     "-I#{boost.include}",
                     "-I#{libexec}/include",

@@ -1,8 +1,8 @@
 class QtUnixodbc < Formula
   desc "Qt SQL Database Driver"
   homepage "https://www.qt.io/"
-  url "https://download.qt.io/official_releases/qt/6.7/6.7.0/submodules/qtbase-everywhere-src-6.7.0.tar.xz"
-  sha256 "11b2e29e2e52fb0e3b453ea13bbe51a10fdff36e1c192d8868c5a40233b8b254"
+  url "https://download.qt.io/official_releases/qt/6.7/6.7.3/submodules/qtbase-everywhere-src-6.7.3.tar.xz"
+  sha256 "8ccbb9ab055205ac76632c9eeddd1ed6fc66936fc56afc2ed0fd5d9e23da3097"
   license any_of: ["GPL-2.0-only", "GPL-3.0-only", "LGPL-3.0-only"]
 
   livecheck do
@@ -10,13 +10,11 @@ class QtUnixodbc < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "24e0c3c4ee1d15315266dbe1ec553ffefec61799d0a55f784102fe7049ea31bb"
-    sha256 cellar: :any,                 arm64_ventura:  "23b119b99061dda6ad71809c3e5cd8f0e152c08c6f37a2697b428c5d3f84419a"
-    sha256 cellar: :any,                 arm64_monterey: "20a396bd86a5773a08940eac59f8aea8ab1b10aca727f69a17eefb4a4b47982b"
-    sha256 cellar: :any,                 sonoma:         "bf3339aff12cad5d98d6a0bfae3822de85b49e74c3225d175fbddba50e3251fc"
-    sha256 cellar: :any,                 ventura:        "6d4666bdca3afbf2a621989f065bf9ced96d65316136a32f5d5000c68bdd6c73"
-    sha256 cellar: :any,                 monterey:       "f3aae6d29fae95023b34c0749d7478422f6394569f4de6aebbc5dfe8f9f55ea2"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "55f1e14b57eb2422ad8c19c07dacb1970b5036ffb1b24ecc4afbe8179d79d3f1"
+    sha256 cellar: :any,                 arm64_sonoma:  "7a350e406d37d887d802f85d64da384456b710e4187097c6b31bba580ff7e366"
+    sha256 cellar: :any,                 arm64_ventura: "38a8d2468f1480fc95d573f0d98e3c055dfaffae71c10f6b642b80cc3f194445"
+    sha256 cellar: :any,                 sonoma:        "68fdb8bd7da650e0fdc85e14ca2c4363a07f91768ebef921e9335591d145f1de"
+    sha256 cellar: :any,                 ventura:       "3c3d332deda58e419a9687c27c9f719d083b3f86f01d1de97dc08077cf10e598"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "08c2a9c02d4142fc8af5af3e21d0e67719dea839e291d7d05dc393ac1d55f3a0"
   end
 
   depends_on "cmake" => [:build, :test]
@@ -49,7 +47,7 @@ class QtUnixodbc < Formula
   end
 
   test do
-    (testpath/"CMakeLists.txt").write <<~EOS
+    (testpath/"CMakeLists.txt").write <<~CMAKE
       cmake_minimum_required(VERSION #{Formula["cmake"].version})
       project(test VERSION 1.0.0 LANGUAGES CXX)
       set(CMAKE_CXX_STANDARD 17)
@@ -62,7 +60,7 @@ class QtUnixodbc < Formula
           main.cpp
       )
       target_link_libraries(test PRIVATE Qt6::Core Qt6::Sql)
-    EOS
+    CMAKE
 
     (testpath/"test.pro").write <<~EOS
       QT       += core sql
@@ -74,7 +72,7 @@ class QtUnixodbc < Formula
       SOURCES += main.cpp
     EOS
 
-    (testpath/"main.cpp").write <<~EOS
+    (testpath/"main.cpp").write <<~CPP
       #include <QCoreApplication>
       #include <QtSql>
       #include <cassert>
@@ -86,7 +84,7 @@ class QtUnixodbc < Formula
         assert(db.isValid());
         return 0;
       }
-    EOS
+    CPP
 
     system "cmake", "-S", ".", "-B", "build", "-DCMAKE_BUILD_TYPE=Debug"
     system "cmake", "--build", "build"

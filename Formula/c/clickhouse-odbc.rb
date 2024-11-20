@@ -1,11 +1,11 @@
 class ClickhouseOdbc < Formula
   desc "Official ODBC driver implementation for accessing ClickHouse as a data source"
   homepage "https://github.com/ClickHouse/clickhouse-odbc"
-  url "https://github.com/ClickHouse/clickhouse-odbc.git",
-      tag:      "v1.2.1.20220905",
-      revision: "fab6efc57d671155c3a386f49884666b2a02c7b7"
+  # Git modules are all for bundled libraries so can use tarball without them
+  url "https://github.com/ClickHouse/clickhouse-odbc/archive/refs/tags/v1.2.1.20220905.tar.gz"
+  sha256 "ca8666cbc7af9e5d4670cd05c9515152c34543e4f45e2bc8fa94bee90d724f1b"
   license "Apache-2.0"
-  revision 4
+  revision 6
   head "https://github.com/ClickHouse/clickhouse-odbc.git", branch: "master"
 
   livecheck do
@@ -14,25 +14,24 @@ class ClickhouseOdbc < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "6d3da8f25a679d578fc9fbca684018833ad363535bfd3e85a4ddd736f6b32e78"
-    sha256 cellar: :any,                 arm64_big_sur:  "edd276cf440f60a578c73b6bd97f28405b4832794dce0b11e7bed991650e47f7"
-    sha256 cellar: :any,                 monterey:       "f0bb5c75237871886d291229e6ba60ffedb04c3d8a5e2feae411968cf83537c6"
-    sha256 cellar: :any,                 big_sur:        "b8ba8ebeb1a452406829d7c81315c9137a2e583f8699edd6fdc9cc7827cb3463"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "0d6e08e8ba3cdeff98402a304e88bc44c416081b13aa0147d9ab9c82e6404982"
+    sha256 cellar: :any,                 arm64_sequoia: "0c6b0acad4b807f6107d995f47eae04bdce3ad7c64c6f4a0cf31eb98dd7c2c2e"
+    sha256 cellar: :any,                 arm64_sonoma:  "04ca343b2b2849c9a11510e111341dc1f119beccf9ca8a2d09e2d85f95432343"
+    sha256 cellar: :any,                 arm64_ventura: "668def88586c374c2e51eb199bd908b65336029aa74de957b4b7b53e55eba806"
+    sha256 cellar: :any,                 sonoma:        "4f8477fd4142bfb2ccd7f56f4deb8190a444f258e91697f689879fa65ad087e5"
+    sha256 cellar: :any,                 ventura:       "34a27423851185c72717d6f0fc2eb2055d11846a0b5527024daa7065e68427d3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "688ff9bea0da387640e6a46228e136b2a001740c33d75bdaec9232d1c83b4027"
   end
 
-  # https://github.com/facebook/folly/issues/1867
-  deprecate! date:    "2023-06-15",
-             because: "vendors an old version of folly that is incompatible with new versions of libc++"
-
   depends_on "cmake" => :build
-  depends_on "pkg-config" => :build
-  depends_on "icu4c"
+  depends_on "folly" => :build
+  depends_on "pkgconf" => :build
+  depends_on "icu4c@76"
   depends_on "openssl@3"
   depends_on "poco"
 
   on_macos do
     depends_on "libiodbc"
+    depends_on "pcre2"
   end
 
   on_linux do
@@ -44,13 +43,14 @@ class ClickhouseOdbc < Formula
   end
 
   def install
-    # Remove bundled libraries excluding required bundled `folly` headers
-    %w[googletest nanodbc poco ssl].each { |l| rm_r(buildpath/"contrib"/l) }
+    # Remove bundled libraries
+    %w[folly googletest nanodbc poco ssl].each { |l| rm_r(buildpath/"contrib"/l) }
 
+    icu4c_dep = deps.find { |dep| dep.name.match?(/^icu4c(@\d+)?$/) }
     args = %W[
       -DCH_ODBC_PREFER_BUNDLED_THIRD_PARTIES=OFF
       -DCH_ODBC_THIRD_PARTY_LINK_STATIC=OFF
-      -DICU_ROOT=#{Formula["icu4c"].opt_prefix}
+      -DICU_ROOT=#{icu4c_dep.to_formula.opt_prefix}
       -DOPENSSL_ROOT_DIR=#{Formula["openssl@3"].opt_prefix}
     ]
     args += if OS.mac?

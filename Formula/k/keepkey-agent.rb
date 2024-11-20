@@ -6,21 +6,24 @@ class KeepkeyAgent < Formula
   url "https://files.pythonhosted.org/packages/65/72/4bf47a7bc8dc93d2ac21672a0db4bc58a78ec5cee3c4bcebd0b4092a9110/keepkey_agent-0.9.0.tar.gz"
   sha256 "47c85de0c2ffb53c5d7bd2f4d2230146a416e82511259fad05119c4ef74be70c"
   license "LGPL-3.0-only"
-  revision 8
+  revision 9
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "92931b4dd55f591f1aa1555e6d2385c9216c67bccdfac519c7d871b6abd9e931"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "45721329733cabb8fb60bf1bbd8c57f3d41ab3690517914e29fcb11e20609ad4"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "cc5256e11632f6398fa1e84affb5947adcc3aff627d7f23bcda175b9b120dade"
-    sha256 cellar: :any_skip_relocation, sonoma:         "09d44c2501298a21078ff77731689585a7df852f860fa7db0ada5a4b78814a18"
-    sha256 cellar: :any_skip_relocation, ventura:        "4d7ade556d31d47adfcb08c5cd3595170c3fd8bd587620a6799c003987659591"
-    sha256 cellar: :any_skip_relocation, monterey:       "0931fb228768e22b2a78e97a9716b4b016c6f46585c75bfc92d40d2e1a56a415"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "4b9024586309813bd02ba23a1d0c558160f96e07fd40418df63ebdd0eb8e08d4"
+    rebuild 2
+    sha256 cellar: :any,                 arm64_sequoia: "7e90d14fa8b17a73432c81dd5263c8938d838a9c2ca07a6efe92d395ec0afd18"
+    sha256 cellar: :any,                 arm64_sonoma:  "25a71155c8223d39c8771688dca8688cd393dbdd7576d2bf5c5fc422b395e0ce"
+    sha256 cellar: :any,                 arm64_ventura: "bacd017684971a7c487abacccd142604b9e95dbb87feaa33f4df4708b90dcb02"
+    sha256 cellar: :any,                 sonoma:        "3cb946e6ed2147b95a96498286e46cc78789e84e563d8f7b2d28746835e47da8"
+    sha256 cellar: :any,                 ventura:       "1d37cf891ee502ab5651ef1dd2a9abd198424ac0968cc81637101ef17f1f17f8"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "2d977a585788997b34e907e44f9857618969c795401963147cd53bc9430b09c5"
   end
 
+  depends_on "pkg-config" => :build # for hidapi resource
   depends_on "cryptography"
-  depends_on "libusb"
-  depends_on "python@3.12"
+  depends_on "hidapi"
+  depends_on "libsodium" # for pynacl
+  depends_on "libusb" # for libusb1
+  depends_on "python@3.13"
 
   uses_from_macos "libffi"
 
@@ -40,8 +43,8 @@ class KeepkeyAgent < Formula
   end
 
   resource "docutils" do
-    url "https://files.pythonhosted.org/packages/1f/53/a5da4f2c5739cf66290fac1431ee52aff6851c7c8ffd8264f13affd7bcdd/docutils-0.20.1.tar.gz"
-    sha256 "f08a4e276c3a1583a86dce3e34aba3fe04d02bba2dd51ed16106244e8a923e3b"
+    url "https://files.pythonhosted.org/packages/ae/ed/aefcc8cd0ba62a0560c3c18c33925362d46c6075480bfa4df87b28e169a9/docutils-0.21.2.tar.gz"
+    sha256 "3a6b18732edf182daa3cd12775bbb338cf5691468f91eeeb109deff6ebfa986f"
   end
 
   resource "ecdsa" do
@@ -50,14 +53,8 @@ class KeepkeyAgent < Formula
   end
 
   resource "hidapi" do
-    url "https://files.pythonhosted.org/packages/95/0e/c106800c94219ec3e6b483210e91623117bfafcf1decaff3c422e18af349/hidapi-0.14.0.tar.gz"
-    sha256 "a7cb029286ced5426a381286526d9501846409701a29c2538615c3d1a612b8be"
-
-    # patch to build with Cython 3+, remove in next release
-    patch do
-      url "https://github.com/trezor/cython-hidapi/commit/749da6931f57c4c30596de678125648ccfd6e1cd.patch?full_index=1"
-      sha256 "e3d70eb9850c7be0fdb0c31bf575b33be5c5848def904760a6ca9f4c3824f000"
-    end
+    url "https://files.pythonhosted.org/packages/bf/6f/90c536b020a8e860f047a2839830a1ade3e1490e67336ecf489b4856eb7b/hidapi-0.14.0.post2.tar.gz"
+    sha256 "6c0e97ba6b059a309d51b495a8f0d5efbcea8756b640d98b6f6bb9fdef2458ac"
   end
 
   resource "keepkey" do
@@ -66,8 +63,8 @@ class KeepkeyAgent < Formula
   end
 
   resource "libagent" do
-    url "https://files.pythonhosted.org/packages/4e/0f/b48045dd9d12eea5c092aaad4c251443384da700c8d85349fc3c554a2320/libagent-0.14.7.tar.gz"
-    sha256 "8cea67fbe94216f61dbc22fac9d3d749b41b9cfc11393a76b0b0013c204adb98"
+    url "https://files.pythonhosted.org/packages/33/9f/d80eb0568f617d4041fd83b8b301fdb817290503ee4c1546024df916454e/libagent-0.15.0.tar.gz"
+    sha256 "c87caebdb932ed42bcd8a8cbe40ce3589587c71c3513ca79cadf7a040e24b4eb"
   end
 
   resource "libusb1" do
@@ -101,8 +98,8 @@ class KeepkeyAgent < Formula
   end
 
   resource "python-daemon" do
-    url "https://files.pythonhosted.org/packages/84/50/97b81327fccbb70eb99f3c95bd05a0c9d7f13fb3f4cfd975885110d1205a/python-daemon-3.0.1.tar.gz"
-    sha256 "6c57452372f7eaff40934a1c03ad1826bf5e793558e87fef49131e6464b4dae5"
+    url "https://files.pythonhosted.org/packages/54/cd/d62884732e5d6ff6906234169d06338d53e37243c60cf73679c8942f9e42/python_daemon-3.1.0.tar.gz"
+    sha256 "fdb621d7e5f46e74b4de1ad6b0fff6e69cd91b4f219de1476190ebdd0f4781df"
   end
 
   resource "semver" do
@@ -111,8 +108,8 @@ class KeepkeyAgent < Formula
   end
 
   resource "setuptools" do
-    url "https://files.pythonhosted.org/packages/4d/5b/dc575711b6b8f2f866131a40d053e30e962e633b332acf7cd2c24843d83d/setuptools-69.2.0.tar.gz"
-    sha256 "0ff4183f8f42cd8fa3acea16c45205521a4ef28f73c6391d8a25e92893134f2e"
+    url "https://files.pythonhosted.org/packages/07/37/b31be7e4b9f13b59cde9dcaeff112d401d49e0dc5b37ed4a9fc8fb12f409/setuptools-75.2.0.tar.gz"
+    sha256 "753bb6ebf1f465a1912e19ed1d41f403a79173a9acf66a42e7e6aec45c3c16ec"
   end
 
   resource "six" do
@@ -126,15 +123,13 @@ class KeepkeyAgent < Formula
   end
 
   resource "wheel" do
-    url "https://files.pythonhosted.org/packages/b8/d6/ac9cd92ea2ad502ff7c1ab683806a9deb34711a1e2bd8a59814e8fc27e69/wheel-0.43.0.tar.gz"
-    sha256 "465ef92c69fa5c5da2d1cf8ac40559a8c940886afcef87dcf14b9470862f1d85"
+    url "https://files.pythonhosted.org/packages/b7/a0/95e9e962c5fd9da11c1e28aa4c0d8210ab277b1ada951d2aee336b505813/wheel-0.44.0.tar.gz"
+    sha256 "a29c3f2817e95ab89aa4660681ad547c0e9547f20e75b0562fe7723c9a2a9d49"
   end
 
   def install
-    # Workaround to avoid creating libexec/bin/__pycache__ which gets linked to bin
-    ENV["PYTHONPYCACHEPREFIX"] = buildpath/"pycache"
-    # Help gcc to find libusb headers on Linux.
-    ENV.append "CFLAGS", "-I#{Formula["libusb"].opt_include}/libusb-1.0" unless OS.mac?
+    ENV["HIDAPI_SYSTEM_HIDAPI"] = "1"
+    ENV["SODIUM_INSTALL"] = "system"
     virtualenv_install_with_resources
   end
 

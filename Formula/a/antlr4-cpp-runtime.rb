@@ -11,6 +11,7 @@ class Antlr4CppRuntime < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "2094de636c5aed0176c2a9719a92554cf839b17b047e2792c300e1207225074b"
     sha256 cellar: :any,                 arm64_sonoma:   "d27c1a0fe28b968a40cab91183d1b0c3a681d3c287bf25dd6e4b0e59ba991af6"
     sha256 cellar: :any,                 arm64_ventura:  "4d6a9dca9ad714531d45d853e6d01f00d9e8181b345dd53584d25d5162693a92"
     sha256 cellar: :any,                 arm64_monterey: "7ce24e3fcb89f34345a3cb596e2e7616af56e376c0137a58ee090f3d3ddcb3cd"
@@ -23,11 +24,9 @@ class Antlr4CppRuntime < Formula
   depends_on "cmake" => :build
 
   on_linux do
-    depends_on "pkg-config" => :build
+    depends_on "pkgconf" => :build
     depends_on "util-linux"
   end
-
-  fails_with gcc: "5"
 
   def install
     system "cmake", ".", "-DANTLR4_INSTALL=ON", "-DANTLR_BUILD_CPP_TESTS=OFF", *std_cmake_args
@@ -35,7 +34,7 @@ class Antlr4CppRuntime < Formula
   end
 
   test do
-    (testpath/"test.cc").write <<~EOS
+    (testpath/"test.cc").write <<~CPP
       #include <antlr4-runtime.h>
       int main(int argc, const char* argv[]) {
           try {
@@ -45,7 +44,7 @@ class Antlr4CppRuntime < Formula
           }
           return 0 ;
       }
-    EOS
+    CPP
     system ENV.cxx, "-std=c++17", "-I#{include}/antlr4-runtime", "test.cc",
                     "-L#{lib}", "-lantlr4-runtime", "-o", "test"
     system "./test"

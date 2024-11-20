@@ -1,18 +1,17 @@
 class Cloudprober < Formula
   desc "Active monitoring software to detect failures before your customers do"
   homepage "https://cloudprober.org"
-  url "https://github.com/cloudprober/cloudprober/archive/refs/tags/v0.13.6.tar.gz"
-  sha256 "a937a95b24d07e3e1fb0e2ab0c0d457cfdfd799206f9c3f6457ff8f029d03853"
+  url "https://github.com/cloudprober/cloudprober/archive/refs/tags/v0.13.8.tar.gz"
+  sha256 "96abe8cd6f48a8e4206e818447070369ccaa2ca68dc1ff8b244a7df4dc0af742"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "332dde7dcedca3ada7572dd9f7db52397efd7ba96d4f97bb3ac94b7ba447e570"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "dee213123319f20b616f2a5e7865cb303d664db917bc094ca896ade71c237267"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "edc365055e984dc35cef08cf40fe2288afa3c35f8d89d26cd5496e0c192b4048"
-    sha256 cellar: :any_skip_relocation, sonoma:         "0289aab1009440f30c84cd9f3fc4129ee676cc39fa2915350a77fc008840b241"
-    sha256 cellar: :any_skip_relocation, ventura:        "8f9a1ca4043796da1fdcf6b4d617670af97429c820a601258c4e9d7df0813bce"
-    sha256 cellar: :any_skip_relocation, monterey:       "091ef1be0980ed30b6b0b5b2559312a0144e30cfd8e4d2f1631e3b5c077fc745"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "63dda14025f482dc90282d79daa00ae4883c4596c763e0486dd7bc8c290ce339"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "c315ff61ccc03a0075d7e67d36032c9903f75b469c9c4b3cbf21620831482926"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "107c78a6a6beef8a55314b5051616d8e1ec6e65419621754a9fae95c74f4eabe"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "cb48b91f808f2232771f934d3eef0e071084bcde1339bcf728ced7e228a28297"
+    sha256 cellar: :any_skip_relocation, sonoma:        "40b73304ff5c2ee7230878f631a428cfaba642f59f86c53ded6f97ba44858351"
+    sha256 cellar: :any_skip_relocation, ventura:       "55cd7174f2bb06615006684f2848ed2be4d60ebbedab57bee4bf1930fff3399d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9b5dea36136024ebd52a37608bf9b5e46eb571cb8c78edb3eb3903b0d0cdf37d"
   end
 
   depends_on "go" => :build

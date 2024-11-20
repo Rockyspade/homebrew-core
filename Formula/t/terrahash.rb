@@ -7,6 +7,7 @@ class Terrahash < Formula
   head "https://github.com/ned1313/terrahash.git", branch: "main"
 
   bottle do
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "3bff28cc077e366d5dcef34c43192ea54defa55bce901fc53eaacfe329c194d5"
     sha256 cellar: :any_skip_relocation, arm64_sonoma:   "2827a0447062c2ee47306aafa09964dcbf25713e403461e3cfb3ed62ec9b11ea"
     sha256 cellar: :any_skip_relocation, arm64_ventura:  "f5309604e6a55ef456ba83b7bbe1c2ff8a24bd18b54703979737bf9500de7433"
     sha256 cellar: :any_skip_relocation, arm64_monterey: "92e077e939732efc7b7809f338e561103207273c1c54d3fbc29b5315dd11c920"
@@ -26,7 +27,7 @@ class Terrahash < Formula
   end
 
   test do
-    (testpath/"main.tf").write <<~EOS
+    (testpath/"main.tf").write <<~HCL
       module "example" {
         source = "terraform-aws-modules/ec2-instance/aws"
         version = "~> 5"
@@ -35,7 +36,7 @@ class Terrahash < Formula
         instance_type = "t2.micro"
         name          = "example"
       }
-    EOS
+    HCL
 
     system "tofu", "init"
     assert_predicate testpath/".terraform.lock.hcl", :exist?

@@ -4,7 +4,7 @@ class Gitg < Formula
   url "https://download.gnome.org/sources/gitg/44/gitg-44.tar.xz"
   sha256 "342a31684dab9671cd341bd3e3ce665adcee0460c2a081ddc493cdbc03132530"
   license "GPL-2.0-or-later"
-  revision 2
+  revision 4
 
   livecheck do
     url :stable
@@ -12,13 +12,12 @@ class Gitg < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "1caffaeae8c0c99e46b34624513085e7c8fbe27c38635277f66159b9edf517d3"
-    sha256 arm64_ventura:  "c2973e35ca94c61673fa4f9861f67278a021735c11afb57d1b59035efe0c21ba"
-    sha256 arm64_monterey: "2cf313c7b67b8f4e8e0656c1273872fa2786d894c84ed8bc6f608b1f543c6814"
-    sha256 sonoma:         "c0a70b70902f255644077ee0fe21161a1cd9b3f118872a47eaecacc187c99ccd"
-    sha256 ventura:        "c8fa8f55f91d1c49776752e57e201ac8769687bf0f7438cdedc34c84ff031aad"
-    sha256 monterey:       "45b643eae44497030d2bf25da3f824e8a64e28fdf288209efd4a57b626dc6fbd"
-    sha256 x86_64_linux:   "0cbc0e25ab157fe48820366df24a9ea57d105ece188f62d9bb27110198977d96"
+    sha256 arm64_sequoia: "4a4166491817b8eadee5a1bd6774f5b23516f54661aa120d5ba9f84cb49466b6"
+    sha256 arm64_sonoma:  "2c01486f3f82a1b9eb7ba8ff00d8ee5207671f8353f79d49d2c62b1da208a3f6"
+    sha256 arm64_ventura: "1790af181f11994bd36b965b0ff044a6b109d98f76dde3ca91fc50a6580cc545"
+    sha256 sonoma:        "b4cd70bb9e6834bf8fa1087da17ffb4c2d689ed0fab8bdb49ac06eb39558e33b"
+    sha256 ventura:       "391b2a3164edbca47ea114e6877114cab7e7d2837830f60570cb4431d28e72f7"
+    sha256 x86_64_linux:  "b78db1a31d523be329532fcb6e861e4420d3d1918239d7a325651d2d98e92c5c"
   end
 
   depends_on "gettext" => :build # for `msgfmt`
@@ -40,8 +39,8 @@ class Gitg < Formula
   depends_on "json-glib"
   depends_on "libdazzle"
   depends_on "libgee"
+  depends_on "libgit2"
   depends_on "libgit2-glib"
-  depends_on "libgit2@1.7"
   depends_on "libhandy"
   depends_on "libpeas@1"
   depends_on "libsecret"
@@ -72,14 +71,14 @@ class Gitg < Formula
     # Disable this part of test on Linux because display is not available.
     assert_match version.to_s, shell_output("#{bin}/gitg --version") if OS.mac?
 
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <libgitg/libgitg.h>
 
       int main(int argc, char *argv[]) {
         GType gtype = gitg_stage_status_file_get_type();
         return 0;
       }
-    EOS
+    C
 
     ENV.prepend_path "PKG_CONFIG_PATH", Formula["libgit2@1.7"].opt_lib/"pkgconfig"
     flags = shell_output("pkg-config --cflags --libs libgitg-1.0").chomp.split

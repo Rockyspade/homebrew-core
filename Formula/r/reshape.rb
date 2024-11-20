@@ -7,6 +7,7 @@ class Reshape < Formula
   head "https://github.com/fabianlindfors/reshape.git", branch: "main"
 
   bottle do
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "44a403226dcc034a328658eef19b96d0abf441c2042d4777fdad22b74dc4cc41"
     sha256 cellar: :any_skip_relocation, arm64_sonoma:   "b29676af2bbf22ea192ead306a354827084c97c13eec0bac3f51a05117a598d3"
     sha256 cellar: :any_skip_relocation, arm64_ventura:  "f233439c22ef1cff6dfda8ee24fb2ddf5e4a95c30ac5381b8d7163f9ed2d0619"
     sha256 cellar: :any_skip_relocation, arm64_monterey: "e7c394f7f2fcbbb5c77df28da0a1e7a19a33e65352ade54c1a7ed2ae962efa63"
@@ -23,7 +24,7 @@ class Reshape < Formula
   end
 
   test do
-    (testpath/"migrations/test.toml").write <<~EOS
+    (testpath/"migrations/test.toml").write <<~TOML
       [[actions]]
       type = "create_table"
       name = "users"
@@ -37,7 +38,7 @@ class Reshape < Formula
         [[actions.columns]]
         name = "name"
         type = "TEXT"
-    EOS
+    TOML
 
     assert_match "SET search_path TO migration_test",
       shell_output("#{bin}/reshape generate-schema-query")

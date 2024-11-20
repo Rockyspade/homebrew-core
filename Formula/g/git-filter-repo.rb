@@ -8,16 +8,11 @@ class GitFilterRepo < Formula
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "a31032bc52a3bad3c19880d00d52abc73e7215a748d64626c1d369d46334c43e"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "a31032bc52a3bad3c19880d00d52abc73e7215a748d64626c1d369d46334c43e"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "a31032bc52a3bad3c19880d00d52abc73e7215a748d64626c1d369d46334c43e"
-    sha256 cellar: :any_skip_relocation, sonoma:         "a31032bc52a3bad3c19880d00d52abc73e7215a748d64626c1d369d46334c43e"
-    sha256 cellar: :any_skip_relocation, ventura:        "a31032bc52a3bad3c19880d00d52abc73e7215a748d64626c1d369d46334c43e"
-    sha256 cellar: :any_skip_relocation, monterey:       "a31032bc52a3bad3c19880d00d52abc73e7215a748d64626c1d369d46334c43e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "fdafd98c555e8c43f9baf3a871bbf45dbb5f8577149dddc02804013da76be66a"
+    rebuild 2
+    sha256 cellar: :any_skip_relocation, all: "8e88f02ddedf105ed6992b99298869d4eae1a521f001663c1cd34fc0adee3b73"
   end
 
-  depends_on "python@3.12"
+  depends_on "python@3.13"
   uses_from_macos "git", since: :catalina # git 2.22.0+ is required
 
   def install

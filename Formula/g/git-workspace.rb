@@ -1,18 +1,17 @@
 class GitWorkspace < Formula
   desc "Sync personal and work git repositories from multiple providers"
   homepage "https://github.com/orf/git-workspace"
-  url "https://github.com/orf/git-workspace/archive/refs/tags/v1.5.0.tar.gz"
-  sha256 "8064f7bae8cfd049b27faaaa4536e61e578d2789970ca4ed8cec82af6dd962b8"
+  url "https://github.com/orf/git-workspace/archive/refs/tags/v1.8.0.tar.gz"
+  sha256 "b6499b70362730dbe1674fd07bd9aefef0bcd45ba4504ed0cce62ef2c7ecad1f"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "5e31cf866fa3e787ddd99792c2a035448193fe1d16e527a56f31bf1825056cf8"
-    sha256 cellar: :any,                 arm64_ventura:  "4e09723e04f3e1e933b52d6f6cdea3a92973acb76c668118978449d7561fc437"
-    sha256 cellar: :any,                 arm64_monterey: "d2602a65865a4566cf60a9f2546e366298c733d57593e9127e6fcf6a349e37ab"
-    sha256 cellar: :any,                 sonoma:         "675ee40c362d2dc544cd87caa77ac83261bbede2c2cef9b27fde0420ba1dcf48"
-    sha256 cellar: :any,                 ventura:        "11a0770afb555a3c457281605022ede5db72deb6c96ecfe80b2e20616e746a62"
-    sha256 cellar: :any,                 monterey:       "18c81743d8cf59686d331abc3023d05a05d2996cd5a8bd26fd5cbe7a4fb5d31b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "9517346daa08e4593455d81ad4750eeb25901cf4e9cc7b9e4f923f2de7846b5e"
+    sha256 cellar: :any,                 arm64_sequoia: "6a4fe8611f58904c04941f7d24f0c05690e94a530e1a5c6a65e1b66ea17a63c7"
+    sha256 cellar: :any,                 arm64_sonoma:  "4cbcd08c8721d9d57b484e83370207dd7d624625b3fe3fe2f3b3a032ef57e602"
+    sha256 cellar: :any,                 arm64_ventura: "2238606be70e0cda69f2b1385151a603da2b4cb09d5d5596801bd297e78d809e"
+    sha256 cellar: :any,                 sonoma:        "24d8208eaa671dc162bad95db12f51ed4a33e8ba47f0f5d734e292d97d43f1c1"
+    sha256 cellar: :any,                 ventura:       "09b7800f722e02bbee6a0d894b06a88ebd8a7b1606532c7c922b285b5dab0dca"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "eac36464fd5fef9aa5c473173281b4a73ded57c21a6fc8595742a1b6a6a539e7"
   end
 
   depends_on "pkg-config" => :build

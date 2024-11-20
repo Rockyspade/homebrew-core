@@ -1,9 +1,10 @@
 class Yaz < Formula
   desc "Toolkit for Z39.50/SRW/SRU clients/servers"
   homepage "https://www.indexdata.com/resources/software/yaz/"
-  url "https://ftp.indexdata.com/pub/yaz/yaz-5.34.1.tar.gz"
-  sha256 "c7fd8e0222b3b0d1115ad8e7a2ee67be7a2807624d61d5b71854bf5e167ab7a9"
+  url "https://ftp.indexdata.com/pub/yaz/yaz-5.34.2.tar.gz"
+  sha256 "ab45cf48036fc6da7493815c033b5db2b1e7a34632caed1a43e9cdef745b9618"
   license "BSD-3-Clause"
+  revision 2
 
   # The latest version text is currently omitted from the homepage for this
   # software, so we have to check the related directory listing page.
@@ -13,13 +14,12 @@ class Yaz < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "dc45f16c09632a6e73e49ace9bd8d0b4e086a5a9c5503cfe7c066f18a59d8f87"
-    sha256 cellar: :any,                 arm64_ventura:  "de294f63ae537046de8e38aab6a66964d142a72bbd5039a1e0510d06444b3d56"
-    sha256 cellar: :any,                 arm64_monterey: "be73925a730bbc3956497ba501596848f6f80292f7ef23cb72490537fd141948"
-    sha256 cellar: :any,                 sonoma:         "7bca2535a733fa5d4d59b565d1844ba549275e7e3deb4ea118a35b8aace8d865"
-    sha256 cellar: :any,                 ventura:        "9df7ada09b950e224f87f15387725a63754d77ea2b5f5f707af654f26a336a47"
-    sha256 cellar: :any,                 monterey:       "a6b19cb6e6905f85aa590d49c4b10aaa28a8364f60aacd76c85d210fa9e760a4"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "019454b127ed23be0ddac5cda1f86e1e011267a6c68ced037c9eeb3843324569"
+    sha256 cellar: :any,                 arm64_sequoia: "a8cd36bbbeec630fa947578396b92b8ad37c0ba907f457f6618cc37240b2fb66"
+    sha256 cellar: :any,                 arm64_sonoma:  "a2c3bf144a59efe29632027782e983de77e92f0aacade22b812c873433992dfc"
+    sha256 cellar: :any,                 arm64_ventura: "8f6a66d5ca7c55b904adf90e11ca423e038bf387d1591557c715b94bbea0a983"
+    sha256 cellar: :any,                 sonoma:        "c22b67c417f5ed789fe8e9b3785ebccdb49077d17ed9b158911472bc7734dbd5"
+    sha256 cellar: :any,                 ventura:       "b9b0851e6eb1a3141f1667b685b05b1379d17c74fd6e6bc0b19fb0c78352a012"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "57fc1bff0c4788bf37030172238c5be3f2c0d2a0f93025c1c63f45869e86d5af"
   end
 
   head do
@@ -34,9 +34,9 @@ class Yaz < Formula
     uses_from_macos "tcl-tk" => :build
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "gnutls"
-  depends_on "icu4c"
+  depends_on "icu4c@76"
   depends_on "readline" # Possible opportunistic linkage. TODO: Check if this can be removed.
 
   uses_from_macos "libxml2"
@@ -47,17 +47,20 @@ class Yaz < Formula
       ENV["XML_CATALOG_FILES"] = etc/"xml/catalog"
       system "./buildconf.sh"
     end
-    system "./configure", *std_configure_args,
-                          "--with-gnutls",
+    icu4c = deps.find { |dep| dep.name.match?(/^icu4c(@\d+)?$/) }
+                .to_formula
+    system "./configure", "--with-gnutls",
+                          "--with-icu=#{icu4c.opt_prefix}",
                           "--with-xml2",
-                          "--with-xslt"
+                          "--with-xslt",
+                          *std_configure_args
     system "make", "install"
 
     # Replace dependencies' cellar paths, which can break build for dependents
     # (like `metaproxy` and `zebra`) after a dependency is version/revision bumped
     inreplace bin/"yaz-config" do |s|
       s.gsub! Formula["gnutls"].prefix.realpath, Formula["gnutls"].opt_prefix
-      s.gsub! Formula["icu4c"].prefix.realpath, Formula["icu4c"].opt_prefix
+      s.gsub! icu4c.prefix.realpath, icu4c.opt_prefix
     end
     unless OS.mac?
       inreplace [bin/"yaz-config", lib/"pkgconfig/yaz.pc"] do |s|
@@ -79,7 +82,7 @@ class Yaz < Formula
     # Test ICU support by running yaz-icu with the example icu_chain
     # from its man page.
     configfile = testpath/"icu-chain.xml"
-    configfile.write <<~EOS
+    configfile.write <<~XML
       <?xml version="1.0" encoding="UTF-8"?>
       <icu_chain locale="en">
         <transform rule="[:Control:] Any-Remove"/>
@@ -89,7 +92,7 @@ class Yaz < Formula
         <display/>
         <casemap rule="l"/>
       </icu_chain>
-    EOS
+    XML
 
     inputfile = testpath/"icu-test.txt"
     inputfile.write "yaz-ICU	xy!"

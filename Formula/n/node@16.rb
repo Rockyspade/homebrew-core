@@ -4,28 +4,27 @@ class NodeAT16 < Formula
   url "https://nodejs.org/dist/v16.20.2/node-v16.20.2.tar.xz"
   sha256 "576f1a03c455e491a8d132b587eb6b3b84651fc8974bb3638433dd44d22c8f49"
   license "MIT"
-  revision 1
+  revision 3
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "631a5ed1cd7834f440c6165474fe9affca55e9731d21abb42f01ebf3aa8fd1f6"
-    sha256 cellar: :any,                 arm64_ventura:  "7efc4bbee5dcd2bfce309895cf9870fa0c652c641d887c37e1061fcbc13c1cf0"
-    sha256 cellar: :any,                 arm64_monterey: "1541329ebab112c5c0ad0cf81d0f81e4ad646587bab5e0824ca7b6849c0d53f6"
-    sha256 cellar: :any,                 sonoma:         "70b178141af156260fbd2d1e7d03c1b74bc5878b11b9e4897f9e123e5626518d"
-    sha256 cellar: :any,                 ventura:        "bd526bbf8a16f7da6349fb7a0fb3b182784512bf4b527d622529c8c907f3d8d7"
-    sha256 cellar: :any,                 monterey:       "e3a8ed83a860e58ff03d4b3045715a26510b988dbeca39ded563cbf679da17e9"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "769953ce120b601f5523298a89df52db171e50053c9311daf3cd9f0ecee71944"
+    sha256 cellar: :any,                 arm64_sequoia: "b13be0d32da21d723781c78c3f5a3bdf84d86541d867c99944ce845752efb7f7"
+    sha256 cellar: :any,                 arm64_sonoma:  "77f8dc24029ff4a327a08e34ca03b9bffb2d2af3154a72d3e715dbdbd5dcc056"
+    sha256 cellar: :any,                 arm64_ventura: "4684f8478761fc02996757f54c0e8cd1f1b8f8a91919048f6759e4fa09cd2e9f"
+    sha256 cellar: :any,                 sonoma:        "510b6314af58d227186a4e19d056281935b7ada207a4119399d5b0b97501530b"
+    sha256 cellar: :any,                 ventura:       "1c4481d6303b9e416c629879cce704d61d8ca58ddf8a37cedacd8d04b212d3a6"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ae8ad6360d6350f4ea98930aa626aa0448bbd264c075959c7ad7d8940109f354"
   end
 
   keg_only :versioned_formula
 
   # https://nodejs.org/en/about/releases/
-  deprecate! date: "2023-11-02", because: :unsupported
+  disable! date: "2024-11-03", because: :unsupported
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "python@3.11" => :build
   depends_on "brotli"
   depends_on "c-ares"
-  depends_on "icu4c"
+  depends_on "icu4c@76"
   depends_on "libnghttp2"
   depends_on "libuv"
   depends_on "openssl@3"
@@ -44,7 +43,15 @@ class NodeAT16 < Formula
 
   fails_with gcc: "5"
 
+  # Backport support for ICU 76+
+  patch do
+    url "https://github.com/nodejs/node/commit/81517faceac86497b3c8717837f491aa29a5e0f9.patch?full_index=1"
+    sha256 "79a5489617665c5c88651a7dc364b8967bebdea5bdf361b85572d041a4768662"
+  end
+
   def install
+    # icu4c 75+ needs C++17. Node 16 uses `-std=gnu++14` so keep GNU extensions
+    ENV.append "CXXFLAGS", "-std=gnu++17"
     # ../deps/v8/src/base/bit-field.h:43:29: error: integer value 7 is outside
     # the valid range of values [0, 3] for this enumeration type
     # [-Wenum-constexpr-conversion]

@@ -4,23 +4,21 @@ class EtcdCppApiv3 < Formula
   url "https://github.com/etcd-cpp-apiv3/etcd-cpp-apiv3/archive/refs/tags/v0.15.4.tar.gz"
   sha256 "4516ecfa420826088c187efd42dad249367ca94ea6cdfc24e3030c3cf47af7b4"
   license "BSD-3-Clause"
-  revision 10
+  revision 17
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "f883f72f93d35df7b159abba6e0b4301da063e9b0e1789d19297b5c32a6e988b"
-    sha256 cellar: :any,                 arm64_ventura:  "c9213602d48b738bf1f2a90936a4d85c6234b98c4e12a495a53cfecec7f31207"
-    sha256 cellar: :any,                 arm64_monterey: "61d0b59da0715896606d86ad08cebc4e724da11e9e2b45245ba54c14f0dc03ab"
-    sha256 cellar: :any,                 sonoma:         "33655333b8e9ffc3e687bcae43cf2af2155e160f90e02532456cd649ff51ee7d"
-    sha256 cellar: :any,                 ventura:        "33fce957976ab0099bf5b4454f36b982cdb6f62023084960072f6d9cca60564a"
-    sha256 cellar: :any,                 monterey:       "cd48e5da602f69bad644c3bf8a76c00b554d41d3d8439c54b778a6a3eb10a215"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "fcb362d41bcd81d856636f1f5673a24501f3401e434121e72e0d2769b826b889"
+    sha256 cellar: :any,                 arm64_sequoia: "eae08a8ebe03d7f50e2652d1492cdcb15eb812aaf5ecf9d8f30e1ae6993c57f9"
+    sha256 cellar: :any,                 arm64_sonoma:  "40e9e03088afec1230e9f1eb9b9c537e818981627a7e5de2bc8314c7c73cb98e"
+    sha256 cellar: :any,                 arm64_ventura: "776250e354e3ac2d1ac415369858cd1460afa987d7e592fab9f97f8413435df9"
+    sha256 cellar: :any,                 sonoma:        "377981f70cba4f15d820106b4cd8260893a40532fd4ce9a0f6b1684636549a07"
+    sha256 cellar: :any,                 ventura:       "d1941f788e048b0456058c296e58d3dac5623a3d876957cf8eacade1867f0a25"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f3b0556472f4d881f9883ae82c6fe318d0799da70f73c86c86fe029a2305a316"
   end
 
-  depends_on "cmake" => :build
+  depends_on "cmake" => [:build, :test]
   depends_on "etcd" => :test
 
   depends_on "abseil"
-  depends_on "boost"
   depends_on "c-ares"
   depends_on "cpprestsdk"
   depends_on "grpc"
@@ -28,7 +26,12 @@ class EtcdCppApiv3 < Formula
   depends_on "protobuf"
   depends_on "re2"
 
-  fails_with gcc: "5"
+  # Fix for removal of GPR_ASSERT macro in grpc.
+  # https://github.com/etcd-cpp-apiv3/etcd-cpp-apiv3/pull/281
+  patch do
+    url "https://github.com/etcd-cpp-apiv3/etcd-cpp-apiv3/commit/ece56adf4d01658a5f0668a3618c97153665581c.patch?full_index=1"
+    sha256 "f3686647436045a9a53b05f81fae02d5a5a2025d5ce78a66aca0ade85c1a99c6"
+  end
 
   def install
     system "cmake", "-S", ".", "-B", "build",
@@ -44,7 +47,7 @@ class EtcdCppApiv3 < Formula
   test do
     port = free_port
 
-    (testpath/"test.cc").write <<~EOS
+    (testpath/"test.cc").write <<~CPP
       #include <iostream>
       #include <etcd/Client.hpp>
 
@@ -54,41 +57,30 @@ class EtcdCppApiv3 < Formula
         auto response = etcd.get("foo").get();
         std::cout << response.value().as_string() << std::endl;
       }
-    EOS
+    CPP
 
-    system ENV.cxx, "test.cc", "-std=c++17",
-                    "-I#{Formula["boost"].include}",
-                    "-I#{Formula["cpprestsdk"].include}",
-                    "-I#{Formula["grpc"].include}",
-                    "-I#{Formula["openssl@3"].include}",
-                    "-I#{Formula["protobuf"].include}",
-                    "-I#{include}",
-                    "-L#{Formula["boost"].lib}",
-                    "-L#{Formula["cpprestsdk"].lib}",
-                    "-L#{Formula["grpc"].lib}",
-                    "-L#{Formula["openssl@3"].lib}",
-                    "-L#{Formula["protobuf"].lib}",
-                    "-L#{lib}",
-                    "-lboost_random-mt",
-                    "-lboost_chrono-mt",
-                    "-lboost_thread-mt",
-                    "-lboost_system-mt",
-                    "-lboost_filesystem-mt",
-                    "-lcpprest",
-                    "-letcd-cpp-api",
-                    "-lgpr", "-lgrpc", "-lgrpc++",
-                    "-lssl", "-lcrypto",
-                    "-lprotobuf",
-                    "-o", "test_etcd_cpp_apiv3"
+    (testpath/"CMakeLists.txt").write <<~CMAKE
+      cmake_minimum_required(VERSION 3.5)
+      set(CMAKE_CXX_STANDARD 17)
+      project(test LANGUAGES CXX)
+      find_package(protobuf CONFIG REQUIRED)
+      find_package(etcd-cpp-api CONFIG REQUIRED)
+      add_executable(test_etcd_cpp_apiv3 test.cc)
+      target_link_libraries(test_etcd_cpp_apiv3 PRIVATE etcd-cpp-api)
+    CMAKE
+
+    ENV.delete "CPATH"
+    system "cmake", ".", "-Wno-dev", "-DCMAKE_BUILD_RPATH=#{HOMEBREW_PREFIX}/lib"
+    system "cmake", "--build", "."
 
     # prepare etcd
-    etcd_pid = fork do
-      exec "#{Formula["etcd"].opt_prefix}/bin/etcd",
-        "--force-new-cluster",
-        "--data-dir=#{testpath}",
-        "--listen-client-urls=http://127.0.0.1:#{port}",
-        "--advertise-client-urls=http://127.0.0.1:#{port}"
-    end
+    etcd_pid = spawn(
+      Formula["etcd"].opt_bin/"etcd",
+      "--force-new-cluster",
+      "--data-dir=#{testpath}",
+      "--listen-client-urls=http://127.0.0.1:#{port}",
+      "--advertise-client-urls=http://127.0.0.1:#{port}",
+    )
 
     # sleep to let etcd get its wits about it
     sleep 10

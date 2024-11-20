@@ -7,6 +7,7 @@ class Gflags < Formula
 
   bottle do
     rebuild 2
+    sha256 cellar: :any,                 arm64_sequoia:  "5a17163fb7c8fb712f7bee2776e6304e54bb4e7116fe3abb6d2689b1042f8a60"
     sha256 cellar: :any,                 arm64_sonoma:   "1b14d0fd5ab4d2d04ff229bf7cace191208d62a3dc67029151ce1140ecf81258"
     sha256 cellar: :any,                 arm64_ventura:  "9ff5d9da1a4c1d22229f1fb75293a2e115bb431b498dac7c4a42f52378353c50"
     sha256 cellar: :any,                 arm64_monterey: "09ec6001e46f675b1e2bf64ed3ffd6ee8072d36facf38791d1ceeed0c2472daf"
@@ -29,7 +30,7 @@ class Gflags < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <iostream>
       #include "gflags/gflags.h"
 
@@ -52,18 +53,18 @@ class Gflags < Formula
         gflags::ShutDownCommandLineFlags();
         return 0;
       }
-    EOS
+    CPP
     system ENV.cxx, "test.cpp", "-L#{lib}", "-lgflags", "-o", "test"
     assert_match "Hello world!", shell_output("./test")
     assert_match "Foo bar!", shell_output("./test --message='Foo bar!'")
 
-    (testpath/"CMakeLists.txt").write <<~EOS
+    (testpath/"CMakeLists.txt").write <<~CMAKE
       cmake_minimum_required(VERSION 2.8)
       project(cmake_test)
       add_executable(${PROJECT_NAME} test.cpp)
       find_package(gflags REQUIRED COMPONENTS static)
       target_link_libraries(${PROJECT_NAME} PRIVATE ${GFLAGS_LIBRARIES})
-    EOS
+    CMAKE
     system "cmake", testpath.to_s
     system "cmake", "--build", testpath.to_s
     assert_match "Hello world!", shell_output("./cmake_test")

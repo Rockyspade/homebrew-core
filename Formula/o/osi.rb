@@ -11,6 +11,7 @@ class Osi < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "d481d371981a212968f123ab295b4a2f891040f411dfa9cbf6b537adc851c155"
     sha256 cellar: :any,                 arm64_sonoma:   "92e1f220abefbedf5afa236f48941731101b6bc6cf3c0a5a3a42c4ded4af2a58"
     sha256 cellar: :any,                 arm64_ventura:  "62ff3b164a73eb23614ab0bf0ae1fcca5bb41e83fd64ebccb8f245cc5aa23c0c"
     sha256 cellar: :any,                 arm64_monterey: "ab536eb79add604baa066582abcda1ad72018ce2aa1e74144d11d4a4988ad259"
@@ -37,13 +38,13 @@ class Osi < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <OsiSolverInterface.hpp>
 
       int main() {
         OsiSolverInterface *si;
       }
-    EOS
+    CPP
     system ENV.cxx, "-std=c++11", "test.cpp", "-L#{lib}", "-lOsi",
                     "-I#{include}/osi/coin",
                     "-I#{Formula["coinutils"].include}/coinutils/coin",

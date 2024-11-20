@@ -13,12 +13,13 @@ class Portaudio < Formula
     regex(/href=.*?pa[._-]stable[._-]v?(\d+)(?:[._-]\d+)?\.t/i)
     strategy :page_match do |page, regex|
       # Modify filename version (190700) to match formula version (19.7.0)
-      page.scan(regex).map { |match| match&.first&.scan(/\d{2}/)&.map(&:to_i)&.join(".") }
+      page.scan(regex).map { |match| match[0].scan(/\d{2}/).map(&:to_i).join(".") }
     end
   end
 
   bottle do
     rebuild 1
+    sha256 cellar: :any,                 arm64_sequoia:  "8ad9f1c15a4bc9c05a9dd184b53b8f5f5d13a2458a70535bfb01e54ce4f8b4bd"
     sha256 cellar: :any,                 arm64_sonoma:   "e5f86790b92dc68b3e1770cffb14dcfa42ed8cb2496b1ae9fb30c2d8ae66c037"
     sha256 cellar: :any,                 arm64_ventura:  "0f9a24bce721238c9f6fffaf6c490bb82e24fa0171bd23c66002d96ee67381e8"
     sha256 cellar: :any,                 arm64_monterey: "8f390bc5ee1fffa1191df48e2947acafd5063abdc713c595760f3ac6a7a8ebd6"
@@ -50,23 +51,23 @@ class Portaudio < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <stdio.h>
       #include "portaudio.h"
 
       int main(){
         printf("%s",Pa_GetVersionInfo()->versionText);
       }
-    EOS
+    C
 
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <iostream>
       #include "portaudiocpp/System.hxx"
 
       int main(){
         std::cout << portaudio::System::versionText();
       }
-    EOS
+    CPP
 
     system ENV.cc, testpath/"test.c", "-I#{include}", "-L#{lib}", "-lportaudio", "-o", "test"
     system ENV.cxx, testpath/"test.cpp", "-I#{include}", "-L#{lib}", "-lportaudiocpp", "-o", "test_cpp"

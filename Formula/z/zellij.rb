@@ -1,19 +1,18 @@
 class Zellij < Formula
   desc "Pluggable terminal workspace, with terminal multiplexer as the base feature"
   homepage "https://zellij.dev"
-  url "https://github.com/zellij-org/zellij/archive/refs/tags/v0.40.1.tar.gz"
-  sha256 "1f0bfa13f2dbe657d76341a196f98a3b4caa47ac63abee06b39883a11ca220a8"
+  url "https://github.com/zellij-org/zellij/archive/refs/tags/v0.41.2.tar.gz"
+  sha256 "12e7f0f80c1e39deed5638c4662fc070855cee0250a7eb1d76cefbeef8c2f376"
   license "MIT"
   head "https://github.com/zellij-org/zellij.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "2183f0c3592b2fb0c9874c94870a3e303c2901f28e2370fb8e71d89625e4ef4a"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "80d0688a3f2fa76ea9d9417bd9db0ecd95932e9280d34471de8937e184116988"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "1071a258de8cc07429de27543aae2906b6a84cef28cf35992f9c4cf09ceee350"
-    sha256 cellar: :any_skip_relocation, sonoma:         "9e32e1561b876067d7b022b50fdc69620dcd4d3697a765f9f5f352b215146139"
-    sha256 cellar: :any_skip_relocation, ventura:        "e3edbd1ce4233a65b7258cb4f6f21e51a055eeae09806ebcead11a3a92a5c0de"
-    sha256 cellar: :any_skip_relocation, monterey:       "d27b158af0acb038d5712603519e9ee8ebf322873a6cbd7c3f3c686059f9b08f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b21f2df5cc8c18fc9cdfc7b819c76b24a8a57710872dcee8a10e2c5a03e80712"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "3985d14a2d7fc0c66ed878ed2c600f5cd238229f694c9087d011b6a82b289185"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "acb39aaf105fbd7512268fa99df97b1869752078aeb8f76c84a4d5e196716738"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "6f7515d90e07423228cdc194e31352d808dae128ed5daa982bb8b570c14bd0ec"
+    sha256 cellar: :any_skip_relocation, sonoma:        "515bd15cac534bd20f41aa2ebc77c45646e2dd8bc1a8c41ef307e89988b52b8c"
+    sha256 cellar: :any_skip_relocation, ventura:       "0535d3328feca430ce40127148a36b13510d993f0f34977700edac74c136485b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8e3bf727ff5681b0f7a4b83173f259f7b34f6d95bccbc4d41669c481d3652800"
   end
 
   depends_on "rust" => :build

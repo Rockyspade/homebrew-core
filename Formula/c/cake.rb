@@ -1,18 +1,16 @@
 class Cake < Formula
   desc "Cross platform build automation system with a C# DSL"
   homepage "https://cakebuild.net/"
-  url "https://github.com/cake-build/cake/archive/refs/tags/v4.0.0.tar.gz"
-  sha256 "ea45d7a69f7bc373bd4d38ed708632a4ff7365d36cb9a85c40a107e6a7ae2c1b"
+  url "https://github.com/cake-build/cake/archive/refs/tags/v5.0.0.tar.gz"
+  sha256 "0c77a4a8626b1f6aa886e542026f33e2645bda7177e66c6ca1f60a6cf80b9bf0"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "9b93e9b43a600ac1b2c4f1a208bd3d32351e9479a32798f03a3f3240c3048ba7"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "6e14ff691a1afc175e118455606320bd182fba32098c84c2b0e608216ea0ae90"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "d5a7244265a5d8de77aaf286582825e14a0922f45233b72b190f597b552ea520"
-    sha256 cellar: :any_skip_relocation, sonoma:         "20b640ab1211cb2414ea3afd61b66358457eeb907f305ba2752c7d017aa323fc"
-    sha256 cellar: :any_skip_relocation, ventura:        "0f5b7483f521a47e7d8263812410cb440b7281e6178775eab0e2704384b64695"
-    sha256 cellar: :any_skip_relocation, monterey:       "aaf5ebc10b59cd8bd82a0ca457c969ff742d94ff607623898f6c1953ee8df542"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "30b72806f212766992de3f8e262c70b086542cf1441104ec1105fd9c41ba9d8b"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "78c022a53d5c794a02cb245365a20e68101ff498636aa9d9b0d5791df21e6946"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "39611171d03f29228d6c0f1402647d20a7ada16eff8a8c9fcd25c57d8ce5b7b1"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "37df34c69614dea7ac08ea390a065de5765df3117ab8b7bf4d76135d9ec3ab3e"
+    sha256 cellar: :any_skip_relocation, ventura:       "9d076394489c1d9004fb0749b3723dde1fd951a1cb4f7f81672e83c82680fd02"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9790da9b120af327c140e99edb3d8bd88fe07016045863938915193f376494b2"
   end
 
   depends_on "dotnet"
@@ -21,21 +19,18 @@ class Cake < Formula
 
   def install
     dotnet = Formula["dotnet"]
-    os = OS.mac? ? "osx" : OS.kernel_name.downcase
-    arch = Hardware::CPU.intel? ? "x64" : Hardware::CPU.arch.to_s
-
     args = %W[
       --configuration Release
       --framework net#{dotnet.version.major_minor}
       --output #{libexec}
-      --runtime #{os}-#{arch}
       --no-self-contained
-      /p:Version=#{version}
+      --use-current-runtime
+      -p:AppHostRelativeDotNet=#{dotnet.opt_libexec.relative_path_from(libexec)}
+      -p:Version=#{version}
     ]
 
     system "dotnet", "publish", "src/Cake", *args
-    env = { DOTNET_ROOT: "${DOTNET_ROOT:-#{dotnet.opt_libexec}}" }
-    (bin/"cake").write_env_script libexec/"Cake", env
+    bin.install_symlink libexec/"Cake" => "cake"
   end
 
   test do

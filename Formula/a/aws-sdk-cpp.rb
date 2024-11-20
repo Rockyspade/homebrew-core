@@ -2,8 +2,8 @@ class AwsSdkCpp < Formula
   desc "AWS SDK for C++"
   homepage "https://github.com/aws/aws-sdk-cpp"
   url "https://github.com/aws/aws-sdk-cpp.git",
-      tag:      "1.11.375",
-      revision: "c1107e541b175e027284086bdb4a0bf6c98462d1"
+      tag:      "1.11.450",
+      revision: "c808a26c2141f0e5be2f830b4a74ad73ec86fb2d"
   license "Apache-2.0"
   head "https://github.com/aws/aws-sdk-cpp.git", branch: "main"
 
@@ -12,13 +12,12 @@ class AwsSdkCpp < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "46c633ed39c3fe2a05117b763a078775b139df4451d9e915c53b25faea38128d"
-    sha256 cellar: :any,                 arm64_ventura:  "acbf832e9ab84c84cf8bbb882abb83654ec67d8a7e8cd8371448709616cfcdbc"
-    sha256 cellar: :any,                 arm64_monterey: "af283db9d02f96ac2a0917192b88de72cf5705f32ec54993f46d7a6c0fff4cd3"
-    sha256 cellar: :any,                 sonoma:         "f9382ae462768e71dbcc0fdb8f9955cea34f976bffd38b8bcace4d25aec53a4e"
-    sha256 cellar: :any,                 ventura:        "bd1c2b911d8f78024a477db335b820b31d950c03a5cc88d910c62444970d7b72"
-    sha256 cellar: :any,                 monterey:       "c42bc24177c8d6208fe9ff2d6d72d395396fe80885ae491a1b2599824149625e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "272513f80c593d0fc9e4ffd027e28be4afbf386888202b5af9b14a1d76fc7d8b"
+    sha256 cellar: :any,                 arm64_sequoia: "692c0415ce1f4b6042e7eda6df561e84bb0846c16d6f327bd4dda24a9bdc132d"
+    sha256 cellar: :any,                 arm64_sonoma:  "412470660fb2aded240a852204d85f3f89f1f222a1af50bb997fef8903b09575"
+    sha256 cellar: :any,                 arm64_ventura: "d5ae47fbadcd6c5ee1dd051aad05a6768ecbc2639b1c8e920308f304129ce169"
+    sha256 cellar: :any,                 sonoma:        "a517b0c2c3c48f5dd1258f96d822d969cc264eff4f77011a83becdd5bde0f00d"
+    sha256 cellar: :any,                 ventura:       "b37f8655d3d60b0798c85bef74198ac295b8e6cb983f5b43e14014b7f47987bc"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "34f568507b2fe726173cc2b87e84d535da4ac2b7d9678f99d1815295027b481e"
   end
 
   depends_on "cmake" => :build
@@ -47,7 +46,7 @@ class AwsSdkCpp < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <aws/core/Version.h>
       #include <iostream>
 
@@ -55,7 +54,7 @@ class AwsSdkCpp < Formula
           std::cout << Aws::Version::GetVersionString() << std::endl;
           return 0;
       }
-    EOS
+    CPP
     system ENV.cxx, "-std=c++11", "test.cpp", "-L#{lib}", "-laws-cpp-sdk-core", "-o", "test"
     system "./test"
   end

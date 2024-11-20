@@ -2,37 +2,37 @@ class Wasmtime < Formula
   desc "Standalone JIT-style runtime for WebAssembly, using Cranelift"
   homepage "https://wasmtime.dev/"
   url "https://github.com/bytecodealliance/wasmtime.git",
-      tag:      "v24.0.0",
-      revision: "6fc3d274c7994dad20c816ccc0739bf766b39a11"
+      tag:      "v26.0.1",
+      revision: "c138e08bfbe09b96a58bf409ee98244fa715988e"
   license "Apache-2.0" => { with: "LLVM-exception" }
   head "https://github.com/bytecodealliance/wasmtime.git", branch: "main"
 
+  # Upstream maintains multiple major versions and the "latest" release may be
+  # for a lower version, so we have to check multiple releases to identify the
+  # highest version.
   livecheck do
     url :stable
-    strategy :github_latest
+    strategy :github_releases
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "1ba895921bc24c40ff7fa3528791ab1299ce6b423243d9dcd875c300210d4950"
-    sha256 cellar: :any,                 arm64_ventura:  "c870f9ab8c424f78bd981f984695c15f21cc176578e1ed89e26294fadb544ec9"
-    sha256 cellar: :any,                 arm64_monterey: "3f412be8d0295b95f1c05f6f40f826be338b6a18eeeb1174de990b1915b12839"
-    sha256 cellar: :any,                 sonoma:         "7c200cc3b3d980a794db602d65b7540ab2901620cf84524155f62274a1f19703"
-    sha256 cellar: :any,                 ventura:        "9773cfb3d0ba7b4be65243c9252f32b5e582c12d37a5f4c1d3a6f77030c66421"
-    sha256 cellar: :any,                 monterey:       "61309258b29cd41fe4b1e5b4474d84ba0e58e967653a5a38f04772c37c988559"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "0337cb473de1e47222ebbbae453460fe34cb04ea587eddddbdd337371741f555"
+    sha256 cellar: :any,                 arm64_sequoia: "ba57d8e6490edd4944cb290c6ca4e9f5ef962a5ea7780709b8045c7fecc7fe71"
+    sha256 cellar: :any,                 arm64_sonoma:  "3197a3e7ecbaebe32955ac422925829887b5cd146ccddff6245c2ec6ceca0463"
+    sha256 cellar: :any,                 arm64_ventura: "764612da418a5e75c698a333f2e89764cd3bed7c179a0d02cb92b25fa7253c05"
+    sha256 cellar: :any,                 sonoma:        "4f0c15ec15d3167746408ed78f16985420e7d5197216f72a3abb1edbcef33307"
+    sha256 cellar: :any,                 ventura:       "81ee2288f1d4a8e1536fbc63aadd7bb6072f29f013152446328db837798c3783"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a8da65a3853bb15ffa041dc14a63caea5a2a40ffd2f1a76e1e6c178716146666"
   end
 
   depends_on "cmake" => :build
   depends_on "rust" => :build
 
   def install
-    system "cargo", "install", *std_cargo_args
+    system "cargo", "install", *std_cargo_args, "--profile=fastest-runtime"
 
-    cd "crates/c-api" do
-      system "cmake", "-S", ".", "-B", "build", *std_cmake_args
-      system "cmake", "--build", "build"
-      system "cmake", "--install", "build"
-    end
+    system "cmake", "-S", "crates/c-api", "-B", "build", "-DWASMTIME_FASTEST_RUNTIME=ON", *std_cmake_args
+    system "cmake", "--build", "build"
+    system "cmake", "--install", "build"
   end
 
   test do
@@ -50,7 +50,7 @@ class Wasmtime < Formula
 
     # Example from https://docs.wasmtime.dev/examples-c-hello-world.html to test C library API,
     # with comments removed for brevity
-    (testpath/"hello.c").write <<~EOS
+    (testpath/"hello.c").write <<~C
       #include <assert.h>
       #include <stdio.h>
       #include <stdlib.h>
@@ -154,7 +154,7 @@ class Wasmtime < Formula
         wasm_byte_vec_delete(&error_message);
         exit(1);
       }
-    EOS
+    C
 
     system ENV.cc, "hello.c", "-I#{include}", "-L#{lib}", "-lwasmtime", "-o", "hello"
     expected = <<~EOS

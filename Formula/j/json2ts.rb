@@ -1,19 +1,12 @@
 class Json2ts < Formula
   desc "Compile JSONSchema to TypeScript type declarations"
   homepage "https://github.com/bcherny/json-schema-to-typescript"
-  url "https://registry.npmjs.org/json-schema-to-typescript/-/json-schema-to-typescript-15.0.0.tgz"
-  sha256 "2788e695dcad9b99cee12d77cc9624ee807f30a9ee173131608b3195471313c1"
+  url "https://registry.npmjs.org/json-schema-to-typescript/-/json-schema-to-typescript-15.0.3.tgz"
+  sha256 "82233ff634ed9ffca59710d10056b5e95a0f2268b52543adf9fe578db1e46e40"
   license "MIT"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "7ed247ec8721d93165ab4b809c930e8b67127f09b860bd081ee870475c23ddc7"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "7ed247ec8721d93165ab4b809c930e8b67127f09b860bd081ee870475c23ddc7"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "7ed247ec8721d93165ab4b809c930e8b67127f09b860bd081ee870475c23ddc7"
-    sha256 cellar: :any_skip_relocation, sonoma:         "1a6b22d3b49cf48d603acdbb92456974c08ba9eb43c3bf887f20bed888f8f49a"
-    sha256 cellar: :any_skip_relocation, ventura:        "1a6b22d3b49cf48d603acdbb92456974c08ba9eb43c3bf887f20bed888f8f49a"
-    sha256 cellar: :any_skip_relocation, monterey:       "1a6b22d3b49cf48d603acdbb92456974c08ba9eb43c3bf887f20bed888f8f49a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d44b416cbfb6ead0f72287edf39d78e9dbf9e3429de82d1a399e31ef4b749572"
+    sha256 cellar: :any_skip_relocation, all: "11457a39c52b5a1b68bfb59cfc45048e5823d396c67601eaf6c081503045f4fd"
   end
 
   depends_on "node"

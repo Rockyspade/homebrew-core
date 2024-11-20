@@ -1,8 +1,8 @@
 class PostgresqlAT12 < Formula
   desc "Object-relational database system"
   homepage "https://www.postgresql.org/"
-  url "https://ftp.postgresql.org/pub/source/v12.20/postgresql-12.20.tar.bz2"
-  sha256 "2d543af3009fec7fd5af35f7a70c95085d3eef6b508e517aa9493e99b15e9ea9"
+  url "https://ftp.postgresql.org/pub/source/v12.21/postgresql-12.21.tar.bz2"
+  sha256 "6c711550ac1cc7828865e5823d9f457e3bdad6f4320177169f90e419be0c27f2"
   license "PostgreSQL"
 
   livecheck do
@@ -11,13 +11,12 @@ class PostgresqlAT12 < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "1860035fa32eabbaae82b4e39696282a3f8e3df7ffe8c0dab13651b88760df94"
-    sha256 arm64_ventura:  "457fcd2a462d2efe40c359886344b35a239417db3c29a8ca4227993d0691094f"
-    sha256 arm64_monterey: "72774b7fef6758e23f4ba024ebf190c2b94081b5a720935f8356ccf9ab9d8d34"
-    sha256 sonoma:         "a79bca41d1f4ba6aed93964db5b03df3fd35dc965712dac6aaa4f556fc5f6e7f"
-    sha256 ventura:        "ce639c93ee3e14d2b05e7d50bc88f243e9e734024d4e666d5574660277ef8e81"
-    sha256 monterey:       "4f941a20712c911f4a5d8086422bbb21fd890e0cba8eeb8ff14aa3b3af58d0bc"
-    sha256 x86_64_linux:   "59bbe07116abbda0667949246203d6e10c154979ffad01c75dc5610f4b2ad32e"
+    sha256 arm64_sequoia: "1e0abe4b5018ec54feec0141585d22ef780696677454e1e27dd1da2553946e6b"
+    sha256 arm64_sonoma:  "6e085b8b89f28d8017278e3f7a49d4098766571d41def69a1204215c9a971e0d"
+    sha256 arm64_ventura: "008f2be94a718859baed5c18e8627bb6472d1f84734316236074bd581e682d0f"
+    sha256 sonoma:        "94616c16c3a22ea772a885549499fa8e63f566dd46f428d2a28fc96dd96be363"
+    sha256 ventura:       "0994d6a17f205595ec423361b26b2449e5105ffcc8972db021738b216ce4a87f"
+    sha256 x86_64_linux:  "4a7e48e7ba32130522324b991839e231f5de9c8d4df4d094ab57b5ab88b05a3f"
   end
 
   keg_only :versioned_formula
@@ -26,7 +25,7 @@ class PostgresqlAT12 < Formula
   deprecate! date: "2024-11-14", because: :unsupported
 
   depends_on "pkg-config" => :build
-  depends_on "icu4c"
+  depends_on "icu4c@76"
 
   # GSSAPI provided by Kerberos.framework crashes when forked.
   # See https://github.com/Homebrew/homebrew-core/issues/47494.
@@ -70,12 +69,7 @@ class PostgresqlAT12 < Formula
       --with-perl
       --with-uuid=e2fs
     ]
-    if OS.mac?
-      args += %w[
-        --with-bonjour
-        --with-tcl
-      ]
-    end
+    args += %w[--with-bonjour --with-tcl] if OS.mac?
 
     # PostgreSQL by default uses xcodebuild internally to determine this,
     # which does not work on CLT-only installs.
@@ -97,12 +91,11 @@ class PostgresqlAT12 < Formula
                                     "pkgincludedir=#{include}/postgresql",
                                     "includedir_server=#{include}/postgresql/server",
                                     "includedir_internal=#{include}/postgresql/internal"
+    return unless OS.linux?
 
-    if OS.linux?
-      inreplace lib/"postgresql/pgxs/src/Makefile.global",
-                "LD = #{HOMEBREW_PREFIX}/Homebrew/Library/Homebrew/shims/linux/super/ld",
-                "LD = #{HOMEBREW_PREFIX}/bin/ld"
-    end
+    inreplace lib/"postgresql/pgxs/src/Makefile.global",
+              "LD = #{Superenv.shims_path}/ld",
+              "LD = #{HOMEBREW_PREFIX}/bin/ld"
   end
 
   def post_install
@@ -160,8 +153,6 @@ class PostgresqlAT12 < Formula
     caveats += <<~EOS
       This formula has created a default database cluster with:
         initdb --locale=C -E UTF-8 #{postgresql_datadir}
-      For more details, read:
-        https://www.postgresql.org/docs/#{version.major}/app-initdb.html
     EOS
 
     caveats

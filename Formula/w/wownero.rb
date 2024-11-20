@@ -25,6 +25,7 @@ class Wownero < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "c6350d120c92aa80675a64133daa98ce1de82f536130bf52f0cea6b68dbf1c66"
     sha256 cellar: :any,                 arm64_sonoma:   "17da92001eeaa1c252c3998ec8bf5e36a67a7e024bf7017dc0d7bb2f6f339b9b"
     sha256 cellar: :any,                 arm64_ventura:  "58f6790548e4d11d3345a630988c91136c0e12bcb0fb5cb818d6dbb7a161bafc"
     sha256 cellar: :any,                 arm64_monterey: "3082d89d0fe7b93cf50920f1cdcefd3fd24c930b8de2c6107c9a823fde779e55"
@@ -33,6 +34,8 @@ class Wownero < Formula
     sha256 cellar: :any,                 monterey:       "d9c2ea323635f520503e9b8c53db1d599d8c5e192420743470da97c0a918d4f6"
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "d08b8e26383ff1a7b709f65214b0f59505ca308f3b675bff55838c91de33a375"
   end
+
+  disable! date: "2025-05-11", because: "needs to use unmaintained `boost@1.85` and `protobuf@21`"
 
   depends_on "cmake" => :build
   depends_on "miniupnpc" => :build

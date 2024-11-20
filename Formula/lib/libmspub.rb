@@ -4,7 +4,7 @@ class Libmspub < Formula
   url "https://dev-www.libreoffice.org/src/libmspub/libmspub-0.1.4.tar.xz"
   sha256 "ef36c1a1aabb2ba3b0bedaaafe717bf4480be2ba8de6f3894be5fd3702b013ba"
   license "MPL-2.0"
-  revision 15
+  revision 17
 
   livecheck do
     url "https://dev-www.libreoffice.org/src/"
@@ -12,21 +12,22 @@ class Libmspub < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "8cb2377b7d0cfa029bc64851ccc621c7e75f28fd9d96ecdd87b46c043ef5fdcf"
-    sha256 cellar: :any,                 arm64_ventura:  "a17bfc0422565de7fade8199f23c2a97c1daf0834a34b113f11b83777c7138b7"
-    sha256 cellar: :any,                 arm64_monterey: "58d3b2c548f8d38cda3ade55681f0b41d045b33d36614f4eeb38e28ca0b2d763"
-    sha256 cellar: :any,                 sonoma:         "0e8a7db8b068af6009973bcf3a077c13f6107e1d0e9b0b92e109ad38429b0396"
-    sha256 cellar: :any,                 ventura:        "45ddab4bd14a6f2a5b8f0814cb10eb58328076d076e0444177f063a4c634d222"
-    sha256 cellar: :any,                 monterey:       "d792d2c08761c3e13de216ae3a4e8b516cd1a4d749c4397b9dc284901475c477"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "18293c8d8717b1fcf2388ee6eb6278295cc02c4e4b92335dbfe2ec9828479245"
+    sha256 cellar: :any,                 arm64_sequoia: "46498702c9fbd8ee646cd137afa86d3d4a1cffcab85b95a379234ab36bf02190"
+    sha256 cellar: :any,                 arm64_sonoma:  "9934e56fcb78fc1403f3223df2ed62226ce5fe9615037b76930f22e1a58d9106"
+    sha256 cellar: :any,                 arm64_ventura: "009cdc0dfadb6a728fa11315d3104655206839dc0a2dd256c45725d1c12ea69f"
+    sha256 cellar: :any,                 sonoma:        "36b77a094590874fe4cc27f3d781471c72a8d94704cf2162b24fd9caa4bd7aee"
+    sha256 cellar: :any,                 ventura:       "b8198c7e9d9ea481b6e07be4714322729f71029fae8ca3dc17ff7ede5c1f94e9"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e79e91b8bc1bee60c4f6a920edc0490a24f06ec6f31e6ba81fb9d192b647c8ac"
   end
 
   depends_on "boost" => :build
   depends_on "libwpg" => :build
   depends_on "pkg-config" => :build
-  depends_on "icu4c"
+  depends_on "icu4c@76"
   depends_on "librevenge"
   depends_on "libwpd"
+
+  uses_from_macos "zlib"
 
   # Fix for missing include needed to build with recent GCC. Remove in the next release.
   # Commit ref: https://git.libreoffice.org/libmspub/+/698bed839c9129fa7a90ca1b5a33bf777bc028d1%5E%21
@@ -35,17 +36,24 @@ class Libmspub < Formula
   end
 
   def install
-    system "./configure", "--without-docs",
-                          "--disable-dependency-tracking",
-                          "--enable-static=no",
-                          "--disable-werror",
+    # icu4c 75+ needs C++17 and icu4c 76+ needs icu-uc
+    # TODO: Fix upstream
+    icu4c = deps.find { |dep| dep.name.match?(/^icu4c(@\d+)?$/) }
+                .to_formula
+    ENV["ICU_LIBS"] = "-L#{icu4c.opt_lib} -licui18n -licuuc"
+    ENV.append "CXXFLAGS", "-std=gnu++17"
+
+    system "./configure", "--disable-silent-rules",
+                          "--disable-static",
                           "--disable-tests",
-                          "--prefix=#{prefix}"
+                          "--disable-werror",
+                          "--without-docs",
+                          *std_configure_args
     system "make", "install"
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <librevenge-stream/librevenge-stream.h>
       #include <libmspub/MSPUBDocument.h>
       int main() {
@@ -53,7 +61,7 @@ class Libmspub < Formula
           libmspub::MSPUBDocument::isSupported(&docStream);
           return 0;
       }
-    EOS
+    CPP
     system ENV.cxx, "test.cpp", "-o", "test", "-lrevenge-stream-0.0",
                     "-I#{Formula["librevenge"].include}/librevenge-0.0",
                     "-lmspub-0.1", "-I#{include}/libmspub-0.1",

@@ -2,7 +2,7 @@ class Pius < Formula
   include Language::Python::Virtualenv
 
   desc "PGP individual UID signer"
-  homepage "https://www.phildev.net/pius/"
+  homepage "https://github.com/jaymzh/pius"
   url "https://github.com/jaymzh/pius/archive/refs/tags/v3.0.0.tar.gz"
   sha256 "3454ade5540687caf6d8b271dd18eb773a57ab4f5503fc71b4769cc3c5f2b572"
   license "GPL-2.0-only"
@@ -10,18 +10,12 @@ class Pius < Formula
   head "https://github.com/jaymzh/pius.git", branch: "master"
 
   bottle do
-    rebuild 4
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "862a5a7ce264a77363a1a3e1a48ee177a712579e68aa469b96f714ebb5a81043"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "862a5a7ce264a77363a1a3e1a48ee177a712579e68aa469b96f714ebb5a81043"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "862a5a7ce264a77363a1a3e1a48ee177a712579e68aa469b96f714ebb5a81043"
-    sha256 cellar: :any_skip_relocation, sonoma:         "862a5a7ce264a77363a1a3e1a48ee177a712579e68aa469b96f714ebb5a81043"
-    sha256 cellar: :any_skip_relocation, ventura:        "862a5a7ce264a77363a1a3e1a48ee177a712579e68aa469b96f714ebb5a81043"
-    sha256 cellar: :any_skip_relocation, monterey:       "862a5a7ce264a77363a1a3e1a48ee177a712579e68aa469b96f714ebb5a81043"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "45e8b7405f3fb6071e55b19cbb78beaf73289719a67aebeead7f317080db78a9"
+    rebuild 6
+    sha256 cellar: :any_skip_relocation, all: "3f3e1fff9df0dffb6684ab3c51f31f7d45fa3ae4be39e97f6695d5f4164494a2"
   end
 
   depends_on "gnupg"
-  depends_on "python@3.12"
+  depends_on "python@3.13"
 
   def install
     # Replace hardcoded gpg path (WONTFIX)
@@ -31,11 +25,11 @@ class Pius < Formula
   end
 
   def caveats
-    <<~EOS
+    <<~TEXT
       The path to gpg is hardcoded in pius as `/usr/bin/env gpg`.
       You can specify a different path by editing ~/.pius:
         gpg-path=/path/to/gpg
-    EOS
+    TEXT
   end
 
   test do

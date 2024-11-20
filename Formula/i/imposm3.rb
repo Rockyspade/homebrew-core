@@ -6,6 +6,7 @@ class Imposm3 < Formula
   license "Apache-2.0"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "64f97048173142e08936aeb2994efcd41266f6cee1d4946cb44183322cd1f30e"
     sha256 cellar: :any,                 arm64_sonoma:   "0b5303c3ec7e530e54107a251fa4ef2fc9f4c2e54463c8b344b0c64fc781d905"
     sha256 cellar: :any,                 arm64_ventura:  "bca1a61350ffd184a74065eb3ccd0af7ab33819dfc263bd9498548ea80d0e7a9"
     sha256 cellar: :any,                 arm64_monterey: "8c0746261d6dbe9bf62f862f3731e963cafdff857067879339428b4973ac020f"
@@ -29,14 +30,14 @@ class Imposm3 < Formula
   end
 
   test do
-    (testpath/"sample.osm.xml").write <<~EOS
+    (testpath/"sample.osm.xml").write <<~XML
       <?xml version='1.0' encoding='UTF-8'?>
       <osm version="0.6">
         <bounds minlat="51.498" minlon="7.579" maxlat="51.499" maxlon="7.58"/>
       </osm>
-    EOS
+    XML
 
-    (testpath/"mapping.yml").write <<~EOS
+    (testpath/"mapping.yml").write <<~YAML
       tables:
         admin:
           columns:
@@ -56,7 +57,7 @@ class Imposm3 < Formula
             boundary:
             - administrative
           type: polygon
-    EOS
+    YAML
 
     assert_match version.to_s, shell_output("#{bin}/imposm version").chomp
 

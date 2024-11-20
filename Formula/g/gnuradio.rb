@@ -3,10 +3,10 @@ class Gnuradio < Formula
 
   desc "SDK for signal processing blocks to implement software radios"
   homepage "https://gnuradio.org/"
-  url "https://github.com/gnuradio/gnuradio/archive/refs/tags/v3.10.9.2.tar.gz"
-  sha256 "7fa154c423d01494cfa4c739faabad70b97f605238cd3fea8907b345b421fea1"
+  url "https://github.com/gnuradio/gnuradio/archive/refs/tags/v3.10.11.0.tar.gz"
+  sha256 "9ca658e6c4af9cfe144770757b34ab0edd23f6dcfaa6c5c46a7546233e5ecd29"
   license "GPL-3.0-or-later"
-  revision 9
+  revision 1
   head "https://github.com/gnuradio/gnuradio.git", branch: "main"
 
   livecheck do
@@ -15,13 +15,12 @@ class Gnuradio < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "a4af712e7d48d68e56bc98bb59ce5477a64732eeeb0af48439b41e6cc1cf16c6"
-    sha256 cellar: :any,                 arm64_ventura:  "e7f79f959da42c59d9abc6acb65db49721c53f54fb72b6dceff84644f5a038e0"
-    sha256 cellar: :any,                 arm64_monterey: "1455b35e66da5ef72f9179de59dd43bd0a906e36b5963028a0dfed10dc1d85ae"
-    sha256 cellar: :any,                 sonoma:         "ed4e0397065b675db6bc0e220d82fa1733b6ff786afea8f0da3c0caeb48bc7cb"
-    sha256 cellar: :any,                 ventura:        "24279acdfbe2169c6e98eb86ee8963a4c9ca11c4be1f3142aa171d32c31af8e2"
-    sha256 cellar: :any,                 monterey:       "5f5c888803483c81488a9e738d7894f856db1de06e726c8e26dc36a36a8de45b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "838765918e3cd7249997d72f9e3438fd49a4ec0ad1d26f2b3fd38abdcad3f095"
+    sha256 cellar: :any,                 arm64_sequoia: "d8c90b4a37295e286c4922b1c8ec7d845a8a3a0a0c27ab32b8d5530979143dfe"
+    sha256 cellar: :any,                 arm64_sonoma:  "06ac8da03aaca3d8f6fdede63295234259120c9cab34c58d22702f7ae8ed18b6"
+    sha256 cellar: :any,                 arm64_ventura: "72fba0972648f34a1f5e3e1887c05f64e18806bed4fe8ac4392de8c9572fc1c6"
+    sha256 cellar: :any,                 sonoma:        "3ae3eba4b90095e3262475be620845da0224e8db8046feffa8f5da3766ac4385"
+    sha256 cellar: :any,                 ventura:       "8612ccf79c75479767dd5a40ba092b29acaa70e805503fb77fdf6c26f2dcd67a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "6d9b4fbb8b410cced6bffe53dca172e4df0ff3cbba8ef4be1bd729445da7d60b"
   end
 
   depends_on "cmake" => :build
@@ -149,12 +148,6 @@ class Gnuradio < Formula
     sha256 "5c0806c7d9af348e6dd3777b4f4dbb42c7ad85b190104837488eab9a7c945cf8"
   end
 
-  # Allow qwt 6.3+
-  patch do
-    url "https://github.com/gnuradio/gnuradio/commit/ca344658756dab10a762571c51acf92c00c066c1.patch?full_index=1"
-    sha256 "7e16ca70d07ce61bc16870f756acc194eb893e22703c53ed2826f5cf90dc7f4e"
-  end
-
   def python3
     "python3.12"
   end
@@ -212,10 +205,10 @@ class Gnuradio < Formula
     plugin_pth_dir = etc/"gnuradio/plugins.d"
     plugin_pth_dir.mkpath
 
-    (venv.site_packages/"homebrew_gr_plugins.py").write <<~EOS
+    (venv.site_packages/"homebrew_gr_plugins.py").write <<~PYTHON
       import site
       site.addsitedir("#{plugin_pth_dir}")
-    EOS
+    PYTHON
 
     pth_contents = "#{prefix/site_packages}\nimport homebrew_gr_plugins\n"
     (venv.site_packages/"homebrew-gnuradio.pth").write pth_contents
@@ -229,7 +222,7 @@ class Gnuradio < Formula
   test do
     assert_match version.to_s, shell_output("#{bin}/gnuradio-config-info -v")
 
-    (testpath/"test.c++").write <<~EOS
+    (testpath/"test.c++").write <<~CPP
       #include <gnuradio/top_block.h>
       #include <gnuradio/blocks/null_source.h>
       #include <gnuradio/blocks/null_sink.h>
@@ -258,7 +251,7 @@ class Gnuradio < Formula
         top_block top;
         top.run();
       }
-    EOS
+    CPP
     system ENV.cxx, testpath/"test.c++", "-std=c++17", "-L#{lib}",
            "-lgnuradio-blocks", "-lgnuradio-runtime", "-lgnuradio-pmt",
            "-L#{Formula["boost"].opt_lib}", "-lboost_system",
@@ -267,7 +260,7 @@ class Gnuradio < Formula
            "-o", testpath/"test"
     system "./test"
 
-    (testpath/"test.py").write <<~EOS
+    (testpath/"test.py").write <<~PYTHON
       from gnuradio import blocks
       from gnuradio import gr
 
@@ -290,7 +283,7 @@ class Gnuradio < Formula
           tb.wait()
 
       main()
-    EOS
+    PYTHON
     system python3, testpath/"test.py"
   end
 end

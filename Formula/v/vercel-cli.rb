@@ -1,18 +1,17 @@
 class VercelCli < Formula
   desc "Command-line interface for Vercel"
   homepage "https://vercel.com/home"
-  url "https://registry.npmjs.org/vercel/-/vercel-36.0.0.tgz"
-  sha256 "de50d934b10fe041f3ac19afaf4d258dc210585cb67a6b7d7bc33fb265176771"
+  url "https://registry.npmjs.org/vercel/-/vercel-39.1.0.tgz"
+  sha256 "6b1edafa3f87f6a86fbec381c06257503c0644b9678918d46011c607cd9c25b4"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "76b88b6dc18545d60beb9fc3220f88c3faaa9ac736696a152f9cc3dd76b6d239"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "76b88b6dc18545d60beb9fc3220f88c3faaa9ac736696a152f9cc3dd76b6d239"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "76b88b6dc18545d60beb9fc3220f88c3faaa9ac736696a152f9cc3dd76b6d239"
-    sha256 cellar: :any_skip_relocation, sonoma:         "81af591f16c26cac2ced328f80a426161f619270a9c40720550d82fe762fef16"
-    sha256 cellar: :any_skip_relocation, ventura:        "81af591f16c26cac2ced328f80a426161f619270a9c40720550d82fe762fef16"
-    sha256 cellar: :any_skip_relocation, monterey:       "81af591f16c26cac2ced328f80a426161f619270a9c40720550d82fe762fef16"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "91cda1f3f38af50ae6d3be2e9689f34facb926f625b5bef608ab1a484e7ffd42"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "93d12c549fd286d290c7470aaddc5654f69020ca4a780b57679f36ff6f259189"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "93d12c549fd286d290c7470aaddc5654f69020ca4a780b57679f36ff6f259189"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "93d12c549fd286d290c7470aaddc5654f69020ca4a780b57679f36ff6f259189"
+    sha256 cellar: :any_skip_relocation, sonoma:        "a88bee40cbd68f9562d4a1ab266dbffa01e8a0e0de4dd299870c10b8ac1c5894"
+    sha256 cellar: :any_skip_relocation, ventura:       "a88bee40cbd68f9562d4a1ab266dbffa01e8a0e0de4dd299870c10b8ac1c5894"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "10293242402975a9ea5536cc4d957fa3795cddfe3aa2b4f41df99535bba1839d"
   end
 
   depends_on "node"

@@ -1,10 +1,10 @@
 class PerconaServer < Formula
   desc "Drop-in MySQL replacement"
   homepage "https://www.percona.com"
-  # TODO: Check if we can use unversioned `protobuf` at version bump
   url "https://downloads.percona.com/downloads/Percona-Server-8.0/Percona-Server-8.0.36-28/source/tarball/percona-server-8.0.36-28.tar.gz"
   sha256 "8a4b44bd9cf79a38e6275e8f5f9d4e8d2c308854b71fd5bf5d1728fff43a6844"
   license "BSD-3-Clause"
+  revision 2
 
   livecheck do
     url "https://docs.percona.com/percona-server/latest/"
@@ -19,30 +19,32 @@ class PerconaServer < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "e8ddfcd137263345d70bdb98a10ce465e3afa3742e0340176ced344d7a76af09"
-    sha256 arm64_ventura:  "fece2bd93b32cc7798eae60ec05ffccb6ca8f1a2514f17413e5f60ac449851e0"
-    sha256 arm64_monterey: "792e8dc5522ae83089e3ad379d390a0b6830d386e9904945db9bdfb52e48a29a"
-    sha256 sonoma:         "343a4d8124a980e1c90e96978c4a648a1f14f8e0b2539cfd21584119729f76f7"
-    sha256 ventura:        "828ed28d3a9642ced256561c2d71c717ea95b85590e4aed2f2400e8af0a30bf7"
-    sha256 monterey:       "55b1d398b262723c6ca7db6bb4d9e11fbae6246d0294f7e63983b0ff5cb5bae4"
-    sha256 x86_64_linux:   "8220675cd32b2106a4d4d03f12189e17c4184e55f3662287108d559e9d1f979d"
+    rebuild 1
+    sha256 arm64_sequoia: "29e0b962cb2f38106efe55c33b8110c5d531c88157ff52d8ce5657667f147e36"
+    sha256 arm64_sonoma:  "534428d3ac87a01e2ed1eda3ee30790c9f065dc89f24d1df9afbcc32c3fd3a23"
+    sha256 arm64_ventura: "8ed29556bfdd2c5f81d8b7414b6baba9d04ea19822b816de39f7c22fb37b9313"
+    sha256 sonoma:        "20abc25692b98473b4963e242c8cc38bcafd8c5aea4f0251dc6b783f8c756800"
+    sha256 ventura:       "abadd8d5152e2e72c8d8a5ad030bed067d3dcc6acad2919abe95fcbe1be8a728"
+    sha256 x86_64_linux:  "621e57fa5a0c7cc891a531caf7ec36ad1403dffc269ad6a3a33210419666ed83"
   end
 
   depends_on "bison" => :build
   depends_on "cmake" => :build
   depends_on "pkg-config" => :build
-  depends_on "icu4c"
+  depends_on "abseil"
+  depends_on "icu4c@76"
   depends_on "libevent"
   depends_on "libfido2"
   depends_on "lz4"
   depends_on "openldap" # Needs `ldap_set_urllist_proc`, not provided by LDAP.framework
   depends_on "openssl@3"
-  depends_on "protobuf@21"
+  depends_on "protobuf"
   depends_on "zlib" # Zlib 1.2.13+
   depends_on "zstd"
 
   uses_from_macos "curl"
   uses_from_macos "cyrus-sasl"
+  uses_from_macos "krb5"
   uses_from_macos "libedit"
 
   on_linux do
@@ -69,6 +71,17 @@ class PerconaServer < Formula
   resource "boost" do
     url "https://boostorg.jfrog.io/artifactory/main/release/1.77.0/source/boost_1_77_0.tar.bz2"
     sha256 "fc9f85fc030e233142908241af7a846e60630aa7388de9a5fafb1f3a26840854"
+  end
+
+  # Backport support for newer Protobuf. Remove with 8.0.39 / 8.4.2
+  patch do
+    url "https://github.com/percona/percona-server/commit/089c011f8e2a865e4bd97715653b4bc0973c43a1.patch?full_index=1"
+    sha256 "aac166f579e636923abeb86cc89934efaf0185df35355aab2d08192d9bf9efd8"
+  end
+  # Backport support for Protobuf 22+ on Linux. Remove with 8.0.40 / 8.4.3
+  patch do
+    url "https://github.com/mysql/mysql-server/commit/269abc0409b22bb87ec88bd4d53dfb7a1403eace.patch?full_index=1"
+    sha256 "ffcee32804e7e1237907432adb3590fcbf30c625eea836df6760c05a312a84e1"
   end
 
   # Patch out check for Homebrew `boost`.
@@ -148,10 +161,6 @@ class PerconaServer < Formula
 
     # Remove the tests directory
     rm_r(prefix/"mysql-test")
-
-    # Don't create databases inside of the prefix!
-    # See: https://github.com/Homebrew/homebrew/issues/4975
-    rm_r(prefix/"data")
 
     # Fix up the control script and link into bin.
     inreplace "#{prefix}/support-files/mysql.server",

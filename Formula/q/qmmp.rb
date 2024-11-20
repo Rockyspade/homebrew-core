@@ -1,8 +1,8 @@
 class Qmmp < Formula
   desc "Qt-based Multimedia Player"
   homepage "https://qmmp.ylsoftware.com/"
-  url "https://qmmp.ylsoftware.com/files/qmmp/2.1/qmmp-2.1.9.tar.bz2"
-  sha256 "b59f7a378b521d4a6d2b5c9e37a35c3494528bf0db85b24caddf3e1a1c9c3a37"
+  url "https://qmmp.ylsoftware.com/files/qmmp/2.2/qmmp-2.2.2.tar.bz2"
+  sha256 "53055984b220ec1f825b885db3ebdb54a7a71ac67935438ee4ff9c082f600c4f"
   license "GPL-2.0-or-later"
 
   livecheck do
@@ -11,19 +11,19 @@ class Qmmp < Formula
   end
 
   bottle do
-    sha256 arm64_ventura:  "16c00f13d9ee36d3103e99ef545258d6daa51cdcf92ad5dd4cbe2133830787a7"
-    sha256 arm64_monterey: "cf810052bdf5fb66ded0deea4e5c521913940eb22f2082a712d06277eb8e7c36"
-    sha256 ventura:        "faedacd0fe2af8d0c44f40eb3f65006761cd889a445375a2f578a1571abf6f1c"
-    sha256 monterey:       "3e0735430c45f5b7e903750321b10edbc26df4b99afce4c586e33bcd3e0d1418"
-    sha256 x86_64_linux:   "089b8e427089d593674f03477d97f7e95db8b1b2efe2bcd581f30389d802d89a"
+    sha256 cellar: :any,                 arm64_sonoma:  "515b38786fd3299f49dda650f810b4278faeec35ad6003a60ae072c25c93a4d6"
+    sha256 cellar: :any,                 arm64_ventura: "cac00b68eaabb52ee9f93d54da5b68fe52de4cb7f39e798f3716f0c99fadb3cd"
+    sha256 cellar: :any,                 sonoma:        "49a2054e2552565d1942d4fcc916b3402f7ae52b178844694869f7cbcb9dc72b"
+    sha256 cellar: :any,                 ventura:       "83c5f7524a1119d497b34303ffa0df3100d7bb179945e3567574ce0e5befe91c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "dde277e48b32110088fa920e36c15d64d5ff5bb1d26e7835dde8bbff01c0f029"
   end
 
-  depends_on "cmake"      => :build
+  depends_on "cmake" => :build
   depends_on "pkg-config" => :build
 
   # TODO: on linux: pipewire
   depends_on "faad2"
-  depends_on "ffmpeg@6"
+  depends_on "ffmpeg"
   depends_on "flac"
   depends_on "game-music-emu"
   depends_on "jack"
@@ -56,11 +56,10 @@ class Qmmp < Formula
   uses_from_macos "curl"
 
   on_macos do
-    # musepack is not bottled on Linux
-    # https://github.com/Homebrew/homebrew-core/pull/92041
     depends_on "gettext"
     depends_on "glib"
-
+    # musepack is not bottled on Linux
+    # https://github.com/Homebrew/homebrew-core/pull/92041
     depends_on "musepack"
   end
 
@@ -73,8 +72,8 @@ class Qmmp < Formula
   fails_with gcc: "5" # ffmpeg is compiled with GCC
 
   resource "qmmp-plugin-pack" do
-    url "https://qmmp.ylsoftware.com/files/qmmp-plugin-pack/2.1/qmmp-plugin-pack-2.1.2.tar.bz2"
-    sha256 "fb5b7381a7f11a31e686fb7c76213d42dfa5df1ec61ac2c7afccd8697730c84b"
+    url "https://qmmp.ylsoftware.com/files/qmmp-plugin-pack/2.2/qmmp-plugin-pack-2.2.1.tar.bz2"
+    sha256 "bfb19dfc657a3b2d882bb1cf4069551488352ae920d8efac391d218c00770682"
   end
 
   def install
@@ -90,6 +89,10 @@ class Qmmp < Formula
       cmake_args << "-DCMAKE_SHARED_LINKER_FLAGS=-Wl,-undefined,dynamic_lookup"
       cmake_args << "-DCMAKE_MODULE_LINKER_FLAGS=-Wl,-undefined,dynamic_lookup"
     end
+
+    # Fix to recognize x11
+    # Issue ref: https://sourceforge.net/p/qmmp-dev/tickets/1177/
+    inreplace "src/plugins/Ui/skinned/CMakeLists.txt", "PkgConfig::X11", "${X11_LDFLAGS}"
 
     system "cmake", "-S", ".", *cmake_args
     system "cmake", "--build", "."

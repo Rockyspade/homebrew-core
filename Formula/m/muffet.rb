@@ -1,19 +1,18 @@
 class Muffet < Formula
   desc "Fast website link checker in Go"
   homepage "https://github.com/raviqqe/muffet"
-  url "https://github.com/raviqqe/muffet/archive/refs/tags/v2.10.2.tar.gz"
-  sha256 "eca6234caf3d278696a969f630c1b62b634731d247b16474750c9fa75f1128c3"
+  url "https://github.com/raviqqe/muffet/archive/refs/tags/v2.10.6.tar.gz"
+  sha256 "8da1668efd6c53e0a0eff584fdc49c591fa9684cd07c5c4154114549157f72d1"
   license "MIT"
   head "https://github.com/raviqqe/muffet.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "b2fba005dc5480c45438c8715c01a8eb792ceded2fe622ed01126aad71cfe652"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "4da53b95da11db4afbc38f15eb901eb7483fe6f4e31b880b73bbea1d2517c4ba"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "d1efa606875f4f228c550ba98ec178c60887bcec41638440efe3fa1b59994ead"
-    sha256 cellar: :any_skip_relocation, sonoma:         "b0ac5eb5a6a32b76c80de96e79efced9b36e1962d0458144f4cce1d68e33f47c"
-    sha256 cellar: :any_skip_relocation, ventura:        "795dc4c58e54404ae020a1046a86059f21ca65e51cbe73113897d5ec7a693cd3"
-    sha256 cellar: :any_skip_relocation, monterey:       "07cfb063b6d40b05be40eaf5d27464cc76f474cbbfd8a0b36582f2c1917891fd"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "8eae28aa9eafdd5d26f7ee4e915a313265f41dc09d6065728e0680ffdb03a60c"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "ed2f4492e254d460defef6238fb4323f4de77dca59405d1308ceb808d0a29fd5"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "ed2f4492e254d460defef6238fb4323f4de77dca59405d1308ceb808d0a29fd5"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "ed2f4492e254d460defef6238fb4323f4de77dca59405d1308ceb808d0a29fd5"
+    sha256 cellar: :any_skip_relocation, sonoma:        "3aed3e5c717e5aa52ece626e0887410a13c358a709b5efd1d9e4b93a63724648"
+    sha256 cellar: :any_skip_relocation, ventura:       "3aed3e5c717e5aa52ece626e0887410a13c358a709b5efd1d9e4b93a63724648"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8e93e735b6070dd39bcd3bf21298d0932dab0936545a6b29d4e7e7662eb55415"
   end
 
   depends_on "go" => :build

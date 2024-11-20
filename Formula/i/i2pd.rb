@@ -1,19 +1,17 @@
 class I2pd < Formula
   desc "Full-featured C++ implementation of I2P client"
   homepage "https://i2pd.website/"
-  url "https://github.com/PurpleI2P/i2pd/archive/refs/tags/2.53.1.tar.gz"
-  sha256 "c6863d853905e7594ea661595ea591055f8f2f018b9b90507d5a43a6456188ea"
+  url "https://github.com/PurpleI2P/i2pd/archive/refs/tags/2.54.0.tar.gz"
+  sha256 "5c3f703417bb5f3e5dda642d39c5d30593a5dcf69d5a5ecfe82d5e8a7d454aaf"
   license "BSD-3-Clause"
-  revision 1
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "5fd7dd481d1a6ab34a6bb20fb63310353154987784a6b0e82542511abe6e0e1d"
-    sha256 cellar: :any,                 arm64_ventura:  "e0ffd5e80c76da7a096dee98a5c98c9bac175c9fafcbb61e5dc0236568a11bfd"
-    sha256 cellar: :any,                 arm64_monterey: "33137c83eda0896b0af38a7fd0a60f25a0facb422c30f6fa3922c92bbc936fbe"
-    sha256 cellar: :any,                 sonoma:         "3130adbee78929af125750073e6dbb6360022aad9f468a4c64bceae9da34d49c"
-    sha256 cellar: :any,                 ventura:        "a535eb423006b8b9cfaf3b32f45b8e0556cde3c4f11ef09223e3124259d41592"
-    sha256 cellar: :any,                 monterey:       "936399d51d014760e4b974a1a8a486b4f7141a0b6fc8c8c6583dadae22d0bfc2"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "07f8e5145d6608a866bc773b6f897a7dd13620a094d451f1f900a2c839dc43e2"
+    sha256 cellar: :any,                 arm64_sequoia: "8cf3af75a10a5b7a03054b3ef0c90e3ba39337a06f8a6325f2476c1cbebdccd6"
+    sha256 cellar: :any,                 arm64_sonoma:  "52a22137f9fab8fe91a767490b672fa04e3018abdcba29b223c0c100252aaaf7"
+    sha256 cellar: :any,                 arm64_ventura: "3835e6ec875545c06531550bdc09edd6c23d5a0774550b20ae35f962b833ff6d"
+    sha256 cellar: :any,                 sonoma:        "bf628805328fe1b0683a63b1ac4139b6c333a281c113db6919a717fa8c4abe6a"
+    sha256 cellar: :any,                 ventura:       "156e5a4e93c57c42ee35a0e078a0804671631f22c736e3804cfe496380e26511"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f96bed143d8206efd421c611f31313288d0d2c916ff45174d5a569fbe88caea2"
   end
 
   depends_on "boost"

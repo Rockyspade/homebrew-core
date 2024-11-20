@@ -1,8 +1,8 @@
 class Imagemagick < Formula
   desc "Tools and libraries to manipulate images in many formats"
   homepage "https://imagemagick.org/index.php"
-  url "https://imagemagick.org/archive/releases/ImageMagick-7.1.1-36.tar.xz"
-  sha256 "ca2b4c0144a75b90ec49a098c33eb3b811a28f7e2cd0139ef67dc4abf830870f"
+  url "https://imagemagick.org/archive/releases/ImageMagick-7.1.1-41.tar.xz"
+  sha256 "3de1a21654918c96f36de3d080dd8cf3f3d41515267db4c7a9e4b64e9dc646d8"
   license "ImageMagick"
   head "https://github.com/ImageMagick/ImageMagick.git", branch: "main"
 
@@ -12,13 +12,12 @@ class Imagemagick < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "3dc3f590507bb05979a9ebbd110425da310d33e5b41c22677a456b0e2940a6ce"
-    sha256 arm64_ventura:  "28c8479f79aa71fddee4614f614330157f01f3032c3cc50022032fbbbd89207c"
-    sha256 arm64_monterey: "ae254fcd9c95a7d7176a4420c0820388c57c04cd33ebdf4d1ab58ff2b03b9dd2"
-    sha256 sonoma:         "efdc71652cb60d611a378474c4cabc7e84d1c3d1529be69c5e829018c02d642a"
-    sha256 ventura:        "4ad11b473dd263366a13e2dc4d52bed46280375d9670efb7bcbdfa2caf61e3d2"
-    sha256 monterey:       "8dcba4143e232744b44b654d2a13f7c0541c70a7e0175eaeeb639f780e4aaeb2"
-    sha256 x86_64_linux:   "b52f1fb049f232328e8729b45cf11479240d153926aa2428f24c2938e769274a"
+    sha256 arm64_sequoia: "c32215fc6f3a7a80a28abb0ced846f1d153430afd2ef29f76da2711286ea11c2"
+    sha256 arm64_sonoma:  "f31c1fce6a79afe9a562b1441923468e796ffd97a34334bde017da8e7caf1e22"
+    sha256 arm64_ventura: "1176c7fd9a10853d07a56c63bd0bccc129c0b4f08770a218bcadfe991d8c891b"
+    sha256 sonoma:        "20ebd3c46ea9ae687371bc8cd40c7787c948f8039002aa91f50859f6d17273a5"
+    sha256 ventura:       "d25b3ff7382e43150b1832527b952339e636de6d69b250a4f18370d2f7f588b8"
+    sha256 x86_64_linux:  "0cd399334918d6af885294f07c50e90baf9a1b4cddc5a2133bb6e6f8a84455db"
   end
 
   depends_on "pkg-config" => :build
@@ -52,6 +51,7 @@ class Imagemagick < Formula
 
   on_linux do
     depends_on "libx11"
+    depends_on "libxext"
   end
 
   skip_clean :la

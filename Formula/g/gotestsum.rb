@@ -7,6 +7,7 @@ class Gotestsum < Formula
   head "https://github.com/gotestyourself/gotestsum.git", branch: "main"
 
   bottle do
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "4f4fade0e7e291c869b850cd321edf812e7ecfa85495aa8ae4c937ded52b24b7"
     sha256 cellar: :any_skip_relocation, arm64_sonoma:   "c46808ce583767f3827a701bd84c731b7f1160271a7b4f9b882aba14517c49b1"
     sha256 cellar: :any_skip_relocation, arm64_ventura:  "003b597593091a4b61a445066d5bfe52fcc3941c1e5e4e5ec15117f8bb983d30"
     sha256 cellar: :any_skip_relocation, arm64_monterey: "36c5f912e8f2f16fa0a2cce4cd5b7ee1a4e484fea5da8ce16b40db80d47ff07e"
@@ -24,13 +25,13 @@ class Gotestsum < Formula
   end
 
   test do
-    (testpath/"go.mod").write <<~EOS
+    (testpath/"go.mod").write <<~GOMOD
       module github.com/Homebrew/brew-test
 
       go 1.18
-    EOS
+    GOMOD
 
-    (testpath/"main.go").write <<~EOS
+    (testpath/"main.go").write <<~GO
       package main
 
       import "fmt"
@@ -42,9 +43,9 @@ class Gotestsum < Formula
       func main() {
         fmt.Println(Hello())
       }
-    EOS
+    GO
 
-    (testpath/"main_test.go").write <<~EOS
+    (testpath/"main_test.go").write <<~GO
       package main
 
       import "testing"
@@ -56,7 +57,7 @@ class Gotestsum < Formula
           t.Errorf("got %q, want %q", got, want)
         }
       }
-    EOS
+    GO
 
     output = shell_output("#{bin}/gotestsum --format=testname")
     assert_match "DONE 1 tests", output

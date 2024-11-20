@@ -1,10 +1,19 @@
 class Root < Formula
   desc "Object oriented framework for large scale data analysis"
-  homepage "https://root.cern.ch/"
-  url "https://root.cern.ch/download/root_v6.32.04.source.tar.gz"
-  sha256 "132f126aae7d30efbccd7dcd991b7ada1890ae57980ef300c16421f9d4d07ea8"
+  homepage "https://root.cern"
   license "LGPL-2.1-or-later"
   head "https://github.com/root-project/root.git", branch: "master"
+
+  stable do
+    url "https://root.cern/download/root_v6.32.08.source.tar.gz"
+    sha256 "29ad4945a72dff1a009c326a65b6fa5ee2478498823251d3cef86a2cbeb77b27"
+
+    # Backport fix for RPATH on macOS
+    patch do
+      url "https://github.com/root-project/root/commit/0569d5d7bfb30d96e06c4192658aed4b78e4da64.patch?full_index=1"
+      sha256 "24553b16f66459fe947d192854f5fa6832c9414cc711d7705cb8e8fa67d2d935"
+    end
+  end
 
   livecheck do
     url "https://root.cern/install/all_releases/"
@@ -15,13 +24,12 @@ class Root < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "de441d02f51b6dad9e4f2c059357e688f0af7e5ad9f48947e83c39f93a706856"
-    sha256 arm64_ventura:  "30990950387c69de2f7a82ea07c01aaf24b018bcea8058f3a02de477df580928"
-    sha256 arm64_monterey: "32339c6f9a969ee1ac6492ec6fb257042969b0878fc78f50c72f60c9caa71a41"
-    sha256 sonoma:         "f484dd8ffcf4e14a5df0b051947d59336f9aa6ce7798658ce96419f3c7669cf3"
-    sha256 ventura:        "ddf6a995c0843df0da0e91d4d03c234a982837335e28d7298e6be7695145489f"
-    sha256 monterey:       "459c9d092dac420ab227b749bebe24335a98c5ce324d73ea585007b87016655b"
-    sha256 x86_64_linux:   "05df68a4414caec551cc238f46612f370ebfb05194ace9fbdbda98d87d4788a5"
+    sha256 arm64_sequoia: "c1bfbeb7e3b575aae166c61272d178037aaf520fd92d62412cf53693e174f98b"
+    sha256 arm64_sonoma:  "c9493b1209d72dde8a29ebe3c5b7cf8cab840399bbada9f3205393b82dd29c8b"
+    sha256 arm64_ventura: "55d9cb47591f8802fc38c1f84d4dbc5114ade1d46598099bf89867cbfe84ec54"
+    sha256 sonoma:        "41b8bb0e19a62eec938a89e8aa5ed5cbefa49d2298f9f9d16010f5c44a7b6230"
+    sha256 ventura:       "7c4bd4f672dfe680fb02353c0a7c7d315601079e9797c863bde708696e6caddd"
+    sha256 x86_64_linux:  "b324dbc173966910292f9bbc64b2d66837f604eb6a6eb4930421b1b69f35c544"
   end
 
   depends_on "cmake" => :build
@@ -38,26 +46,25 @@ class Root < Formula
   depends_on "graphviz"
   depends_on "gsl"
   depends_on "lz4"
-  depends_on "mysql-client"
+  depends_on "mariadb-connector-c"
   depends_on "nlohmann-json"
   depends_on "numpy" # for tmva
   depends_on "openblas"
   depends_on "openssl@3"
   depends_on "pcre"
   depends_on "pcre2"
-  depends_on "python@3.12"
+  depends_on "python@3.13"
   depends_on "sqlite"
   depends_on "tbb"
-  depends_on :xcode
   depends_on "xrootd"
   depends_on "xxhash"
   depends_on "xz" # for LZMA
-  depends_on "zlib"
   depends_on "zstd"
 
   uses_from_macos "libxcrypt"
   uses_from_macos "libxml2"
   uses_from_macos "ncurses"
+  uses_from_macos "zlib"
 
   on_linux do
     depends_on "giflib"
@@ -74,15 +81,15 @@ class Root < Formula
 
   skip_clean "bin"
 
-  fails_with gcc: "5"
-
   def python3
-    "python3.12"
+    "python3.13"
   end
 
   def install
-    ENV.append "LDFLAGS", "-Wl,-rpath,#{lib}/root"
-    ENV.remove "HOMEBREW_INCLUDE_PATHS", Formula["util-linux"].opt_include if OS.mac?
+    # Skip modification of CLING_OSX_SYSROOT to the unversioned SDK path
+    # Related: https://github.com/Homebrew/homebrew-core/issues/135714
+    # Related: https://github.com/root-project/cling/issues/457
+    inreplace "interpreter/cling/lib/Interpreter/CMakeLists.txt", '"MacOSX[.0-9]+\.sdk"', '"SKIP"'
 
     inreplace "cmake/modules/SearchInstalledSoftware.cmake" do |s|
       # Enforce secure downloads of vendored dependencies. These are
@@ -92,13 +99,12 @@ class Root < Formula
       s.gsub! "CMAKE_VERSION VERSION_GREATER 3.15", "CMAKE_VERSION VERSION_GREATER 99.99"
     end
 
-    args = std_cmake_args + %W[
+    args = %W[
       -DCLING_CXX_PATH=clang++
       -DCMAKE_CXX_STANDARD=17
       -DCMAKE_INSTALL_ELISPDIR=#{elisp}
       -DPYTHON_EXECUTABLE=#{which(python3)}
       -DXROOTD_ROOT_DIR=#{Formula["xrootd"].opt_prefix}
-      -Dbuiltin_afterimage=ON
       -Dbuiltin_cfitsio=OFF
       -Dbuiltin_clang=ON
       -Dbuiltin_cling=ON
@@ -155,8 +161,14 @@ class Root < Formula
       -GNinja
     ]
 
+    compiledata = if build.head?
+      "cmake/unix/compiledata.sh"
+    else
+      args << "-Dbuiltin_afterimage=ON"
+      "build/unix/compiledata.sh"
+    end
     # Workaround the shim directory being embedded into the output
-    inreplace "build/unix/compiledata.sh", "`type -path $CXX`", ENV.cxx
+    inreplace compiledata, "`type -path $CXX`", ENV.cxx
 
     # Homebrew now sets CMAKE_INSTALL_LIBDIR to /lib, which is incorrect
     # for ROOT with gnuinstall, so we set it back here.
@@ -172,7 +184,7 @@ class Root < Formula
   end
 
   def caveats
-    <<~EOS
+    <<~TEXT
       As of ROOT 6.22, you should not need the thisroot scripts; but if you
       depend on the custom variables set by them, you can still run them:
 
@@ -184,16 +196,16 @@ class Root < Formula
         source #{HOMEBREW_PREFIX}/bin/thisroot.csh
       For fish users:
         . #{HOMEBREW_PREFIX}/bin/thisroot.fish
-    EOS
+    TEXT
   end
 
   test do
-    (testpath/"test.C").write <<~EOS
+    (testpath/"test.C").write <<~C
       #include <iostream>
       void test() {
         std::cout << "Hello, world!" << std::endl;
       }
-    EOS
+    C
 
     # Test ROOT command line mode
     system bin/"root", "-b", "-l", "-q", "-e", "gSystem->LoadAllLibraries(); 0"
@@ -207,14 +219,14 @@ class Root < Formula
                  shell_output("#{bin}/root -l -b -n -q test.C+")
 
     # Test linking
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <iostream>
       #include <TString.h>
       int main() {
         std::cout << TString("Hello, world!") << std::endl;
         return 0;
       }
-    EOS
+    CPP
     flags = %w[cflags libs ldflags].map { |f| "$(#{bin}/root-config --#{f})" }
     flags << "-Wl,-rpath,#{lib}/root"
     shell_output("$(#{bin}/root-config --cxx) test.cpp #{flags.join(" ")}")

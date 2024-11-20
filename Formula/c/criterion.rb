@@ -8,6 +8,7 @@ class Criterion < Formula
   head "https://github.com/Snaipe/Criterion.git", branch: "bleeding"
 
   bottle do
+    sha256 cellar: :any, arm64_sequoia:  "a880153b64b65008d1d92ed11ba5a67261d82b255a8dafbd9921ecba80e9ebc7"
     sha256 cellar: :any, arm64_sonoma:   "575118c0a83351e49c5f6504d80e7022186e7f7b21da529ad3015969d9c46f0a"
     sha256 cellar: :any, arm64_ventura:  "6b9c4a49f635a0eac301d1ed822fd38d5912a2e9a871e814b3ecba2ac58d6e11"
     sha256 cellar: :any, arm64_monterey: "59ab15a4aed2eaa77fb3b98db32814872866cafba2b9b52a9f1bf7bb0efa6c0c"
@@ -20,7 +21,7 @@ class Criterion < Formula
   depends_on "cmake" => :build
   depends_on "meson" => :build
   depends_on "ninja" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "libgit2"
   depends_on "nanomsg"
   depends_on "nanopb"
@@ -28,20 +29,20 @@ class Criterion < Formula
   uses_from_macos "libffi"
 
   def install
-    system "meson", "setup", *std_meson_args, "--force-fallback-for=boxfort,debugbreak,klib", "build"
+    system "meson", "setup", "build", "--force-fallback-for=boxfort,debugbreak,klib", *std_meson_args
     system "meson", "compile", "-C", "build"
     system "meson", "install", "--skip-subprojects", "-C", "build"
   end
 
   test do
-    (testpath/"test-criterion.c").write <<~EOS
+    (testpath/"test-criterion.c").write <<~C
       #include <criterion/criterion.h>
 
       Test(suite_name, test_name)
       {
         cr_assert(1);
       }
-    EOS
+    C
 
     system ENV.cc, "test-criterion.c", "-I#{include}", "-L#{lib}", "-lcriterion", "-o", "test-criterion"
     system "./test-criterion"

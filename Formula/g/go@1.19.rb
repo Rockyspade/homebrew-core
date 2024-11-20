@@ -22,7 +22,7 @@ class GoAT119 < Formula
 
   # EOL with Go 1.21 release (2023-08-08)
   # Ref: https://go.dev/doc/devel/release#policy
-  deprecate! date: "2023-08-13", because: :unsupported
+  disable! date: "2024-08-24", because: :unsupported
 
   depends_on "go" => :build
 
@@ -48,7 +48,7 @@ class GoAT119 < Formula
   end
 
   test do
-    (testpath/"hello.go").write <<~EOS
+    (testpath/"hello.go").write <<~GO
       package main
 
       import "fmt"
@@ -56,7 +56,7 @@ class GoAT119 < Formula
       func main() {
           fmt.Println("Hello World")
       }
-    EOS
+    GO
     # Run go fmt check for no errors then run the program.
     # This is a a bare minimum of go working as it uses fmt, build, and run.
     system bin/"go", "fmt", "hello.go"

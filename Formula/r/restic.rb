@@ -1,19 +1,18 @@
 class Restic < Formula
   desc "Fast, efficient and secure backup program"
   homepage "https://restic.net/"
-  url "https://github.com/restic/restic/archive/refs/tags/v0.17.0.tar.gz"
-  sha256 "031cf34eeafe09064a6b63bcf752093d742b89166e93924aa4dde13160f91301"
+  url "https://github.com/restic/restic/archive/refs/tags/v0.17.3.tar.gz"
+  sha256 "bf0dd73edfae531c24070e2e7833938613f7b179ed165e6b681098edfdf286c8"
   license "BSD-2-Clause"
   head "https://github.com/restic/restic.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "94b215d3aa7f2fd78c34143a6468adf1ad94714404fadef23870f98750de4170"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "94b215d3aa7f2fd78c34143a6468adf1ad94714404fadef23870f98750de4170"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "94b215d3aa7f2fd78c34143a6468adf1ad94714404fadef23870f98750de4170"
-    sha256 cellar: :any_skip_relocation, sonoma:         "51c7f4cbe46df14860bac6a57f1133d887212aeea8f0aae53aa218cff18fe811"
-    sha256 cellar: :any_skip_relocation, ventura:        "51c7f4cbe46df14860bac6a57f1133d887212aeea8f0aae53aa218cff18fe811"
-    sha256 cellar: :any_skip_relocation, monterey:       "51c7f4cbe46df14860bac6a57f1133d887212aeea8f0aae53aa218cff18fe811"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "8dc16a5e2d06f28fb1910644a41fbdb1de76cd21983d1278ac40ad80288c0e29"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "b0debc30cad0e6e9f7dd0d02c1345865589d691ad796f6ea5e23827638d58862"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "b0debc30cad0e6e9f7dd0d02c1345865589d691ad796f6ea5e23827638d58862"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "b0debc30cad0e6e9f7dd0d02c1345865589d691ad796f6ea5e23827638d58862"
+    sha256 cellar: :any_skip_relocation, sonoma:        "df2cbf0539af846b8302d81bd927230ea283dfc877a83a7a06e35a4c0fc08441"
+    sha256 cellar: :any_skip_relocation, ventura:       "df2cbf0539af846b8302d81bd927230ea283dfc877a83a7a06e35a4c0fc08441"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "04e295026f4b3c1150f5b9c5ee718fd0ddc42835edecaab71441d03f8012bc97"
   end
 
   depends_on "go" => :build

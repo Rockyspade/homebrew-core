@@ -4,21 +4,21 @@ class Libical < Formula
   url "https://github.com/libical/libical/releases/download/v3.0.18/libical-3.0.18.tar.gz"
   sha256 "72b7dc1a5937533aee5a2baefc990983b66b141dd80d43b51f80aced4aae219c"
   license any_of: ["LGPL-2.1-or-later", "MPL-2.0"]
+  revision 2
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "cbfdd5df533fe16d1e4cb8ae08e3506b56144e46a5a7bed20baa66fbfb172722"
-    sha256 cellar: :any,                 arm64_ventura:  "54e10eeed68faed65e321d173a38b00583cbe916260ff53470b6c22e1d912366"
-    sha256 cellar: :any,                 arm64_monterey: "bcf9371441b25ef1f0d6c54f655ce0c2711bb0d0063d37d8f3ad891cb5072b07"
-    sha256 cellar: :any,                 sonoma:         "4d7b3012fc7364658ba8ea249b78e5e328a3f1a7dd2a9e5aca4efc704ddd1847"
-    sha256 cellar: :any,                 ventura:        "58216622ec0d87ec6abcfe1bc672824d1607d66ad1f9b651195c7ae816bfe161"
-    sha256 cellar: :any,                 monterey:       "2ba4c21b0ca62f8ba830d7335190df0e44ae9caeb245ad6de1857ccf64cb61c9"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "93aff19dd7bfe76ffe8c9416e135db82e598c68e8923f31763c8fa15d430aa08"
+    sha256 cellar: :any,                 arm64_sequoia: "12ed9bd20e48d2a2e2179ac13ac2a0680e230f977327131c47bc2496b10f9e9a"
+    sha256 cellar: :any,                 arm64_sonoma:  "09ef21d33928ca0f752e03f9da8c553682539a4a54ecbf046c6355d31230e821"
+    sha256 cellar: :any,                 arm64_ventura: "c8e2ac34b1c0ba410afeb4a5edb16746836c1479f80341a2bdec8b179baab4ea"
+    sha256 cellar: :any,                 sonoma:        "15ef37cc1f62f61d674ab2641ca678d3ea355c95cfa97df05332bcb1f7140a4f"
+    sha256 cellar: :any,                 ventura:       "9bb23e2c4724bff5b3446a47510e84f6f2acf4ae7fac74ab9c4119a3c48748f2"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "50bab3d317e999bbabf84081ba16a074703023ae3a28f2bf6510b6eb7a76cdfc"
   end
 
   depends_on "cmake" => :build
   depends_on "pkg-config" => :build
   depends_on "glib"
-  depends_on "icu4c"
+  depends_on "icu4c@76"
 
   uses_from_macos "libxml2"
 
@@ -40,14 +40,14 @@ class Libical < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #define LIBICAL_GLIB_UNSTABLE_API 1
       #include <libical-glib/libical-glib.h>
       int main(int argc, char *argv[]) {
         ICalParser *parser = i_cal_parser_new();
         return 0;
       }
-    EOS
+    C
     system ENV.cc, "test.c", "-o", "test", "-L#{lib}", "-lical-glib",
                    "-I#{Formula["glib"].opt_include}/glib-2.0",
                    "-I#{Formula["glib"].opt_lib}/glib-2.0/include"

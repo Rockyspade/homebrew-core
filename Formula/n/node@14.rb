@@ -23,13 +23,14 @@ class NodeAT14 < Formula
   # https://nodejs.org/en/about/releases/
   disable! date: "2024-02-20", because: :unsupported
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   # Build support for Python 3.11 was not backported.
   # Ref: https://github.com/nodejs/node/pull/45231
   depends_on "python@3.10" => :build
   depends_on "brotli"
   depends_on "c-ares"
-  depends_on "icu4c"
+  # Re-add an ICU4C dependency if extracting formula
+  # TODO: depends_on "icu4c"
   depends_on "libnghttp2"
   depends_on "libuv"
   depends_on "openssl@1.1"

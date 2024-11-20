@@ -4,7 +4,7 @@ class Opencv < Formula
   url "https://github.com/opencv/opencv/archive/refs/tags/4.10.0.tar.gz"
   sha256 "b2171af5be6b26f7a06b1229948bbb2bdaa74fcf5cd097e0af6378fce50a6eb9"
   license "Apache-2.0"
-  revision 3
+  revision 12
   head "https://github.com/opencv/opencv.git", branch: "4.x"
 
   livecheck do
@@ -13,13 +13,11 @@ class Opencv < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "aa7cb6d85aa491674a263c2388dcea7d8348a150ea746d816a8956c15f044f00"
-    sha256 arm64_ventura:  "37bd1c796bc6806e43563d296069816adf6e3902dfe6920af4c5f21c6dafda57"
-    sha256 arm64_monterey: "781f0ce21b90d01e7aa295fd3022ba465c1d395cdab16a7485cc842abe1038e5"
-    sha256 sonoma:         "a3a78c01492703825ac1b3942fc2440c00f27e624cb148796969dd1c8d8bc360"
-    sha256 ventura:        "f228f915d579f0d4dd02f2c7fe47711c605e084f98dd28827f9c3c2a57cca635"
-    sha256 monterey:       "914e64b1d864e466868abba51b139a449452877d4e878f5e439a2a1f7f03bc4b"
-    sha256 x86_64_linux:   "102ef609921375c9b154040d034224dd1b48e8d604cba0089f6f83024d344493"
+    sha256 arm64_sonoma:  "de25a8e698f799ef0ec18f6a10e68ced4662cbe434b15190bb1ae77a58e082cf"
+    sha256 arm64_ventura: "dd6e20b2ffd3f7d59ca63986c1ebd401a218cf60584f5b06b2633b6ad1183765"
+    sha256 sonoma:        "a1a65f508c0ff07d95b2d14719917bf70a28b39e1224c677dfb6bcfa76c6ff31"
+    sha256 ventura:       "1cfcea05855bb12f02327b073e2ff100a1aa2a09226260d362653ed580bb4009"
+    sha256 x86_64_linux:  "6372c078b4664d54f3b20c7dd89d1acad8c335f31dbd48f895c42c0312223c5d"
   end
 
   depends_on "cmake" => :build
@@ -28,12 +26,13 @@ class Opencv < Formula
   depends_on "abseil"
   depends_on "ceres-solver"
   depends_on "eigen"
-  depends_on "ffmpeg@6"
+  depends_on "ffmpeg"
   depends_on "freetype"
   depends_on "gflags"
   depends_on "glog"
   depends_on "harfbuzz"
   depends_on "jpeg-turbo"
+  depends_on "jsoncpp"
   depends_on "libpng"
   depends_on "libtiff"
   depends_on "numpy"
@@ -53,7 +52,6 @@ class Opencv < Formula
   on_macos do
     depends_on "glew"
     depends_on "imath"
-    depends_on "jsoncpp"
     depends_on "libarchive"
   end
 
@@ -178,14 +176,14 @@ class Opencv < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <opencv2/opencv.hpp>
       #include <iostream>
       int main() {
         std::cout << CV_VERSION << std::endl;
         return 0;
       }
-    EOS
+    CPP
     system ENV.cxx, "-std=c++17", "test.cpp", "-I#{include}/opencv4", "-o", "test"
     assert_equal shell_output("./test").strip, version.to_s
 

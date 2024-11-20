@@ -31,6 +31,7 @@ class Gpredict < Formula
   end
 
   bottle do
+    sha256 arm64_sequoia:  "4403289b0462934585554618873510ff96c04fde9853e6aeb3ddc048fd98ba31"
     sha256 arm64_sonoma:   "a2f0896b69d12cc6fcefff733bb0c1f8dad89309125453ad660b3bca6d6bfb1d"
     sha256 arm64_ventura:  "6e7826d912ce8ab58e41957be7c2f5430e72a8dd1d4e12da7c1500e167c3135a"
     sha256 arm64_monterey: "10d957077407004e9a1f24871417521fc89ce9400a28880d606357d6c97b9153"
@@ -74,8 +75,6 @@ class Gpredict < Formula
   end
 
   def install
-    ENV.prepend_path "PERL5LIB", Formula["perl-xml-parser"].libexec/"lib/perl5" if OS.linux?
-
     if build.head?
       inreplace "autogen.sh", "libtoolize", "glibtoolize"
       system "./autogen.sh", *std_configure_args

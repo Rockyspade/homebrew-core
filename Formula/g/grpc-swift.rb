@@ -1,8 +1,8 @@
 class GrpcSwift < Formula
   desc "Swift language implementation of gRPC"
   homepage "https://github.com/grpc/grpc-swift"
-  url "https://github.com/grpc/grpc-swift/archive/refs/tags/1.23.0.tar.gz"
-  sha256 "49b8e5c6c47746d4910535ac81e34a2d75541e563078af00da72ded78c9b4f69"
+  url "https://github.com/grpc/grpc-swift/archive/refs/tags/1.24.2.tar.gz"
+  sha256 "06f504ec5ce4b375e48e25983d06bb7f55dea126a65669d326def832c8da3581"
   license "Apache-2.0"
   head "https://github.com/grpc/grpc-swift.git", branch: "main"
 
@@ -12,21 +12,27 @@ class GrpcSwift < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "ac7b80a3732e74b2ed8a327841ce21953e5f31b23e667df88976e5b222e13a10"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "175eda7416b1ea2581f63aa1c03d7f82c8ece4435f73379098e5e70e26e0a422"
-    sha256 cellar: :any_skip_relocation, sonoma:        "5c5f4fae8d0edf1f1cbd294867031d75daf24c6985777831d1213d9019eb0a99"
-    sha256 cellar: :any_skip_relocation, ventura:       "e643ce9036ce268621dee33cce071de8ff288b6074d68c4084e69871bb54ed6f"
-    sha256                               x86_64_linux:  "2d41b0d3eb85aac3beb311f475fe59f3fac8dcf4c4fa260e33a768aae6c0f3dd"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "77a3718fec21c195890abd756f9367c397ea99d35af5d299602cb57fb08dbad8"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "67eb22f2334a994e04bfc6ab89d2f3427812d478240434163108bed1a6494b00"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "ac62dc16446915e1d0df21846c2688ec7080fb0c2faf183df50d0359b0c57d51"
+    sha256 cellar: :any_skip_relocation, sonoma:        "26896664dc139e80c7b8d08fc0ea44fcd506fe3643a278c3e80b7acb5893ad39"
+    sha256 cellar: :any_skip_relocation, ventura:       "5fcedf2f3a4fa371ed947446d396b4dafaf0f8ccda8885f16a64a2b15c6731bc"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d44b36b070eed8ad0209fd694490d6b0b31cf53cbe9516061ff266d517e8af04"
   end
 
-  depends_on xcode: ["14.3", :build]
+  depends_on xcode: ["15.0", :build]
   depends_on "protobuf"
   depends_on "swift-protobuf"
 
-  uses_from_macos "swift"
+  uses_from_macos "swift" => :build
 
   def install
-    system "swift", "build", "--disable-sandbox", "-c", "release", "--product", "protoc-gen-grpc-swift"
+    args = if OS.mac?
+      ["--disable-sandbox"]
+    else
+      ["--static-swift-stdlib"]
+    end
+    system "swift", "build", *args, "-c", "release", "--product", "protoc-gen-grpc-swift"
     bin.install ".build/release/protoc-gen-grpc-swift"
   end
 

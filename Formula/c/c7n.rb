@@ -3,8 +3,8 @@ class C7n < Formula
 
   desc "Rules engine for cloud security, cost optimization, and governance"
   homepage "https://github.com/cloud-custodian/cloud-custodian"
-  url "https://github.com/cloud-custodian/cloud-custodian/archive/refs/tags/0.9.40.0.tar.gz"
-  sha256 "81e15305e16d94a66e17627617af1290f19bbe335f6781c231180113d1ce65c2"
+  url "https://github.com/cloud-custodian/cloud-custodian/archive/refs/tags/0.9.42.0.tar.gz"
+  sha256 "88ca170ffbb01fd6af9dbefe84768285258ae6471d7d9a6ef59800ea63a66961"
   license "Apache-2.0"
 
   livecheck do
@@ -13,37 +13,36 @@ class C7n < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "c2a226762fe04db074824d29afc6c73ed373743f58f1730bfd892eb5f7405382"
-    sha256 cellar: :any,                 arm64_ventura:  "9953ca96769f3fd1be7ff5e17f9516fe85a7b4bb5d405b819f68b7ca3f51dd4c"
-    sha256 cellar: :any,                 arm64_monterey: "25a13bf56feafc16b27de0c221dc4fb016b60af7f949a8552c4cdf547fab5030"
-    sha256 cellar: :any,                 sonoma:         "0ba34ec525d54d8e20065286a235067373619340e5495f40a33f33fefc686990"
-    sha256 cellar: :any,                 ventura:        "3985fd63bf325f93ac57001c4149508930c6bf487c487f29cc5d8ea516902f48"
-    sha256 cellar: :any,                 monterey:       "4249d2a70624496b153252744e91156d867a495f87f93aa7b9db5dd00d037437"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "58546f7b84e959d7fac3a6ab9b0491d9efb6e033ec6991631f2769b3a936d8ac"
+    sha256 cellar: :any,                 arm64_sequoia: "36b52f15f8891948dad4c94077117c3dfed4263a11c538d1a4498ccc6835b1be"
+    sha256 cellar: :any,                 arm64_sonoma:  "149e54fa268963ce64450fec59d2cdc5fece9a67b0951a37aa0d15665f0782ae"
+    sha256 cellar: :any,                 arm64_ventura: "0986bd98095f318cf24afe0cee8d1ad4563cef56a396d6042c83a0339458ae3f"
+    sha256 cellar: :any,                 sonoma:        "d5fc3a10742b044a4ff44316980aac5b87ff0378806f380ec0c989901568fe51"
+    sha256 cellar: :any,                 ventura:       "97c6d0f33b905808f9b3fee7bac1e40137156bfd0630d403bb0357cccfcb09bd"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "209a1710513f95aa2b871b99c796bba42ed0dce93dd2f71bffbcbdbee001b28e"
   end
 
   depends_on "rust" => :build # for rpds-py
   depends_on "libyaml"
-  depends_on "python@3.12"
+  depends_on "python@3.13"
 
   resource "argcomplete" do
-    url "https://files.pythonhosted.org/packages/db/ca/45176b8362eb06b68f946c2bf1184b92fc98d739a3f8c790999a257db91f/argcomplete-3.4.0.tar.gz"
-    sha256 "c2abcdfe1be8ace47ba777d4fce319eb13bf8ad9dace8d085dcad6eded88057f"
+    url "https://files.pythonhosted.org/packages/5f/39/27605e133e7f4bb0c8e48c9a6b87101515e3446003e0442761f6a02ac35e/argcomplete-3.5.1.tar.gz"
+    sha256 "eb1ee355aa2557bd3d0145de7b06b2a45b0ce461e1e7813f5d066039ab4177b4"
   end
 
   resource "attrs" do
-    url "https://files.pythonhosted.org/packages/e3/fc/f800d51204003fa8ae392c4e8278f256206e7a919b708eef054f5f4b650d/attrs-23.2.0.tar.gz"
-    sha256 "935dc3b529c262f6cf76e50877d35a4bd3c1de194fd41f47a2b7ae8f19971f30"
+    url "https://files.pythonhosted.org/packages/fc/0f/aafca9af9315aee06a89ffde799a10a582fe8de76c563ee80bbcdc08b3fb/attrs-24.2.0.tar.gz"
+    sha256 "5cfb1b9148b5b086569baec03f20d7b6bf3bcacc9a42bebf87ffaaca362f6346"
   end
 
   resource "boto3" do
-    url "https://files.pythonhosted.org/packages/4e/8a/432b6c6bd6a881cd80a248d7f1af19dcbf7c943ec1f360d26ee20cdba217/boto3-1.34.147.tar.gz"
-    sha256 "9ec1c6ab22588242a47549f51a63dfc7c21fdf95a94820fc6e629ab060c38bd9"
+    url "https://files.pythonhosted.org/packages/04/30/af5b971fc103db5425c45c36b8fcfbcc4d5818fc782350a3a6e29f47d670/boto3-1.35.60.tar.gz"
+    sha256 "e573504c67c3e438fd4b0222119ed1a73b644c78eb3b6dee0b36a6c70ecf7677"
   end
 
   resource "botocore" do
-    url "https://files.pythonhosted.org/packages/fe/e6/5d3c75460f63dcd5913fcc26d196c7baed84fe3d779b50767162d1ee92be/botocore-1.34.147.tar.gz"
-    sha256 "2e8f000b77e4ca345146cb2edab6403769a517b564f627bb084ab335417f3dbe"
+    url "https://files.pythonhosted.org/packages/87/46/4c10ff89b2a164863a1d5e995e6230a76fa3f636f4144b9af24ea5f92f35/botocore-1.35.60.tar.gz"
+    sha256 "378f53037d817bed2c04a006b7319745e664030182211429c924647273b29bc9"
   end
 
   resource "docutils" do
@@ -52,8 +51,8 @@ class C7n < Formula
   end
 
   resource "importlib-metadata" do
-    url "https://files.pythonhosted.org/packages/d6/b2/c1d251caf629375d0dcced2c4fe6a7e2c38395c1f8438fd63e6cebfdb7ca/importlib_metadata-8.1.0.tar.gz"
-    sha256 "fcdcb1d5ead7bdf3dd32657bb94ebe9d2aabfe89a19782ddc32da5041d6ebfb4"
+    url "https://files.pythonhosted.org/packages/cd/12/33e59336dca5be0c398a7482335911a33aa0e20776128f038019f1a95f1b/importlib_metadata-8.5.0.tar.gz"
+    sha256 "71522656f0abace1d072b9e5481a48f07c138e00f079c38c8f883823f9c26bd7"
   end
 
   resource "jmespath" do
@@ -67,8 +66,8 @@ class C7n < Formula
   end
 
   resource "jsonschema-specifications" do
-    url "https://files.pythonhosted.org/packages/f8/b9/cc0cc592e7c195fb8a650c1d5990b10175cf13b4c97465c72ec841de9e4b/jsonschema_specifications-2023.12.1.tar.gz"
-    sha256 "48a76787b3e70f5ed53f1160d2b81f586e4ca6d1548c5de7085d1682674764cc"
+    url "https://files.pythonhosted.org/packages/10/db/58f950c996c793472e336ff3655b13fbcf1e3b359dcf52dcf3ed3b52c352/jsonschema_specifications-2024.10.1.tar.gz"
+    sha256 "0f38b83639958ce1152d02a7f062902c41c8fd20d558b0c34344292d417ae272"
   end
 
   resource "python-dateutil" do
@@ -77,8 +76,8 @@ class C7n < Formula
   end
 
   resource "pyyaml" do
-    url "https://files.pythonhosted.org/packages/cd/e5/af35f7ea75cf72f2cd079c95ee16797de7cd71f29ea7c68ae5ce7be1eda0/PyYAML-6.0.1.tar.gz"
-    sha256 "bfdf460b1736c775f2ba9f6a92bca30bc2095067b8a9d77876d1fad6cc3b4a43"
+    url "https://files.pythonhosted.org/packages/54/ed/79a089b6be93607fa5cdaedf301d7dfb23af5f25c398d5ead2525b063e17/pyyaml-6.0.2.tar.gz"
+    sha256 "d584d9ec91ad65861cc08d42e834324ef890a082e591037abe114850ff7bbc3e"
   end
 
   resource "referencing" do
@@ -87,13 +86,13 @@ class C7n < Formula
   end
 
   resource "rpds-py" do
-    url "https://files.pythonhosted.org/packages/36/a2/83c3e2024cefb9a83d832e8835f9db0737a7a2b04ddfdd241c650b703db0/rpds_py-0.19.0.tar.gz"
-    sha256 "4fdc9afadbeb393b4bbbad75481e0ea78e4469f2e1d713a90811700830b553a9"
+    url "https://files.pythonhosted.org/packages/23/80/afdf96daf9b27d61483ef05b38f282121db0e38f5fd4e89f40f5c86c2a4f/rpds_py-0.21.0.tar.gz"
+    sha256 "ed6378c9d66d0de903763e7706383d60c33829581f0adff47b6535f1802fa6db"
   end
 
   resource "s3transfer" do
-    url "https://files.pythonhosted.org/packages/cb/67/94c6730ee4c34505b14d94040e2f31edf144c230b6b49e971b4f25ff8fab/s3transfer-0.10.2.tar.gz"
-    sha256 "0711534e9356d3cc692fdde846b4a1e4b0cb6519971860796e6bc4c7aea00ef6"
+    url "https://files.pythonhosted.org/packages/a0/a8/e0a98fd7bd874914f0608ef7c90ffde17e116aefad765021de0f012690a2/s3transfer-0.10.3.tar.gz"
+    sha256 "4f50ed74ab84d474ce614475e0b8d5047ff080810aac5d01ea25231cfc944b0c"
   end
 
   resource "six" do
@@ -107,13 +106,13 @@ class C7n < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/43/6d/fa469ae21497ddc8bc93e5877702dca7cb8f911e337aca7452b5724f1bb6/urllib3-2.2.2.tar.gz"
-    sha256 "dd505485549a7a552833da5e6063639d0d177c04f23bc3864e41e5dc5f612168"
+    url "https://files.pythonhosted.org/packages/ed/63/22ba4ebfe7430b76388e7cd448d5478814d3032121827c12a2cc287e2260/urllib3-2.2.3.tar.gz"
+    sha256 "e7d814a81dad81e6caf2ec9fdedb284ecc9c73076b62654547cc64ccdcae26e9"
   end
 
   resource "zipp" do
-    url "https://files.pythonhosted.org/packages/d3/20/b48f58857d98dcb78f9e30ed2cfe533025e2e9827bbd36ea0a64cc00cbc1/zipp-3.19.2.tar.gz"
-    sha256 "bf1dcf6450f873a13e952a29504887c89e6de7506209e5b1bcc3460135d4de19"
+    url "https://files.pythonhosted.org/packages/3f/50/bad581df71744867e9468ebd0bcd6505de3b275e06f202c2cb016e3ff56f/zipp-3.21.0.tar.gz"
+    sha256 "2c9958f6430a2040341a52eb608ed6dd93ef4392e02ffe219417c1b28b5dd1f4"
   end
 
   def install
@@ -143,8 +142,10 @@ class C7n < Formula
             tag: CreatorName
             principal_id_tag: CreatorId
     EOF
+
     output = shell_output("#{bin}/custodian validate --verbose #{testpath}/good-policy.yml 2>&1")
     assert_match "valid", output
+
     # has invalid "action" key instead of "actions"
     (testpath/"bad-policy.yml").write <<~EOF
       policies:
@@ -157,6 +158,7 @@ class C7n < Formula
             tag: CreatorName
             principal_id_tag: CreatorId
     EOF
+
     output = shell_output("#{bin}/custodian validate --verbose #{testpath}/bad-policy.yml 2>&1", 1)
     assert_match "invalid", output
   end

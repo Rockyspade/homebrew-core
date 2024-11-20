@@ -8,12 +8,13 @@ class Btfs < Formula
   head "https://github.com/johang/btfs.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "440c3be8b9952616f1aa74044ff4aad74fe9a2ba8f584c7d650546b5ee129ac2"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "c13f8e1ccf19a55a3bfe37a185a7f58d79ec7a2a69e318e662434b917c17b5d1"
   end
 
   depends_on "autoconf" => :build
   depends_on "automake" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "curl"
   depends_on "libfuse@2"
   depends_on "libtorrent-rasterbar"
@@ -24,7 +25,7 @@ class Btfs < Formula
     ENV.cxx11
     inreplace "configure.ac", "fuse >= 2.8.0", "fuse >= 2.7.3"
     system "autoreconf", "--force", "--install", "--verbose"
-    system "./configure", *std_configure_args, "--disable-silent-rules"
+    system "./configure", "--disable-silent-rules", *std_configure_args
     system "make", "install"
   end
 

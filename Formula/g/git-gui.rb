@@ -1,9 +1,10 @@
 class GitGui < Formula
   desc "Tcl/Tk UI for the git revision control system"
   homepage "https://git-scm.com"
-  url "https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.46.0.tar.xz"
-  sha256 "7f123462a28b7ca3ebe2607485f7168554c2b10dfc155c7ec46300666ac27f95"
+  url "https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.47.0.tar.xz"
+  sha256 "1ce114da88704271b43e027c51e04d9399f8c88e9ef7542dae7aebae7d87bc4e"
   license "GPL-2.0-only"
+  revision 1
   head "https://github.com/git/git.git", branch: "master"
 
   livecheck do
@@ -11,16 +12,10 @@ class GitGui < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "4cbfb2806785093fd4e17010642532337530f45f139483e03b9dd83f08bc3930"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "4cbfb2806785093fd4e17010642532337530f45f139483e03b9dd83f08bc3930"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "4cbfb2806785093fd4e17010642532337530f45f139483e03b9dd83f08bc3930"
-    sha256 cellar: :any_skip_relocation, sonoma:         "4cbfb2806785093fd4e17010642532337530f45f139483e03b9dd83f08bc3930"
-    sha256 cellar: :any_skip_relocation, ventura:        "4cbfb2806785093fd4e17010642532337530f45f139483e03b9dd83f08bc3930"
-    sha256 cellar: :any_skip_relocation, monterey:       "4cbfb2806785093fd4e17010642532337530f45f139483e03b9dd83f08bc3930"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "20931574b751a49578c122064cb2487dc4fd9e3e7547bf4f2d718717dbf2cc6d"
+    sha256 cellar: :any_skip_relocation, all: "43434f236ce7dba02e490276143ab38298ee0077ace8d94bc28a610b346b8cd5"
   end
 
-  depends_on "tcl-tk"
+  depends_on "tcl-tk@8"
 
   # Patch to fix Homebrew/homebrew-core#68798.
   # Remove when the following PR has been merged
@@ -39,7 +34,7 @@ class GitGui < Formula
     # the git makefiles don't install a .app for git-gui
     # We also tell git to use the homebrew-installed wish binary from tcl-tk.
     # See https://github.com/Homebrew/homebrew-core/issues/36390
-    tcl_bin = Formula["tcl-tk"].opt_bin
+    tcl_bin = Formula["tcl-tk@8"].opt_bin
     args = %W[
       TKFRAMEWORK=/dev/null
       prefix=#{prefix}

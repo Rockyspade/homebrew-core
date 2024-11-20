@@ -12,6 +12,7 @@ class Mikutter < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "5dfe5d2f6dd4fd03d99c9ef6fe3802bac9eead82654de2ecd75b568e860844e2"
     sha256 cellar: :any,                 arm64_sonoma:   "874e909394bbcd628880b9ecb1c24bbdcd742f4e9bf70b0124ffc9406a03a530"
     sha256 cellar: :any,                 arm64_ventura:  "3fc62fdf24d802bed6844898757ea6c3ad41199bce35d7695cfcfc18dff2129f"
     sha256 cellar: :any,                 arm64_monterey: "4699f159d4c7e93dd620bbf19cbd3a24d3a98be7aeffa1931463c3ec61cbd980"
@@ -298,7 +299,7 @@ class Mikutter < Formula
   end
 
   test do
-    (testpath/".mikutter/plugin/test_plugin/test_plugin.rb").write <<~EOS
+    (testpath/".mikutter/plugin/test_plugin/test_plugin.rb").write <<~RUBY
       # -*- coding: utf-8 -*-
       Plugin.create(:test_plugin) do
         require 'logger'
@@ -316,7 +317,7 @@ class Mikutter < Formula
           nil
         end
       end
-    EOS
+    RUBY
     system bin/"mikutter", "plugin_depends",
            testpath/".mikutter/plugin/test_plugin/test_plugin.rb"
     system bin/"mikutter", "--plugin=test_plugin", "--debug"

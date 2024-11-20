@@ -23,7 +23,7 @@ class Gtksourceviewmm < Formula
   # GTK 2 is EOL: https://blog.gtk.org/2020/12/16/gtk-4-0/
   disable! date: "2024-01-21", because: :unmaintained
 
-  depends_on "pkg-config" => [:build, :test]
+  depends_on "pkgconf" => [:build, :test]
   depends_on "gtkmm"
   depends_on "gtksourceview"
 
@@ -34,16 +34,16 @@ class Gtksourceviewmm < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <gtksourceviewmm.h>
 
       int main(int argc, char *argv[]) {
         gtksourceview::init();
         return 0;
       }
-    EOS
+    CPP
     ENV.libxml2
-    command = "#{Formula["pkg-config"].opt_bin}/pkg-config --cflags --libs gtksourceviewmm-2.0"
+    command = "#{Formula["pkgconf"].opt_bin}/pkg-config --cflags --libs gtksourceviewmm-2.0"
     flags = shell_output(command).strip.split
     system ENV.cxx, "-std=c++11", "test.cpp", "-o", "test", *flags
     system "./test"

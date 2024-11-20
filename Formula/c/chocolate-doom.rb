@@ -12,6 +12,7 @@ class ChocolateDoom < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "4f000383f25ecf073d230153d43208298586091496c89fffe550b1ac3ceec679"
     sha256 cellar: :any,                 arm64_sonoma:   "d48d6cab180c6b15c33208fb7147b3f60b8817d81d8cd3a02da366f84b04d9fe"
     sha256 cellar: :any,                 arm64_ventura:  "307ee7d5f7aac248e236f8235c0de58d303693d9767f62d981dbb2de2b6dbab6"
     sha256 cellar: :any,                 arm64_monterey: "3414e9cd11236891dfd66811b14a329b63b9ccf83f24f7564ddc589d170cf501"
@@ -23,7 +24,7 @@ class ChocolateDoom < Formula
 
   depends_on "autoconf" => :build
   depends_on "automake" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "fluid-synth"
   depends_on "libpng"
   depends_on "libsamplerate"
@@ -33,9 +34,7 @@ class ChocolateDoom < Formula
 
   def install
     system "autoreconf", "--force", "--install", "--verbose"
-    system "./configure", "--prefix=#{prefix}",
-                          "--disable-dependency-tracking",
-                          "--disable-silent-rules"
+    system "./configure", "--disable-silent-rules", *std_configure_args
     system "make", "install", "execgamesdir=#{bin}"
     rm_r(share/"applications")
     rm_r(share/"icons")

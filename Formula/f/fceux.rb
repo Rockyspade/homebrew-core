@@ -2,7 +2,7 @@ class Fceux < Formula
   desc "All-in-one NES/Famicom Emulator"
   homepage "https://fceux.com/"
   license "GPL-2.0-only"
-  revision 2
+  revision 4
   head "https://github.com/TASEmulators/fceux.git", branch: "master"
 
   stable do
@@ -15,22 +15,26 @@ class Fceux < Formula
       url "https://raw.githubusercontent.com/Homebrew/formula-patches/cd40795/fceux/2.6.6-arm.patch"
       sha256 "0890494f4b5db5fa11b94e418d505cea87dc9b9f55cdc6c97e9b5699aeada4ac"
     end
+
+    # x265 4.0 build patch, upstream pr ref, https://github.com/TASEmulators/fceux/pull/766
+    patch do
+      url "https://github.com/TASEmulators/fceux/commit/7d5960fe4037f673b4a644af18b663efe215a24d.patch?full_index=1"
+      sha256 "eb16bd9673645a74b1797914564e3fc3867594332334d5921791e7f97f8d36b4"
+    end
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "bfa825bc1b802bef0d363c3583d2b764003374b304b157a3e3cb60d8957906a6"
-    sha256 cellar: :any,                 arm64_ventura:  "20605deb4c81f581cf24f486481c6fd5a1a5d2c4f2c83cc83b099d970c276b24"
-    sha256 cellar: :any,                 arm64_monterey: "220b5099f902a7285fe7c25aebedb8160eef3d5d46bb5658a584faef9c50eb82"
-    sha256 cellar: :any,                 sonoma:         "c069a6d8df8620c67847c31a30940d85e5a8bf17be80ed33fb80135dc2d3eede"
-    sha256 cellar: :any,                 ventura:        "99f19db1ae480c85e5296511a4a549d3e0c15281d654e937e0dd6a0f06f623b1"
-    sha256 cellar: :any,                 monterey:       "3417ac4e49dfff539e550dbde05e59ad12d51fd3c1a3ecce532ea6e03950731f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "780831f1198865742b0547c7774bcfa8d0453c6bad9f759753853f11c7038d5d"
+    sha256 cellar: :any,                 arm64_sonoma:  "c3594d0215425a0e72abe7c7234eaba3dfa46b85dc4dd01ba03dd0f1a422a50e"
+    sha256 cellar: :any,                 arm64_ventura: "ac3ba77489705d69cb38841e46e6387c1f4e0296a0850b86371d428240325d56"
+    sha256 cellar: :any,                 sonoma:        "fe93346ca1683b5dcecb5cf4df2296ea345422354b46714c1f1365a8a962c71c"
+    sha256 cellar: :any,                 ventura:       "bfb3e74a9bb2ebacd321c553eb170991e16fc361c547ae56887b61360b355f08"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "bc5e0fd981b3b0245b4b9df311b69fb00fe65fe652622a8d3d30f24d0b18fc44"
   end
 
   depends_on "cmake" => :build
   depends_on "pkg-config" => :build
 
-  depends_on "ffmpeg@6"
+  depends_on "ffmpeg"
   depends_on "libarchive"
   depends_on "minizip"
   depends_on "qt"

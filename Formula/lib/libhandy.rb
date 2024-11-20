@@ -6,6 +6,7 @@ class Libhandy < Formula
   license "LGPL-2.1-or-later"
 
   bottle do
+    sha256 arm64_sequoia:  "df4227eb5f6062d4b9d6c36d374defe991229ee0ed9dc8e8902c97a1be026151"
     sha256 arm64_sonoma:   "f1b399070cea7b5c44e3afad605155f867659920d5d3de17c466cf5cc3ba6a33"
     sha256 arm64_ventura:  "46282e234e80d7e1333fd66978709232ccd69517759099868c386c6eec51ca84"
     sha256 arm64_monterey: "2efac67c62c3b8da9bdb64fb4b37a0c66b184239009feb39d5407431b6f9b4e8"
@@ -42,7 +43,7 @@ class Libhandy < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <gtk/gtk.h>
       #include <handy.h>
       int main(int argc, char *argv[]) {
@@ -51,7 +52,7 @@ class Libhandy < Formula
         HdyLeaflet *leaflet = HDY_LEAFLET (hdy_leaflet_new ());
         return 0;
       }
-    EOS
+    C
 
     pkg_config_flags = shell_output("pkg-config --cflags --libs libhandy-1").strip.split
     system ENV.cc, "test.c", "-o", "test", *pkg_config_flags

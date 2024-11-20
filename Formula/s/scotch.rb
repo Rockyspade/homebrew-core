@@ -12,6 +12,7 @@ class Scotch < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "de4538c50a8a18eccfdf930eee033be2533b5072f75553c5814d4e2522e614c6"
     sha256 cellar: :any,                 arm64_sonoma:   "24e92a586b21cb68b395ea503e6ccd6d163f2ed98157d30345cc0578a621b632"
     sha256 cellar: :any,                 arm64_ventura:  "6371884c2959baaaa0cdced2f0863dbfb6072732a6dccc2cae04dda024a0a96d"
     sha256 cellar: :any,                 arm64_monterey: "61dd479a8047d0262333496f06f7ab22327254c17c73ed7c3def2fa5a0d4d8e5"
@@ -72,7 +73,7 @@ class Scotch < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <stdlib.h>
       #include <stdio.h>
       #include <scotch.h>
@@ -82,7 +83,7 @@ class Scotch < Formula
         printf("%d.%d.%d", major, minor, patch);
         return 0;
       }
-    EOS
+    C
     system ENV.cc, "test.c", "-L#{lib}", "-lscotch", "-lscotcherr",
                              "-pthread", "-L#{Formula["zlib"].opt_lib}", "-lz", "-lm"
     assert_match version.to_s, shell_output("./a.out")

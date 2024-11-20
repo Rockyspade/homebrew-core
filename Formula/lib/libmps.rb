@@ -6,6 +6,7 @@ class Libmps < Formula
   license "BSD-2-Clause"
 
   bottle do
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "c651514f2ee9c277517272b328db0e41ab0cc06b3998302e591db274dc70f104"
     sha256 cellar: :any_skip_relocation, arm64_sonoma:   "2c076fea0e44ca8cf0aacfc914e05a8d4af972c32700d11ce60a4858c6270f96"
     sha256 cellar: :any_skip_relocation, arm64_ventura:  "dc6283eb82ae52dc677b701a27f47146c4613c820b32d877b9ec52536f51474e"
     sha256 cellar: :any_skip_relocation, arm64_monterey: "c6b18ffb9d46a689f2888c158cb44d1e5bc9a355eb55265b6668a6c19e1000c3"
@@ -42,7 +43,7 @@ class Libmps < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include "mps.h"
       #include "mpscawl.h"
       #include "mpscamc.h"
@@ -53,7 +54,7 @@ class Libmps < Formula
         mps_res_t res = mps_arena_create(&arena, mps_arena_class_vm(), 1024*1024);
         return (res == MPS_RES_OK) ? 0 : 1;
       }
-    EOS
+    C
     system ENV.cc, "test.c", "-I#{include}", "-L#{lib}", "-lmps", "-o", "test"
     system "./test"
   end

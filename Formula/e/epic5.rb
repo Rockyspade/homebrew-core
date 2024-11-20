@@ -1,9 +1,9 @@
 class Epic5 < Formula
   desc "Enhanced, programmable IRC client"
   homepage "https://www.epicsol.org/"
-  url "https://ftp.epicsol.org/pub/epic/EPIC5-PRODUCTION/epic5-2.2.tar.xz"
-  mirror "https://www.mirrorservice.org/sites/distfiles.macports.org/epic5/epic5-2.2.tar.xz"
-  sha256 "94bd21f93560013b32fe499afbfca0dd2eaec1f3b63f32fc979be4fe5a6b1670"
+  url "https://ftp.epicsol.org/pub/epic/EPIC5-PRODUCTION/epic5-3.0.1.tar.xz"
+  mirror "https://www.mirrorservice.org/sites/distfiles.macports.org/epic5/epic5-3.0.1.tar.xz"
+  sha256 "17b967c61e58874f0775e1fd0b0607f85c64b63258c1ac4d4089e811352a3945"
   license "BSD-3-Clause"
   head "https://git.epicsol.org/epic5.git", branch: "master"
 
@@ -13,13 +13,12 @@ class Epic5 < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "39e2c865107b65a7fc09c0806c18300b802835723d47c4f015c604924cc866e3"
-    sha256 arm64_ventura:  "d9904b7ad5563c69d551d6b4f38f5e4125a33d7fb446f58fff38db769d2d25bd"
-    sha256 arm64_monterey: "ea670d3bd246c1f03340d88d28445220ae0f01f3a9b1652767823e185b6903ad"
-    sha256 sonoma:         "41c37d3e27ee52ee67b3648e401b42a9d233e90a914caa1507f6bd615a69c6a9"
-    sha256 ventura:        "e41c2da7ff16c86032479cfe41cff01b942fe63e9d44e97cc102e81a2c7f9530"
-    sha256 monterey:       "ff5c82c4699af0ad3a2a5e2da1a619e30962564c8c6820971d98c1f7c225b804"
-    sha256 x86_64_linux:   "200b5eafaf44c843ea6098623d83fdef580045e14cf59a99c4adeed2ec1c3e6c"
+    sha256 arm64_sequoia: "d77a2b3b8a145c9ab3b92caddd7aae8aac220ca45a06a46447776c8deee92ccc"
+    sha256 arm64_sonoma:  "d332bdeea8d3d613f645c4dc5ad201e813d5309d1fcee0f2851ca082b8cb14da"
+    sha256 arm64_ventura: "a97c8e6ea962a9b844941d646544831c6d452078a9c966f309ae7f8ace765ecc"
+    sha256 sonoma:        "bcab6dac9ed21958775041e4433c9e9503f990367f048635c2c9d7b89268d798"
+    sha256 ventura:       "d82f6d867cb849586d0930ef8b94a11295c5ef3715505ab14a126c677b8b784c"
+    sha256 x86_64_linux:  "96d6834f5c2c4dd457ceff56a2ab29a5c8cb3bdcb63beed452fc80a2eb82ff82"
   end
 
   depends_on "openssl@3"

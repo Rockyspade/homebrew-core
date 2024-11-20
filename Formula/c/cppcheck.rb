@@ -1,8 +1,8 @@
 class Cppcheck < Formula
   desc "Static analysis of C and C++ code"
   homepage "https://sourceforge.net/projects/cppcheck/"
-  url "https://github.com/danmar/cppcheck/archive/refs/tags/2.14.2.tar.gz"
-  sha256 "9c3acea5f489336bd83a8ea33917a9a04a80c56d874bf270287e7de27acf2d00"
+  url "https://github.com/danmar/cppcheck/archive/refs/tags/2.16.0.tar.gz"
+  sha256 "f1a97c8cef5ee9d0abb57e9244549d4fe18d4ecac80cf82e250d1fc5f38b1501"
   license "GPL-3.0-or-later"
   head "https://github.com/danmar/cppcheck.git", branch: "main"
 
@@ -15,39 +15,37 @@ class Cppcheck < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "0237afd9cb49d2673655d438a0a2963144591661acc6cc38d0930d4e31de9f3a"
-    sha256 arm64_ventura:  "3f345da5f5ec736381379d5d1976a3470af543d2a37e15bdab09618d90a1bb22"
-    sha256 arm64_monterey: "fdd285c962f987018b1c7267a6de2b0bfc88eb52f76f7c5d0909d3a9f9c2e50a"
-    sha256 sonoma:         "f83f1d685cc4b6587f302bbdcb6775981350c4a4d99f4a9b2c59bd31a517c3a6"
-    sha256 ventura:        "928b4b7019859d1544f30ab904e3b00f6a8189a01c2c6faab255714c93438fa1"
-    sha256 monterey:       "cf2cabc98d005503a29afec1f8b6c789d1981ae97a76a8334207f693096e0234"
-    sha256 x86_64_linux:   "2c5aa5f9f3aadeeb489e22f56eca4ad539ddc1911a0112d591ee728f7a90544b"
+    sha256 arm64_sequoia: "fb5842051cde656928d4b808ed159e4b25d04496b75f2a792372fa2b3adb0b4b"
+    sha256 arm64_sonoma:  "bb3feb14aae1f7954396b8026c91253ed01809f70ddeba6e5e375e2d577932b0"
+    sha256 arm64_ventura: "7e9c35a1c2d1998d89747a67ee77046fab42688508e5e05e0b5b87b8935ec566"
+    sha256 sonoma:        "efaa934a8536deaac326094c5aad9f401b59983f1b9a7a270986959f3700dea3"
+    sha256 ventura:       "c380212e8b3bedc5d2f1aecbc0c4730042897fb6ca0b2e46c000cbf88ea0b272"
+    sha256 x86_64_linux:  "ffda2b7b66275fecd5f9caf7b4004b9f764c5ad478eed47497d3e4172303f179"
   end
 
   depends_on "cmake" => :build
-  depends_on "python@3.12" => [:build, :test]
+  depends_on "python@3.13" => [:build, :test]
   depends_on "pcre"
   depends_on "tinyxml2"
 
   uses_from_macos "libxml2"
 
   def python3
-    which("python3.12")
+    which("python3.13")
   end
 
   def install
-    args = std_cmake_args + %W[
+    args = %W[
       -DHAVE_RULES=ON
       -DUSE_BUNDLED_TINYXML2=OFF
       -DENABLE_OSS_FUZZ=OFF
       -DPYTHON_EXECUTABLE=#{python3}
+      -DFILESDIR=#{pkgshare}
     ]
-    system "cmake", "-S", ".", "-B", "build", *args
+
+    system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
-
-    # Move the python addons to the cppcheck pkgshare folder
-    (pkgshare/"addons").install Dir.glob("addons/*.py")
   end
 
   test do
@@ -84,9 +82,9 @@ class Cppcheck < Formula
     test_cpp_file_check.write <<~EOS
       int main()
       {
-      char a[10];
-      a[10] = 0;
-      return 0;
+        char a[10];
+        a[10] = 0;
+        return 0;
       }
     EOS
     output = shell_output("#{bin}/cppcheck #{test_cpp_file_check} 2>&1")

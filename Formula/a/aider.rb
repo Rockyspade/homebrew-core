@@ -3,40 +3,37 @@ class Aider < Formula
 
   desc "AI pair programming in your terminal"
   homepage "https://aider.chat/"
-  url "https://files.pythonhosted.org/packages/95/00/65d8e8c9bc7f4989ef77ccdb4b01f242ffb54604576de523b40427f07c71/aider_chat-0.50.1.tar.gz"
-  sha256 "f6c107863edd1b3316ae054784cb439cda2ac4a176c7a18e7976a614543d6ae0"
+  url "https://files.pythonhosted.org/packages/fd/8c/c9511d3367689bba8959458eff4a6a7a6c5aeb7abeb433a5f065b511ce60/aider_chat-0.63.2.tar.gz"
+  sha256 "45c38734cbf04d2952c919aaee0cdc2f82b981b0740e7cd531f78cff449e5562"
   license "Apache-2.0"
   head "https://github.com/paul-gauthier/aider.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "bc91fc3b6836f779d04e5d06ed3dd8bb95913f106eefba3e6059113eb6e1ff88"
-    sha256 cellar: :any,                 arm64_ventura:  "1f327295826dd043ec517f177af872780fbefbd6ecacdc2b3f94f5e5287c7bde"
-    sha256 cellar: :any,                 arm64_monterey: "46476fa0faa0246553058211649f1d640c7ff829158b3d6889d474e829d48b54"
-    sha256 cellar: :any,                 sonoma:         "76fdb3812c7502a240519772501c7bd2e51f56345145ced61a033124c5997af2"
-    sha256 cellar: :any,                 ventura:        "8f767b1cf994ed11397165a7cb6a5eff27e601ae12e5602a6e684d33055eb8a9"
-    sha256 cellar: :any,                 monterey:       "c5818bdfb872feb191071e2773ab5bcb97cd8fe5c18701c43ca9a267e9ee50f1"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e449c10297dfb0832a8fbd946362797cc425ed0088fff4df9c7bafed97315e3d"
+    sha256 cellar: :any,                 arm64_sequoia: "b67985d73f1c4d7d056659323cd3785ba699da168aa53119732e7b4575c23c28"
+    sha256 cellar: :any,                 arm64_sonoma:  "a2f5660f4201d96d01d128d0de3861429b2dcd9f218eddd3d3a510082d7b4cf9"
+    sha256 cellar: :any,                 arm64_ventura: "4c4d0bda212ddb48212f708f6d9c4aa29b3269dde592a8554cc0b4c30cd0bfad"
+    sha256 cellar: :any,                 sonoma:        "304dedf935a03876891e58818aa891930185083e4e90de65d0dd693eed0a6345"
+    sha256 cellar: :any,                 ventura:       "ffef41cc7937f5706471e509ed975a5a38ecd9965b5cdb6ef4bc96c93e7cab2c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "662ba96b8524acb777219221dc7cf7a701d45f72106b961bc2812f5dfd864c6f"
   end
 
-  depends_on "cython" => :build # for tree-sitter-languages
-  depends_on "python-setuptools" => :build # for tree-sitter-languages
   depends_on "rust" => :build # for pydantic_core
   depends_on "certifi"
   depends_on "cffi"
   depends_on "libyaml"
   depends_on "numpy"
   depends_on "pillow"
-  depends_on "python@3.12"
+  depends_on "python@3.12" # py3.13 support issue, https://github.com/Aider-AI/aider/issues/1984
   depends_on "scipy"
 
   resource "aiohappyeyeballs" do
-    url "https://files.pythonhosted.org/packages/b7/c3/112f2f992aeb321de483754c1c5acab08c8ac3388c9c7e6f3e4f45ec1c42/aiohappyeyeballs-2.3.5.tar.gz"
-    sha256 "6fa48b9f1317254f122a07a131a86b71ca6946ca989ce6326fff54a99a920105"
+    url "https://files.pythonhosted.org/packages/bc/69/2f6d5a019bd02e920a3417689a89887b39ad1e350b562f9955693d900c40/aiohappyeyeballs-2.4.3.tar.gz"
+    sha256 "75cf88a15106a5002a8eb1dab212525c00d1f4c0fa96e551c9fbe6f09a621586"
   end
 
   resource "aiohttp" do
-    url "https://files.pythonhosted.org/packages/15/9c/ed427fcc46423c965a8e33673d7111b6e3b3aa7d61ca52163a720ff200cb/aiohttp-3.10.3.tar.gz"
-    sha256 "21650e7032cc2d31fc23d353d7123e771354f2a3d5b05a5647fc30fea214e696"
+    url "https://files.pythonhosted.org/packages/17/7e/16e57e6cf20eb62481a2f9ce8674328407187950ccc602ad07c685279141/aiohttp-3.10.10.tar.gz"
+    sha256 "0631dd7c9f0822cc61c88586ca76d5b5ada26538097d0f1df510b082bad3411a"
   end
 
   resource "aiosignal" do
@@ -50,8 +47,8 @@ class Aider < Formula
   end
 
   resource "anyio" do
-    url "https://files.pythonhosted.org/packages/e6/e3/c4c8d473d6780ef1853d630d581f70d655b4f8d7553c6997958c283039a2/anyio-4.4.0.tar.gz"
-    sha256 "5aadc6a1bbb7cdb0bede386cac5e2940f5e2ff3aa20277e991cf028e0585ce94"
+    url "https://files.pythonhosted.org/packages/9f/09/45b9b7a6d4e45c6bcb5bf61d19e3ab87df68e0601fa8c5293de3542546cc/anyio-4.6.2.post1.tar.gz"
+    sha256 "4c8bc31ccdb51c7f7bd251f51c609e038d63e34219b44aa86e47576389880b4c"
   end
 
   resource "attrs" do
@@ -70,8 +67,8 @@ class Aider < Formula
   end
 
   resource "charset-normalizer" do
-    url "https://files.pythonhosted.org/packages/63/09/c1bc53dab74b1816a00d8d030de5bf98f724c52c1635e07681d312f20be8/charset-normalizer-3.3.2.tar.gz"
-    sha256 "f30c3cb33b24454a82faecaf01b19c18562b1e89558fb6c56de4d9118a032fd5"
+    url "https://files.pythonhosted.org/packages/f2/4f/e1808dc01273379acc506d18f1504eb2d299bd4131743b9fc54d7be4df1e/charset_normalizer-3.4.0.tar.gz"
+    sha256 "223217c3d4f82c3ac5e29032b3f1c2eb0fb591b72161f86d93f5719079dae93e"
   end
 
   resource "click" do
@@ -84,9 +81,14 @@ class Aider < Formula
     sha256 "e7067471884de5478c58a511e529f0f9bd1c66bfef1dea90935438d6c23306d1"
   end
 
+  resource "cython" do
+    url "https://files.pythonhosted.org/packages/84/4d/b720d6000f4ca77f030bd70f12550820f0766b568e43f11af7f7ad9061aa/cython-3.0.11.tar.gz"
+    sha256 "7146dd2af8682b4ca61331851e6aebce9fe5158e75300343f80c07ca80b1faff"
+  end
+
   resource "diff-match-patch" do
-    url "https://files.pythonhosted.org/packages/48/40/7f0b68e3578453d1ccd3638cfd9682b515b9d22730903a88615f1ee92352/diff-match-patch-20230430.tar.gz"
-    sha256 "953019cdb9c9d2c9e47b5b12bcff3cf4746fc4598eb406076fa1fc27e6a1f15c"
+    url "https://files.pythonhosted.org/packages/0e/ad/32e1777dd57d8e85fa31e3a243af66c538245b8d64b7265bec9a61f2ca33/diff_match_patch-20241021.tar.gz"
+    sha256 "beae57a99fa48084532935ee2968b8661db861862ec82c6f21f4acdd6d835073"
   end
 
   resource "diskcache" do
@@ -100,8 +102,8 @@ class Aider < Formula
   end
 
   resource "filelock" do
-    url "https://files.pythonhosted.org/packages/08/dd/49e06f09b6645156550fb9aee9cc1e59aba7efbc972d665a1bd6ae0435d4/filelock-3.15.4.tar.gz"
-    sha256 "2207938cbc1844345cb01a5a95524dae30f0ce089eba5b00378295a17e3e90cb"
+    url "https://files.pythonhosted.org/packages/9d/db/3ef5bb276dae18d6ec2124224403d1d67bccdbefc17af4cc8f553e341ab1/filelock-3.16.1.tar.gz"
+    sha256 "c249fbfcd5db47e5e2d6d62198e565475ee65e4831e2561c8e313fa7eb961435"
   end
 
   resource "flake8" do
@@ -110,13 +112,13 @@ class Aider < Formula
   end
 
   resource "frozenlist" do
-    url "https://files.pythonhosted.org/packages/cf/3d/2102257e7acad73efc4a0c306ad3953f68c504c16982bbdfee3ad75d8085/frozenlist-1.4.1.tar.gz"
-    sha256 "c037a86e8513059a2613aaba4d817bb90b9d9b6b69aace3ce9c877e8c8ed402b"
+    url "https://files.pythonhosted.org/packages/8f/ed/0f4cec13a93c02c47ec32d81d11c0c1efbadf4a471e3f3ce7cad366cbbd3/frozenlist-1.5.0.tar.gz"
+    sha256 "81d5af29e61b9c8348e876d442253723928dce6433e0e76cd925cd83f1b4b817"
   end
 
   resource "fsspec" do
-    url "https://files.pythonhosted.org/packages/90/b6/eba5024a9889fcfff396db543a34bef0ab9d002278f163129f9f01005960/fsspec-2024.6.1.tar.gz"
-    sha256 "fad7d7e209dd4c1208e3bbfda706620e0da5142bebbd9c384afb95b07e798e49"
+    url "https://files.pythonhosted.org/packages/a0/52/f16a068ebadae42526484c31f4398e62962504e5724a8ba5dc3409483df2/fsspec-2024.10.0.tar.gz"
+    sha256 "eda2d8a4116d4f2429db8550f2457da57279247dd930bb12f821b58391359493"
   end
 
   resource "gitdb" do
@@ -140,23 +142,23 @@ class Aider < Formula
   end
 
   resource "httpcore" do
-    url "https://files.pythonhosted.org/packages/17/b0/5e8b8674f8d203335a62fdfcfa0d11ebe09e23613c3391033cbba35f7926/httpcore-1.0.5.tar.gz"
-    sha256 "34a38e2f9291467ee3b44e89dd52615370e152954ba21721378a87b2960f7a61"
+    url "https://files.pythonhosted.org/packages/b6/44/ed0fa6a17845fb033bd885c03e842f08c1b9406c86a2e60ac1ae1b9206a6/httpcore-1.0.6.tar.gz"
+    sha256 "73f6dbd6eb8c21bbf7ef8efad555481853f5f6acdeaff1edb0694289269ee17f"
   end
 
   resource "httpx" do
-    url "https://files.pythonhosted.org/packages/5c/2d/3da5bdf4408b8b2800061c339f240c1802f2e82d55e50bd39c5a881f47f0/httpx-0.27.0.tar.gz"
-    sha256 "a0cb88a46f32dc874e04ee956e4c2764aba2aa228f650b06788ba6bda2962ab5"
+    url "https://files.pythonhosted.org/packages/78/82/08f8c936781f67d9e6b9eeb8a0c8b4e406136ea4c3d1f89a5db71d42e0e6/httpx-0.27.2.tar.gz"
+    sha256 "f7c2be1d2f3c3c3160d441802406b206c2b76f5947b11115e6df10c6c65e66c2"
   end
 
   resource "huggingface-hub" do
-    url "https://files.pythonhosted.org/packages/ec/07/b70a5b9c3da399a54a446a4750763c9030f47fa0491ef31a3fa8de4cb0d2/huggingface_hub-0.24.5.tar.gz"
-    sha256 "7b45d6744dd53ce9cbf9880957de00e9d10a9ae837f1c9b7255fc8fa4e8264f3"
+    url "https://files.pythonhosted.org/packages/d5/a8/882ae5d1cfa7c9c5be32feee4cee56d9873078913953423e47a756da110d/huggingface_hub-0.26.2.tar.gz"
+    sha256 "b100d853465d965733964d123939ba287da60a547087783ddff8a323f340332b"
   end
 
   resource "idna" do
-    url "https://files.pythonhosted.org/packages/21/ed/f86a79a07470cb07819390452f178b3bef1d375f2ec021ecfc709fc7cf07/idna-3.7.tar.gz"
-    sha256 "028ff3aadf0609c1fd278d8ea3089299412a7a8b9bd005dd08b9f8285bcb5cfc"
+    url "https://files.pythonhosted.org/packages/f1/70/7703c29685631f5a7590aa73f1f1d3fa9a380e654b86af429e0934a32f7d/idna-3.10.tar.gz"
+    sha256 "12f65c9b470abda6dc35cf8e63cc574b1c52b11df2c86030af0ac09b01b13ea9"
   end
 
   resource "importlib-metadata" do
@@ -165,8 +167,8 @@ class Aider < Formula
   end
 
   resource "importlib-resources" do
-    url "https://files.pythonhosted.org/packages/c8/9d/6ee73859d6be81c6ea7ebac89655e92740296419bd37e5c8abdb5b62fd55/importlib_resources-6.4.0.tar.gz"
-    sha256 "cdb2b453b8046ca4e3798eb1d84f3cce1446a0e8e7b5ef4efb600f19fc398145"
+    url "https://files.pythonhosted.org/packages/98/be/f3e8c6081b684f176b761e6a2fef02a0be939740ed6f54109a2951d806f3/importlib_resources-6.4.5.tar.gz"
+    sha256 "980862a1d16c9e147a59603677fa2aa5fd82b87f223b6cb870695bcfce830065"
   end
 
   resource "jinja2" do
@@ -175,8 +177,13 @@ class Aider < Formula
   end
 
   resource "jiter" do
-    url "https://files.pythonhosted.org/packages/d7/1a/aa64be757afc614484b370a4d9fc1747dc9237b37ce464f7f9d9ca2a3d38/jiter-0.5.0.tar.gz"
-    sha256 "1d916ba875bcab5c5f7d927df998c4cb694d27dceddf3392e58beaf10563368a"
+    url "https://files.pythonhosted.org/packages/ac/3d/4ca1c6b8d1d15ea747da474891f9879c0f0777e2e44e87c0be81657ed016/jiter-0.7.0.tar.gz"
+    sha256 "c061d9738535497b5509f8970584f20de1e900806b239a39a9994fc191dad630"
+  end
+
+  resource "json5" do
+    url "https://files.pythonhosted.org/packages/91/59/51b032d53212a51f17ebbcc01bd4217faab6d6c09ed0d856a987a5f42bbc/json5-0.9.25.tar.gz"
+    sha256 "548e41b9be043f9426776f05df8635a00fe06104ea51ed24b67f908856e151ae"
   end
 
   resource "jsonschema" do
@@ -185,13 +192,13 @@ class Aider < Formula
   end
 
   resource "jsonschema-specifications" do
-    url "https://files.pythonhosted.org/packages/f8/b9/cc0cc592e7c195fb8a650c1d5990b10175cf13b4c97465c72ec841de9e4b/jsonschema_specifications-2023.12.1.tar.gz"
-    sha256 "48a76787b3e70f5ed53f1160d2b81f586e4ca6d1548c5de7085d1682674764cc"
+    url "https://files.pythonhosted.org/packages/10/db/58f950c996c793472e336ff3655b13fbcf1e3b359dcf52dcf3ed3b52c352/jsonschema_specifications-2024.10.1.tar.gz"
+    sha256 "0f38b83639958ce1152d02a7f062902c41c8fd20d558b0c34344292d417ae272"
   end
 
   resource "litellm" do
-    url "https://files.pythonhosted.org/packages/99/cc/10e292e40506ee62007f69aabd3112243ac7dda7e2b0569a60de735e2796/litellm-1.43.9.tar.gz"
-    sha256 "c397a14c9b851f007f09c99e5a28606f7f122fdb4ae954931220f60e9edc6918"
+    url "https://files.pythonhosted.org/packages/66/35/2492c084ef449258b8d6f8ea0199ce66068f786e093f2da13f3d74d46b5d/litellm-1.51.2.tar.gz"
+    sha256 "a86e524b5cf9ad2863d835adb81fd92afd206a190c8629f3e86f652b5f405efa"
   end
 
   resource "markdown-it-py" do
@@ -200,8 +207,8 @@ class Aider < Formula
   end
 
   resource "markupsafe" do
-    url "https://files.pythonhosted.org/packages/87/5b/aae44c6655f3801e81aa3eef09dbbf012431987ba564d7231722f68df02d/MarkupSafe-2.1.5.tar.gz"
-    sha256 "d283d37a890ba4c1ae73ffadf8046435c76e7bc2247bbb63c00bd1a709c6544b"
+    url "https://files.pythonhosted.org/packages/b2/97/5d42485e71dfc078108a86d6de8fa46db44a1a9295e89c5d6d4a06e23a62/markupsafe-3.0.2.tar.gz"
+    sha256 "ee55d3edf80167e48ea11a923c7386f4669df67d7994554387f84e7d8b0a2bf0"
   end
 
   resource "mccabe" do
@@ -214,9 +221,19 @@ class Aider < Formula
     sha256 "bb413d29f5eea38f31dd4754dd7377d4465116fb207585f97bf925588687c1ba"
   end
 
+  resource "mixpanel" do
+    url "https://files.pythonhosted.org/packages/bd/a3/9d71562db2107da31be6a988cac88cd1be11364d103b618a98ba92d2487b/mixpanel-4.10.1.tar.gz"
+    sha256 "29a6b5773dd34f05cf8e249f4e1d16e7b6280d6b58894551ce9a5aad7700a115"
+  end
+
+  resource "monotonic" do
+    url "https://files.pythonhosted.org/packages/ea/ca/8e91948b782ddfbd194f323e7e7d9ba12e5877addf04fb2bf8fca38e86ac/monotonic-1.6.tar.gz"
+    sha256 "3a55207bcfed53ddd5c5bae174524062935efed17792e9de2ad0205ce9ad63f7"
+  end
+
   resource "multidict" do
-    url "https://files.pythonhosted.org/packages/f9/79/722ca999a3a09a63b35aac12ec27dfa8e5bb3a38b0f857f7a1a209a88836/multidict-6.0.5.tar.gz"
-    sha256 "f7e301075edaf50500f0b341543c41194d8df3ae5caf4702f2095f3ca73dd8da"
+    url "https://files.pythonhosted.org/packages/d6/be/504b89a5e9ca731cd47487e91c469064f8ae5af93b7259758dcfc2b9c848/multidict-6.1.0.tar.gz"
+    sha256 "22ae2ebf9b0c69d206c003e2f6a914ea33f0a932d4aa16f236afc049d9958f4a"
   end
 
   resource "networkx" do
@@ -225,8 +242,8 @@ class Aider < Formula
   end
 
   resource "openai" do
-    url "https://files.pythonhosted.org/packages/bf/a0/a2d136a93da61f3d0e25dc71fb2a3bd20af0f4b2c3cde9d03a294f06efe9/openai-1.40.6.tar.gz"
-    sha256 "2239232bcb7f4bd4ce8e02544b5769618582411cf399816d96686d1b6c1e5c8d"
+    url "https://files.pythonhosted.org/packages/83/fc/77552f9ddd40ac32fe44c591c5a0918a050aea6ce62a3f22fc7d8fe0359a/openai-1.53.0.tar.gz"
+    sha256 "be2c4e77721b166cce8130e544178b7d579f751b4b074ffbaade3854b6f85ec5"
   end
 
   resource "packaging" do
@@ -239,9 +256,34 @@ class Aider < Formula
     sha256 "a482d51503a1ab33b1c67a6c3813a26953dbdc71c31dacaef9a838c4e29f5712"
   end
 
+  resource "pexpect" do
+    url "https://files.pythonhosted.org/packages/42/92/cc564bf6381ff43ce1f4d06852fc19a2f11d180f23dc32d9588bee2f149d/pexpect-4.9.0.tar.gz"
+    sha256 "ee7d41123f3c9911050ea2c2dac107568dc43b2d3b0c7557a33212c398ead30f"
+  end
+
+  resource "posthog" do
+    url "https://files.pythonhosted.org/packages/4c/7a/a6ab0d18f93255a4488196269ff53f2720821b169e1964cbf785d5f54b32/posthog-3.7.0.tar.gz"
+    sha256 "b095d4354ba23f8b346ab5daed8ecfc5108772f922006982dfe8b2d29ebc6e0e"
+  end
+
   resource "prompt-toolkit" do
-    url "https://files.pythonhosted.org/packages/47/6d/0279b119dafc74c1220420028d490c4399b790fc1256998666e3a341879f/prompt_toolkit-3.0.47.tar.gz"
-    sha256 "1e1b29cb58080b1e69f207c893a1a7bf16d127a5c30c9d17a25a5d77792e5360"
+    url "https://files.pythonhosted.org/packages/2d/4f/feb5e137aff82f7c7f3248267b97451da3644f6cdc218edfe549fb354127/prompt_toolkit-3.0.48.tar.gz"
+    sha256 "d6623ab0477a80df74e646bdbc93621143f5caf104206aa29294d53de1a03d90"
+  end
+
+  resource "propcache" do
+    url "https://files.pythonhosted.org/packages/a9/4d/5e5a60b78dbc1d464f8a7bbaeb30957257afdc8512cbb9dfd5659304f5cd/propcache-0.2.0.tar.gz"
+    sha256 "df81779732feb9d01e5d513fad0122efb3d53bbc75f61b2a4f29a020bc985e70"
+  end
+
+  resource "psutil" do
+    url "https://files.pythonhosted.org/packages/26/10/2a30b13c61e7cf937f4adf90710776b7918ed0a9c434e2c38224732af310/psutil-6.1.0.tar.gz"
+    sha256 "353815f59a7f64cdaca1c0307ee13558a0512f6db064e92fe833784f08539c7a"
+  end
+
+  resource "ptyprocess" do
+    url "https://files.pythonhosted.org/packages/20/e5/16ff212c1e452235a90aeb09066144d0c5a6a8c0834397e03f5224495c4e/ptyprocess-0.7.0.tar.gz"
+    sha256 "5c5d0a3b48ceee0b48485e0c26037c0acd7d29765ca3fbb5cb3831d347423220"
   end
 
   resource "pycodestyle" do
@@ -255,13 +297,18 @@ class Aider < Formula
   end
 
   resource "pydantic" do
-    url "https://files.pythonhosted.org/packages/8c/99/d0a5dca411e0a017762258013ba9905cd6e7baa9a3fd1fe8b6529472902e/pydantic-2.8.2.tar.gz"
-    sha256 "6f62c13d067b0755ad1c21a34bdd06c0c12625a22b0fc09c6b149816604f7c2a"
+    url "https://files.pythonhosted.org/packages/a9/b7/d9e3f12af310e1120c21603644a1cd86f59060e040ec5c3a80b8f05fae30/pydantic-2.9.2.tar.gz"
+    sha256 "d155cef71265d1e9807ed1c32b4c8deec042a44a50a4188b25ac67ecd81a9c0f"
   end
 
   resource "pydantic-core" do
-    url "https://files.pythonhosted.org/packages/12/e3/0d5ad91211dba310f7ded335f4dad871172b9cc9ce204f5a56d76ccd6247/pydantic_core-2.20.1.tar.gz"
-    sha256 "26ca695eeee5f9f1aeeb211ffc12f10bcb6f71e2989988fda61dabd65db878d4"
+    url "https://files.pythonhosted.org/packages/e2/aa/6b6a9b9f8537b872f552ddd46dd3da230367754b6f707b8e1e963f515ea3/pydantic_core-2.23.4.tar.gz"
+    sha256 "2584f7cf844ac4d970fba483a717dbe10c1c1c96a969bf65d61ffe94df1b2863"
+  end
+
+  resource "pydub" do
+    url "https://files.pythonhosted.org/packages/fe/9a/e6bca0eed82db26562c73b5076539a4a08d3cffd19c3cc5913a3e61145fd/pydub-0.25.1.tar.gz"
+    sha256 "980a33ce9949cab2a569606b65674d748ecbca4f0796887fd6f46173a7b0d30f"
   end
 
   resource "pyflakes" do
@@ -274,25 +321,19 @@ class Aider < Formula
     sha256 "786ff802f32e91311bff3889f6e9a86e81505fe99f2735bb6d60ae0c5004f199"
   end
 
-  resource "pypager" do
-    url "https://files.pythonhosted.org/packages/a2/94/fb3cf81608d8a5aaf5bbac7e8f331e1ccc4501d7351957b72f0a8eb0d9f5/pypager-3.0.1.tar.gz"
-    sha256 "79c1fc8c4f2c9749dd58e5b29bfce48ca864a24898d1a1e0df1e7fe82d86ab44"
-
-    # Fix failure under build isolation: https://github.com/prompt-toolkit/pypager/pull/31
-    patch do
-      url "https://github.com/prompt-toolkit/pypager/commit/13e8c26d978a42154083cc2d846fa7f719a6d1fc.patch?full_index=1"
-      sha256 "ff9a7c85c2fa837d062ef96650ccc01cae8330f3ff0ba90a5487e92f6052aceb"
-    end
-  end
-
   resource "pypandoc" do
-    url "https://files.pythonhosted.org/packages/95/ac/40008af3ae4af9a5cc796803fb4d2ef82385632113f2c74f1ca1e2b5e3ed/pypandoc-1.13.tar.gz"
-    sha256 "31652073c7960c2b03570bd1e94f602ca9bc3e70099df5ead4cea98ff5151c1e"
+    url "https://files.pythonhosted.org/packages/3a/76/4813088c2df396b562a944887ec42983f268b75091c03b48bdaf657a7229/pypandoc-1.14.tar.gz"
+    sha256 "6b4c45f5f1b9fb5bb562079164806bdbbc3e837b5402bcf3f1139edc5730a197"
   end
 
   resource "pyperclip" do
     url "https://files.pythonhosted.org/packages/30/23/2f0a3efc4d6a32f3b63cdff36cd398d9701d26cda58e3ab97ac79fb5e60d/pyperclip-1.9.0.tar.gz"
     sha256 "b7de0142ddc81bfc5c7507eea19da920b92252b548b96186caf94a5e2527d310"
+  end
+
+  resource "python-dateutil" do
+    url "https://files.pythonhosted.org/packages/66/c0/0c8b6ad9f17a802ee498c46e004a0eb49bc148f2fd230864601a86dcf6db/python-dateutil-2.9.0.post0.tar.gz"
+    sha256 "37dd54208da7e1cd875388217d5e00ebd4179249f90fb72437e91a35459a0ad3"
   end
 
   resource "python-dotenv" do
@@ -311,8 +352,8 @@ class Aider < Formula
   end
 
   resource "regex" do
-    url "https://files.pythonhosted.org/packages/3f/51/64256d0dc72816a4fe3779449627c69ec8fee5a5625fd60ba048f53b3478/regex-2024.7.24.tar.gz"
-    sha256 "9cfd009eed1a46b27c14039ad5bbc5e71b6367c5b2e6d5f5da0ea91600817506"
+    url "https://files.pythonhosted.org/packages/f9/38/148df33b4dbca3bd069b963acab5e0fa1a9dbd6820f8c322d0dd6faeff96/regex-2024.9.11.tar.gz"
+    sha256 "6c188c307e8433bcb63dc1915022deb553b4203a70722fc542c363bf120a01fd"
   end
 
   resource "requests" do
@@ -321,13 +362,23 @@ class Aider < Formula
   end
 
   resource "rich" do
-    url "https://files.pythonhosted.org/packages/b3/01/c954e134dc440ab5f96952fe52b4fdc64225530320a910473c1fe270d9aa/rich-13.7.1.tar.gz"
-    sha256 "9be308cb1fe2f1f57d67ce99e95af38a1e2bc71ad9813b0e247cf7ffbcc3a432"
+    url "https://files.pythonhosted.org/packages/d9/e9/cf9ef5245d835065e6673781dbd4b8911d352fb770d56cf0879cf11b7ee1/rich-13.9.3.tar.gz"
+    sha256 "bc1e01b899537598cf02579d2b9f4a415104d3fc439313a7a2c165d76557a08e"
   end
 
   resource "rpds-py" do
-    url "https://files.pythonhosted.org/packages/55/64/b693f262791b818880d17268f3f8181ef799b0d187f6f731b1772e05a29a/rpds_py-0.20.0.tar.gz"
-    sha256 "d72a210824facfdaf8768cf2d7ca25a042c30320b3020de2fa04640920d4e121"
+    url "https://files.pythonhosted.org/packages/25/cb/8e919951f55d109d658f81c9b49d0cc3b48637c50792c5d2e77032b8c5da/rpds_py-0.20.1.tar.gz"
+    sha256 "e1791c4aabd117653530dccd24108fa03cc6baf21f58b950d0a73c3b3b29a350"
+  end
+
+  resource "setuptools" do
+    url "https://files.pythonhosted.org/packages/27/b8/f21073fde99492b33ca357876430822e4800cdf522011f18041351dfa74b/setuptools-75.1.0.tar.gz"
+    sha256 "d59a21b17a275fb872a9c3dae73963160ae079f1049ed956880cd7c09b120538"
+  end
+
+  resource "six" do
+    url "https://files.pythonhosted.org/packages/71/39/171f1c67cd00715f190ba0b100d606d440a28c93c7714febeca8b79af85e/six-1.16.0.tar.gz"
+    sha256 "1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"
   end
 
   resource "smmap" do
@@ -341,8 +392,8 @@ class Aider < Formula
   end
 
   resource "sounddevice" do
-    url "https://files.pythonhosted.org/packages/87/92/62d87d7b53a4e1041f0d9e049e225fce3c7bc266c0162c023feb245b999d/sounddevice-0.5.0.tar.gz"
-    sha256 "0de95277654b3d403d9c15ded3c6cedf307e9b27cc9ce7bd995a2891d0c955af"
+    url "https://files.pythonhosted.org/packages/80/2d/b04ae180312b81dbb694504bee170eada5372242e186f6298139fd3a0513/sounddevice-0.5.1.tar.gz"
+    sha256 "09ca991daeda8ce4be9ac91e15a9a81c8f81efa6b695a348c9171ea0c16cb041"
   end
 
   resource "soundfile" do
@@ -351,13 +402,13 @@ class Aider < Formula
   end
 
   resource "soupsieve" do
-    url "https://files.pythonhosted.org/packages/ce/21/952a240de1c196c7e3fbcd4e559681f0419b1280c617db21157a0390717b/soupsieve-2.5.tar.gz"
-    sha256 "5663d5a7b3bfaeee0bc4372e7fc48f9cff4940b3eec54a6451cc5299f1097690"
+    url "https://files.pythonhosted.org/packages/d7/ce/fbaeed4f9fb8b2daa961f90591662df6a86c1abf25c548329a86920aedfb/soupsieve-2.6.tar.gz"
+    sha256 "e2e68417777af359ec65daac1057404a3c8a5455bb8abc36f1a9866ab1a51abb"
   end
 
   resource "tiktoken" do
-    url "https://files.pythonhosted.org/packages/c4/4a/abaec53e93e3ef37224a4dd9e2fc6bb871e7a538c2b6b9d2a6397271daf4/tiktoken-0.7.0.tar.gz"
-    sha256 "1077266e949c24e0291f6c350433c6f0971365ece2b173a23bc3b9f9defef6b6"
+    url "https://files.pythonhosted.org/packages/37/02/576ff3a6639e755c4f70997b2d315f56d6d71e0d046f4fb64cb81a3fb099/tiktoken-0.8.0.tar.gz"
+    sha256 "9ccbb2740f24542534369c5635cfd9b2b3c2490754a78ac8831d99f89f94eeb2"
   end
 
   resource "tokenizers" do
@@ -366,8 +417,8 @@ class Aider < Formula
   end
 
   resource "tqdm" do
-    url "https://files.pythonhosted.org/packages/58/83/6ba9844a41128c62e810fddddd72473201f3eacde02046066142a2d96cc5/tqdm-4.66.5.tar.gz"
-    sha256 "e1020aef2e5096702d8a025ac7d16b1577279c9d63f8375b63083e9a5f0fcbad"
+    url "https://files.pythonhosted.org/packages/e9/34/bef135b27fe1864993a5284ad001157ee9b5538e859ac90f5b0e8cc8c9ec/tqdm-4.66.6.tar.gz"
+    sha256 "4bdd694238bef1485ce839d67967ab50af8f9272aab687c0d7702a01da0be090"
   end
 
   resource "tree-sitter" do
@@ -387,8 +438,8 @@ class Aider < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/43/6d/fa469ae21497ddc8bc93e5877702dca7cb8f911e337aca7452b5724f1bb6/urllib3-2.2.2.tar.gz"
-    sha256 "dd505485549a7a552833da5e6063639d0d177c04f23bc3864e41e5dc5f612168"
+    url "https://files.pythonhosted.org/packages/ed/63/22ba4ebfe7430b76388e7cd448d5478814d3032121827c12a2cc287e2260/urllib3-2.2.3.tar.gz"
+    sha256 "e7d814a81dad81e6caf2ec9fdedb284ecc9c73076b62654547cc64ccdcae26e9"
   end
 
   resource "wcwidth" do
@@ -397,17 +448,20 @@ class Aider < Formula
   end
 
   resource "yarl" do
-    url "https://files.pythonhosted.org/packages/e0/ad/bedcdccbcbf91363fd425a948994f3340924145c2bc8ccb296f4a1e52c28/yarl-1.9.4.tar.gz"
-    sha256 "566db86717cf8080b99b58b083b773a908ae40f06681e87e589a976faf8246bf"
+    url "https://files.pythonhosted.org/packages/54/9c/9c0a9bfa683fc1be7fdcd9687635151544d992cccd48892dc5e0a5885a29/yarl-1.17.1.tar.gz"
+    sha256 "067a63fcfda82da6b198fa73079b1ca40b7c9b7994995b6ee38acda728b64d47"
   end
 
   resource "zipp" do
-    url "https://files.pythonhosted.org/packages/0e/af/9f2de5bd32549a1b705af7a7c054af3878816a1267cb389c03cc4f342a51/zipp-3.20.0.tar.gz"
-    sha256 "0145e43d89664cfe1a2e533adc75adafed82fe2da404b4bbb6b026c0157bdb31"
+    url "https://files.pythonhosted.org/packages/54/bf/5c0000c44ebc80123ecbdddba1f5dcd94a5ada602a9c225d84b5aaa55e86/zipp-3.20.2.tar.gz"
+    sha256 "bc9eb26f4506fda01b81bcde0ca78103b6e62f991b381fec825435c836edbc29"
+  end
+
+  def python3
+    "python3.12"
   end
 
   def install
-    python3 = "python3.12"
     venv = virtualenv_install_with_resources without: "tree-sitter-languages"
 
     # Requires building languages outside `setup.py`: https://github.com/grantjenks/py-tree-sitter-languages/pull/65
@@ -419,9 +473,12 @@ class Aider < Formula
   end
 
   test do
-    assert_match version.to_s, shell_output("#{bin}/aider --version")
-    assert_match "Missing these environment variables", shell_output("#{bin}/aider --yes --exit")
-    ENV["OPENAI_API_KEY"] = "invalid"
-    assert_match "Incorrect API key", shell_output("#{bin}/aider --yes --exit --message=test 2>&1")
+    mkdir "tmptestdir" do
+      assert_match version.to_s, shell_output("#{bin}/aider --version")
+      assert_match "OPENAI_API_KEY: Not set", shell_output("#{bin}/aider --yes --exit --no-check-update")
+      ENV["OPENAI_API_KEY"] = "invalid"
+      output = shell_output("#{bin}/aider --yes --exit --message=test --no-check-update 2>&1")
+      assert_match "Incorrect API key", output
+    end
   end
 end

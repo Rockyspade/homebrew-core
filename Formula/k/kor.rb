@@ -1,18 +1,17 @@
 class Kor < Formula
   desc "CLI tool to discover unused Kubernetes resources"
   homepage "https://github.com/yonahd/kor"
-  url "https://github.com/yonahd/kor/archive/refs/tags/v0.5.4.tar.gz"
-  sha256 "b5067bed6bf719b00b7d6c0489e8b8590956e88f62e8fe2d7f1fd466f3c3e951"
+  url "https://github.com/yonahd/kor/archive/refs/tags/v0.5.6.tar.gz"
+  sha256 "a655d04eadde49c23fa8171248423304adb6db1da695df19b28863b90cae8e3a"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "265784b07691075065f11d13df5c86ee4f3376e97798a7d4322b2dc8849c3fd0"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "a1aaaec24c74aa30adc3c0b7b41d7e84963a088e1e0972763145fb83b930e9f7"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "a5551b8f9d9d43ad2143b46d3833b45a59abd13dd0cf195a7f79fdeda96aaffe"
-    sha256 cellar: :any_skip_relocation, sonoma:         "1cb31605d1492ffac8febb753ddfddd61a681bbedef29030dd38072e88445656"
-    sha256 cellar: :any_skip_relocation, ventura:        "ff55deda2dfd2f0b713d7be471de8582710bab661ee70369866a1af2cd240186"
-    sha256 cellar: :any_skip_relocation, monterey:       "9e6fb54dfd30dcc932703542240682bbc0be0c0dcfe72be2b55f2091e5fe5407"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b96ed4b3c06a1253e7f83d91d785cc90699b9e56a32a12b1bb54e1c34c6651f4"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "28238df1bac4fe98410a6fba34e5498d6eba1c9140fdf2158379d10c473ce53b"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "28238df1bac4fe98410a6fba34e5498d6eba1c9140fdf2158379d10c473ce53b"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "28238df1bac4fe98410a6fba34e5498d6eba1c9140fdf2158379d10c473ce53b"
+    sha256 cellar: :any_skip_relocation, sonoma:        "ba38a28dac4a58367ce3f4277013227adedd4e9b3ac16abbd0624c050a6aa431"
+    sha256 cellar: :any_skip_relocation, ventura:       "ba38a28dac4a58367ce3f4277013227adedd4e9b3ac16abbd0624c050a6aa431"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "df19b69c5ac4a9c000d0b1df27c1d955d1676c19ed64e6afaa763d10aa9cf47c"
   end
 
   depends_on "go" => :build

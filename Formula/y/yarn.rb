@@ -6,7 +6,7 @@ class Yarn < Formula
   license "BSD-2-Clause"
 
   livecheck do
-    skip("1.x line is frozen and features/bugfixes only happen on 2.x")
+    skip("1.x line is frozen and features/bugfixes only happen on 2+")
   end
 
   bottle do
@@ -17,7 +17,6 @@ class Yarn < Formula
   depends_on "node" => :test
 
   conflicts_with "hadoop", because: "both install `yarn` binaries"
-  conflicts_with "corepack", because: "both install `yarn` and `yarnpkg` binaries"
 
   def install
     libexec.install buildpath.glob("*")

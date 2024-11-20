@@ -10,12 +10,12 @@ class Luajit < Formula
   # Get the latest commit with:
   #   `git ls-remote --heads https://github.com/LuaJIT/LuaJIT.git v2.1`
   # This is a rolling release model so take care not to ignore CI failures that may be regressions.
-  url "https://github.com/LuaJIT/LuaJIT/archive/ae4735f621d89d84758769b76432d2319dda9827.tar.gz"
+  url "https://github.com/LuaJIT/LuaJIT/archive/fe71d0fb54ceadfb5b5f3b6baf29e486d97f6059.tar.gz"
   # Use the version scheme `2.1.timestamp` where `timestamp` is the Unix timestamp of the
   # latest commit at the time of updating.
   # `brew livecheck luajit` will generate the correct version for you automatically.
-  version "2.1.1723675123"
-  sha256 "4e444dd48dc4bf7196ca718f287a513f0e51f8608c03c1dccd25488871e5f823"
+  version "2.1.1731601260"
+  sha256 "92325f209b21aaf0a67b099bc73cf9bbac5789a9749bdc3898d4a990abb4f36e"
   license "MIT"
   head "https://luajit.org/git/luajit.git", branch: "v2.1"
 
@@ -28,13 +28,12 @@ class Luajit < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "ea2045c0041178c6197b918cbf73cbbe2fd41c7085bcb485f62c6161c3e09aa1"
-    sha256 cellar: :any,                 arm64_ventura:  "fdaf05816e11b41116ebb7cb93adbbd15734f754402ea6c2ed2f7a6dfbb5eccc"
-    sha256 cellar: :any,                 arm64_monterey: "8a435d2e4827a507cf69744047b8c033d5ff78e260e5b9d69d08d68cd7ecc58d"
-    sha256 cellar: :any,                 sonoma:         "4fd6601a5f48132e383d484e5af578b3e11d5af8314fb95c775a2ea65e676a49"
-    sha256 cellar: :any,                 ventura:        "fb056a1cb4ccc314334d8c634d16781c112dab0f3e4a15b5d4b599bf8945f42f"
-    sha256 cellar: :any,                 monterey:       "4ddd1b2f526bdcb43070c5be4da9aec80362ed20f0184beb906deee78254f4ca"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "21b63a36ea38c24e6c54079a5737c29eaa74dd5a706290341c7c8e41c88a59ee"
+    sha256 cellar: :any,                 arm64_sequoia: "737594d4fcb6328e67342c20b89b69f3da3530059777f4fd43a574cf19858e86"
+    sha256 cellar: :any,                 arm64_sonoma:  "c9b7d6bd818dbf3d44a22dceb61c987504ea1eba48d33e3d338f124508ec8f78"
+    sha256 cellar: :any,                 arm64_ventura: "a05cc2ee52e4b2c218b6d1e78f0555b71a8110302b40fd17e4d803bfae347d19"
+    sha256 cellar: :any,                 sonoma:        "3148ff84afeb3ff7e4359228246eed4a7838e603a23c93f80241f95d8b85b404"
+    sha256 cellar: :any,                 ventura:       "179623ae87ad5b56a282ea60aac7799e2c45eb5a8413c4f96fe3d910d46e198c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "850baf24aa98556cef6fb723be49cd1d5855cf64fe4bf0fddde908e4a101d507"
   end
 
   def install
@@ -51,7 +50,7 @@ class Luajit < Formula
     ENV["MACOSX_DEPLOYMENT_TARGET"] = MacOS.version.to_s if OS.mac?
 
     # Help the FFI module find Homebrew-installed libraries.
-    ENV.append "LDFLAGS", "-Wl,-rpath,#{rpath(target: HOMEBREW_PREFIX/"lib")}" if HOMEBREW_PREFIX.to_s != "/usr/local"
+    ENV.append "LDFLAGS", "-Wl,-rpath,#{rpath(target: HOMEBREW_PREFIX/"lib")}"
 
     # Pass `Q= E=@:` to build verbosely.
     verbose_args = %w[Q= E=@:]

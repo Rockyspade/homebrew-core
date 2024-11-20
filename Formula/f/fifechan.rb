@@ -12,6 +12,7 @@ class Fifechan < Formula
 
   bottle do
     rebuild 1
+    sha256 cellar: :any,                 arm64_sequoia:  "71f641735c72610a5de0482f15c41098d817fed78afcebc8c4c41a686505cb7b"
     sha256 cellar: :any,                 arm64_sonoma:   "277fbd536c176f738c60124aea4321ec581e32491ee82fc13dceec867574705b"
     sha256 cellar: :any,                 arm64_ventura:  "a8deaa164106ac1b37cc156fc4707b8517b07194cf87adc348094600dfbd40b6"
     sha256 cellar: :any,                 arm64_monterey: "462d21b6d9e655b260847f1aace8c011f07145d335aaaf1984c09fbfc2712699"
@@ -44,7 +45,7 @@ class Fifechan < Formula
   end
 
   test do
-    (testpath/"fifechan_test.cpp").write <<~EOS
+    (testpath/"fifechan_test.cpp").write <<~CPP
       #include <fifechan.hpp>
       int main(int n, char** c) {
         fcn::Container* mContainer = new fcn::Container();
@@ -53,7 +54,7 @@ class Fifechan < Formula
         }
         return 0;
       }
-    EOS
+    CPP
 
     system ENV.cxx, "fifechan_test.cpp", "-std=c++11", "-I#{include}", "-L#{lib}", "-lfifechan", "-o", "fifechan_test"
     system "./fifechan_test"

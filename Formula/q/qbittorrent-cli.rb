@@ -7,6 +7,7 @@ class QbittorrentCli < Formula
   head "https://github.com/ludviglundgren/qbittorrent-cli.git", branch: "master"
 
   bottle do
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "2354020af5f92c74432d7d77ac324bb9956893076efe1650216c4beeebf2223b"
     sha256 cellar: :any_skip_relocation, arm64_sonoma:   "2d1c5fb756844c20716657afb77ebe37ee8379482946db1eaef3a9219ef31bf3"
     sha256 cellar: :any_skip_relocation, arm64_ventura:  "0b022b67a52e85f8a45704a3fac937b9222ecae032b57d1b28be7d3f7f016431"
     sha256 cellar: :any_skip_relocation, arm64_monterey: "4bcac1629bb928fc3b5cbce2d1016a53542e2bbf19fb15e4ca2bf8b122c8878a"
@@ -32,10 +33,10 @@ class QbittorrentCli < Formula
 
   test do
     port = free_port
-    (testpath/"config.qbt.toml").write <<~EOS
+    (testpath/"config.qbt.toml").write <<~TOML
       [qbittorrent]
       addr = "http://127.0.0.1:#{port}"
-    EOS
+    TOML
 
     output = shell_output("#{bin}/qbt app version --config #{testpath}/config.qbt.toml 2>&1", 1)
     assert_match "could not get app version", output

@@ -14,6 +14,7 @@ class Rethinkdb < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "08cd5f3a221e9ade6d2e9ccad0cb73f10094855e2f362dbebb274c7dba1fbc3c"
     sha256 cellar: :any,                 arm64_sonoma:   "12c05ba1583bb06660d8630fab1a5d3335bc43fddd5827c2b34ff01660dfbbd2"
     sha256 cellar: :any,                 arm64_ventura:  "799cd7b1efe7da9dd0933b42e5bebd71dbd354be745ae898cdb1f3f5504885e8"
     sha256 cellar: :any,                 arm64_monterey: "a59635dab2420df9cbd170c6e6d09f2a3f7b3de354546aa474cd43362ea037c8"
@@ -22,6 +23,16 @@ class Rethinkdb < Formula
     sha256 cellar: :any,                 monterey:       "931ed3a24d911f5548561327055106ef6a65434632d7b0c57bbb6a25c27ef975"
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "728c63d067ecd2ef2f0df719c1334e74a5f97486526af5ad947ea552b0e9492a"
   end
+
+  # There has been no response to Protobuf 25+ issue[^1] opened on 2023-12-13.
+  # Upstream appears to be in low maintenance state after parent company shut down[^2].
+  # Recently seeing download server issues[^3][^4] which makes source tarball unstable.
+  #
+  # [^1]: https://github.com/rethinkdb/rethinkdb/issues/7142
+  # [^2]: https://github.com/rethinkdb/rethinkdb/issues/6981
+  # [^3]: https://github.com/rethinkdb/rethinkdb/issues/7155
+  # [^4]: https://github.com/rethinkdb/rethinkdb/issues/7157
+  deprecate! date: "2024-11-12", because: "uses unmaintained `protobuf@21`"
 
   depends_on "boost" => :build
   depends_on "openssl@3"

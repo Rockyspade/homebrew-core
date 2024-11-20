@@ -1,19 +1,18 @@
 class N < Formula
   desc "Node version management"
   homepage "https://github.com/tj/n"
-  url "https://github.com/tj/n/archive/refs/tags/v9.2.3.tar.gz"
-  sha256 "c160fd30281d2aeb07d0101758f2f592dd3c6a23370417d9c6bf1efb5368a7dd"
+  url "https://github.com/tj/n/archive/refs/tags/v10.1.0.tar.gz"
+  sha256 "53f686808ef37728922ad22e8a5560f4caf1d214d706639ef8eca6e72b891697"
   license "MIT"
   head "https://github.com/tj/n.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "89304b0eb5dba92060a594d9761699fd334efd4fc884df2fbf4afa476e55f36a"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "89304b0eb5dba92060a594d9761699fd334efd4fc884df2fbf4afa476e55f36a"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "89304b0eb5dba92060a594d9761699fd334efd4fc884df2fbf4afa476e55f36a"
-    sha256 cellar: :any_skip_relocation, sonoma:         "10b735f6bbfa0c30b7208446d8f87804cadca713dba7a740d8fde2bd4c363583"
-    sha256 cellar: :any_skip_relocation, ventura:        "10b735f6bbfa0c30b7208446d8f87804cadca713dba7a740d8fde2bd4c363583"
-    sha256 cellar: :any_skip_relocation, monterey:       "10b735f6bbfa0c30b7208446d8f87804cadca713dba7a740d8fde2bd4c363583"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "89304b0eb5dba92060a594d9761699fd334efd4fc884df2fbf4afa476e55f36a"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "81646c87b6a7b3f3f74de589a2246cc12f9477a1b04a1fa3dadc08d991842a74"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "81646c87b6a7b3f3f74de589a2246cc12f9477a1b04a1fa3dadc08d991842a74"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "81646c87b6a7b3f3f74de589a2246cc12f9477a1b04a1fa3dadc08d991842a74"
+    sha256 cellar: :any_skip_relocation, sonoma:        "658d2c03d442e49143a223a77d49a462ec2ce5ee40d22da4a932e178920234d4"
+    sha256 cellar: :any_skip_relocation, ventura:       "658d2c03d442e49143a223a77d49a462ec2ce5ee40d22da4a932e178920234d4"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "81646c87b6a7b3f3f74de589a2246cc12f9477a1b04a1fa3dadc08d991842a74"
   end
 
   def install

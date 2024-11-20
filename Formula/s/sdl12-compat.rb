@@ -12,6 +12,7 @@ class Sdl12Compat < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "7629feebea88788075d1b222b1096b9f7c1a412fa7dfd5874cfc9ecedeb3cee3"
     sha256 cellar: :any,                 arm64_sonoma:   "4948b9d4e38766595d0c173458b97c00121834dd6b4161496a09fec4fc094950"
     sha256 cellar: :any,                 arm64_ventura:  "d8d666b4c119e5dadd9d338d12c59723adad83565e18612afaf934fcf58e2872"
     sha256 cellar: :any,                 arm64_monterey: "f5a78c668498f0507ffecfce91a2f690b46fc0adc91ed1c3bf207466c1d08f4d"
@@ -48,7 +49,7 @@ class Sdl12Compat < Formula
     assert_predicate lib/"libSDLmain.a", :exist?
     assert_equal version.to_s, shell_output("#{bin}/sdl-config --version").strip
 
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <SDL.h>
 
       int main(int argc, char* argv[]) {
@@ -56,7 +57,7 @@ class Sdl12Compat < Formula
         SDL_Quit();
         return 0;
       }
-    EOS
+    C
     flags = Utils.safe_popen_read(bin/"sdl-config", "--cflags", "--libs").split
     system ENV.cc, "test.c", "-o", "test", *flags
     system "./test"

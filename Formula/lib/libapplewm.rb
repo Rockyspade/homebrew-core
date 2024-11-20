@@ -6,6 +6,7 @@ class Libapplewm < Formula
   license "MIT"
 
   bottle do
+    sha256 cellar: :any, arm64_sequoia:  "9aed87eee9abadbc7e94ee746f6b54588d3eacd9fb455b2d94a96c4b7a19425e"
     sha256 cellar: :any, arm64_sonoma:   "a85cafdda17d42585277fa6d22fb7b7d71d030c9ec591d4cbcc528a32ef5410e"
     sha256 cellar: :any, arm64_ventura:  "5292c56db7842b7784fc2d8cb11ca61ea9cfc1ec4c8293c4faeeaf9a8b8de876"
     sha256 cellar: :any, arm64_monterey: "054032d8ea48004ed41b659815c0d934cb386280d7651ea304118395bafdc360"
@@ -35,7 +36,7 @@ class Libapplewm < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <X11/Xlib.h>
       #include <X11/extensions/applewm.h>
       #include <stdio.h>
@@ -50,7 +51,7 @@ class Libapplewm < Formula
         XAppleWMSetFrontProcess(disp);
         return 0;
       }
-    EOS
+    C
 
     system ENV.cc, "test.c", "-o", "test",
       "-I#{include}", "-L#{lib}", "-L#{Formula["libx11"].lib}",

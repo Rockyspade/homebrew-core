@@ -3,33 +3,32 @@ class Vdirsyncer < Formula
 
   desc "Synchronize calendars and contacts"
   homepage "https://github.com/pimutils/vdirsyncer"
-  url "https://files.pythonhosted.org/packages/81/fb/6fbb7f1d102a59db275811a0de756d6f5bb55c624ba4bdf918b3fbd2ddc0/vdirsyncer-0.19.2.tar.gz"
-  sha256 "fd058ceeab8293459a0466cd9b0e4ab3b39462c6e089a0f0ac37c307420d82ba"
+  url "https://files.pythonhosted.org/packages/ee/c2/50eb6b430f447c062ae3cd07d1a354d768bdb1443580bd4ae16ec8c8296d/vdirsyncer-0.19.3.tar.gz"
+  sha256 "e437851feb985dec3544654f8f9cf6dd109b0b03f7e19956086603092ffeb28f"
   license "BSD-3-Clause"
-  revision 9
+  revision 1
   head "https://github.com/pimutils/vdirsyncer.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "d49511a3196fc9f8cde0eadb713ef99ed6f0c8196c2cc4a4f02e0f29eeba06da"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "0b3da987d9fb483cb12f48b40c58ba3ba3b1d74b42d1eaa4da6858655ce5cd2d"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "6558cf6728f75fd9ff942dfde089ccd4ff70d0476835ae04f3794105dee2ff07"
-    sha256 cellar: :any_skip_relocation, sonoma:         "43f96432ad5b09b20708c5e0b700604f54095b6badf96f13b1eefe16a772ea46"
-    sha256 cellar: :any_skip_relocation, ventura:        "a368d5559e845ab7022c8826417ba89f21c0728b95906cb757ff97958ea132d7"
-    sha256 cellar: :any_skip_relocation, monterey:       "4e1626869aa9d973817157bd40c9762f9912ef345e43547b16d10531d5382df2"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "43d17d048afb94cd39fdb36e372aa23c517bcb813b409a8dd4c4fbf6dc9a7086"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "262259023ada6d45fbe2d552ae9c131056afd17e6b9e61acf1cda39ab5f99873"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "539bd2b454cb065f44205a65bad80cac2885587dbd9e47ceb74ed86410234a81"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "3a1739830ed3ee741744b58963122e2303cbc7e594d81dac59f585d6170ccaf2"
+    sha256 cellar: :any_skip_relocation, sonoma:        "e26029b8dffb1d00efa11ac50378cbea093c90ead6e1ac1a5991e7a57cc5a591"
+    sha256 cellar: :any_skip_relocation, ventura:       "5963ce821ab637ee1c1ab1b781235f801ef44f9832a11daca81aea53383cfd37"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d4ce3329db8209b5a19816fbf886ffda72682f4c8a1f8c93f49c9eb7b027072a"
   end
 
   depends_on "certifi"
-  depends_on "python@3.12"
+  depends_on "python@3.13"
 
   resource "aiohappyeyeballs" do
-    url "https://files.pythonhosted.org/packages/b7/c3/112f2f992aeb321de483754c1c5acab08c8ac3388c9c7e6f3e4f45ec1c42/aiohappyeyeballs-2.3.5.tar.gz"
-    sha256 "6fa48b9f1317254f122a07a131a86b71ca6946ca989ce6326fff54a99a920105"
+    url "https://files.pythonhosted.org/packages/bc/69/2f6d5a019bd02e920a3417689a89887b39ad1e350b562f9955693d900c40/aiohappyeyeballs-2.4.3.tar.gz"
+    sha256 "75cf88a15106a5002a8eb1dab212525c00d1f4c0fa96e551c9fbe6f09a621586"
   end
 
   resource "aiohttp" do
-    url "https://files.pythonhosted.org/packages/45/11/36ba898823ab19e49e6bd791d75b9185eadef45a46fc00d3c669824df8a0/aiohttp-3.10.2.tar.gz"
-    sha256 "4d1f694b5d6e459352e5e925a42e05bac66655bfde44d81c59992463d2897014"
+    url "https://files.pythonhosted.org/packages/1d/cd/af0e573bdb77ae7df1148fe8e4ea854215a37db0b116aac6b5496335095e/aiohttp-3.11.4.tar.gz"
+    sha256 "9d95cce8bb010597b3f2217155befe4708e0538d3548aa08d640ebf54e3f57cb"
   end
 
   resource "aiohttp-oauthlib" do
@@ -58,8 +57,8 @@ class Vdirsyncer < Formula
   end
 
   resource "charset-normalizer" do
-    url "https://files.pythonhosted.org/packages/63/09/c1bc53dab74b1816a00d8d030de5bf98f724c52c1635e07681d312f20be8/charset-normalizer-3.3.2.tar.gz"
-    sha256 "f30c3cb33b24454a82faecaf01b19c18562b1e89558fb6c56de4d9118a032fd5"
+    url "https://files.pythonhosted.org/packages/f2/4f/e1808dc01273379acc506d18f1504eb2d299bd4131743b9fc54d7be4df1e/charset_normalizer-3.4.0.tar.gz"
+    sha256 "223217c3d4f82c3ac5e29032b3f1c2eb0fb591b72161f86d93f5719079dae93e"
   end
 
   resource "click" do
@@ -73,18 +72,18 @@ class Vdirsyncer < Formula
   end
 
   resource "frozenlist" do
-    url "https://files.pythonhosted.org/packages/cf/3d/2102257e7acad73efc4a0c306ad3953f68c504c16982bbdfee3ad75d8085/frozenlist-1.4.1.tar.gz"
-    sha256 "c037a86e8513059a2613aaba4d817bb90b9d9b6b69aace3ce9c877e8c8ed402b"
+    url "https://files.pythonhosted.org/packages/8f/ed/0f4cec13a93c02c47ec32d81d11c0c1efbadf4a471e3f3ce7cad366cbbd3/frozenlist-1.5.0.tar.gz"
+    sha256 "81d5af29e61b9c8348e876d442253723928dce6433e0e76cd925cd83f1b4b817"
   end
 
   resource "idna" do
-    url "https://files.pythonhosted.org/packages/21/ed/f86a79a07470cb07819390452f178b3bef1d375f2ec021ecfc709fc7cf07/idna-3.7.tar.gz"
-    sha256 "028ff3aadf0609c1fd278d8ea3089299412a7a8b9bd005dd08b9f8285bcb5cfc"
+    url "https://files.pythonhosted.org/packages/f1/70/7703c29685631f5a7590aa73f1f1d3fa9a380e654b86af429e0934a32f7d/idna-3.10.tar.gz"
+    sha256 "12f65c9b470abda6dc35cf8e63cc574b1c52b11df2c86030af0ac09b01b13ea9"
   end
 
   resource "multidict" do
-    url "https://files.pythonhosted.org/packages/f9/79/722ca999a3a09a63b35aac12ec27dfa8e5bb3a38b0f857f7a1a209a88836/multidict-6.0.5.tar.gz"
-    sha256 "f7e301075edaf50500f0b341543c41194d8df3ae5caf4702f2095f3ca73dd8da"
+    url "https://files.pythonhosted.org/packages/d6/be/504b89a5e9ca731cd47487e91c469064f8ae5af93b7259758dcfc2b9c848/multidict-6.1.0.tar.gz"
+    sha256 "22ae2ebf9b0c69d206c003e2f6a914ea33f0a932d4aa16f236afc049d9958f4a"
   end
 
   resource "oauthlib" do
@@ -92,24 +91,24 @@ class Vdirsyncer < Formula
     sha256 "9859c40929662bec5d64f34d01c99e093149682a3f38915dc0655d5a633dd918"
   end
 
+  resource "propcache" do
+    url "https://files.pythonhosted.org/packages/a9/4d/5e5a60b78dbc1d464f8a7bbaeb30957257afdc8512cbb9dfd5659304f5cd/propcache-0.2.0.tar.gz"
+    sha256 "df81779732feb9d01e5d513fad0122efb3d53bbc75f61b2a4f29a020bc985e70"
+  end
+
   resource "requests" do
     url "https://files.pythonhosted.org/packages/63/70/2bf7780ad2d390a8d301ad0b550f1581eadbd9a20f896afe06353c2a2913/requests-2.32.3.tar.gz"
     sha256 "55365417734eb18255590a9ff9eb97e9e1da868d4ccd6402399eaf68af20a760"
   end
 
-  resource "requests-toolbelt" do
-    url "https://files.pythonhosted.org/packages/f3/61/d7545dafb7ac2230c70d38d31cbfe4cc64f7144dc41f6e4e4b78ecd9f5bb/requests-toolbelt-1.0.0.tar.gz"
-    sha256 "7681a0a3d047012b5bdc0ee37d7f8f07ebe76ab08caeccfc3921ce23c88d5bc6"
-  end
-
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/43/6d/fa469ae21497ddc8bc93e5877702dca7cb8f911e337aca7452b5724f1bb6/urllib3-2.2.2.tar.gz"
-    sha256 "dd505485549a7a552833da5e6063639d0d177c04f23bc3864e41e5dc5f612168"
+    url "https://files.pythonhosted.org/packages/ed/63/22ba4ebfe7430b76388e7cd448d5478814d3032121827c12a2cc287e2260/urllib3-2.2.3.tar.gz"
+    sha256 "e7d814a81dad81e6caf2ec9fdedb284ecc9c73076b62654547cc64ccdcae26e9"
   end
 
   resource "yarl" do
-    url "https://files.pythonhosted.org/packages/e0/ad/bedcdccbcbf91363fd425a948994f3340924145c2bc8ccb296f4a1e52c28/yarl-1.9.4.tar.gz"
-    sha256 "566db86717cf8080b99b58b083b773a908ae40f06681e87e589a976faf8246bf"
+    url "https://files.pythonhosted.org/packages/4b/d5/0d0481857de42a44ba4911f8010d4b361dc26487f48d5503c66a797cff48/yarl-1.17.2.tar.gz"
+    sha256 "753eaaa0c7195244c84b5cc159dc8204b7fd99f716f11198f999f2332a86b178"
   end
 
   def install

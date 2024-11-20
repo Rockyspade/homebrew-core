@@ -11,6 +11,7 @@ class CargoDepgraph < Formula
   end
 
   bottle do
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "cd0ef62d3b9309511017388b14d90f770ef95ff5e37c789a36702692885cb051"
     sha256 cellar: :any_skip_relocation, arm64_sonoma:   "060ce6579e0acf883ca67a613d5f33375205e56afa48a28876d81d9d653d275e"
     sha256 cellar: :any_skip_relocation, arm64_ventura:  "694d37c938b1aea59687cda71bea7a8fba0656b191b716a3e8d58a71c2fec02f"
     sha256 cellar: :any_skip_relocation, arm64_monterey: "12ed5d4719fecb87d5a71f1bb8f82d574c3b5ba77d990430874aa49a33b9cdae"
@@ -37,14 +38,14 @@ class CargoDepgraph < Formula
     crate = testpath/"demo-crate"
     mkdir crate do
       (crate/"src/main.rs").write "// Dummy file"
-      (crate/"Cargo.toml").write <<~EOS
+      (crate/"Cargo.toml").write <<~TOML
         [package]
         name = "demo-crate"
         version = "0.1.0"
 
         [dependencies]
         rustc-std-workspace-core = "1.0.0" # explicitly empty crate for testing
-      EOS
+      TOML
       expected = <<~EOS
         digraph {
             0 [ label = "demo-crate" shape = box]

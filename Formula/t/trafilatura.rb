@@ -3,22 +3,22 @@ class Trafilatura < Formula
 
   desc "Discovery, extraction and processing for Web text"
   homepage "https://trafilatura.readthedocs.io/en/latest/"
-  url "https://files.pythonhosted.org/packages/89/20/1028e6d81f956312aa76673092ec012a692cec2c63e87b0d6573a6d0e383/trafilatura-1.12.1.tar.gz"
-  sha256 "89891db646dd84d98fb34a2faed7ba84c22e5490007b587d0599036d35164760"
+  url "https://files.pythonhosted.org/packages/d0/cd/77e4403b61d5da59063bb65ee894cf951c6f1137658499947adc040102f5/trafilatura-1.12.2.tar.gz"
+  sha256 "4c9cb1434f7e13ef0b16cb44ee1d44e84523ec7268940b9559c374e7effc9a96"
   license "GPL-3.0-or-later"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "c7cafaace455793cb5707fa3444c71938d1b85c0cec49ee62e04f6f13d810554"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "d7b2f8d557df53182a9b25c7ee3dee7fe0a9c205015db77f64c83533c9c78698"
-    sha256 cellar: :any,                 arm64_monterey: "91dfaa4de664c44b76f0efb416b9c0e0310deecd015f0b5bddecf19ab18e225e"
-    sha256 cellar: :any_skip_relocation, sonoma:         "4278a08d79127792f47dabd2e5c38f76af77d94815c023efc73130e6a9253a57"
-    sha256 cellar: :any_skip_relocation, ventura:        "e5610046276d7ddfe7e5dc7ce8cbc4a8f6bcce3e948eeff1c2942d422dd98a9f"
-    sha256 cellar: :any,                 monterey:       "c02ac97ef2a9d972bc27065c80962e09ce031d45236cd5dcec6ba19ce2c0b82d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "271cca5e0408a2dda2abbf8400ecfad060b7456264750beaf1caa9b0764d0125"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "3d2b05278b7dac67cb6511131caaed8d01c7e67bd9de37b43b94110b32f9cfd0"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "e38aba65a43e4a8fada4a651189743025f3e550c6bb014cd0c965df5910334de"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "1acaa03f8d69f8163d2e0806b4df842df4db88b00ec2c9a4c3a88f8643ffb841"
+    sha256 cellar: :any_skip_relocation, sonoma:        "b2e15ff288507c4168e36dbe358db5100946edb8f8b2f284db23edbbd9453c8f"
+    sha256 cellar: :any_skip_relocation, ventura:       "e7de935a43c32887142f8aff2bc22ce95e4628ff84d48534f672021fe7ce2b28"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "59748caaa42f04dbe73e4c138a9c33cf0d5753ed0f06b7c909cf6a0314c7a7a5"
   end
 
   depends_on "certifi"
-  depends_on "python@3.12"
+  depends_on "python@3.13"
 
   uses_from_macos "libxml2", since: :ventura
   uses_from_macos "libxslt"
@@ -29,13 +29,13 @@ class Trafilatura < Formula
   end
 
   resource "charset-normalizer" do
-    url "https://files.pythonhosted.org/packages/63/09/c1bc53dab74b1816a00d8d030de5bf98f724c52c1635e07681d312f20be8/charset-normalizer-3.3.2.tar.gz"
-    sha256 "f30c3cb33b24454a82faecaf01b19c18562b1e89558fb6c56de4d9118a032fd5"
+    url "https://files.pythonhosted.org/packages/f2/4f/e1808dc01273379acc506d18f1504eb2d299bd4131743b9fc54d7be4df1e/charset_normalizer-3.4.0.tar.gz"
+    sha256 "223217c3d4f82c3ac5e29032b3f1c2eb0fb591b72161f86d93f5719079dae93e"
   end
 
   resource "courlan" do
-    url "https://files.pythonhosted.org/packages/0f/47/4c32478892e8d87438eb205996ec3798b8bcb174b947cfb6cd3df45f5a5b/courlan-1.3.0.tar.gz"
-    sha256 "3868f388122f2b09d154802043fe92dfd62c3ea7a700eaae8abc05198cf8bc25"
+    url "https://files.pythonhosted.org/packages/9f/d4/50ac3848147e1c74d8f207064093dc2a62b8f51e0f615f7ba5cf5fd732f7/courlan-1.3.1.tar.gz"
+    sha256 "10858ab686470a3b1d8748d7b88199607c94e74eba3c8ade759ba4a9576d366e"
   end
 
   resource "dateparser" do
@@ -44,8 +44,8 @@ class Trafilatura < Formula
   end
 
   resource "htmldate" do
-    url "https://files.pythonhosted.org/packages/cd/71/ac70cf10ea9b58414a0d8d32593f916ab83e0d9d28c95e91879d26cffd0d/htmldate-1.8.1.tar.gz"
-    sha256 "caf1686cf75c61dd1f061ede5d7a46e759b15d5f9987cd8e13c8c4237511263d"
+    url "https://files.pythonhosted.org/packages/2e/a0/7abcfa08fd1eb3f8e5cd22f3fdea86d5c4e066360ff7966ce53c7d75f0e9/htmldate-1.9.1.tar.gz"
+    sha256 "83eaad12c23b38aecb2b9fc2ceb131af815943ce3e1a0506a862eb256c16b606"
   end
 
   resource "justext" do
@@ -59,8 +59,8 @@ class Trafilatura < Formula
   end
 
   resource "lxml-html-clean" do
-    url "https://files.pythonhosted.org/packages/c2/64/1f45e912e26b8f4c31ba7b7abf65b55a867f88582ff39d600ba07660ac82/lxml_html_clean-0.2.0.tar.gz"
-    sha256 "47c323f39d95d4cbf4956da62929c89a79313074467efaa4821013c97bf95628"
+    url "https://files.pythonhosted.org/packages/eb/c9/efd2064658c33d248a9522825dfb38c82619579754c0320103e632829b16/lxml_html_clean-0.3.1.tar.gz"
+    sha256 "d9f7d8ae36092f4ed5079cfbf95ff06d3c6fd04f4a861422ce251ece72d3c4b5"
   end
 
   resource "python-dateutil" do
@@ -69,13 +69,13 @@ class Trafilatura < Formula
   end
 
   resource "pytz" do
-    url "https://files.pythonhosted.org/packages/90/26/9f1f00a5d021fff16dee3de13d43e5e978f3d58928e129c3a62cf7eb9738/pytz-2024.1.tar.gz"
-    sha256 "2a29735ea9c18baf14b448846bde5a48030ed267578472d8955cd0e7443a9812"
+    url "https://files.pythonhosted.org/packages/3a/31/3c70bf7603cc2dca0f19bdc53b4537a797747a58875b552c8c413d963a3f/pytz-2024.2.tar.gz"
+    sha256 "2aa355083c50a0f93fa581709deac0c9ad65cca8a9e9beac660adcbd493c798a"
   end
 
   resource "regex" do
-    url "https://files.pythonhosted.org/packages/3f/51/64256d0dc72816a4fe3779449627c69ec8fee5a5625fd60ba048f53b3478/regex-2024.7.24.tar.gz"
-    sha256 "9cfd009eed1a46b27c14039ad5bbc5e71b6367c5b2e6d5f5da0ea91600817506"
+    url "https://files.pythonhosted.org/packages/f9/38/148df33b4dbca3bd069b963acab5e0fa1a9dbd6820f8c322d0dd6faeff96/regex-2024.9.11.tar.gz"
+    sha256 "6c188c307e8433bcb63dc1915022deb553b4203a70722fc542c363bf120a01fd"
   end
 
   resource "six" do
@@ -94,8 +94,8 @@ class Trafilatura < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/43/6d/fa469ae21497ddc8bc93e5877702dca7cb8f911e337aca7452b5724f1bb6/urllib3-2.2.2.tar.gz"
-    sha256 "dd505485549a7a552833da5e6063639d0d177c04f23bc3864e41e5dc5f612168"
+    url "https://files.pythonhosted.org/packages/ed/63/22ba4ebfe7430b76388e7cd448d5478814d3032121827c12a2cc287e2260/urllib3-2.2.3.tar.gz"
+    sha256 "e7d814a81dad81e6caf2ec9fdedb284ecc9c73076b62654547cc64ccdcae26e9"
   end
 
   def install

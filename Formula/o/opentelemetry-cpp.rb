@@ -1,25 +1,24 @@
 class OpentelemetryCpp < Formula
   desc "OpenTelemetry C++ Client"
   homepage "https://opentelemetry.io/"
-  url "https://github.com/open-telemetry/opentelemetry-cpp/archive/refs/tags/v1.16.1.tar.gz"
-  sha256 "b8a78bb2a3a78133dbb08bcd04342f4b1e03cb4a19079b8416d408d905fffc37"
+  url "https://github.com/open-telemetry/opentelemetry-cpp/archive/refs/tags/v1.17.0.tar.gz"
+  sha256 "13542725463f1ea106edaef078c2276065cf3da998cb1d3dcf92630daa3f64d4"
   license "Apache-2.0"
-  revision 2
+  revision 3
   head "https://github.com/open-telemetry/opentelemetry-cpp.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "718c8436bd5657a404058ed8b5323789e74cf5635fcfbd33f956051f075c7b06"
-    sha256 cellar: :any,                 arm64_ventura:  "8e9a8c6e20f30c79e2ed5745426731bd200974856f231cf4f72bec16e1a4f349"
-    sha256 cellar: :any,                 arm64_monterey: "d007d09bf0476bda6d35a6d9ddcab6ce4c81bca13a7f742920ace22c782fdc09"
-    sha256 cellar: :any,                 sonoma:         "0578c0f583f98cfa46e2f102a8f659ec176ba6bb6255b75c7303cb3aa644ccb1"
-    sha256 cellar: :any,                 ventura:        "cf1c0dc1cebd246c39af039afa414e1212e1b40bbede433b73fe787ca70a5152"
-    sha256 cellar: :any,                 monterey:       "9666cb1fc3484d89b0b07c735c76f5dfd2faa1438ea5ff9849ff4a3d7b7f65fc"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "122941271565f41cab30bf7dae07b9629b2db3b443ae89ef054d96a8a0ad9acb"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_sequoia: "641daf431606b1db8be742517b5de831e76287c4e374db37a3b3e1c51d0d7225"
+    sha256 cellar: :any,                 arm64_sonoma:  "83a5dd311347c1e7faee0eff47a0184a32dfef40f3ab6159ac9a61a47057756b"
+    sha256 cellar: :any,                 arm64_ventura: "227fca82917507f9b1bedfdde99705e45cbffb9579f28c98786ff16ea04fa444"
+    sha256 cellar: :any,                 sonoma:        "d191760b851d6a3b1fe6facce4b91ae6df4665d995fe3ece704291a56fa88316"
+    sha256 cellar: :any,                 ventura:       "688880c32bcac3776ffb69a1cd4ad1a0f0f1356ead4b9673143c3cec3326b919"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b94ec6b8e515389826bb6d1375ab8791a7299ad08ee176e4bd28dc33cbdde420"
   end
 
   depends_on "cmake" => :build
   depends_on "abseil"
-  depends_on "boost"
   depends_on "grpc"
   depends_on "nlohmann-json"
   depends_on "prometheus-cpp"
@@ -36,13 +35,11 @@ class OpentelemetryCpp < Formula
   def install
     ENV.append "LDFLAGS", "-Wl,-undefined,dynamic_lookup" if OS.mac?
     system "cmake", "-S", ".", "-B", "build",
+                    "-DBUILD_SHARED_LIBS=ON",
                     "-DCMAKE_CXX_STANDARD=17", # Keep in sync with C++ standard in abseil.rb
                     "-DCMAKE_INSTALL_RPATH=#{rpath}",
-                    "-DBUILD_TESTING=OFF",
                     "-DWITH_ELASTICSEARCH=ON",
                     "-DWITH_EXAMPLES=OFF",
-                    "-DWITH_JAEGER=OFF", # deprecated, needs older `thrift`
-                    "-DWITH_METRICS_PREVIEW=ON",
                     "-DWITH_OTLP_GRPC=ON",
                     "-DWITH_OTLP_HTTP=ON",
                     "-DWITH_ABSEIL=ON",

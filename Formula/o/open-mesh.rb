@@ -12,6 +12,7 @@ class OpenMesh < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "1b1e1f2436c2eef35ba7c5a9ad38c1a95a621faca514d4e82ef1e57d668d0494"
     sha256 cellar: :any,                 arm64_sonoma:   "34a5323c42111f78314efc77e19b9b5f595718155a22e480f75d0f559666c581"
     sha256 cellar: :any,                 arm64_ventura:  "c3766a3a3366ce1da776285750738811d5b38e752d1d487fcd4fca2f0249dc84"
     sha256 cellar: :any,                 arm64_monterey: "6ffaa80496d44e94d4ae6be0cd21e8ddfa23b5dadf9349284d65af6bebc2e45d"
@@ -35,7 +36,7 @@ class OpenMesh < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <iostream>
       #include <OpenMesh/Core/IO/MeshIO.hh>
       #include <OpenMesh/Core/Mesh/PolyMesh_ArrayKernelT.hh>
@@ -71,7 +72,7 @@ class OpenMesh < Formula
           return 0;
       }
 
-    EOS
+    CPP
     flags = %W[
       -I#{include}
       -L#{lib}

@@ -7,6 +7,7 @@ class Stepci < Formula
 
   bottle do
     rebuild 1
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "5734ebe30193bf703e1e8abf64b3c3085dfbbc3be250494fbae9607b81a42ca5"
     sha256 cellar: :any_skip_relocation, arm64_sonoma:   "b51a4218cbf325447634057a0362fa99de98611348196764ba954f53baeb2eba"
     sha256 cellar: :any_skip_relocation, arm64_ventura:  "b51a4218cbf325447634057a0362fa99de98611348196764ba954f53baeb2eba"
     sha256 cellar: :any_skip_relocation, arm64_monterey: "b51a4218cbf325447634057a0362fa99de98611348196764ba954f53baeb2eba"
@@ -27,7 +28,7 @@ class Stepci < Formula
     # https://docs.stepci.com/legal/privacy.html
     ENV["STEPCI_DISABLE_ANALYTICS"] = "1"
 
-    (testpath/"workflow.yml").write <<~EOS
+    (testpath/"workflow.yml").write <<~YAML
       version: "1.1"
       name: Status Check
       env:
@@ -41,7 +42,7 @@ class Stepci < Formula
                 method: GET
                 check:
                   status: /^20/
-    EOS
+    YAML
 
     expected = <<~EOS
       Tests: 0 failed, 1 passed, 1 total

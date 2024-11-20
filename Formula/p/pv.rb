@@ -1,8 +1,8 @@
 class Pv < Formula
   desc "Monitor data's progress through a pipe"
   homepage "https://www.ivarch.com/programs/pv.shtml"
-  url "https://www.ivarch.com/programs/sources/pv-1.8.13.tar.gz"
-  sha256 "e2bde058d0d3bfe03e60a6eedef6a179991f5cc698d1bac01b64a86f5a8c17af"
+  url "https://www.ivarch.com/programs/sources/pv-1.9.0.tar.gz"
+  sha256 "b38d69d7fc0785eb5eb3c57e8b12a7334f862047bf84b18f414365335399469a"
   license "Artistic-2.0"
 
   livecheck do
@@ -11,13 +11,12 @@ class Pv < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "fd4ec6b5b5adec77841ece1dd42037ca2cb29e5a62112e5b830ef84ab95f0ccc"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "f79ae91591571ac90eeddf5e774c4349899cd456b6c18eb1b2afb5ccb8285826"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "70bcd972d9ac92d6f6ac7276bcfab123636a5c3916c012144f38f90e85a094c9"
-    sha256 cellar: :any_skip_relocation, sonoma:         "216a5f0e7f3ffb03e026d46b7b67d738fe82465df393f9bd7ad106d4d14873b7"
-    sha256 cellar: :any_skip_relocation, ventura:        "08bc06b9652c2d9da09dff9e15187c2bf88a4cde172390a429285677f04af52b"
-    sha256 cellar: :any_skip_relocation, monterey:       "039818f9f2196435e0cfe44846a03797cbdb09ba3435e5f7860598b2bf99dda3"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6ecc2417c4287ae63f9d81857aa9ecd007de8a0591594fe6dda28f15f237f895"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "f9e420de1a3555054ef2a2c1bb06ae52d566d68703a60b27408f4c0a16201f4f"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "a4ff1418c1d4036d1be8712e0f41904ea27f686e4596d331e2f4af2487fc03e3"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "42db9d825c20a38cb0cb8f5f7dc2d9c68afc0030554fea61db7858c082713d11"
+    sha256 cellar: :any_skip_relocation, sonoma:        "860cded87f996a8ad031bd791796e5f67589fe36bcf24aa8f0afe7a147d2edd0"
+    sha256 cellar: :any_skip_relocation, ventura:       "f357dc2da58b2128ca760ee0ea86519acf9ecf3006b25075a0f9708d7268890b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0aaf715a715bee53f9dc09436dbcf07475a61e2a23884137845562e4c15acd9b"
   end
 
   def install

@@ -1,19 +1,18 @@
 class CargoAbout < Formula
   desc "Cargo plugin to generate list of all licenses for a crate"
   homepage "https://github.com/EmbarkStudios/cargo-about"
-  url "https://github.com/EmbarkStudios/cargo-about/archive/refs/tags/0.6.4.tar.gz"
-  sha256 "94a3cd55e82fc8adf99d49e311011a5a9a0fb5e152a45fe42af42897c451484c"
+  url "https://github.com/EmbarkStudios/cargo-about/archive/refs/tags/0.6.6.tar.gz"
+  sha256 "ecb67a616c81e813f3435da28f046b9f9e7519870a264589a62fb705081bdbdd"
   license any_of: ["Apache-2.0", "MIT"]
   head "https://github.com/EmbarkStudios/cargo-about.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "768555e743f08212e1094ff863df1647e1788d2e1bc7d18a2adbe924b0bafcf2"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "e1bbbef28b6a388ec303a695f9782fde0bff74e90231a68132653dccf1ff8853"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "45ecb6ad67efacf0ec6e9e443b7a63b5d236ab73c76e507081983edd6effcf17"
-    sha256 cellar: :any_skip_relocation, sonoma:         "c1867cc5664efd5a3abbfcf1da38add4b542a6e78c55bbe3c7a8ba7dc07d5b1b"
-    sha256 cellar: :any_skip_relocation, ventura:        "dc6eaa1acb17c4463c60b9e23be9cb256ba33580b9c6f3afdab4498f672805b2"
-    sha256 cellar: :any_skip_relocation, monterey:       "678fd7116d6c971b79e82c1d67f256db2d8605f7f314f85ed8c3d65b783f6f5e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "39acd6c335c949d8e8ac4981ef0ccaff6f061f4a3ab1f03f013e96775a942af5"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "e4e781f29bab8727a985f32317d0255446bb22cae5c85db41f63b9f4695da3a3"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "d921ce0ed093640baddb410d725595cc4ad420caa010c351b84f6910891ce0e4"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "e80aba3a92619ac3a0543e9d5d73c8cfb4c6447d87624c6b7ca7fbf58dd0d212"
+    sha256 cellar: :any_skip_relocation, sonoma:        "3ba6784a3246790e22995903f96779134ec71548faab02f81afc8ab598c99710"
+    sha256 cellar: :any_skip_relocation, ventura:       "da6c0d81527af5a0f1f52fddf48179ff65d6e2de797f2daede1cf2608fc12e36"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1b594e161cf8e9f5014877ec3cd73247d430439820e82a5a026d5d0ad57b0384"
   end
 
   depends_on "rust" => :build
@@ -32,7 +31,7 @@ class CargoAbout < Formula
 
     crate = testpath/"demo-crate"
     mkdir crate do
-      (crate/"src/main.rs").write <<~EOS
+      (crate/"src/main.rs").write <<~RUST
         #[cfg(test)]
         mod tests {
           #[test]
@@ -40,13 +39,13 @@ class CargoAbout < Formula
             assert_eq!(1 + 1, 2);
           }
         }
-      EOS
-      (crate/"Cargo.toml").write <<~EOS
+      RUST
+      (crate/"Cargo.toml").write <<~TOML
         [package]
         name = "demo-crate"
         version = "0.1.0"
         license = "MIT"
-      EOS
+      TOML
 
       system bin/"cargo-about", "init"
       assert_predicate crate/"about.hbs", :exist?

@@ -1,8 +1,8 @@
 class Spot < Formula
   desc "Platform for LTL and ω-automata manipulation"
   homepage "https://spot.lre.epita.fr"
-  url "https://www.lrde.epita.fr/dload/spot/spot-2.12.tar.gz"
-  sha256 "26ba076ad57ec73d2fae5482d53e16da95c47822707647e784d8c7cec0d10455"
+  url "https://www.lrde.epita.fr/dload/spot/spot-2.12.1.tar.gz"
+  sha256 "5477c08d4e1d062f164c2e486a83556925d07d70f2180de706af7aa949c6ff5c"
   license "GPL-3.0-or-later"
 
   livecheck do
@@ -11,16 +11,16 @@ class Spot < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "e4c76f482118ead7179f160c066dfdf0ab3a2e1c7d00b2c90c00278921ab527f"
-    sha256 cellar: :any,                 arm64_ventura:  "0820204a038373d059598cc87c0e65a9302abff79d89fe16b8726d746b6d06a8"
-    sha256 cellar: :any,                 arm64_monterey: "af8c2ecf6ccf310913e30dd943b3020814adb5fd771e2884471f4b26e64c478b"
-    sha256 cellar: :any,                 sonoma:         "ceefbedede95d7a74cecdce0b0c0616c3130a5fe72094be2590b37f0522d87f3"
-    sha256 cellar: :any,                 ventura:        "b263cfe52f46515fb7ed5cf8bb60a480135bc3ba75e4cb167da98c456f648e54"
-    sha256 cellar: :any,                 monterey:       "6c7200f7ad180a1a54caa6b19380c53934f7e6697a9891916a0b8945d3115992"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "2729262b1b52510bf7f256f7d54bbb7b4a99e820c19f718947785ad33b541a72"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_sequoia: "13273a424546330dcb88457667df63bcc4441ba52748f1a2f998847e21579fe1"
+    sha256 cellar: :any,                 arm64_sonoma:  "3f3e6b30ada8fca2095c2f9e48543a7efb06a283c0c0be2fe58f16d9d77d058f"
+    sha256 cellar: :any,                 arm64_ventura: "8d0eeb9eb003a39959a556cc47c3c5680ec077a8cab4527fc2fb5126d96892eb"
+    sha256 cellar: :any,                 sonoma:        "14f6bc12870fb15b58cfee446186261c7acbfb785ff14fca2cd01377b71d1036"
+    sha256 cellar: :any,                 ventura:       "072a39a85251c944035b33d5463b7af0ffdc9b081014825a78a99c4d5f88c686"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e91723e2bf847484701af072c3bc4cd85aa22bfcde4b6b590a849e62c15ff7a4"
   end
 
-  depends_on "python@3.12" => :build
+  depends_on "python@3.13" => :build
 
   fails_with gcc: "5" # C++17
 

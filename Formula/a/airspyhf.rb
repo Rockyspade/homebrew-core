@@ -7,6 +7,7 @@ class Airspyhf < Formula
   head "https://github.com/airspy/airspyhf.git", branch: "master"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "56ba130afa6a1ad1fe9fbda09e0ae0bfefd6eb4d2e5b5a88fa28b150c2a4c1f6"
     sha256 cellar: :any,                 arm64_sonoma:   "b747dbc3b901d77c790fd984fdbaf37979b0e3e7ef0aaca8d616be09353fbe37"
     sha256 cellar: :any,                 arm64_ventura:  "5fbaa0afc4b557fad2a08babdbe97253a76ab494b81dbc402fe0ca9d5c26674a"
     sha256 cellar: :any,                 arm64_monterey: "eef302a163fb091b112c40684b5dcc04e226e95df03042cc9c77ff6e1b637f9c"
@@ -21,37 +22,32 @@ class Airspyhf < Formula
   end
 
   depends_on "cmake" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "libusb"
 
   def install
-    args = std_cmake_args
-
-    libusb = Formula["libusb"]
-    args << "-DLIBUSB_INCLUDE_DIR=#{libusb.opt_include}/libusb-#{libusb.version.major_minor}"
-    args << "-DLIBUSB_LIBRARIES=#{libusb.opt_lib/shared_library("libusb-#{libusb.version.major_minor}")}"
-
-    mkdir "build" do
-      system "cmake", "..", *args
-      system "make", "install"
-    end
+    system "cmake", "-S", ".", "-B", "build", *std_cmake_args
+    system "cmake", "--build", "build"
+    system "cmake", "--install", "build"
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <libairspyhf/airspyhf.h>
-      int main()
-      {
+
+      int main() {
         uint64_t serials[256];
         int n = airspyhf_list_devices(serials, 256);
-        if (n == 0)
-        {
+
+        if (n == 0){
           return 0;
         }
+
         return 1;
       }
-    EOS
-    system ENV.cc, "test.c", "-I#{include}", "-L#{lib}", "-lairspyhf", "-lm", "-o", "test"
+    C
+
+    system ENV.cc, "test.c", "-o", "test", "-I#{include}", "-L#{lib}", "-lairspyhf", "-lm"
     system "./test"
     assert_match version.to_s, shell_output("#{bin}/airspyhf_lib_version").chomp
   end

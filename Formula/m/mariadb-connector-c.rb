@@ -1,11 +1,12 @@
 class MariadbConnectorC < Formula
   desc "MariaDB database connector for C applications"
   homepage "https://mariadb.org/download/?tab=connector&prod=connector-c"
-  url "https://archive.mariadb.org/connector-c-3.3.10/mariadb-connector-c-3.3.10-src.tar.gz"
-  mirror "https://fossies.org/linux/misc/mariadb-connector-c-3.3.10-src.tar.gz/"
-  sha256 "fb156c40147d375ba7ce85d554a67ce4080b2aeb523c6438030f6fe4d680378b"
+  # TODO: Remove backward compatibility library symlinks on breaking version bump
+  url "https://archive.mariadb.org/connector-c-3.4.3/mariadb-connector-c-3.4.3-src.tar.gz"
+  mirror "https://fossies.org/linux/misc/mariadb-connector-c-3.4.3-src.tar.gz/"
+  sha256 "a9033833a88ca74789bd6db565965382c982d06aae1c086097fa9c3e7c7d1eaf"
   license "LGPL-2.1-or-later"
-  head "https://github.com/mariadb-corporation/mariadb-connector-c.git", branch: "3.3"
+  head "https://github.com/mariadb-corporation/mariadb-connector-c.git", branch: "3.4"
 
   # The REST API may omit the newest major/minor versions unless the
   # `olderReleases` parameter is set to `true`.
@@ -23,38 +24,53 @@ class MariadbConnectorC < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "9fecdeb4de3fca9352714ef3da8d1a3e39f24c27cc5dcce3f96af7dae2347a4d"
-    sha256 arm64_ventura:  "301289e2a7caef0989327d7fee7c421b5f2ef939cac8bc179fc605ce21c78d88"
-    sha256 arm64_monterey: "4b01573be81162ac4c70a04d2a7095d72a3b9566d036f167e8ac0b7273b2a756"
-    sha256 sonoma:         "94b265528bf4942c59609605a3012972262c2a98b95d50da90d8fa6d097b07c3"
-    sha256 ventura:        "667256ba3261c68d6b9800695cfbdea41d2c013d1704a73b4d8554b9f5ab0e12"
-    sha256 monterey:       "bbc4cedcf0901e5f98f30245a62ab7a0f7ea5e1d3e10d7e86af678ea6cf2a97e"
-    sha256 x86_64_linux:   "bee14af0524f508a0279615b0351fb082e25aa78a835c973b68e89bb2ee37d7b"
+    sha256 arm64_sequoia: "462f8b1b844ffd11a6848b3db96c9a91eb6d70b0293055375e83f29a2ae58c28"
+    sha256 arm64_sonoma:  "cc5818a3b76aad42d8c8bb2353b1defc925f8fbf77aa9ca8da2fa4481a3b64f7"
+    sha256 arm64_ventura: "c14286f2fad6a45db22b155b50311151628ab0c4626bf29222d3c8827dd72fca"
+    sha256 sonoma:        "3b308c690e20b19c4bed0ffccfb4f5c9b75970ed631e445a664ab146bf7ac86b"
+    sha256 ventura:       "9dd3822cccaefd5770675bf267f65ff6791b2869259bc98ad25f7633d55045af"
+    sha256 x86_64_linux:  "9aa82a00506a9aad0a0bae6054d2eef6ec377eacfb8b0ff6f3416e66a6dac277"
   end
+
+  keg_only "it conflicts with mariadb"
 
   depends_on "cmake" => :build
   depends_on "openssl@3"
+  depends_on "zstd"
 
   uses_from_macos "curl"
   uses_from_macos "krb5"
   uses_from_macos "zlib"
 
-  on_linux do
-    depends_on "zstd"
-  end
-
-  conflicts_with "mariadb", because: "both install `mariadb_config`"
-
   def install
-    args = std_cmake_args
-    args << "-DWITH_OPENSSL=On"
-    args << "-DWITH_EXTERNAL_ZLIB=On"
-    args << "-DOPENSSL_INCLUDE_DIR=#{Formula["openssl@3"].opt_include}"
-    args << "-DINSTALL_MANDIR=#{share}"
-    args << "-DCOMPILATION_COMMENT=Homebrew"
+    rm_r "external"
 
-    system "cmake", ".", *args
-    system "make", "install"
+    # -DINSTALL_* are relative to prefix
+    args = %w[
+      -DINSTALL_LIBDIR=lib
+      -DINSTALL_MANDIR=share/man
+      -DWITH_EXTERNAL_ZLIB=ON
+      -DWITH_MYSQLCOMPAT=ON
+      -DWITH_UNIT_TESTS=OFF
+    ]
+
+    system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args
+    system "cmake", "--build", "build"
+    system "cmake", "--install", "build"
+
+    # Add mysql_config symlink for compatibility which simplifies building
+    # some dependents. This is done in the full `mariadb` installation[^1]
+    # but not in the standalone `mariadb-connector-c`.
+    #
+    # [^1]: https://github.com/MariaDB/server/blob/main/cmake/symlinks.cmake
+    bin.install_symlink "mariadb_config" => "mysql_config"
+
+    # Temporary symlinks for backwards compatibility.
+    # TODO: Remove in future version update.
+    (lib/"mariadb").install_symlink lib.glob(shared_library("*"))
+
+    # TODO: Automatically compress manpages in brew
+    Utils::Gzip.compress(*man3.glob("*.3"))
   end
 
   test do

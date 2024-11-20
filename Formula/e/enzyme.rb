@@ -1,19 +1,18 @@
 class Enzyme < Formula
   desc "High-performance automatic differentiation of LLVM"
   homepage "https://enzyme.mit.edu"
-  url "https://github.com/EnzymeAD/Enzyme/archive/refs/tags/v0.0.144.tar.gz"
-  sha256 "74eea3a2491ba3a844fded8e271fecf850d84ec9d154bc586725b40b93bbff2f"
+  url "https://github.com/EnzymeAD/Enzyme/archive/refs/tags/v0.0.165.tar.gz"
+  sha256 "1ed50db7ffb3db450cc7e93e2ec8df422a90631d32776e292c13455d9128223d"
   license "Apache-2.0" => { with: "LLVM-exception" }
   head "https://github.com/EnzymeAD/Enzyme.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "16b37b8a2c22906898a8ef86e3503f9b0b459e9f9823ad64aadcd2096ca5b9d6"
-    sha256 cellar: :any,                 arm64_ventura:  "34b7d038daf8b0881cd63b3ba72a26daa03f852c37ec7b88517cb381de82233f"
-    sha256 cellar: :any,                 arm64_monterey: "92ce97f8c7a1d46300fe2a31d6e3b76c42a4c8c5f6324830ddf0bcf45c509a9b"
-    sha256 cellar: :any,                 sonoma:         "30c9e63b9a97738fad643c1ce6640f30aa1a9c7e34d4e284f1f768a5c35eb4b3"
-    sha256 cellar: :any,                 ventura:        "fec86ebf31810d67cd85aa9be88cd9297149b4be5ed325ad3da0a20758ebedbe"
-    sha256 cellar: :any,                 monterey:       "aff27ef5c8e58d8edbe1e3fd880d854fef52ce97835380feb0b06ee5e58e20a4"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "53927deef490d6303dc83e63059b2904e071b6b9caad17d908c6c8e4a3700ee7"
+    sha256 cellar: :any,                 arm64_sequoia: "5e5f542b1c3c0f04120efa9917411296b6c30a136ddbab882a221788382a629f"
+    sha256 cellar: :any,                 arm64_sonoma:  "34166b40c58d64431e9f4b7ba8ab1f3f1a0e62dbbec7b77bdfb77caa2c559bc2"
+    sha256 cellar: :any,                 arm64_ventura: "e337f8c15ab6b9a7b5f3f9d48e30258806f3823650770a42378bda0fabfedc9b"
+    sha256 cellar: :any,                 sonoma:        "2b72f2a9541a5784bd41660409383afdf4690ff184cea6d3bd0ce28057ddc854"
+    sha256 cellar: :any,                 ventura:       "481fc124cf25db05c8059d92bd697c14cc58ca60ce8a8b1d72ba5fd42fbd8c31"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "2220c385deb4273b53691a2d5ec5e745ba40b7f75ae29d5487259f49afec262a"
   end
 
   depends_on "cmake" => :build
@@ -32,7 +31,7 @@ class Enzyme < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <stdio.h>
       extern double __enzyme_autodiff(void*, double);
       double square(double x) {
@@ -45,7 +44,7 @@ class Enzyme < Formula
         double i = 21.0;
         printf("square(%.0f)=%.0f, dsquare(%.0f)=%.0f\\n", i, square(i), i, dsquare(i));
       }
-    EOS
+    C
 
     ENV["CC"] = llvm.opt_bin/"clang"
 

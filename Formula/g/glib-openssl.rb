@@ -24,7 +24,7 @@ class GlibOpenssl < Formula
   # See: https://gitlab.gnome.org/Archive/glib-openssl/
   disable! date: "2024-02-22", because: :repo_archived
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "glib"
   depends_on "openssl@1.1"
 
@@ -47,7 +47,7 @@ class GlibOpenssl < Formula
   end
 
   test do
-    (testpath/"gtls-test.c").write <<~EOS
+    (testpath/"gtls-test.c").write <<~C
       #include <gio/gio.h>
       #include <string.h>
       int main (int argc, char *argv[])
@@ -58,7 +58,7 @@ class GlibOpenssl < Formula
         else
           return 1;
       }
-    EOS
+    C
 
     # From `pkg-config --cflags --libs gio-2.0`
     gettext = Formula["gettext"]

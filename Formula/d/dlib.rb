@@ -12,6 +12,7 @@ class Dlib < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "81ea4ab8b5ebdc18921b8b4dac89c043a16d3eb49055c6d8e98cb8cdccca5041"
     sha256 cellar: :any,                 arm64_sonoma:   "d19cac41cc5094b91fe62eda9bb6aec0b1c07d44ab9a13f85615f05d864b8df5"
     sha256 cellar: :any,                 arm64_ventura:  "19cd0cbae5086be45a52545ba0c902349a48bec3584b096544af783febf28fcd"
     sha256 cellar: :any,                 arm64_monterey: "d36c2a0183d5ac011c6e1f4d2e001ec2cabebef683665d067b79eb3bddeabdc2"
@@ -48,14 +49,14 @@ class Dlib < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <dlib/logger.h>
       dlib::logger dlog("example");
       int main() {
         dlog.set_level(dlib::LALL);
         dlog << dlib::LINFO << "The answer is " << 42;
       }
-    EOS
+    CPP
     system ENV.cxx, "-pthread", "-std=c++14", "test.cpp", "-o", "test", "-I#{include}",
                     "-L#{lib}", "-ldlib"
     assert_match(/INFO.*example: The answer is 42/, shell_output("./test"))

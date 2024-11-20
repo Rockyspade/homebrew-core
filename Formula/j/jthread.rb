@@ -11,6 +11,7 @@ class Jthread < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "0b2a1b4160a03bae62a73f61bd3e2bbedd3a4080f4e2650060a05bb445301c4b"
     sha256 cellar: :any,                 arm64_sonoma:   "4cbc30a2ad38f097c8955fc49b84005364fda4ecc67b24fa3e545394543a2aff"
     sha256 cellar: :any,                 arm64_ventura:  "1f6f395e12547fcfcafcfcf52501dce17024aacb8fcb8a2270e42595ac5a80c2"
     sha256 cellar: :any,                 arm64_monterey: "7a786a2608afa79835cab95860405402c716916bb2f79b5e562c838269e178b4"
@@ -36,7 +37,7 @@ class Jthread < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <jthread/jthread.h>
       using namespace jthread;
 
@@ -47,7 +48,7 @@ class Jthread < Formula
         jm->Unlock();
         return 0;
       }
-    EOS
+    CPP
 
     system ENV.cxx, "test.cpp", "-I#{include}", "-L#{lib}", "-ljthread",
                     "-o", "test"

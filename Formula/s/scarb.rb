@@ -1,8 +1,8 @@
 class Scarb < Formula
   desc "Cairo package manager"
   homepage "https://docs.swmansion.com/scarb/"
-  url "https://github.com/software-mansion/scarb/archive/refs/tags/v2.7.1.tar.gz"
-  sha256 "8dcea331acc23e38d7b787fc4361d26a73bc54dfb035eba41f451d4199817b55"
+  url "https://github.com/software-mansion/scarb/archive/refs/tags/v2.8.5.tar.gz"
+  sha256 "18a07a0a09946f276ab399cddff1d6a6bccb342da903204dd88e804df6f478a0"
   license "MIT"
   head "https://github.com/software-mansion/scarb.git", branch: "main"
 
@@ -12,16 +12,16 @@ class Scarb < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "5bebe89d28af9d82716788e2a1532d71a5c7f3a6518b80d1a82b293d395359e7"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "22edae4bcd8e226a3782579c64a7a2d3551900ba06e4c86e8a50fef7b2137030"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "cd282d48a8b317f90b67c1d46c25d316b9de38331634b0ed4d93543d6ff026f4"
-    sha256 cellar: :any_skip_relocation, sonoma:         "50e7c42c77658a55fdcfc7cfe94c1c90a412a126029e562a773107ad7f26cec9"
-    sha256 cellar: :any_skip_relocation, ventura:        "5004a309417fbe94a126ecb7a4ca483f2b488e5b323fda77743cc5fef92c4467"
-    sha256 cellar: :any_skip_relocation, monterey:       "6036996bf8cbae60626572a8b685b4bc1a660148586b01bfdabdc94ef20868d2"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "56e73110a9d0baf9f5148e42784ad530374edcabb1158a8aefeefcccee876e7f"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "b5e5ad817c5e8634bc9f7b9cb8be4fe8eed216825b9e65885cf94088b0868a48"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "70a84c6e76582540af3243e0e052f6f998c444b110959a0d3c1c0150840f7f21"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "a5c2f567237364e2c14f08469c18b674f43b9b7ba19016b86f0db0e37ec09848"
+    sha256 cellar: :any_skip_relocation, sonoma:        "48cf60524abe4c4271d7db2dcc1dc022f716cca785a30a245930883b68c4d8cb"
+    sha256 cellar: :any_skip_relocation, ventura:       "9357aef48ccb1561640845755fd00e619a37f7cc1739d6695b9b4d5ac7e75114"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "532733488fc64bbfdb9a1669b2819285cdb61e9e5b62e706d02f19d10881133c"
   end
 
   depends_on "rust" => :build
+  uses_from_macos "zlib"
 
   def install
     %w[

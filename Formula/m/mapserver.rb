@@ -1,9 +1,10 @@
 class Mapserver < Formula
   desc "Publish spatial data and interactive mapping apps to the web"
   homepage "https://mapserver.org/"
-  url "https://download.osgeo.org/mapserver/mapserver-8.2.1.tar.gz"
-  sha256 "bc2cb4339cfc241aa68c8ae35b0e8ee6c19da7781cad16653a26c5229f2c98f2"
+  url "https://download.osgeo.org/mapserver/mapserver-8.2.2.tar.gz"
+  sha256 "47d8ee4bd12ddd2f04b24aa84c6e58f8e6990bcd5c150ba42e22f30ad30568e4"
   license "MIT"
+  revision 1
 
   livecheck do
     url "https://mapserver.org/download.html"
@@ -11,13 +12,12 @@ class Mapserver < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "de9bc65cac134171d94503eaafc64b595663de46095f28dc68f4c5e3214a8188"
-    sha256 cellar: :any,                 arm64_ventura:  "0de2cfa403f833911bc6f7e283d2b2f795e34a74ac8f38cca2fa889443ed97e6"
-    sha256 cellar: :any,                 arm64_monterey: "fa33dc7449716c6a44e7cb45fab1d4ae6501ea5ced32acd7e1ff0401f7bf8cc2"
-    sha256 cellar: :any,                 sonoma:         "34de2e88e3d3485be45e659c2e961333e895490a964830dfad261916b4137f9f"
-    sha256 cellar: :any,                 ventura:        "93e6b855b5489c183f56b806c68006564a5850a7e66d75af48d8e8d4ebf620a0"
-    sha256 cellar: :any,                 monterey:       "8d8ea69a27b1198e2e51abd148b1c4a8e11b6fa1883aca93d8bbc86d50342887"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "bdd9b644bc48d842675b3075643d312f9c19dbfeb896de2e11a045ab06281d87"
+    sha256 cellar: :any,                 arm64_sequoia: "5c4f20f2d7e825a45c9877aba01d9f1c40c9b9703801a3a82955fee81b19f2a5"
+    sha256 cellar: :any,                 arm64_sonoma:  "7a3ede1841b823c77f837b1f53b708c868adcd7dae2531cc982d58218bb4609f"
+    sha256 cellar: :any,                 arm64_ventura: "3eade837930fe0024a3b667768922fcee0c17ce6c1930c1c98ad66b869d78d89"
+    sha256 cellar: :any,                 sonoma:        "1b610c08a39de74db79327d03d311024642a3dbda5a5285a2d76f4e833586826"
+    sha256 cellar: :any,                 ventura:       "f6a6a4ec604724b29add81780802d4b3e63018492cf2c0beb7e676a48f405c57"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b0da998cc52dde31e1508e0423744e05a0ffbb2288db5aa96df22d75eaf6f19b"
   end
 
   depends_on "cmake" => :build

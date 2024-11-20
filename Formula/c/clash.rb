@@ -17,7 +17,7 @@ class Clash < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "edb29d947930fd06526bd829940a3acd5cad459d9f4005dee6233e35b010f4bc"
   end
 
-  deprecate! date: "2023-11-04", because: :repo_removed
+  disable! date: "2024-09-09", because: :repo_removed
 
   depends_on "go" => :build
   depends_on "shadowsocks-libev" => :test
@@ -42,7 +42,7 @@ class Clash < Formula
     assert_match version.to_s, shell_output("#{bin}/clash -v")
 
     ss_port = free_port
-    (testpath/"shadowsocks-libev.json").write <<~EOS
+    (testpath/"shadowsocks-libev.json").write <<~JSON
       {
           "server":"127.0.0.1",
           "server_port":#{ss_port},
@@ -50,11 +50,11 @@ class Clash < Formula
           "timeout":600,
           "method":"chacha20-ietf-poly1305"
       }
-    EOS
+    JSON
     server = fork { exec "ss-server", "-c", testpath/"shadowsocks-libev.json" }
 
     clash_port = free_port
-    (testpath/"config.yaml").write <<~EOS
+    (testpath/"config.yaml").write <<~YAML
       mixed-port: #{clash_port}
       mode: global
       proxies:
@@ -64,7 +64,7 @@ class Clash < Formula
           port: #{ss_port}
           password: "test"
           cipher: chacha20-ietf-poly1305
-    EOS
+    YAML
     system bin/"clash", "-t", "-d", testpath # test config && download Country.mmdb
     client = fork { exec bin/"clash", "-d", testpath }
 

@@ -4,19 +4,13 @@ class Repo < Formula
   desc "Repository tool for Android development"
   homepage "https://source.android.com/source/developing.html"
   url "https://gerrit.googlesource.com/git-repo.git",
-      tag:      "v2.46",
-      revision: "0444ddf78e3026056ee3786119e595909c039ff2"
+      tag:      "v2.49.3",
+      revision: "ab2d3211043e2cb42a55f56e5abf69d23103c105"
   license "Apache-2.0"
   version_scheme 1
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "fbd3d930b5b82d64171586736a1ea8ccc1a1ca3ef20f5b988b58cd00100b5016"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "fbd3d930b5b82d64171586736a1ea8ccc1a1ca3ef20f5b988b58cd00100b5016"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "fbd3d930b5b82d64171586736a1ea8ccc1a1ca3ef20f5b988b58cd00100b5016"
-    sha256 cellar: :any_skip_relocation, sonoma:         "fbd3d930b5b82d64171586736a1ea8ccc1a1ca3ef20f5b988b58cd00100b5016"
-    sha256 cellar: :any_skip_relocation, ventura:        "fbd3d930b5b82d64171586736a1ea8ccc1a1ca3ef20f5b988b58cd00100b5016"
-    sha256 cellar: :any_skip_relocation, monterey:       "fbd3d930b5b82d64171586736a1ea8ccc1a1ca3ef20f5b988b58cd00100b5016"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "1c176c0e0a2ff1c1412af90e72e806fa8dc3202be400b31eba3aa835c6ed202e"
+    sha256 cellar: :any_skip_relocation, all: "13c06fea0b3ecce91d74711952aa8f8b660f7ff161dd7b417fbc5833ff8a6882"
   end
 
   uses_from_macos "python"

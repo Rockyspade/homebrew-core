@@ -8,6 +8,7 @@ class Dump1090Mutability < Formula
   revision 3
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "efa32621a9a3d6334c711608e079d435f6af49eb4879442ab499cde1b6d3699d"
     sha256 cellar: :any,                 arm64_sonoma:   "e58f730410669a3d0cebde197feec0c661b6b868518f6bd503f8474fd507c180"
     sha256 cellar: :any,                 arm64_ventura:  "578b30fb22f49021afbf7828f9a470f2a51872afe33c20f66f4529c300420484"
     sha256 cellar: :any,                 arm64_monterey: "d7dd9f68dbcc3c0f08e1cb87d09ea24a2f16172196c8d9f82bf57416319333b8"
@@ -17,8 +18,12 @@ class Dump1090Mutability < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "6e554a1e935e5eb47e04660041e611ef0a947ab2c8241bc3a25346363ee06ce8"
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "librtlsdr"
+
+  on_macos do
+    depends_on "libusb"
+  end
 
   def install
     # Work around failure from GCC 10+ using default of `-fno-common`

@@ -1,14 +1,23 @@
 class Fastd < Formula
   desc "Fast and Secure Tunnelling Daemon"
   homepage "https://github.com/neocturne/fastd"
-  url "https://github.com/neocturne/fastd.git",
-      tag:      "v22",
-      revision: "0f47d83eac2047d33efdab6eeaa9f81f17e3ebd1"
   license "BSD-2-Clause"
   revision 2
   head "https://github.com/neocturne/fastd.git", branch: "main"
 
+  stable do
+    url "https://github.com/neocturne/fastd/releases/download/v22/fastd-22.tar.xz"
+    sha256 "19750b88705d66811b7c21b672537909c19ae6b21350688cbd1a3a54d08a8951"
+
+    # remove in next release
+    patch do
+      url "https://github.com/neocturne/fastd/commit/89abc48e60e182f8d57e924df16acf33c6670a9b.patch?full_index=1"
+      sha256 "7bcac7dc288961a34830ef0552e1f9985f1b818aa37978b281f542a26fb059b9"
+    end
+  end
+
   bottle do
+    sha256 cellar: :any, arm64_sequoia:  "dec129faf709276bc51ace4b7f75b3c5ad0bd7054d16f6732e7d17af88d214dc"
     sha256 cellar: :any, arm64_sonoma:   "47546d8f19b4aa18516f976cd4da96dacc190ac1d29ed97724baed9240d4e8c9"
     sha256 cellar: :any, arm64_ventura:  "024b4441f467477b61a7ed9dbce3bb5eaae293a77131abd6293741679d122a77"
     sha256 cellar: :any, arm64_monterey: "5c53118d30669c0aafb1662819055f9c21e1344142f61a1219791c10ccf505ce"
@@ -19,10 +28,9 @@ class Fastd < Formula
   end
 
   depends_on "bison" => :build
-  depends_on "cmake" => :build
   depends_on "meson" => :build
   depends_on "ninja" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "json-c"
   depends_on "libsodium"
   depends_on "libuecc"
@@ -31,12 +39,6 @@ class Fastd < Formula
   on_linux do
     depends_on "libcap"
     depends_on "libmnl"
-  end
-
-  # remove in next release
-  patch do
-    url "https://github.com/neocturne/fastd/commit/89abc48e60e182f8d57e924df16acf33c6670a9b.patch?full_index=1"
-    sha256 "7bcac7dc288961a34830ef0552e1f9985f1b818aa37978b281f542a26fb059b9"
   end
 
   def install

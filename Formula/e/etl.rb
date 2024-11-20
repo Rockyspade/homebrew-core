@@ -15,7 +15,7 @@ class Etl < Formula
     sha256 cellar: :any_skip_relocation, all: "0c052b60f8a2e21a109351218fa2d1402f6bf28c66e1695f3aba77a26dc959b2"
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "glibmm@2.66"
 
   # upstream bug report, https://github.com/synfig/synfig/issues/3371
@@ -27,14 +27,14 @@ class Etl < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <ETL/misc>
       int main(int argc, char *argv[])
       {
         int rv = etl::ceil_to_int(5.5);
         return 6 - rv;
       }
-    EOS
+    CPP
     flags = %W[
       -I#{include}/ETL
       -lpthread

@@ -14,6 +14,7 @@ class Libsecret < Formula
   end
 
   bottle do
+    sha256 cellar: :any, arm64_sequoia:  "50e5f771aa551730a1f311d965730283ba5e0aef8665b71c4ba12ec75db03d3f"
     sha256 cellar: :any, arm64_sonoma:   "844f8b10821660e2cf4ee2a41870ef5157475e7bd983ad4902364bee227b7d9e"
     sha256 cellar: :any, arm64_ventura:  "366983f28d6e6d1902f3db15dd6820b1d98f3a5d428fcbcff96b5acbae5f8f33"
     sha256 cellar: :any, arm64_monterey: "ba020d35c50475b48171733da01a4e64d9c9eddb44cb2628e16aa9aa8d90aa75"
@@ -45,7 +46,7 @@ class Libsecret < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <libsecret/secret.h>
 
       const SecretSchema * example_get_schema (void) G_GNUC_CONST;
@@ -70,7 +71,7 @@ class Libsecret < Formula
           example_get_schema();
           return 0;
       }
-    EOS
+    C
 
     pkg_config_cflags = shell_output("pkg-config --cflags --libs libsecret-1").chomp.split
     system ENV.cc, "test.c", *pkg_config_cflags, "-o", "test"

@@ -6,6 +6,7 @@ class Libsigcxx < Formula
   license "LGPL-3.0-or-later"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "e481f54a00978ae4fdd3c377bacfb99fb5f890ff914791151a514ce7a6ebfadb"
     sha256 cellar: :any,                 arm64_sonoma:   "1dafdacabb0f20c0f95af6338147c4ffb65d4e516670786b995091364fa9c110"
     sha256 cellar: :any,                 arm64_ventura:  "ea969d674fc75a2c00d3949275f22c54cb3bff8c3f172e0fa7504eb8c5a43e33"
     sha256 cellar: :any,                 arm64_monterey: "d8da5f7b72add1164baa9dea85cf98252e453d6feccdc810a83e45864015a4a6"
@@ -30,7 +31,7 @@ class Libsigcxx < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <iostream>
       #include <string>
       #include <sigc++/sigc++.h>
@@ -47,7 +48,7 @@ class Libsigcxx < Formula
         signal_print.emit("hello world\\n");
         return 0;
       }
-    EOS
+    CPP
 
     system ENV.cxx, "-std=c++17", "test.cpp",
                    "-L#{lib}", "-lsigc-3.0", "-I#{include}/sigc++-3.0", "-I#{lib}/sigc++-3.0/include", "-o", "test"

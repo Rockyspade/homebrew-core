@@ -1,8 +1,8 @@
 class Fastfetch < Formula
   desc "Like neofetch, but much faster because written mostly in C"
   homepage "https://github.com/fastfetch-cli/fastfetch"
-  url "https://github.com/fastfetch-cli/fastfetch/archive/refs/tags/2.21.3.tar.gz"
-  sha256 "cec1f126ade7a5ef971901b1cdbe79f5864523d7a0a92732991619485d13e2e7"
+  url "https://github.com/fastfetch-cli/fastfetch/archive/refs/tags/2.30.1.tar.gz"
+  sha256 "5248311a3d8ce65f6f48756dfc0df9f8922d64f5201ee8d980497d52e924906e"
   license "MIT"
   head "https://github.com/fastfetch-cli/fastfetch.git", branch: "dev"
 
@@ -12,14 +12,12 @@ class Fastfetch < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 arm64_sonoma:   "15fc995728c023c5288544b50003dc3b2953db27e25da8df04032e259a821e43"
-    sha256 arm64_ventura:  "b76af61f85ec1c7a3370f3b6a792b46a2c5501eb56cc1334e16d440768e31533"
-    sha256 arm64_monterey: "236d9573990aa3f46cf396a6963a535309f4af743649fb573f36efc6a8840ef5"
-    sha256 sonoma:         "b641531e953f6614a241087b9fbe08faed572271d0bf4cc794cce18566edd800"
-    sha256 ventura:        "63a4715ba2fc656a0cf40c7a4e24d0ae15f7a2640e190b98b181b61b1d39b2f3"
-    sha256 monterey:       "4adf09dd2940ab9f45251e56ddf16da63ca79ebbea4fbdf76bc195a120e8faa6"
-    sha256 x86_64_linux:   "dcdf1470881ed9f621ee19ae249397783e33c349bd3d9bf686304d3c084316c4"
+    sha256 arm64_sequoia: "2ba0aaadc4875972c6dec5490a45a9efc09d1374d3863aaf6ab4c4bf391ce2f3"
+    sha256 arm64_sonoma:  "af31b4bec50b0a0d6f49554c73b72a61ab4b7321dbafe982de46aed989f120c9"
+    sha256 arm64_ventura: "b684e4f4066e0ff71c068c40dad6bac448ce69c481f7e7b97aed356de6baab0e"
+    sha256 sonoma:        "985a991fd1a9d3f5ea8e721e79a150b97d2d132cda598735e71cdc00d963adc6"
+    sha256 ventura:       "7a2b918a20bff83f61d28276ff341dabea84414d7d260ae4390b0e30b3a43e37"
+    sha256 x86_64_linux:  "c9c434f04308a17f5fc6ef1206ad2a5b70e3eb3b3a7a5f8c97a85f29de45ca71"
   end
 
   depends_on "chafa" => :build
@@ -27,7 +25,7 @@ class Fastfetch < Formula
   depends_on "glib" => :build
   depends_on "imagemagick" => :build
   depends_on "pkg-config" => :build
-  depends_on "python@3.12" => :build
+  depends_on "python@3.13" => :build
   depends_on "vulkan-loader" => :build
 
   uses_from_macos "sqlite" => :build

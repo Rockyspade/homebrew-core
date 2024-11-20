@@ -14,6 +14,7 @@ class Liboil < Formula
 
   bottle do
     rebuild 1
+    sha256 cellar: :any,                 arm64_sequoia:  "884af7577129d0a2cf1418f838a9d8057e4f158911797fc6e7ba4e2217ce0182"
     sha256 cellar: :any,                 arm64_sonoma:   "793980d104cfea7e8ee60dc08de451f1d6c208c90ba8faa57d026d6bb36af87b"
     sha256 cellar: :any,                 arm64_ventura:  "d9163cdae71515f1281691a77d77cd635f9f5d0e001eece4ac204f0156ecc393"
     sha256 cellar: :any,                 arm64_monterey: "1301c11b0befc6f72c27cdf4c659caa989c472a4a04d5fda6d1815baff7c381e"
@@ -48,13 +49,13 @@ class Liboil < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <liboil/liboil.h>
       int main(int argc, char** argv) {
         oil_init();
         return 0;
       }
-    EOS
+    C
 
     flags = ["-I#{include}/liboil-0.3", "-L#{lib}", "-loil-0.3"] + ENV.cflags.to_s.split
     system ENV.cc, "test.c", "-o", "test", *flags

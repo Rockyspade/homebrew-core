@@ -1,19 +1,18 @@
 class Patat < Formula
   desc "Terminal-based presentations using Pandoc"
   homepage "https://github.com/jaspervdj/patat"
-  url "https://hackage.haskell.org/package/patat-0.12.0.0/patat-0.12.0.0.tar.gz"
-  sha256 "5b93df3ee9f730655a7b93abf5148aaf576d10fd8409e76e5443054f861b2029"
+  url "https://hackage.haskell.org/package/patat-0.13.0.0/patat-0.13.0.0.tar.gz"
+  sha256 "cb06567ed6cedc2cbba38151e1b3056576ce6d02e694d351027d8a008478860b"
   license "GPL-2.0-or-later"
   head "https://github.com/jaspervdj/patat.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "1d70af90d558c895c512cb672797a730cef1243d84c4e9bc5c00d5e3e41309dd"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "8321387e99f956f1519463b135fd07994e8d062357e8c03475e85bb6e555191d"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "f966c64de45ee6b9fe64546b3e13953c2333aa015b7495facd8d6c34fb489493"
-    sha256 cellar: :any_skip_relocation, sonoma:         "2746e29750e1cf33e4b4a42761a20892137c0bd33475bea6ce9bb30326cabbd5"
-    sha256 cellar: :any_skip_relocation, ventura:        "2f9de7b6c0df90b8295a3c122afc4e7288e5a5cd8bb32e9a4df6a4d8ad3d657f"
-    sha256 cellar: :any_skip_relocation, monterey:       "733ce8ec1321be118513223dd3851b2de9a1feeae4c88725ee1f6e0b58510d0d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "62f2b0f018eaf92e75b5eafa130ff43d7cb833105a92f6fbaa308f09213e4393"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "943c548cfa0b271a36c514017edfc6a5b4c58f9428cb063e81ece889768519cb"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "2c3961a124929b309509d6807fdb1b1da893fb0f9e3603722eae93b8057382e5"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "cdebdf1f3f4da54c2cbb1866772bae872486598e9aa6a0760e1d74f2498802a8"
+    sha256 cellar: :any_skip_relocation, sonoma:        "a2d335b433f87cf622edbf4a4933965a769eeb74c93bbbc1ba4508df9373a449"
+    sha256 cellar: :any_skip_relocation, ventura:       "8c7bcb1b23937dd5beae9ad24ae563b3a6c88aa03edb4c4565ee0f499776bee3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "679f9c8aec372ecbc3d3f35e540e6bb559bffe8563184f73921abf0d5b750a6a"
   end
 
   depends_on "cabal-install" => :build

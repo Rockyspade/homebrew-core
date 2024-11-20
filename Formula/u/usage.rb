@@ -1,19 +1,18 @@
 class Usage < Formula
   desc "Tool for working with usage-spec CLIs"
   homepage "https://usage.jdx.dev/"
-  url "https://github.com/jdx/usage/archive/refs/tags/v0.3.0.tar.gz"
-  sha256 "dc54c47ee761a3e6ff31fbbb696b40e893b1fcdf2d2d15a96c488d8d57711097"
+  url "https://github.com/jdx/usage/archive/refs/tags/v1.3.2.tar.gz"
+  sha256 "2fa15f57ab5e8519438bce2f88452ffd2a0533fe6cc2ad520345b382946b13b0"
   license "MIT"
   head "https://github.com/jdx/usage.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "9af5c5c135977368bb28aed9a5dffa055927cf089d1ff89427dc855fe8432574"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "cd74206a4ca2366b7829e3d6605b11fa4520b2cb5c188541695307e078c20363"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "fcbe603d44b0c137ace78f9ee2c16f6e57a3b44e24f61f7dc11c0d0ecb867b67"
-    sha256 cellar: :any_skip_relocation, sonoma:         "bab9809ce8d62d67f3387783be60cb3aec6192ba766a03f71f967ea06ab3c9d5"
-    sha256 cellar: :any_skip_relocation, ventura:        "ebbf8d4863c6e02e7e91e6a5b3968923635f3afdfb04acb960581e24b3d14cc1"
-    sha256 cellar: :any_skip_relocation, monterey:       "a03e982796bc52b28b8d079eba0ed87b48e5d40a8d9f5361c30c3838cebbe399"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "8d05800a832ae7ff3d0129adca23641da143b4dc2c58e08f54217f0c8cacc07e"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "5fafe5fc2a51eee39f48b1a0378492fb5b9c58835446ed25037fc71fc3a51e15"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "46da55abb37b17b09c102aba0cbc4af2b4b95b152cea89b353d163bfa0eac099"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "d7dfb23fd7f1f155d0340d920ce72639dfc9feb06d87a41aeb4b97ccc33aa82a"
+    sha256 cellar: :any_skip_relocation, sonoma:        "4b2d8923f79010ba2cebeac1bdabdc021a72ccdd8fa5628405ec4eff2fcb47ad"
+    sha256 cellar: :any_skip_relocation, ventura:       "dba812792b7734d174e8c73988d9ee5e60abf2cc4f3b34a5a3ed3ee476ca742d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c6c3ff1fd9906de91519779a27d8ada482d6676f7133d06f4f084a6c04f3e2e1"
   end
 
   depends_on "rust" => :build

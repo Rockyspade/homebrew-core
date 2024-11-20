@@ -1,19 +1,12 @@
 class Prettierd < Formula
   desc "Prettier daemon"
   homepage "https://github.com/fsouza/prettierd"
-  url "https://registry.npmjs.org/@fsouza/prettierd/-/prettierd-0.25.3.tgz"
-  sha256 "39b761c81a6d1d65819ea2f30e96965e25e7ada6d14644e449116e9543b4619f"
+  url "https://registry.npmjs.org/@fsouza/prettierd/-/prettierd-0.25.4.tgz"
+  sha256 "3150e6d3502855632dc259a717e3833d321db6915d57c958cab6463e292cc033"
   license "ISC"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "25b404362efc90f2ce7986adc01878db41f9142dee34a9c32785ed43438902e0"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "25b404362efc90f2ce7986adc01878db41f9142dee34a9c32785ed43438902e0"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "25b404362efc90f2ce7986adc01878db41f9142dee34a9c32785ed43438902e0"
-    sha256 cellar: :any_skip_relocation, sonoma:         "25b404362efc90f2ce7986adc01878db41f9142dee34a9c32785ed43438902e0"
-    sha256 cellar: :any_skip_relocation, ventura:        "25b404362efc90f2ce7986adc01878db41f9142dee34a9c32785ed43438902e0"
-    sha256 cellar: :any_skip_relocation, monterey:       "25b404362efc90f2ce7986adc01878db41f9142dee34a9c32785ed43438902e0"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "2dc9d301c9ecf59636baf5e2a42601ce6712915c601360158ddd54cf5e9d3fb4"
+    sha256 cellar: :any_skip_relocation, all: "c6bff9b787b92531aa1acbd522ddbd8215c377717ef1f69466922bd846f3cc0b"
   end
 
   depends_on "node"

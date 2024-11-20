@@ -9,6 +9,7 @@ class Uhdm < Formula
   head "https://github.com/chipsalliance/UHDM.git", branch: "master"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "0cc479f9f9c9d2b4e6fb196ab0baf48dbbccea8ea125ff7796507746b4387973"
     sha256 cellar: :any,                 arm64_sonoma:   "b5658a0a15d3f14adcd0d110c7cbe6525428882c69d696704f1fa9aad1aca607"
     sha256 cellar: :any,                 arm64_ventura:  "b4f50710bff48e2cac91711af294791839eaf95c754e99e7caf4f780f1eafbab"
     sha256 cellar: :any,                 arm64_monterey: "251b2278f62ad38d87f27f61a673e7dff0424fd648fbad2906bf6135db5f42a6"
@@ -19,7 +20,7 @@ class Uhdm < Formula
   end
 
   depends_on "cmake" => :build
-  depends_on "python@3.12" => :build
+  depends_on "python@3.13" => :build
   depends_on "pkg-config" => :test
   depends_on "capnp"
 
@@ -34,7 +35,7 @@ class Uhdm < Formula
   end
 
   def python3
-    which("python3.12")
+    which("python3.13")
   end
 
   def install
@@ -55,7 +56,7 @@ class Uhdm < Formula
 
   test do
     # Create a minimal .uhdm file and ensure executables work
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <cassert>
       #include <stdlib.h>
       #include "uhdm/constant.h"
@@ -77,7 +78,7 @@ class Uhdm < Formula
         assert(vpi_get(vpiSize, vpi_handle) == 12345);
         assert(vpi_get_str(vpiDecompile, vpi_handle) == std::string("decompile"));
       }
-    EOS
+    CPP
 
     flags = shell_output("pkg-config --cflags --libs UHDM").chomp.split
     system ENV.cxx, "test.cpp", "-o", "test", "-fPIC", "-std=c++17", *flags

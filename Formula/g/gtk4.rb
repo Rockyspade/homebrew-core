@@ -1,8 +1,8 @@
 class Gtk4 < Formula
   desc "Toolkit for creating graphical user interfaces"
   homepage "https://gtk.org/"
-  url "https://download.gnome.org/sources/gtk/4.14/gtk-4.14.5.tar.xz"
-  sha256 "5547f2b9f006b133993e070b87c17804e051efda3913feaca1108fa2be41e24d"
+  url "https://download.gnome.org/sources/gtk/4.16/gtk-4.16.5.tar.xz"
+  sha256 "302d6813fbed95c419fb3ab67c5da5e214882b6a645c3eab9028dfb91ab418a4"
   license "LGPL-2.1-or-later"
 
   livecheck do
@@ -11,13 +11,12 @@ class Gtk4 < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "91707419b88b5d666898ba30a059897110641293f6ce1d602dfd51076e129258"
-    sha256 arm64_ventura:  "abf0b4b61f5d3c87328986dcb08ebd821879909367bf9fa9feff758e97f3bb52"
-    sha256 arm64_monterey: "b2eca390766bbe96317aed281103636b391a5948cedd24b0128aad012e2e66e3"
-    sha256 sonoma:         "77f5bef853a8cf40afe4d38e2bf5ae4c365ff24634c9d5f2b7170750408fb162"
-    sha256 ventura:        "8da15fe0eba18ef4b952dbf104b00649bbb30554b35be0c5c9800f0424fbf84c"
-    sha256 monterey:       "3a51a6b4bd19c22fe04f4c8145f826962d5687a58861dde56d70184f963c8c4e"
-    sha256 x86_64_linux:   "9e53798297c2c6e3988a73aecf5e431f5164cb3bc959a553fc84dac76001707a"
+    sha256 arm64_sequoia: "d09b632449c02e758422d1b02b9afcb0a6090e3669017b8aa0336cf59de4ca7a"
+    sha256 arm64_sonoma:  "9ee780effa65ac8aeb5a0e3d4352ac4a2fb164207e6bce98f906f45fe9f1651a"
+    sha256 arm64_ventura: "0bb7950f030ccaa97288b910371563db7efbe98f5fd9f05fde24f7be1a806d5d"
+    sha256 sonoma:        "8fe9f40d3f90344b3cb57e59d6355019da76f0c9f90414a960dcf8899a4c7dde"
+    sha256 ventura:       "23ff5a36956d5d8ec4906ed59f74f1d1e75b5b12a1c0f54713940371fafbf2c3"
+    sha256 x86_64_linux:  "36d41dcc66b975324ad8de49dc20ac481723ffb2bfb8427d40b5445ef86d006c"
   end
 
   depends_on "docbook" => :build
@@ -65,11 +64,10 @@ class Gtk4 < Formula
 
   def install
     args = %w[
-      -Dgtk_doc=false
-      -Dman-pages=true
-      -Dintrospection=enabled
       -Dbuild-examples=false
       -Dbuild-tests=false
+      -Dintrospection=enabled
+      -Dman-pages=true
       -Dmedia-gstreamer=disabled
       -Dvulkan=disabled
     ]
@@ -101,14 +99,14 @@ class Gtk4 < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <gtk/gtk.h>
 
       int main(int argc, char *argv[]) {
         gtk_disable_setlocale();
         return 0;
       }
-    EOS
+    C
 
     flags = shell_output("#{Formula["pkg-config"].opt_bin}/pkg-config --cflags --libs gtk4").strip.split
     system ENV.cc, "test.c", "-o", "test", *flags

@@ -2,8 +2,8 @@ class Calicoctl < Formula
   desc "Calico CLI tool"
   homepage "https://www.projectcalico.org"
   url "https://github.com/projectcalico/calico.git",
-      tag:      "v3.28.1",
-      revision: "6018563438f3aacf5e043dea0c567abe5d34c08a"
+      tag:      "v3.29.0",
+      revision: "26c4c71c76cafea610380a55ee4ae45e09a8215c"
   license "Apache-2.0"
   head "https://github.com/projectcalico/calico.git", branch: "master"
 
@@ -13,13 +13,12 @@ class Calicoctl < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "f5e0e9fac11bb391d326264455be11600e18747ef025130270e92751b78c3085"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "bc696b1ff3ff3b8bd3407cbde061fc7fbb855e64179c6d2105a05946d5831647"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "845cb1069db3002960b2eb6bdeefb8cd3ea2bc76e33bcdb29432becd811990be"
-    sha256 cellar: :any_skip_relocation, sonoma:         "1dbd1ee9c22594731877db05760c5bb174bc727380d09ac5668ca6698bcd6b10"
-    sha256 cellar: :any_skip_relocation, ventura:        "336c51d9f38666fbc43fbc53345f9e84ee3e126a4f6dca868c4eddc18f9861f7"
-    sha256 cellar: :any_skip_relocation, monterey:       "1a5ced2212333bddce6269fc8916b0a5167fbd832887b01674fa1e026ea7665f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f7e717034d9cfe08d888dc830c0c5d4518d259e5b3526c4ad83837054d85673f"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "d729c60fb3c90ae5ee472cd3e990054b80e9e7ecc794472b16fec460cd6f2be9"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "d729c60fb3c90ae5ee472cd3e990054b80e9e7ecc794472b16fec460cd6f2be9"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "d729c60fb3c90ae5ee472cd3e990054b80e9e7ecc794472b16fec460cd6f2be9"
+    sha256 cellar: :any_skip_relocation, sonoma:        "b9ce0bf7785c77f67df9206e25cef31b89b2c57aaac862fe62450a3fbc3ab87a"
+    sha256 cellar: :any_skip_relocation, ventura:       "b9ce0bf7785c77f67df9206e25cef31b89b2c57aaac862fe62450a3fbc3ab87a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "26a13207bd8178994cf8e30998ec8aaf0b58b5bc71f0ceac29243b0921ad7d45"
   end
 
   depends_on "go" => :build

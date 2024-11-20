@@ -2,22 +2,22 @@ class OpensearchDashboards < Formula
   desc "Open source visualization dashboards for OpenSearch"
   homepage "https://opensearch.org/docs/dashboards/index/"
   url "https://github.com/opensearch-project/OpenSearch-Dashboards.git",
-      tag:      "2.15.0",
-      revision: "aa37a6921f56a6ef6355b5ed8a6bd7b6017aae6a"
+      tag:      "2.17.1",
+      revision: "62cc0320399aef63aa09689aaaf000adafbedeef"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "00919574634fcb00aa1dd6b4d8bd7fc9e490076bdca5d968dd85de9dd30fb673"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "859bba83d2c902785010a585aa44dd62c699c0e2f06462621eee9b1b960c5d4d"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "859bba83d2c902785010a585aa44dd62c699c0e2f06462621eee9b1b960c5d4d"
-    sha256 cellar: :any_skip_relocation, sonoma:         "46651668f9f333e9708a25fc6dce87de29c63b10563af33de22befbbff95a53f"
-    sha256 cellar: :any_skip_relocation, ventura:        "b93e7eba054a9d9d9f8e2d000f9dc678231604821f0419e6f01ccf2ede339009"
-    sha256 cellar: :any_skip_relocation, monterey:       "b93e7eba054a9d9d9f8e2d000f9dc678231604821f0419e6f01ccf2ede339009"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "909d7cdeba0349a8bd3e04f04c01f9ce585a6792351d335ef0a8f5b125eadabd"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "3b24337e9517973f2ef1166f0dca56475afd6b2b7372bce6911860c2f7b269d5"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "3b24337e9517973f2ef1166f0dca56475afd6b2b7372bce6911860c2f7b269d5"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "6835484c0688aaa0cca06872c36731fbda3c2aa6f6d271c757a7b3b406efdce1"
+    sha256 cellar: :any_skip_relocation, sonoma:        "350574d29611996de361adf885b0664b66da012947e66221a8766b81d4eccf5c"
+    sha256 cellar: :any_skip_relocation, ventura:       "7ded93c7753822b90e1d44f52c9b94e1e4f0ee6d76dca371144ea7b182a85f85"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8a58d0e8e496629ea0071fc7cbcb38cb23c71c5aca00abdc76fac3dad33f87c3"
   end
 
   # Match deprecation date of `node@18`.
-  deprecate! date: "2023-10-18", because: "uses deprecated `node@18`"
+  # disable! date: "2025-04-30", because: "uses deprecated `node@18`"
+  deprecate! date: "2024-10-29", because: "uses deprecated `node@18`"
 
   depends_on "yarn" => :build
   depends_on "opensearch" => :test
@@ -87,11 +87,11 @@ class OpensearchDashboards < Formula
                                                    "-Epath.logs=#{testpath}/logs"
     end
 
-    (testpath/"config.yml").write <<~EOS
+    (testpath/"config.yml").write <<~YAML
       server.host: "127.0.0.1"
       path.data: #{testpath}/data
       opensearch.hosts: ["http://127.0.0.1:#{os_port}"]
-    EOS
+    YAML
 
     osd_port = free_port
     fork { exec bin/"opensearch-dashboards", "-p", osd_port.to_s, "-c", testpath/"config.yml" }

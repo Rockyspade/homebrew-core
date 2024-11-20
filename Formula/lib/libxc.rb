@@ -7,6 +7,7 @@ class Libxc < Formula
 
   bottle do
     rebuild 1
+    sha256 cellar: :any,                 arm64_sequoia:  "4137ad3e56f47ffab7864f99478f77a8d48272e6695e4ea46caeaf8b367d4dbc"
     sha256 cellar: :any,                 arm64_sonoma:   "d3b7a181e48fbe340461e747e09de5b03463a42640ea7e3d17e70344e68a13fb"
     sha256 cellar: :any,                 arm64_ventura:  "76e117d24f61975699724c178dc4ca067b3ac7894fe44b2ccbecbac4896531e4"
     sha256 cellar: :any,                 arm64_monterey: "a17707ff2b6046f4b20246a3f4516d5c8dd025b42f1332b079d61c597e0d2acb"
@@ -34,7 +35,7 @@ class Libxc < Formula
 
   test do
     # Common test files for both cmake and plain
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <stdio.h>
       #include <xc.h>
       int main()
@@ -43,14 +44,14 @@ class Libxc < Formula
         xc_version(&major, &minor, &micro);
         printf("%d.%d.%d", major, minor, micro);
       }
-    EOS
-    (testpath/"test.f90").write <<~EOS
+    C
+    (testpath/"test.f90").write <<~FORTRAN
       program lxctest
         use xc_f03_lib_m
       end program lxctest
-    EOS
+    FORTRAN
     # Simple cmake example
-    (testpath / "CMakeLists.txt").write <<~EOS
+    (testpath / "CMakeLists.txt").write <<~CMAKE
       cmake_minimum_required(VERSION 3.6)
       project(test_libxc LANGUAGES C Fortran)
       find_package(Libxc CONFIG REQUIRED)
@@ -58,7 +59,7 @@ class Libxc < Formula
       target_link_libraries(test_c PRIVATE Libxc::xc)
       add_executable(test_fortran test.f90)
       target_link_libraries(test_fortran PRIVATE Libxc::xcf03)
-    EOS
+    CMAKE
     # Test cmake build
     system "cmake", "-B", "build"
     system "cmake", "--build", "build"

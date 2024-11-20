@@ -1,8 +1,8 @@
 class SwiProlog < Formula
   desc "ISO/Edinburgh-style Prolog interpreter"
   homepage "https://www.swi-prolog.org/"
-  url "https://www.swi-prolog.org/download/stable/src/swipl-9.2.6.tar.gz"
-  sha256 "0cb9b80b9922be8165cbac384ebe050d94553e72cf7aebfc980b4395ff01d05d"
+  url "https://www.swi-prolog.org/download/stable/src/swipl-9.2.8.tar.gz"
+  sha256 "b331637a57c913c49edcfcb10ddcf6c031278ce93d2411d54542778531abb5c7"
   license "BSD-2-Clause"
   head "https://github.com/SWI-Prolog/swipl-devel.git", branch: "master"
 
@@ -12,13 +12,12 @@ class SwiProlog < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "598510b76bdd7c3ee65e3c1d2985850c3f1b834281519baac226ea169563e138"
-    sha256 arm64_ventura:  "03ce4c8fdf6ec2b5a75eb4df3c119c300b0caa0d39156d0effc993599b80e78d"
-    sha256 arm64_monterey: "204c7827acde178b0fb678b6b2c25bec2a72c805acf9407004b9337dfe8bd349"
-    sha256 sonoma:         "edd11320e42b5c60fcde748d0aa428938de247b2240891bfd0fb7972c5b36403"
-    sha256 ventura:        "69e94bd7577e284142e7c70d73f4951bd230dffdb5469a70f38d8fd120439fec"
-    sha256 monterey:       "01aaa112ea8cc27ee03a51a14b60e01b770bc48d88e430e5bf65f9605774f1a1"
-    sha256 x86_64_linux:   "3e49ccb6979769ac7fe2540aa0ae3f7c9fa9fad564e91700138a6277554bbed9"
+    sha256 arm64_sequoia: "f6ceb36933e2448157545fef30536bd4c91467802f7a0ac51c457ac76a1a4f04"
+    sha256 arm64_sonoma:  "ecbe24deec0df248adda3c44e789694aead64aeb4f4bb3ce1d48e60d6e5255c2"
+    sha256 arm64_ventura: "108eabd3efffcb439ab4a884d66c0790122fb34ca91eb6f23963ed0ee18d42ed"
+    sha256 sonoma:        "4473970903320547769a6380e6018a36acb004db8537e75e3917e79ead6818e4"
+    sha256 ventura:       "a07dde9c433e634ea14448227ef6709e6bb1c90f31fe3658fc7b049e39d59afd"
+    sha256 x86_64_linux:  "6d7123369a248a9b1226a72c9eeeb20970ae602b999ab96c8b5022b9ea8d5703"
   end
 
   depends_on "cmake" => :build
@@ -62,10 +61,10 @@ class SwiProlog < Formula
   end
 
   test do
-    (testpath/"test.pl").write <<~EOS
+    (testpath/"test.pl").write <<~PROLOG
       test :-
           write('Homebrew').
-    EOS
+    PROLOG
     assert_equal "Homebrew", shell_output("#{bin}/swipl -s #{testpath}/test.pl -g test -t halt")
   end
 end

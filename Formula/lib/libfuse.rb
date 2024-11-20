@@ -7,7 +7,8 @@ class Libfuse < Formula
   head "https://github.com/libfuse/libfuse.git", branch: "master"
 
   bottle do
-    sha256 x86_64_linux: "ab801f94a42a4958defce2a4f5d06250c8bda2ef6262a08d858884fa94c3b69f"
+    rebuild 1
+    sha256 x86_64_linux: "585b1ea16d170add0e1a1a7159e266a4851fe684365491acc61319b1039a29a4"
   end
 
   depends_on "meson" => :build
@@ -28,7 +29,7 @@ class Libfuse < Formula
   end
 
   test do
-    (testpath/"fuse-test.c").write <<~EOS
+    (testpath/"fuse-test.c").write <<~C
       #define FUSE_USE_VERSION 31
       #include <fuse3/fuse.h>
       #include <stdio.h>
@@ -37,7 +38,7 @@ class Libfuse < Formula
         printf("%d\\n", fuse_version());
         return 0;
       }
-    EOS
+    C
     system ENV.cc, "fuse-test.c", "-L#{lib}", "-I#{include}", "-D_FILE_OFFSET_BITS=64", "-lfuse3", "-o", "fuse-test"
     system "./fuse-test"
   end

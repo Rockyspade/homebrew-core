@@ -4,17 +4,16 @@ class Sysbench < Formula
   url "https://github.com/akopytov/sysbench/archive/refs/tags/1.0.20.tar.gz"
   sha256 "e8ee79b1f399b2d167e6a90de52ccc90e52408f7ade1b9b7135727efe181347f"
   license "GPL-2.0-or-later"
-  revision 6
+  revision 7
   head "https://github.com/akopytov/sysbench.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "17c56c40b2c5ab0b9771892471db04149ca177750717be9ce5af114b6f893b62"
-    sha256 cellar: :any,                 arm64_ventura:  "2cd8825fab0c36c7cadd7e8cd6251323f54f52733ea5d46927dfb47b946ca217"
-    sha256 cellar: :any,                 arm64_monterey: "7873462239a08bd00fae9c58e5d4d32c353c1ea2358cacb70128540c2ad99f9e"
-    sha256 cellar: :any,                 sonoma:         "a6fa13a7b2d27f397dbc1f0b5e81bba22f719fa7d239c0e4fce2481ad82b553a"
-    sha256 cellar: :any,                 ventura:        "3e6f1e3c2daec2950ce462463dbab70c16aa8d89f71a174262167471d91259e6"
-    sha256 cellar: :any,                 monterey:       "afbac084c8d329226293a3150c99e89b6d9cf8cebc45c1c2db8587fb0c5530a2"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "26773367916c37a8a6eb26390cd72c953e199cf6d0bd61cf38531aa82b991453"
+    sha256 cellar: :any,                 arm64_sequoia: "58353cd8988e133b4dfa59be80204cf6968ab6a733f9da7b3a53f561b74c4a20"
+    sha256 cellar: :any,                 arm64_sonoma:  "88b6daa8909f7deca820c79d70651675e73bab3bf25e431ba72967ae78a932bb"
+    sha256 cellar: :any,                 arm64_ventura: "ae000c8446a05ac27b143521afa5c0cb27d6f2fd85985a6b829f2d4c5983c8ef"
+    sha256 cellar: :any,                 sonoma:        "6dc4d175800e0e93778a1d90ef77640a6678f6724f0aa3760aed0fb101c80ba3"
+    sha256 cellar: :any,                 ventura:       "276837830f7c80059028dc02664bed943a465041127d6c9c09faaa3a00c1f837"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "6b1d4498974cb5820ef3e1d532ae7ba041a7d201583c363d98674771caeacc7f"
   end
 
   depends_on "autoconf" => :build
@@ -23,14 +22,13 @@ class Sysbench < Formula
   depends_on "pkg-config" => :build
   depends_on "libpq"
   depends_on "luajit"
-  depends_on "mysql-client@8.0" # Does not build with > 8.3 https://github.com/akopytov/sysbench/issues/522
-  depends_on "openssl@3"
+  depends_on "mariadb-connector-c"
 
   uses_from_macos "vim" # needed for xxd
 
   def install
     system "./autogen.sh"
-    system "./configure", *std_configure_args, "--with-mysql", "--with-pgsql", "--with-system-luajit"
+    system "./configure", "--with-mysql", "--with-pgsql", "--with-system-luajit", *std_configure_args
     system "make", "install"
   end
 

@@ -3,18 +3,17 @@ class Ocrmypdf < Formula
 
   desc "Adds an OCR text layer to scanned PDF files"
   homepage "https://ocrmypdf.readthedocs.io/en/latest/"
-  url "https://files.pythonhosted.org/packages/42/f4/7e72fe8bd401cdcb1c8a2b1acce6e447db35b65bd403e55be312242aae41/ocrmypdf-16.4.3.tar.gz"
-  sha256 "16116ca548bfb0c6f6e7c675e289449584a5024760f3ca0c7ecaa7685f5109ba"
+  url "https://files.pythonhosted.org/packages/80/f0/58b84b58ce0f7d7e89f682595068fe76aa0b07a386f23af0cdc85feb4697/ocrmypdf-16.6.2.tar.gz"
+  sha256 "dd08d32b3d989ba6d7b9f0dcebe3c1bcc049d06609916ac476c1f985b7605111"
   license "MPL-2.0"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "b0e616948222492d3b96e3482778b5fab79035a96300b7ded7bc8b2e4641b35a"
-    sha256 cellar: :any,                 arm64_ventura:  "f80b78ad3c107da0c9b9d8fe331f1f2408fa7e038a72792de93cf6b48da5fa30"
-    sha256 cellar: :any,                 arm64_monterey: "0f4c76c45f029a0b6215ccca2020874cfac90abb1a3146da08b6fb87c97a1bf0"
-    sha256 cellar: :any,                 sonoma:         "d629cde2713335ae26ef68c1cacf5a31c4315daf69a92db4a988bf49aeda2fa9"
-    sha256 cellar: :any,                 ventura:        "b1ed945bf6d4ff5b281a174bdd4a4ede1b5f35a936355e8215d1ca90c37be362"
-    sha256 cellar: :any,                 monterey:       "eb7dce710783069d663d86094bd68937eb403532ce26cfa1ecece07b876ff63f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "9e438a779bc7a687cba958bb4745ccc9ab6d2c681084ae2e1e442baf5ee11781"
+    sha256 cellar: :any,                 arm64_sequoia: "71541f610bffc07085ce6e65a4886e9c21c285775c217e12ef0e7b436511d378"
+    sha256 cellar: :any,                 arm64_sonoma:  "9af001fa547c82daa133352d897795cdca376c39604b2791290115a210b8c94f"
+    sha256 cellar: :any,                 arm64_ventura: "48295461093432409de272f2007542df0eda33bd3675e6e818fc2d4c30454c1c"
+    sha256 cellar: :any,                 sonoma:        "3bee76c786c01d213a1e01a50f55a569c0f98e943c6b99f1aac88dbeb8521f91"
+    sha256 cellar: :any,                 ventura:       "2898b1bd97503b8afc61961368bce2ee561320faaa386bb80536f84dce4e9422"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7804f48e5815e641061623b94425e3d15ff89376b69b369b3bd2a9d38965560b"
   end
 
   depends_on "pkg-config" => :build
@@ -28,7 +27,7 @@ class Ocrmypdf < Formula
   depends_on "pillow"
   depends_on "pngquant"
   depends_on "pybind11"
-  depends_on "python@3.12"
+  depends_on "python@3.13"
   depends_on "qpdf"
   depends_on "tesseract"
   depends_on "unpaper"
@@ -40,13 +39,13 @@ class Ocrmypdf < Formula
   fails_with gcc: "5"
 
   resource "charset-normalizer" do
-    url "https://files.pythonhosted.org/packages/63/09/c1bc53dab74b1816a00d8d030de5bf98f724c52c1635e07681d312f20be8/charset-normalizer-3.3.2.tar.gz"
-    sha256 "f30c3cb33b24454a82faecaf01b19c18562b1e89558fb6c56de4d9118a032fd5"
+    url "https://files.pythonhosted.org/packages/f2/4f/e1808dc01273379acc506d18f1504eb2d299bd4131743b9fc54d7be4df1e/charset_normalizer-3.4.0.tar.gz"
+    sha256 "223217c3d4f82c3ac5e29032b3f1c2eb0fb591b72161f86d93f5719079dae93e"
   end
 
   resource "deprecated" do
-    url "https://files.pythonhosted.org/packages/92/14/1e41f504a246fc224d2ac264c227975427a85caf37c3979979edb9b1b232/Deprecated-1.2.14.tar.gz"
-    sha256 "e5323eb936458dccc2582dc6f9c322c852a775a27065ff2b0c4970b9d53d01b3"
+    url "https://files.pythonhosted.org/packages/2e/a3/53e7d78a6850ffdd394d7048a31a6f14e44900adedf190f9a165f6b69439/deprecated-1.2.15.tar.gz"
+    sha256 "683e561a90de76239796e6b6feac66b99030d2dd3fcf61ef996330f14bbb9b0d"
   end
 
   resource "deprecation" do
@@ -60,8 +59,8 @@ class Ocrmypdf < Formula
   end
 
   resource "lxml" do
-    url "https://files.pythonhosted.org/packages/63/f7/ffbb6d2eb67b80a45b8a0834baa5557a14a5ffce0979439e7cd7f0c4055b/lxml-5.2.2.tar.gz"
-    sha256 "bb2dc4898180bea79863d5487e5f9c7c34297414bad54bcd0f0852aee9cfdb87"
+    url "https://files.pythonhosted.org/packages/e7/6b/20c3a4b24751377aaa6307eb230b66701024012c29dd374999cc92983269/lxml-5.3.0.tar.gz"
+    sha256 "4e109ca30d1edec1ac60cdbe341905dc3b8f55b16855e03a54aaf59e51ec8c6f"
   end
 
   resource "markdown-it-py" do
@@ -75,8 +74,8 @@ class Ocrmypdf < Formula
   end
 
   resource "packaging" do
-    url "https://files.pythonhosted.org/packages/51/65/50db4dda066951078f0a96cf12f4b9ada6e4b811516bf0262c0f4f7064d4/packaging-24.1.tar.gz"
-    sha256 "026ed72c8ed3fcce5bf8950572258698927fd1dbda10a5e981cdf0ac37f4f002"
+    url "https://files.pythonhosted.org/packages/d0/63/68dbb6eb2de9cb10ee4c9c14a0148804425e13c4fb20d61cce69f53106da/packaging-24.2.tar.gz"
+    sha256 "c228a6dc5e932d346bc5739379109d49e8853dd8223571c7c5b55260edc0b97f"
   end
 
   resource "pdfminer-six" do
@@ -85,13 +84,13 @@ class Ocrmypdf < Formula
   end
 
   resource "pi-heif" do
-    url "https://files.pythonhosted.org/packages/8e/12/b477e3bc1ce4a7e9db9ff85f22c89ccd5199c04c150d9cef1bbd444b1672/pi_heif-0.18.0.tar.gz"
-    sha256 "0a690159607beaa6712f2c8abaa5168a22314d18f00a617d691548f5acba8070"
+    url "https://files.pythonhosted.org/packages/5e/97/41dd02b235d3a761dcbf56993bca96f54e8e7e114d4c75761408d15ceb89/pi_heif-0.20.0.tar.gz"
+    sha256 "f63b5ab190697c91dec482112bfa90751e48070899f4888317e943075dccf0be"
   end
 
   resource "pikepdf" do
-    url "https://files.pythonhosted.org/packages/6f/f0/8ebf71fb64d8135d61b5fd28ef2785f02d84352cf82357565cde8e67a3ab/pikepdf-9.1.0.tar.gz"
-    sha256 "e0c8d0a165b61d62495919b4351b5d2c7f0ebd47ea31d94d82c5203e97e07897"
+    url "https://files.pythonhosted.org/packages/57/54/71552c3ab2694618741e5579506759238716664400304cb615917a993df5/pikepdf-9.4.2.tar.gz"
+    sha256 "0108c063bc56dc2dbfc87f20533a728342a938f4c85e39773866b71255aa8388"
   end
 
   resource "pluggy" do
@@ -105,8 +104,8 @@ class Ocrmypdf < Formula
   end
 
   resource "rich" do
-    url "https://files.pythonhosted.org/packages/b3/01/c954e134dc440ab5f96952fe52b4fdc64225530320a910473c1fe270d9aa/rich-13.7.1.tar.gz"
-    sha256 "9be308cb1fe2f1f57d67ce99e95af38a1e2bc71ad9813b0e247cf7ffbcc3a432"
+    url "https://files.pythonhosted.org/packages/ab/3a/0316b28d0761c6734d6bc14e770d85506c986c85ffb239e688eeaab2c2bc/rich-13.9.4.tar.gz"
+    sha256 "439594978a49a09530cff7ebc4b5c7103ef57baf48d5ea3184f21d9a2befa098"
   end
 
   resource "wrapt" do

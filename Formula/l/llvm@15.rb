@@ -7,8 +7,7 @@ class LlvmAT15 < Formula
   license "Apache-2.0" => { with: "LLVM-exception" }
 
   livecheck do
-    url :stable
-    regex(/^llvmorg[._-]v?(15(?:\.\d+)+)$/i)
+    skip "No longer developed or maintained"
   end
 
   bottle do
@@ -31,6 +30,9 @@ class LlvmAT15 < Formula
   # We intentionally use Make instead of Ninja.
   # See: Homebrew/homebrew-core/issues/35513
   depends_on "cmake" => :build
+  # sanitizer_mac.cpp:630:15: error: constexpr function never produces a constant expression [-Winvalid-constexpr]
+  # constexpr u16 GetOSMajorKernelOffset() {
+  depends_on maximum_macos: [:sonoma, :build]
   depends_on "python@3.12" => :build
   depends_on "zstd"
 
@@ -269,23 +271,23 @@ class LlvmAT15 < Formula
     assert_equal (lib/shared_library("libLLVM-#{soversion}")).to_s,
                  shell_output("#{bin}/llvm-config --libfiles").chomp
 
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <stdio.h>
       int main()
       {
         printf("Hello World!\\n");
         return 0;
       }
-    EOS
+    C
 
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <iostream>
       int main()
       {
         std::cout << "Hello World!" << std::endl;
         return 0;
       }
-    EOS
+    CPP
 
     # Testing default toolchain and SDK location.
     system bin/"clang++", "-v",
@@ -296,9 +298,9 @@ class LlvmAT15 < Formula
     assert_equal "Hello World!", shell_output("./test").chomp
 
     # To test `lld`, we mock a broken `ld` to make sure it's not what's being used.
-    (testpath/"fake_ld.c").write <<~EOS
+    (testpath/"fake_ld.c").write <<~C
       int main() { return 1; }
-    EOS
+    C
     (testpath/"bin").mkpath
     system ENV.cc, "-v", "fake_ld.c", "-o", "bin/ld"
     with_env(PATH: "#{testpath}/bin:#{ENV["PATH"]}") do
@@ -383,19 +385,19 @@ class LlvmAT15 < Formula
         refute_match(/libunwind/, lib)
       end
 
-      (testpath/"test_plugin.cpp").write <<~EOS
+      (testpath/"test_plugin.cpp").write <<~CPP
         #include <iostream>
         __attribute__((visibility("default")))
         extern "C" void run_plugin() {
           std::cout << "Hello Plugin World!" << std::endl;
         }
-      EOS
-      (testpath/"test_plugin_main.c").write <<~EOS
+      CPP
+      (testpath/"test_plugin_main.c").write <<~C
         extern void run_plugin();
         int main() {
           run_plugin();
         }
-      EOS
+      C
       system bin/"clang++", "-v", "-o", "test_plugin.so",
              "-shared", "-fPIC", "test_plugin.cpp", "-L#{opt_lib}",
              "-stdlib=libc++", "-rtlib=compiler-rt",
@@ -428,7 +430,7 @@ class LlvmAT15 < Formula
     EOS
     system bin/"mlir-opt", "--split-input-file", "--verify-diagnostics", "test.mlir"
 
-    (testpath/"scanbuildtest.cpp").write <<~EOS
+    (testpath/"scanbuildtest.cpp").write <<~CPP
       #include <iostream>
       int main() {
         int *i = new int;
@@ -437,14 +439,14 @@ class LlvmAT15 < Formula
         std::cout << *i << std::endl;
         return 0;
       }
-    EOS
+    CPP
     assert_includes shell_output("#{bin}/scan-build make scanbuildtest 2>&1"),
                     "warning: Use of memory after it is freed"
 
-    (testpath/"clangformattest.c").write <<~EOS
+    (testpath/"clangformattest.c").write <<~C
       int    main() {
           printf("Hello world!"); }
-    EOS
+    C
     assert_equal "int main() { printf(\"Hello world!\"); }\n",
       shell_output("#{bin}/clang-format -style=google clangformattest.c")
 

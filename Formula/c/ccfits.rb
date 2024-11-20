@@ -12,6 +12,7 @@ class Ccfits < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "c0b2097286d045051ae1f6ab9f4a98333ecd874d9c59e83f96402209b33b2d1b"
     sha256 cellar: :any,                 arm64_sonoma:   "38ef0469e244e5e54e735472717186ac523f41a06bfce07219c6fd39ce46e457"
     sha256 cellar: :any,                 arm64_ventura:  "8f1e70f55129b991cc5bb8035c8e0eb92901225984af325857cf7124180a2b02"
     sha256 cellar: :any,                 arm64_monterey: "5c222b5a44e8de98ffb844eaf585b718979f8e7a0f9f8ec0b3e34a74045310c1"
@@ -42,14 +43,14 @@ class Ccfits < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <CCfits/CCfits>
       #include <iostream>
       int main() {
         CCfits::FITS::setVerboseMode(true);
         std::cout << "the answer is " << CCfits::VTbyte << std::endl;
       }
-    EOS
+    CPP
     system ENV.cxx, "-std=c++11", "test.cpp", "-o", "test", "-I#{include}",
                     "-L#{lib}", "-lCCfits"
     assert_match "the answer is -11", shell_output("./test")

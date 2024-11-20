@@ -7,6 +7,7 @@ class Gdl < Formula
   revision 1
 
   bottle do
+    sha256                               arm64_sequoia:  "2e9f8f552db78335d815e67a085b8d26e42002308d0b138ec1dbdf9aba2b232f"
     sha256                               arm64_sonoma:   "1cfd6543098b8fbd77e7fd87c1c16f37d6f486c50323e39bf2d52605409b0f11"
     sha256                               arm64_ventura:  "d896433e025e9c24f986d70fbd82afca5692a82a1a94613b6f4542f341a9896d"
     sha256                               arm64_monterey: "b3769eef48ccbaf262852d48819309afac933d962c7464d4fa3e28a1449b0334"
@@ -48,11 +49,6 @@ class Gdl < Formula
   end
 
   def install
-    if OS.linux?
-      ENV.prepend_path "PERL5LIB", Formula["perl-xml-parser"].libexec/"lib/perl5"
-      ENV["INTLTOOL_PERL"] = Formula["perl"].bin/"perl"
-    end
-
     system "./configure", "--disable-silent-rules",
                           "--enable-introspection=yes",
                           *std_configure_args.reject { |s| s["--disable-debug"] }
@@ -60,14 +56,14 @@ class Gdl < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <gdl/gdl.h>
 
       int main(int argc, char *argv[]) {
         GType type = gdl_dock_object_get_type();
         return 0;
       }
-    EOS
+    C
 
     pkg_config_flags = shell_output("pkg-config --cflags --libs gdl-3.0").chomp.split
     system ENV.cc, "test.c", *pkg_config_flags, "-o", "test"

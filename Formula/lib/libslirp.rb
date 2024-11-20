@@ -6,6 +6,7 @@ class Libslirp < Formula
   license "BSD-3-Clause"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "469818c98320325537b527080018148b2a0890b538f2f860083cfd5ad54f5deb"
     sha256 cellar: :any,                 arm64_sonoma:   "6c4d57761e16cc3a1cd0a9c02147d28072e80159d38bdb90216e980d51deb265"
     sha256 cellar: :any,                 arm64_ventura:  "902f5a661dd64b96456aa93a61ba747f595a125698dc8d68d8652f2d3cfff33f"
     sha256 cellar: :any,                 arm64_monterey: "66223e420806ad8b140e331a2cc0eef4decff44367d0e3e5c35afe50e51be04a"
@@ -27,7 +28,7 @@ class Libslirp < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <stdio.h>
       #include <string.h>
       #include <stddef.h>
@@ -41,7 +42,7 @@ class Libslirp < Formula
         Slirp* ctx = slirp_new(&cfg, NULL, NULL);
         return 0;
       }
-    EOS
+    C
     system ENV.cc, "test.c", "-L#{lib}", "-lslirp", "-o", "test"
     system "./test"
   end

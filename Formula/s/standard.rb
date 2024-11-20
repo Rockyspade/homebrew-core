@@ -1,19 +1,17 @@
 class Standard < Formula
   desc "JavaScript Style Guide, with linter & automatic code fixer"
   homepage "https://standardjs.com/"
-  url "https://registry.npmjs.org/standard/-/standard-17.1.0.tgz"
-  sha256 "84ce1ab5180ebb73e0a4b56f37b59823aec3ab34a53540c09eeaf533de5aee53"
+  url "https://registry.npmjs.org/standard/-/standard-17.1.2.tgz"
+  sha256 "fb2aaf22460bb3e77e090c727c694a56dd9a9486eec30a0152290a5c6d83757c"
   license "MIT"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "2d06a373849759c1b455daca6ba136aae42fd595a61a879822d2e296a203a13f"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "2d06a373849759c1b455daca6ba136aae42fd595a61a879822d2e296a203a13f"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "2d06a373849759c1b455daca6ba136aae42fd595a61a879822d2e296a203a13f"
-    sha256 cellar: :any_skip_relocation, sonoma:         "282a80dbf34a60f7e44a4a78d6ee35ae579ff7ba4783c631162c2c5289b391be"
-    sha256 cellar: :any_skip_relocation, ventura:        "282a80dbf34a60f7e44a4a78d6ee35ae579ff7ba4783c631162c2c5289b391be"
-    sha256 cellar: :any_skip_relocation, monterey:       "282a80dbf34a60f7e44a4a78d6ee35ae579ff7ba4783c631162c2c5289b391be"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "0bc78f5c4f7351ad1fbc152ae3869fe81b77a7047b41fea80f09bfe1a76ead1d"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "d20e97c6540bd3307d244952e9a90986e43b5c11821d88941238a06592dfb422"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "d20e97c6540bd3307d244952e9a90986e43b5c11821d88941238a06592dfb422"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "d20e97c6540bd3307d244952e9a90986e43b5c11821d88941238a06592dfb422"
+    sha256 cellar: :any_skip_relocation, sonoma:        "447f86d74cec0c6c6b1896bff34def4b3bdc8cb0172ef6f9cf2b4013074a1736"
+    sha256 cellar: :any_skip_relocation, ventura:       "447f86d74cec0c6c6b1896bff34def4b3bdc8cb0172ef6f9cf2b4013074a1736"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d20e97c6540bd3307d244952e9a90986e43b5c11821d88941238a06592dfb422"
   end
 
   depends_on "node"

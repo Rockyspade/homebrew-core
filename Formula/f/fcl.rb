@@ -8,6 +8,7 @@ class Fcl < Formula
   head "https://github.com/flexible-collision-library/fcl.git", branch: "master"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "0ab8eb79ee5ae022e186975198bd18da7cde25c41cb9e52e70366bf20de59e48"
     sha256 cellar: :any,                 arm64_sonoma:   "6a4d2a1e04f17fb6cf2d7ed92524f09a841c3b212f3ecf22d9dc00dd294bb895"
     sha256 cellar: :any,                 arm64_ventura:  "d147e210255b79430e8fed2455325c53aa0975c2f081b39c44050c5921efd813"
     sha256 cellar: :any,                 arm64_monterey: "05d4d212709bccf7dc0f78eb01882937cdfa656ee019b47493baf6c404d33359"
@@ -18,27 +19,26 @@ class Fcl < Formula
   end
 
   depends_on "cmake" => :build
-  depends_on "pkg-config" => :build
-  depends_on "boost"
+  depends_on "pkgconf" => :build
   depends_on "eigen"
   depends_on "libccd"
   depends_on "octomap"
 
   def install
-    ENV.cxx11
-    system "cmake", ".", "-DBUILD_TESTING=OFF", *std_cmake_args
-    system "make", "install"
+    system "cmake", "-S", ".", "-B", "build", *std_cmake_args
+    system "cmake", "--build", "build"
+    system "cmake", "--install", "build"
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <fcl/geometry/shape/box.h>
       #include <cassert>
 
       int main() {
         assert(fcl::Boxd(1, 1, 1).computeVolume() == 1);
       }
-    EOS
+    CPP
 
     system ENV.cxx, "test.cpp", "-std=c++11", "-I#{include}",
                     "-I#{Formula["eigen"].include}/eigen3",

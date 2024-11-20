@@ -1,8 +1,8 @@
 class Zabbix < Formula
   desc "Availability and monitoring solution"
   homepage "https://www.zabbix.com/"
-  url "https://cdn.zabbix.com/zabbix/sources/stable/7.0/zabbix-7.0.3.tar.gz"
-  sha256 "173059f57f11716146da79345e5a6bc52eceee6a5c4410664b8500a955598b2a"
+  url "https://cdn.zabbix.com/zabbix/sources/stable/7.0/zabbix-7.0.5.tar.gz"
+  sha256 "215301b6e089a685a2fabcca17fc65e5766d42d2079174b65a1bf28df7679692"
   license "AGPL-3.0-only"
   head "https://github.com/zabbix/zabbix.git", branch: "master"
 
@@ -12,22 +12,22 @@ class Zabbix < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "0b3de39ab674d3979927725bba021617388e5a6dbd5380c38424b86ea90f8fe1"
-    sha256 arm64_ventura:  "522086a2d2e729d8c75a371a4df4aaf126fe5362bc26ac243d52e450b1aacf34"
-    sha256 arm64_monterey: "c634ae005eb477baf1c6d167962d507be98dd595f5e27889ace990b5bcb2f006"
-    sha256 sonoma:         "85a5ee366b9d04b93ab6fee76d5b6b79b214a3c6cf7668f1a53e61b0679a07b1"
-    sha256 ventura:        "913f38f6817b20e76012579a0118161f1838972c386408a67bf5fabe87f50b9a"
-    sha256 monterey:       "d6c3c0ef5c3854620966ac1960e1b53e8063bfef23b954abe106ae47dbc9c9dd"
-    sha256 x86_64_linux:   "2cce851ba3b3dd1082706569f7b892e3b0a28a26eca7448167ae044520ca9c7a"
+    sha256 arm64_sequoia: "cb3db87c856cb4f1e167beeebb9341e3d81b558fba305f5b80e2379e4e0565af"
+    sha256 arm64_sonoma:  "749292c626d9b1c90166810dcd57270730dc2cb949bb28ab8f9b8a09d1b2adc0"
+    sha256 arm64_ventura: "20634e289f17bbb6788c3c100f3f4019b1ad31909d5c0dd8b36836dc5421934d"
+    sha256 sonoma:        "77e0422ff7af80053847cda11b33566fa45bfe0e145fbd2590a3c941467c2a4d"
+    sha256 ventura:       "5e42058d52bd1d14cc1f85730ef54225bed71f9d1f0813a01db92f53324a27df"
+    sha256 x86_64_linux:  "d851e1afd7362e58ddb489d06f7990aafd7acc1ead3fa4758a3ebc964a8c4be2"
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "openssl@3"
   depends_on "pcre2"
 
   def install
     args = %W[
       --enable-agent
+      --enable-ipv6
       --with-libpcre2
       --sysconfdir=#{pkgetc}
       --with-openssl=#{Formula["openssl@3"].opt_prefix}

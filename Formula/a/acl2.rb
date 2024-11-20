@@ -1,26 +1,31 @@
 class Acl2 < Formula
   desc "Logic and programming language in which you can model computer systems"
   homepage "https://www.cs.utexas.edu/users/moore/acl2/index.html"
-  url "https://github.com/acl2/acl2/archive/refs/tags/8.5.tar.gz"
-  sha256 "dcc18ab0220027b90f30cd9e5a67d8f603ff0e5b26528f3aab75dc8d3d4ebc0f"
+  url "https://github.com/acl2/acl2/archive/refs/tags/8.6.tar.gz"
+  sha256 "c2d73e66422901b3cc2a6f5a9ab50f5f3b1b4060cf9dc9148d076f3a8b957cf9"
   license "BSD-3-Clause"
-  revision 20
+  revision 1
 
   bottle do
-    sha256 arm64_sonoma:   "950990850f517b2f23a0a536ae3f2a81dd8600fb702ad12b5444932b9baa89c0"
-    sha256 arm64_ventura:  "8c8c4dee9bc5b041159aafa2ee29ebc7433f5862bef46589a3fe98365ed26e4f"
-    sha256 arm64_monterey: "ab838adc58c06712cf735b2553f37431e7fa998bfa3fd2ded884184e13e18d34"
-    sha256 sonoma:         "c56551d509e45fcccb4a0eba75802732dd80fb2c9f1996ccb92aa5234e0e8a69"
-    sha256 ventura:        "f78efb615ca9592a851fc3fd3edce07334041d64d330f10d0ae01c8297b39549"
-    sha256 monterey:       "00b5a314bcc064d46e21974d4dee9b912672c58a10c435e4eeced070a07879f8"
-    sha256 x86_64_linux:   "35ec849b92aee5cd2202ad94f2855d9bbd9e5df983e3656d98898299b322d43f"
+    sha256 arm64_sequoia: "ccb95a431adc877dd21d030bc86d487c8f874abdeecfbc30bf06a214ab823b68"
+    sha256 arm64_sonoma:  "38776189c5231e7c8e01be170bfc54c599aa84705871f892a17b0a2640e5d270"
+    sha256 arm64_ventura: "d4ca7c648675236242e5c77ca226a50a2b58dd7d0a89afd8508d124d14595905"
+    sha256 sonoma:        "f8e0b1c7e668802bb045d83de42dd72b908fdbc6fee53c8281f4f913a7776305"
+    sha256 ventura:       "f546c59b3f7d510abd2243f7829b53175f16d7ac263edefc35f70732282d5a5d"
+    sha256 x86_64_linux:  "4caaba70131197f6d2eb408622360e02684fc8b0ae5c302c565d43d79ed9de2f"
   end
 
   depends_on "sbcl"
 
   def install
-    # Remove prebuilt-binary.
-    (buildpath/"books/kestrel/axe/x86/examples/popcount/popcount-macho-64.executable").unlink
+    # Remove prebuilt binaries
+    [
+      "books/kestrel/axe/x86/examples/popcount/popcount-macho-64.executable",
+      "books/kestrel/axe/x86/examples/factorial/factorial.macho64",
+      "books/kestrel/axe/x86/examples/tea/tea.macho64",
+    ].each do |f|
+      (buildpath/f).unlink
+    end
 
     system "make",
            "LISP=#{HOMEBREW_PREFIX}/bin/sbcl",

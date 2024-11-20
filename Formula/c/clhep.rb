@@ -12,6 +12,7 @@ class Clhep < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "8e9dd4065ed1dfa0f4542454189540d428093451a913bd59ccfda465c51ffd47"
     sha256 cellar: :any,                 arm64_sonoma:   "0e69dfb6c076d3b6c87ff2fa67018eabf9e2d33ecfcc60505e614958a8baa748"
     sha256 cellar: :any,                 arm64_ventura:  "7394489e65b6b3b4eb7af0878e70fa4d77a93ff343093594cb591022cf193239"
     sha256 cellar: :any,                 arm64_monterey: "f46bbb06f3914fe69fa4e59c1eba50702765c0143f3f0b5fbc974ca1e53fae20"
@@ -31,7 +32,7 @@ class Clhep < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <iostream>
       #include <Vector/ThreeVector.h>
 
@@ -42,7 +43,7 @@ class Clhep < Formula
         std::cout << " cos(theta): " << aVec.cosTheta() << std::endl;
         return 0;
       }
-    EOS
+    CPP
     system ENV.cxx, "-std=c++11", "-L#{lib}", "-lCLHEP", "-I#{include}/CLHEP",
            testpath/"test.cpp", "-o", "test"
     assert_equal "r: 3.74166 phi: 1.10715 cos(theta): 0.801784",

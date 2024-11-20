@@ -1,27 +1,26 @@
 class Rure < Formula
   desc "C API for RUst's REgex engine"
   homepage "https://github.com/rust-lang/regex/tree/HEAD/regex-capi"
-  url "https://github.com/rust-lang/regex/archive/refs/tags/1.10.6.tar.gz"
-  sha256 "9ca2905c45aa024a979dc97c8140b97af2be143e2dd47fc2d990af5ac2befb31"
+  url "https://github.com/rust-lang/regex/archive/refs/tags/1.11.1.tar.gz"
+  sha256 "b346bd18b614325bafa15130f5ea0f3fc0712f19f2090069fdc164e3f83325b8"
   license all_of: [
     "Unicode-TOU",
     any_of: ["Apache-2.0", "MIT"],
   ]
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "bee88478824dab1e04220f232c6985edc0b104da0988bab132b9c4865a1dfcaf"
-    sha256 cellar: :any,                 arm64_ventura:  "daafe186cb2a0343ba58e00c800b4388066dfc94f94a0396ee8fc7e296f12e35"
-    sha256 cellar: :any,                 arm64_monterey: "63fe7ad2bcb9b05aae352c022b39274551f08c73d299484e3f4889e55f33723e"
-    sha256 cellar: :any,                 sonoma:         "6f289f0bb5e5914337c82208a7a77998a7544b7bd0b9ffa08eba86517b16b018"
-    sha256 cellar: :any,                 ventura:        "58450166903f27cb8469b302d9601869f271f3721480308f5738bc37d239992c"
-    sha256 cellar: :any,                 monterey:       "5814cac480d689026b2e2ecba9e270b1808f524347ff52be82727eea15b1a312"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "aca0f991890a446418faee08463144b3e3e0724a6e336d51d25c274246535980"
+    sha256 cellar: :any,                 arm64_sequoia: "2c5a4892338686036abbec370b25232b93e0c729d9e5ae7f9fb6e0d0fe8b623e"
+    sha256 cellar: :any,                 arm64_sonoma:  "87c6daa3212314431070b578bc71d4c859f9730ed787987b9eedd4359e3afe62"
+    sha256 cellar: :any,                 arm64_ventura: "dc07b8e0b0ccdc26fde897a2c0c3a13fe962f301fe078bffccffb263328bbfd0"
+    sha256 cellar: :any,                 sonoma:        "28f4e15683930a740c5f030306ac769f7671a0d4c32536756f9d096470041933"
+    sha256 cellar: :any,                 ventura:       "4de2e95dd8c24f9b16c4f371df152e2e7ac2376bb0e2de16b1ef2fae0abb5d31"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "012c9ed074329023e7b518d7829db5e5020dc92f1ae81872ca41fa8550ed273f"
   end
 
   depends_on "rust" => :build
 
   def install
-    system "cargo", "build", "--lib", "--manifest-path", "regex-capi/Cargo.toml", "--release"
+    system "cargo", "build", "--jobs", ENV.make_jobs, "--lib", "--manifest-path", "regex-capi/Cargo.toml", "--release"
     include.install "regex-capi/include/rure.h"
     lib.install "target/release/#{shared_library("librure")}"
     lib.install "target/release/librure.a"
@@ -29,13 +28,13 @@ class Rure < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <rure.h>
       int main(int argc, char **argv) {
         rure *re = rure_compile_must("a");
         return 0;
       }
-    EOS
+    C
     system ENV.cc, "test.c", "-L#{lib}", "-lrure", "-o", "test"
     system "./test"
   end

@@ -1,8 +1,8 @@
 class Mbedtls < Formula
   desc "Cryptographic & SSL/TLS library"
   homepage "https://tls.mbed.org/"
-  url "https://github.com/Mbed-TLS/mbedtls/releases/download/v3.6.0/mbedtls-3.6.0.tar.bz2"
-  sha256 "3ecf94fcfdaacafb757786a01b7538a61750ebd85c4b024f56ff8ba1490fcd38"
+  url "https://github.com/Mbed-TLS/mbedtls/releases/download/mbedtls-3.6.2/mbedtls-3.6.2.tar.bz2"
+  sha256 "8b54fb9bcf4d5a7078028e0520acddefb7900b3e66fec7f7175bb5b7d85ccdca"
   license "Apache-2.0"
   head "https://github.com/Mbed-TLS/mbedtls.git", branch: "development"
 
@@ -13,17 +13,16 @@ class Mbedtls < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "22f2f5791b39dd7b4c0e23de2f5ccdbc1d2d5646d8ae4e0f383e28c7bfec0447"
-    sha256 cellar: :any,                 arm64_ventura:  "da8283d7f4d91000050d79a3182689fe0fc457164c49b2b543c2bb3bdf7ca00d"
-    sha256 cellar: :any,                 arm64_monterey: "2f88e3981d628a7e2ba865ffe8a503665275f37cc3670b037ff03da44fb7fe70"
-    sha256 cellar: :any,                 sonoma:         "fcf016e3b79048dd5706d1d194f944d67603f872d50ba7735cc9c397eb540fbb"
-    sha256 cellar: :any,                 ventura:        "6e4b4b99da5c8c4fd8895a55dd70571282a10f2757d53e8954b93b783ab3a8aa"
-    sha256 cellar: :any,                 monterey:       "9133411777538739ca2650304d440cc1ae16884e3b601835cf2d2429c3063f39"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "88af2c1e1d18b6b99d6256a3308d90a7ccb599ea6848e04bdeb85fa0a594123a"
+    sha256 cellar: :any,                 arm64_sequoia: "451fa9222bdfef8a77fc116ed9d4c7d060e39e07f7f71a12cacb7747f077f38f"
+    sha256 cellar: :any,                 arm64_sonoma:  "57cc0f45f4fb406f0b4e28b21c3f9694c9867f6ef469086803e97519b4008d08"
+    sha256 cellar: :any,                 arm64_ventura: "7b09a07c271d4ea1f91d084e95118793d1ea9cc54d49124b975786ebe43ad820"
+    sha256 cellar: :any,                 sonoma:        "ce7b2b5556e35cb94435e318e93d4878d36d3ef78d271aba6fa1cdb842d44d1f"
+    sha256 cellar: :any,                 ventura:       "696fabe2b3da431fe4852751ef036a790cb4ea4d27f3c5bf22a397dece28c0f3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0591255d3f83ef14d18eadf4383876d2826cdd913477e4dba7f7539a11155ce1"
   end
 
   depends_on "cmake" => :build
-  depends_on "python@3.12" => :build
+  depends_on "python@3.13" => :build
 
   def install
     inreplace "include/mbedtls/mbedtls_config.h" do |s|
@@ -37,7 +36,7 @@ class Mbedtls < Formula
 
     system "cmake", "-S", ".", "-B", "build",
                     "-DUSE_SHARED_MBEDTLS_LIBRARY=On",
-                    "-DPython3_EXECUTABLE=#{which("python3.12")}",
+                    "-DPython3_EXECUTABLE=#{which("python3.13")}",
                     "-DCMAKE_INSTALL_RPATH=#{rpath}",
                     "-DGEN_FILES=OFF",
                     *std_cmake_args

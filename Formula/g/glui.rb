@@ -7,6 +7,7 @@ class Glui < Formula
   revision 1
 
   bottle do
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "304a5d0296be83a23e90e4e2364c63f85ce4c2bcb6548cdc9b58a0cc03fe77dd"
     sha256 cellar: :any_skip_relocation, arm64_sonoma:   "88a3c782310cf2ba070f8bef4991da04770a86df4c48d0a6d47f71065116fcac"
     sha256 cellar: :any_skip_relocation, arm64_ventura:  "a1ca3761236e58be6553617d9ac8dc0eb3a22e753beab0b3d11d1fbbdba98eeb"
     sha256 cellar: :any_skip_relocation, arm64_monterey: "4446bb9bfbe249e1c9b306e5286e0e9279b189def2f1b1c97cb7cbce0a243d86"
@@ -40,7 +41,7 @@ class Glui < Formula
 
   test do
     if OS.mac?
-      (testpath/"test.cpp").write <<~EOS
+      (testpath/"test.cpp").write <<~CPP
         #include <cassert>
         #include <GL/glui.h>
         int main() {
@@ -48,12 +49,12 @@ class Glui < Formula
           assert(glui != nullptr);
           return 0;
         }
-      EOS
+      CPP
       system ENV.cxx, "-framework", "GLUT", "-framework", "OpenGL", "-I#{include}",
         "-L#{lib}", "-lglui", "-std=c++11", "test.cpp"
       system "./a.out"
     else
-      (testpath/"test.cpp").write <<~EOS
+      (testpath/"test.cpp").write <<~CPP
         #include <cassert>
         #include <GL/glui.h>
         #include <GL/glut.h>
@@ -63,7 +64,7 @@ class Glui < Formula
           assert(glui != nullptr);
           return 0;
         }
-      EOS
+      CPP
       system ENV.cxx, "-I#{include}", "-std=c++11", "test.cpp",
         "-L#{lib}", "-lglui", "-lglut", "-lGLU", "-lGL"
       if ENV["DISPLAY"]

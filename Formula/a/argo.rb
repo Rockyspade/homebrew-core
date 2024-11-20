@@ -2,18 +2,17 @@ class Argo < Formula
   desc "Get stuff done with container-native workflows for Kubernetes"
   homepage "https://argoproj.io"
   url "https://github.com/argoproj/argo-workflows.git",
-      tag:      "v3.5.10",
-      revision: "25829927431d9a0f46d17b72ae74aedb8d700884"
+      tag:      "v3.6.0",
+      revision: "b26ed4aa4dee395844531efa4a76a022183bec22"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "6feff0e683efdc86c676d290a6802ab61616271dedac045c8eceea85f9b74e9a"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "cde528db5e9f77e347efafcb9ae34517fd442b149b48d6a2f8e62d1fd3dfd4c1"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "ab3422e6c294036dc6a5eafb8dd364ee420f7989c284d2b77edb65a61dda09ee"
-    sha256 cellar: :any_skip_relocation, sonoma:         "a7434cf6c93a19b25a085bff735124e0c8beb7820000a8ecb95c15cf7284f6d4"
-    sha256 cellar: :any_skip_relocation, ventura:        "95544b9189ade74a1f0a890b11a8fea767fee972f53989b399026bc300f13c02"
-    sha256 cellar: :any_skip_relocation, monterey:       "af584bed20c0842a94a66b8481369b31b53e75258ba081ae27f1e84f8014312a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c9512a4d33570fdfa02a32bad9498fe553de91f918877daa8535b33bd80b5a04"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "0e91f7cee8189af64bc956f0bb72279c0faf55c84e8945db6b6061569cd5024b"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "5567cf7f7fe5259db124df9417c714f7432b21385f6a53996c4d81bc45baaaca"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "5ca0b4a7443ff7fbfb275ad1a0ac71272593ead6d55497ef10305fec0b757b03"
+    sha256 cellar: :any_skip_relocation, sonoma:        "eb7bfa175856a3c60540c59f15c3c22b8725440831cfd4564e4fa30bf3f8e35a"
+    sha256 cellar: :any_skip_relocation, ventura:       "dc54b4e180faedd8ba5535a19ea8299dffd1cb034d6c194570a2a48c6a4d786a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e8afe5fb8c3138edd03b7f87539aa557565d7f4d13bf646806339c9fcab898fb"
   end
 
   depends_on "go" => :build
@@ -23,7 +22,7 @@ class Argo < Formula
   def install
     # this needs to be remove to prevent multiple 'operation not permitted' errors
     inreplace "Makefile", "CGO_ENABLED=0", ""
-    system "make", "dist/argo"
+    system "make", "dist/argo", "-j1"
     bin.install "dist/argo"
 
     generate_completions_from_executable(bin/"argo", "completion", shells: [:bash, :zsh])

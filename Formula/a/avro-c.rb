@@ -10,6 +10,7 @@ class AvroC < Formula
   license "Apache-2.0"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "5b573d22c1090a79e1fbca6318cbdaa497d7114d02cf69aac9fc4aad77b8489f"
     sha256 cellar: :any,                 arm64_sonoma:   "486572382a8323c7816b6244588ecbd2dbf4d39fb1deea0c12600abe86df2f29"
     sha256 cellar: :any,                 arm64_ventura:  "753a5f373fb25d3d992539750fa36b68a981d7529fee9eb6b702090e61dc5939"
     sha256 cellar: :any,                 arm64_monterey: "a67d4adccc1ab3face3d67c7fbfcd85701eefd48d200f6897e4ad05aa91b0b26"
@@ -20,7 +21,7 @@ class AvroC < Formula
   end
 
   depends_on "cmake" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "jansson"
   depends_on "snappy"
   depends_on "xz"
@@ -28,11 +29,9 @@ class AvroC < Formula
   uses_from_macos "zlib"
 
   def install
-    cd "lang/c" do
-      system "cmake", "-S", ".", "-B", "build", *std_cmake_args
-      system "cmake", "--build", "build"
-      system "cmake", "--install", "build"
-    end
+    system "cmake", "-S", "lang/c", "-B", "build", *std_cmake_args
+    system "cmake", "--build", "build"
+    system "cmake", "--install", "build"
   end
 
   test do

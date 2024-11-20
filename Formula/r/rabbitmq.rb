@@ -1,8 +1,8 @@
 class Rabbitmq < Formula
   desc "Messaging and streaming broker"
   homepage "https://www.rabbitmq.com"
-  url "https://github.com/rabbitmq/rabbitmq-server/releases/download/v3.13.6/rabbitmq-server-generic-unix-3.13.6.tar.xz"
-  sha256 "7bfc742e3d227e8a2b1ea2a0b5ef3ba4b6a7987d5e220e0fbf0919d29b6ed43c"
+  url "https://github.com/rabbitmq/rabbitmq-server/releases/download/v4.0.3/rabbitmq-server-generic-unix-4.0.3.tar.xz"
+  sha256 "607ba3b4fd1fc133f3bada1b2225ff0527f99cc6eb32423ae73f6c9f5ee9bd13"
   license "MPL-2.0"
 
   livecheck do
@@ -11,13 +11,7 @@ class Rabbitmq < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "4e1cee3de3dd021bb4649fa612c9b26481b8ec2e61fdd4aa610f282b70e4265f"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "4e1cee3de3dd021bb4649fa612c9b26481b8ec2e61fdd4aa610f282b70e4265f"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "4e1cee3de3dd021bb4649fa612c9b26481b8ec2e61fdd4aa610f282b70e4265f"
-    sha256 cellar: :any_skip_relocation, sonoma:         "4e1cee3de3dd021bb4649fa612c9b26481b8ec2e61fdd4aa610f282b70e4265f"
-    sha256 cellar: :any_skip_relocation, ventura:        "4e1cee3de3dd021bb4649fa612c9b26481b8ec2e61fdd4aa610f282b70e4265f"
-    sha256 cellar: :any_skip_relocation, monterey:       "4e1cee3de3dd021bb4649fa612c9b26481b8ec2e61fdd4aa610f282b70e4265f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b81d73462277de13f6303f0dbd10f3e9748d8fdd6c5ad25b9645f75ebcd0b713"
+    sha256 cellar: :any_skip_relocation, all: "434ba5a58ea77a70af4f49ba2a2a0a80603c9d6f820e6dc8e30c87d53f2bd1f8"
   end
 
   depends_on "erlang"
@@ -56,7 +50,12 @@ class Rabbitmq < Formula
                                  "rabbitmq_mqtt,rabbitmq_stream]."
     end
 
-    sbin.install prefix/"plugins/rabbitmq_management-#{version}/priv/www/cli/rabbitmqadmin"
+    rabbitmqadmin = prefix.glob("plugins/rabbitmq_management-*/priv/www/cli/rabbitmqadmin")
+    if (rabbitmqadmin_count = rabbitmqadmin.count) > 1
+      odie "Expected only one `rabbitmqadmin`, got #{rabbitmqadmin_count}"
+    end
+
+    sbin.install rabbitmqadmin
     (sbin/"rabbitmqadmin").chmod 0755
     generate_completions_from_executable(sbin/"rabbitmqadmin", "--bash-completion", shells: [:bash],
                                          base_name: "rabbitmqadmin", shell_parameter_format: :none)

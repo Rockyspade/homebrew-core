@@ -1,8 +1,8 @@
 class PostgresqlAT16 < Formula
   desc "Object-relational database system"
   homepage "https://www.postgresql.org/"
-  url "https://ftp.postgresql.org/pub/source/v16.4/postgresql-16.4.tar.bz2"
-  sha256 "971766d645aa73e93b9ef4e3be44201b4f45b5477095b049125403f9f3386d6f"
+  url "https://ftp.postgresql.org/pub/source/v16.5/postgresql-16.5.tar.bz2"
+  sha256 "a6cbbb7037f98cb8afa7d3970b7c48040cf02b115e39253a0c037a8bb8e778f0"
   license "PostgreSQL"
 
   livecheck do
@@ -11,13 +11,12 @@ class PostgresqlAT16 < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "c46a6c35fc22994ddd2d4b9ac42ce8d2669bf42bbf227eca3923a7450ee995bb"
-    sha256 arm64_ventura:  "250201e11e8f8e15a5e6f6d634143901d011ea844f03071e4a26582293af8320"
-    sha256 arm64_monterey: "a98f50066e7addcab7b0e9b8a222f44254194c1e9e53f5f313ea319b4d1df71a"
-    sha256 sonoma:         "cfe682fd3eb27215b051396c8fd34f6e16515db833016c4eaccd09c9ffc64e87"
-    sha256 ventura:        "74d6eb771a702af02ec01794fed4b0484ddabc622a4a7dcc89dff7e659baf1d3"
-    sha256 monterey:       "fbf1a7624b33b7e2f4175a204711f6e75cecfa9ab96a037fe83d905ea92a63f9"
-    sha256 x86_64_linux:   "7d030bae122c351f6c477f8e5715ac5340a4cce3f88879700ae44b7c1c22e1aa"
+    sha256 arm64_sequoia: "625e31fd6e35891102ae2db4b1e615b2f8169c257bc69e7e2a2e8ebf827506f7"
+    sha256 arm64_sonoma:  "516dd5f6db8257fdea623a4ba13ab2f74648d02187facddd41fe35547fafe04c"
+    sha256 arm64_ventura: "9781de105f8a6595c0c9500aa02e63d18dee984c3140536b8433184d51424c96"
+    sha256 sonoma:        "daedbabc39e1cbd649e78f39dd288f5ae558464f42cecb14fb1a8b9dc6c5a053"
+    sha256 ventura:       "dbe42b85f7ba49eb2ea390abbff384b7a5f68e50b7614a1462bd2c2fbda801e0"
+    sha256 x86_64_linux:  "25bdd152f1def3816d97a252cf7b66d28d35307625402fbb6ed73b242ac23f9f"
   end
 
   keg_only :versioned_formula
@@ -25,9 +24,9 @@ class PostgresqlAT16 < Formula
   # https://www.postgresql.org/support/versioning/
   deprecate! date: "2028-11-09", because: :unsupported
 
-  depends_on "pkg-config" => :build
-  depends_on "gettext"
-  depends_on "icu4c"
+  depends_on "gettext" => :build
+  depends_on "pkgconf" => :build
+  depends_on "icu4c@76"
 
   # GSSAPI provided by Kerberos.framework crashes when forked.
   # See https://github.com/Homebrew/homebrew-core/issues/47494.
@@ -44,6 +43,10 @@ class PostgresqlAT16 < Formula
   uses_from_macos "perl"
   uses_from_macos "zlib"
 
+  on_macos do
+    depends_on "gettext"
+  end
+
   on_linux do
     depends_on "linux-pam"
     depends_on "util-linux"
@@ -55,10 +58,13 @@ class PostgresqlAT16 < Formula
     ENV.prepend "CPPFLAGS", "-I#{Formula["openssl@3"].opt_include} -I#{Formula["readline"].opt_include}"
 
     # Fix 'libintl.h' file not found for extensions
-    ENV.prepend "LDFLAGS", "-L#{Formula["gettext"].opt_lib}"
-    ENV.prepend "CPPFLAGS", "-I#{Formula["gettext"].opt_include}"
+    # Update config to fix `error: could not find function 'gss_store_cred_into' required for GSSAPI`
+    if OS.mac?
+      ENV.prepend "LDFLAGS", "-L#{Formula["gettext"].opt_lib} -L#{Formula["krb5"].opt_lib}"
+      ENV.prepend "CPPFLAGS", "-I#{Formula["gettext"].opt_include} -I#{Formula["krb5"].opt_include}"
+    end
 
-    args = std_configure_args + %W[
+    args = %W[
       --datadir=#{opt_pkgshare}
       --libdir=#{opt_lib}
       --includedir=#{opt_include}
@@ -79,18 +85,13 @@ class PostgresqlAT16 < Formula
       --with-uuid=e2fs
       --with-extra-version=\ (#{tap.user})
     ]
-    if OS.mac?
-      args += %w[
-        --with-bonjour
-        --with-tcl
-      ]
-    end
+    args += %w[--with-bonjour --with-tcl] if OS.mac?
 
     # PostgreSQL by default uses xcodebuild internally to determine this,
     # which does not work on CLT-only installs.
     args << "PG_SYSROOT=#{MacOS.sdk_path}" if OS.mac? && MacOS.sdk_root_needed?
 
-    system "./configure", *args
+    system "./configure", *args, *std_configure_args
 
     # Work around busted path magic in Makefile.global.in. This can't be specified
     # in ./configure, but needs to be set here otherwise install prefixes containing
@@ -134,8 +135,6 @@ class PostgresqlAT16 < Formula
     <<~EOS
       This formula has created a default database cluster with:
         initdb --locale=C -E UTF-8 #{postgresql_datadir}
-      For more details, read:
-        https://www.postgresql.org/docs/#{version.major}/app-initdb.html
     EOS
   end
 
@@ -151,10 +150,10 @@ class PostgresqlAT16 < Formula
   test do
     system bin/"initdb", testpath/"test" unless ENV["HOMEBREW_GITHUB_ACTIONS"]
     assert_equal opt_pkgshare.to_s, shell_output("#{bin}/pg_config --sharedir").chomp
-    assert_equal opt_lib.to_s, shell_output("#{bin}/pg_config --libdir").chomp
+    assert_equal lib.to_s, shell_output("#{bin}/pg_config --libdir").chomp
     assert_equal (opt_lib/"postgresql").to_s, shell_output("#{bin}/pg_config --pkglibdir").chomp
     assert_equal (opt_include/"postgresql").to_s, shell_output("#{bin}/pg_config --pkgincludedir").chomp
     assert_equal (opt_include/"postgresql/server").to_s, shell_output("#{bin}/pg_config --includedir-server").chomp
-    assert_match "-I#{Formula["gettext"].opt_include}", shell_output("#{bin}/pg_config --cppflags")
+    assert_match "-I#{Formula["gettext"].opt_include}", shell_output("#{bin}/pg_config --cppflags") if OS.mac?
   end
 end

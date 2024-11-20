@@ -1,18 +1,18 @@
 class Lmod < Formula
   desc "Lua-based environment modules system to modify PATH variable"
   homepage "https://lmod.readthedocs.io"
-  url "https://github.com/TACC/Lmod/archive/refs/tags/8.7.48.tar.gz"
-  sha256 "3456ee9182ffcfbacbade3568361acf07d10058d3b55beb01e9b7eb5c3e38d27"
+  url "https://github.com/TACC/Lmod/archive/refs/tags/8.7.53.tar.gz"
+  sha256 "5e7ed1a5acfee76abfd96f2ffa3af69d49052b9e88a04ab18d87d18a538c4834"
   license "MIT"
+  revision 1
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "efd19425f4f8baab432a8f0388bc5d7498efa18611596f26b2403fd1b4034d99"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "9a53cb20ce09d7dc5b47916ca071f4caa55d5f35e9dd49062aadfbe5628788da"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "3446b4a34771e0ecabc25ed8566ad5c2c04dd4b3589bbcdbdd74ccb4fd2a6aca"
-    sha256 cellar: :any_skip_relocation, sonoma:         "972ae689cef2e0ffe4a4d751ee7a5e1911e9ffcba05ab0d51b9e33b76467606e"
-    sha256 cellar: :any_skip_relocation, ventura:        "b94e809a38908f4c399aefd20c7752991f42eed8318ee0c27c92fc14c4de5c88"
-    sha256 cellar: :any_skip_relocation, monterey:       "2e07d8b80a191c9b52f7ce011e7f6ec0f1028243a29197cc5a8c5795c1ffc732"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b176505c7d56d1160e541d1485e4949c4a1184b74297ee4be44330c91cf89ea6"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "ad8674d50fae8017895cc9cf584a1c11218a81e2689e24b9b8e15db2f2052fc7"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "5399c157970666b639b2cb7f1b44650ba67df8bb01d7f1e0d6c2846ccd22ce69"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "f71e7caf342970807320d4f49ecaf6d1bfb7dc28a6d53c97625c6c3ac5b87b31"
+    sha256 cellar: :any_skip_relocation, sonoma:        "d915829812dd44a79d8bb5442b39b584b04804b47263aeeaa8fb7185029ad0ab"
+    sha256 cellar: :any_skip_relocation, ventura:       "c99b2a8027dda56dcf559d3cb642297135fc6585df764f21e52c5f5ea3e86dff"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "650a593ac759ffdb286de0041a205a384464b8f8f71b3f6af9f116afb73e0701"
   end
 
   depends_on "luarocks" => :build
@@ -21,10 +21,13 @@ class Lmod < Formula
 
   uses_from_macos "bc" => :build
   uses_from_macos "libxcrypt"
-  uses_from_macos "tcl-tk"
 
   on_macos do
     depends_on "gnu-sed" => :build
+  end
+
+  on_linux do
+    depends_on "tcl-tk@8" # TCL 9 issue: https://github.com/TACC/Lmod/issues/728
   end
 
   resource "luafilesystem" do
@@ -52,9 +55,12 @@ class Lmod < Formula
     end
 
     # We install `tcl-tk` headers in a subdirectory to avoid conflicts with other formulae.
-    ENV.append_to_cflags "-I#{Formula["tcl-tk"].opt_include}/tcl-tk" if OS.linux?
+    ENV.append_to_cflags "-I#{Formula["tcl-tk@8"].opt_include}/tcl-tk" if OS.linux?
     system "./configure", "--with-siteControlPrefix=yes", "--prefix=#{prefix}"
     system "make", "install"
+
+    # Remove man page which conflicts with `modules` formula
+    rm man1/"module.1"
   end
 
   def caveats

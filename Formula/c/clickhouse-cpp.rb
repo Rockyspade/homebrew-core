@@ -7,6 +7,7 @@ class ClickhouseCpp < Formula
   head "https://github.com/ClickHouse/clickhouse-cpp.git", branch: "master"
 
   bottle do
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "3cda0223506dcc56518dbd70b371ef6757853d01e67ca55c68d2551e9a32b7f8"
     sha256 cellar: :any_skip_relocation, arm64_sonoma:   "cb116ae767d8a4c24d40b04e8839ac3829fe8ec91e35b95e6fc57240ed7ee460"
     sha256 cellar: :any_skip_relocation, arm64_ventura:  "cd89dba1b35ec393371df54f97b29e8634f1269a9882bcde8d4cc69e723e4de3"
     sha256 cellar: :any_skip_relocation, arm64_monterey: "65b02be3ff3f7ce09709380bace6cf7a0d2df5d01e701e1b251479092c99cf82"
@@ -44,7 +45,7 @@ class ClickhouseCpp < Formula
   end
 
   test do
-    (testpath/"main.cpp").write <<~EOS
+    (testpath/"main.cpp").write <<~CPP
       #include <clickhouse/client.h>
 
       #include <exception>
@@ -81,7 +82,7 @@ class ClickhouseCpp < Formula
 
           return exit_code;
       }
-    EOS
+    CPP
 
     args = %W[
       -std=c++17

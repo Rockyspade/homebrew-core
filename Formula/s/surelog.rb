@@ -7,6 +7,7 @@ class Surelog < Formula
   head "https://github.com/chipsalliance/Surelog.git", branch: "master"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "5a7918b04d91dab87e2aa0ee10bc54e5a560288af6714db5abf6d30f3feab0fc"
     sha256 cellar: :any,                 arm64_sonoma:   "85204e65ac92cea0739274b1836c7bae77eaf3005eb013ec20241dfe5500ba8d"
     sha256 cellar: :any,                 arm64_ventura:  "2ff2bedf7480466f17c675bb0a34882222158d8b4d460b72bb4aa2082cffb8e4"
     sha256 cellar: :any,                 arm64_monterey: "9325935c4d32f32009230864c7418d73ac42a373978f068751437914f898e72b"
@@ -20,7 +21,7 @@ class Surelog < Formula
   depends_on "cmake" => :build
   depends_on "nlohmann-json" => :build
   depends_on "openjdk" => :build
-  depends_on "python@3.12" => :build
+  depends_on "python@3.13" => :build
   depends_on "pkg-config" => :test
   depends_on "antlr4-cpp-runtime"
   depends_on "capnp"
@@ -36,7 +37,7 @@ class Surelog < Formula
                     "-DANTLR_JAR_LOCATION=#{antlr.opt_prefix}/antlr-#{antlr.version}-complete.jar",
                     "-DBUILD_SHARED_LIBS=ON",
                     "-DCMAKE_INSTALL_RPATH=#{rpath}",
-                    "-DPython3_EXECUTABLE=#{which("python3.12")}",
+                    "-DPython3_EXECUTABLE=#{which("python3.13")}",
                     "-DSURELOG_BUILD_TESTS=OFF",
                     "-DSURELOG_USE_HOST_ALL=ON",
                     "-DSURELOG_WITH_ZLIB=ON",
@@ -50,7 +51,7 @@ class Surelog < Formula
     system bin/"surelog", "--version"
 
     # ensure library is ok
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <Surelog/API/Surelog.h>
       #include <Surelog/CommandLine/CommandLineParser.h>
       #include <Surelog/Common/FileSystem.h>
@@ -102,7 +103,7 @@ class Surelog < Formula
         delete errors;
         return code;
       }
-    EOS
+    CPP
 
     flags = shell_output("pkg-config --cflags --libs Surelog").chomp.split
     system ENV.cxx, testpath/"test.cpp", "-o", "test",

@@ -5,15 +5,15 @@ class Ruby < Formula
   head "https://github.com/ruby/ruby.git", branch: "master"
 
   stable do
-    url "https://cache.ruby-lang.org/pub/ruby/3.3/ruby-3.3.4.tar.gz"
-    sha256 "fe6a30f97d54e029768f2ddf4923699c416cdbc3a6e96db3e2d5716c7db96a34"
+    url "https://cache.ruby-lang.org/pub/ruby/3.3/ruby-3.3.6.tar.gz"
+    sha256 "8dc48fffaf270f86f1019053f28e51e4da4cce32a36760a0603a9aee67d7fd8d"
 
     # Should be updated only when Ruby is updated (if an update is available).
     # The exception is Rubygem security fixes, which mandate updating this
     # formula & the versioned equivalents and bumping the revisions.
     resource "rubygems" do
-      url "https://rubygems.org/rubygems/rubygems-3.5.14.tgz"
-      sha256 "07a62267f5f282b6d549bccc61dc0295169574cb2fec36b60dc4518fafaf9419"
+      url "https://rubygems.org/rubygems/rubygems-3.5.23.tgz"
+      sha256 "3d277bf0b12ff46834d89b283fc451d130dbe6428d00d7ace4664c449c3ef28c"
 
       livecheck do
         url "https://rubygems.org/pages/download"
@@ -28,13 +28,12 @@ class Ruby < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "d7f3368bed92b3cf315aa1e6e3d4828508b8cde834da97c7de286356b23b5612"
-    sha256 arm64_ventura:  "7386f4f6b74b9e75c76985bd8fddba74c74230e180b23c2d5cd744d8bb1be4e3"
-    sha256 arm64_monterey: "1ca652dd76a06d4111038770c33d033cfcceb405a515a8bbaec60d00db56a0ba"
-    sha256 sonoma:         "7eed0e55b0e8bc34828fcd31b3d06d13322bfefd88a2f4bc3b00d8ad1f85e4dc"
-    sha256 ventura:        "13ccd17720074f7007167d12eab6759fce0a8e7f1c0476fd032ae0f307999556"
-    sha256 monterey:       "2cb7e1deede563054cbd401aa98951018ebde2a59d61e3d226904d5a7e0e1199"
-    sha256 x86_64_linux:   "6cafaf06f366962038aa196b99e6ad4135eb10bb65df700058818f53dfa22184"
+    sha256 arm64_sequoia: "d1077f441bf54d6e59bdac468cd44013d218843dea36add546b8946464bc7b59"
+    sha256 arm64_sonoma:  "1d1be63045a004474d7d2f0e0607af710ef04999e70b455a7e1be7df289cc024"
+    sha256 arm64_ventura: "78f11b6782faa869e8422cf2531be7bf21447f86a563e8eae6d57d148ef2b6a7"
+    sha256 sonoma:        "9102cb5755913c088cb4fb5a9afe0188cdcf2f6b733586a3deb492b6869e8906"
+    sha256 ventura:       "f82fad313fa6e653d9d453ce21a56e16bfe6df4cd8539e883704fc1e08c680ea"
+    sha256 x86_64_linux:  "8784b621019d8580a50a588341ea83ceafded9a1f750f5ae47680a6bad89f909"
   end
 
   keg_only :provided_by_macos
@@ -147,6 +146,9 @@ class Ruby < Formula
       (libexec/"gembin").install buildpath/"vendor_gem/bin/bundle" => "bundle"
       (libexec/"gembin").install_symlink "bundle" => "bundler"
     end
+
+    # remove all lockfiles in bin folder
+    rm Dir[bin/"*.lock"]
   end
 
   def post_install

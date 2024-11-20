@@ -4,24 +4,23 @@ class Rust < Formula
   license any_of: ["Apache-2.0", "MIT"]
 
   stable do
-    url "https://static.rust-lang.org/dist/rustc-1.80.1-src.tar.gz"
-    sha256 "2c0b8f643942dcb810cbcc50f292564b1b6e44db5d5f45091153996df95d2dc4"
+    url "https://static.rust-lang.org/dist/rustc-1.82.0-src.tar.gz"
+    sha256 "7c53f4509eda184e174efa6ba7d5eeb586585686ce8edefc781a2b11a7cf512a"
 
     # From https://github.com/rust-lang/rust/tree/#{version}/src/tools
     resource "cargo" do
-      url "https://github.com/rust-lang/cargo/archive/refs/tags/0.81.0.tar.gz"
-      sha256 "5d2ea954f1a8bf03389fe2cefc5603de180a0c0010aa66628a325007216ef862"
+      url "https://github.com/rust-lang/cargo/archive/refs/tags/0.83.0.tar.gz"
+      sha256 "53fbf5eb9d0c42ce184bd1b170606db7c878e7ef07ed3b513a67e62e14ca4661"
     end
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "96fc16c5b23a1ebf08f74357dfa11e84578b1c6884b54b16f23162530e93b2fb"
-    sha256 cellar: :any,                 arm64_ventura:  "22a7875c137cd68a01c09d6b8f2bb9ceb5dd56b3f388d68ecbe06450664fe57e"
-    sha256 cellar: :any,                 arm64_monterey: "81ad407748a18551299dc0f7e4373dc26b11a3933abf5f386d2087be2577625a"
-    sha256 cellar: :any,                 sonoma:         "78e8c7f74d9773b1c5bf79fd4b7f5aabf2ac037ea6507f7431b0a6cc7cc53ace"
-    sha256 cellar: :any,                 ventura:        "6903fc2b63bfa7a24b5e0cf0edb0e435a20e708409f11b50172c76009df05877"
-    sha256 cellar: :any,                 monterey:       "cdb924e4d733710a4068c9ddbf9693777e0be9719e40c71fae39a74f0112f018"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e3678845ef50ee19dfb9898d762d73e3bd48e6c88cb4ad6de94ee86c51d23c52"
+    sha256 cellar: :any,                 arm64_sequoia: "d360d73408fd04fb4764e56a3f6664d23e5ff31f04e72862f84f0a7890032967"
+    sha256 cellar: :any,                 arm64_sonoma:  "645ea85f492d6b522a4e393421692ef4d847beec44c7e6229b300788f1846c8c"
+    sha256 cellar: :any,                 arm64_ventura: "9cee18d96c531f10110f3819873467c1ff47ae30f6a9a864018dbc94efdc94d5"
+    sha256 cellar: :any,                 sonoma:        "9f4a7df899767cb1bea9219421c10d6afc3d4a3d44227dcbac4bb01a249a8bc4"
+    sha256 cellar: :any,                 ventura:       "895f420a4102977bb8b8d5c27e9b9592f74cc289e8d9db7f44036815967f9a28"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "12f7054b93eae88d31054b54c9f92a29266acd268e02db4b8f8120303dd3c4c6"
   end
 
   head do
@@ -32,46 +31,102 @@ class Rust < Formula
     end
   end
 
-  depends_on "libgit2@1.7"
+  depends_on "libgit2"
   depends_on "libssh2"
   depends_on "llvm"
   depends_on macos: :sierra
   depends_on "openssl@3"
   depends_on "pkg-config"
+  depends_on "zstd"
 
   uses_from_macos "python" => :build
   uses_from_macos "curl"
   uses_from_macos "zlib"
 
+  link_overwrite "etc/bash_completion.d/cargo"
+  # These used to belong in `rustfmt`.
+  link_overwrite "bin/cargo-fmt", "bin/git-rustfmt", "bin/rustfmt", "bin/rustfmt-*"
+
   # From https://github.com/rust-lang/rust/blob/#{version}/src/stage0
-  resource "cargobootstrap" do
+  resource "rustc-bootstrap" do
     on_macos do
       on_arm do
-        url "https://static.rust-lang.org/dist/2024-06-13/cargo-1.79.0-aarch64-apple-darwin.tar.xz"
-        sha256 "2cc674f17c18b0c01e0e5a8e5caedc26b0f499d2cc10605cf1a838e2cad9ef7d"
+        url "https://static.rust-lang.org/dist/2024-09-05/rustc-1.81.0-aarch64-apple-darwin.tar.xz", using: :nounzip
+        sha256 "bed00f549a08030b232ad811728e3a5d7239e2e53b667df9cfb11eabf87f2cf3"
       end
       on_intel do
-        url "https://static.rust-lang.org/dist/2024-06-13/cargo-1.79.0-x86_64-apple-darwin.tar.xz"
-        sha256 "e1326c13b7437a72e061a2d662400c114ef87b73c45ef8823ea1b2bdc3140109"
+        url "https://static.rust-lang.org/dist/2024-09-05/rustc-1.81.0-x86_64-apple-darwin.tar.xz", using: :nounzip
+        sha256 "2313aa8a68b514e6e337bb97e933cb25a5cbb48506980da4eeaa04394e595aad"
       end
     end
 
     on_linux do
       on_arm do
-        url "https://static.rust-lang.org/dist/2024-06-13/cargo-1.79.0-aarch64-unknown-linux-gnu.tar.xz"
-        sha256 "4ca5e9bd141b0111387ea1aa0355f87eb8d0da52fbc616cefa4ecde4997aa65b"
+        url "https://static.rust-lang.org/dist/2024-09-05/rustc-1.81.0-aarch64-unknown-linux-gnu.tar.xz", using: :nounzip
+        sha256 "301f651f38f8c52ebaad0ac7eb211a5ea25c3b690686d1c265febeee62d2c6fc"
       end
       on_intel do
-        url "https://static.rust-lang.org/dist/2024-06-13/cargo-1.79.0-x86_64-unknown-linux-gnu.tar.xz"
-        sha256 "07fcadd27b645ad58ff4dae5ef166fd730311bbae8f25f6640fe1bfd2a1f3c3c"
+        url "https://static.rust-lang.org/dist/2024-09-05/rustc-1.81.0-x86_64-unknown-linux-gnu.tar.xz", using: :nounzip
+        sha256 "988a4e4cdecebe4f4a0c52ec4ade5a5bfc58d6958969f5b1e8aac033bda2613e"
       end
     end
   end
 
-  def install
-    # relates to https://github.com/rust-lang/rust/pull/126507
-    odie "bump to use libgit2 1.8" if version >= "1.81.0"
+  # From https://github.com/rust-lang/rust/blob/#{version}/src/stage0
+  resource "cargo-bootstrap" do
+    on_macos do
+      on_arm do
+        url "https://static.rust-lang.org/dist/2024-09-05/cargo-1.81.0-aarch64-apple-darwin.tar.xz", using: :nounzip
+        sha256 "cc826e6592016db7a5750a97051b71b48aca2d79f146daf08e953d56000ae43d"
+      end
+      on_intel do
+        url "https://static.rust-lang.org/dist/2024-09-05/cargo-1.81.0-x86_64-apple-darwin.tar.xz", using: :nounzip
+        sha256 "01a98d95e71025b8c52fdf8bbbe32a2d2739a5861301a99ec889994e3a512292"
+      end
+    end
 
+    on_linux do
+      on_arm do
+        url "https://static.rust-lang.org/dist/2024-09-05/cargo-1.81.0-aarch64-unknown-linux-gnu.tar.xz", using: :nounzip
+        sha256 "76f8927e4923c26c51b60ef99a29f3609843b3a2730f0bdf2ea6958626f11b11"
+      end
+      on_intel do
+        url "https://static.rust-lang.org/dist/2024-09-05/cargo-1.81.0-x86_64-unknown-linux-gnu.tar.xz", using: :nounzip
+        sha256 "c50ee4b1ae8695461930e36d5465dddb7c7a0e0f0aa6cbd60de120b17c38b841"
+      end
+    end
+  end
+
+  # From https://github.com/rust-lang/rust/blob/#{version}/src/stage0
+  resource "rust-std-bootstrap" do
+    on_macos do
+      on_arm do
+        url "https://static.rust-lang.org/dist/2024-09-05/rust-std-1.81.0-aarch64-apple-darwin.tar.xz", using: :nounzip
+        sha256 "2dba5210a79617a9240570c1f7fcc24912a2c96689a3159324727e5a516c6326"
+      end
+      on_intel do
+        url "https://static.rust-lang.org/dist/2024-09-05/rust-std-1.81.0-x86_64-apple-darwin.tar.xz", using: :nounzip
+        sha256 "8319664a0b39ac47d9b52fce0f45bc9c37b06669ab4f1204a709fb0f2a5a03c3"
+      end
+    end
+
+    on_linux do
+      on_arm do
+        url "https://static.rust-lang.org/dist/2024-09-05/rust-std-1.81.0-aarch64-unknown-linux-gnu.tar.xz", using: :nounzip
+        sha256 "85567f037cee338f8ec8f9b6287a7f200d221658a996cba254abc91606ece6f4"
+      end
+      on_intel do
+        url "https://static.rust-lang.org/dist/2024-09-05/rust-std-1.81.0-x86_64-unknown-linux-gnu.tar.xz", using: :nounzip
+        sha256 "6ddf80f254e8eea9956308ba89fd68e1ac7885853df9239b07bbc9f047b7562f"
+      end
+    end
+  end
+
+  def llvm
+    Formula["llvm"]
+  end
+
+  def install
     # Ensure that the `openssl` crate picks up the intended library.
     # https://docs.rs/openssl/latest/openssl/#manual
     ENV["OPENSSL_DIR"] = Formula["openssl@3"].opt_prefix
@@ -87,11 +142,6 @@ class Rust < Formula
       ENV["MACOSX_DEPLOYMENT_TARGET"] = MacOS.version
     end
 
-    resource("cargobootstrap").stage do
-      system "./install.sh", "--prefix=#{buildpath}/cargobootstrap"
-    end
-    ENV.prepend_path "PATH", buildpath/"cargobootstrap/bin"
-
     cargo_src_path = buildpath/"src/tools/cargo"
     rm_r(cargo_src_path)
     resource("cargo").stage cargo_src_path
@@ -101,12 +151,20 @@ class Rust < Formula
                 'curl = { version = "\\1", features = ["force-system-lib-on-osx"] }'
     end
 
-    # rustfmt and rust-analyzer are available in their own formulae.
+    cache_date = File.basename(File.dirname(resource("rustc-bootstrap").url))
+    build_cache_directory = buildpath/"build/cache"/cache_date
+
+    resource("rustc-bootstrap").stage build_cache_directory
+    resource("cargo-bootstrap").stage build_cache_directory
+    resource("rust-std-bootstrap").stage build_cache_directory
+
+    # rust-analyzer is available in its own formula.
     tools = %w[
       analysis
       cargo
       clippy
       rustdoc
+      rustfmt
       rust-analyzer-proc-macro-srv
       rust-demangler
       src
@@ -115,12 +173,13 @@ class Rust < Formula
       --prefix=#{prefix}
       --sysconfdir=#{etc}
       --tools=#{tools.join(",")}
-      --llvm-root=#{Formula["llvm"].opt_prefix}
+      --llvm-root=#{llvm.opt_prefix}
       --enable-llvm-link-shared
       --enable-profiler
       --enable-vendor
       --disable-cargo-native-static
       --disable-docs
+      --disable-lld
       --set=rust.jemalloc
       --release-description=#{tap.user}
     ]
@@ -135,6 +194,7 @@ class Rust < Formula
     system "make"
     system "make", "install"
 
+    bash_completion.install etc/"bash_completion.d/cargo"
     (lib/"rustlib/src/rust").install "library"
     rm([
       bin.glob("*.old"),
@@ -145,11 +205,19 @@ class Rust < Formula
   end
 
   def post_install
-    Dir["#{lib}/rustlib/**/*.dylib"].each do |dylib|
+    lib.glob("rustlib/**/*.dylib") do |dylib|
       chmod 0664, dylib
       MachO::Tools.change_dylib_id(dylib, "@rpath/#{File.basename(dylib)}")
       MachO.codesign!(dylib) if Hardware::CPU.arm?
       chmod 0444, dylib
+    end
+    return unless OS.mac?
+
+    # Symlink our LLVM here to make sure the adjacent bin/rust-lld can find it.
+    # Needs to be done in `postinstall` to avoid having `change_dylib_id` done on it.
+    lib.glob("rustlib/*/lib") do |dir|
+      # Use `ln_sf` instead of `install_symlink` to avoid resolving this into a Cellar path.
+      ln_sf llvm.opt_lib/shared_library("libLLVM"), dir
     end
   end
 
@@ -163,20 +231,27 @@ class Rust < Formula
 
   test do
     system bin/"rustdoc", "-h"
-    (testpath/"hello.rs").write <<~EOS
+    (testpath/"hello.rs").write <<~RUST
       fn main() {
         println!("Hello World!");
       }
-    EOS
+    RUST
     system bin/"rustc", "hello.rs"
     assert_equal "Hello World!\n", shell_output("./hello")
     system bin/"cargo", "new", "hello_world", "--bin"
     assert_equal "Hello, world!", cd("hello_world") { shell_output("#{bin}/cargo run").split("\n").last }
 
+    assert_match <<~EOS, shell_output("#{bin}/rustfmt --check hello.rs", 1)
+       fn main() {
+      -  println!("Hello World!");
+      +    println!("Hello World!");
+       }
+    EOS
+
     # We only check the tools' linkage here. No need to check rustc.
     expected_linkage = {
       bin/"cargo" => [
-        Formula["libgit2@1.7"].opt_lib/shared_library("libgit2"),
+        Formula["libgit2"].opt_lib/shared_library("libgit2"),
         Formula["libssh2"].opt_lib/shared_library("libssh2"),
         Formula["openssl@3"].opt_lib/shared_library("libcrypto"),
         Formula["openssl@3"].opt_lib/shared_library("libssl"),

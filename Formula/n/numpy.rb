@@ -1,26 +1,25 @@
 class Numpy < Formula
   desc "Package for scientific computing with Python"
   homepage "https://www.numpy.org/"
-  url "https://files.pythonhosted.org/packages/1c/8a/0db635b225d2aa2984e405dc14bd2b0c324a0c312ea1bc9d283f2b83b038/numpy-2.0.1.tar.gz"
-  sha256 "485b87235796410c3519a699cfe1faab097e509e90ebb05dcd098db2ae87e7b3"
+  url "https://files.pythonhosted.org/packages/25/ca/1166b75c21abd1da445b97bf1fa2f14f423c6cfb4fc7c4ef31dccf9f6a94/numpy-2.1.3.tar.gz"
+  sha256 "aa08e04e08aaf974d4458def539dece0d28146d866a39da5639596f4921fd761"
   license "BSD-3-Clause"
   head "https://github.com/numpy/numpy.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "a2979a8604af74e0c82a8c71078afcd5100ccb50337dbaf4721c64b99c24276a"
-    sha256 cellar: :any,                 arm64_ventura:  "152a821f3be4ac2bfcb25082f9794fe079a2e5d5e34156df34e0567de6668dd2"
-    sha256 cellar: :any,                 arm64_monterey: "bca268c68a1c18ce0c7ee06491627018a15c8317e4e931bcffa58eba9abfd441"
-    sha256 cellar: :any,                 sonoma:         "5c2c80c1f503b754e51886bd6d5dceffa703d1d64081b50ab5fce6056b3576e4"
-    sha256 cellar: :any,                 ventura:        "552700f8d6e9d6fe01daf0e17f5002fe4fa01f53557662e9fbb2f4c6703f0d19"
-    sha256 cellar: :any,                 monterey:       "a2a08c0c03e5cda783a64196b65478e37526925487cbe45ed2abdd9505ccfd06"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b0c47c7382e22af33327ec27bbff173053a33220f21b853a9873ccb473f1a136"
+    sha256 cellar: :any,                 arm64_sequoia: "2f200bdc987706a148d0d27b8e04a4985919115143143269434f14b7c3cf5862"
+    sha256 cellar: :any,                 arm64_sonoma:  "57282ea0d427a55fcc107b3bd583ce94cf7f052e649f2d9151033e32c1e7226c"
+    sha256 cellar: :any,                 arm64_ventura: "4a3f265f4767d15e1dc9ae74285a202b54933d376f78e29a4bee654153a35eb3"
+    sha256 cellar: :any,                 sonoma:        "9d673e339b3e923d3fc44bb94f02c7c4e293a0cbf5d7349645d328b6716ccc6c"
+    sha256 cellar: :any,                 ventura:       "c886bcf4c4d8321b64438895adc823f069583fc335decece51fb39095b68aebf"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3c4c1045279d796d31b8583083d81651090ec41aa9e46b2badfc0d5333fa5d0a"
   end
 
   depends_on "gcc" => :build # for gfortran
   depends_on "meson" => :build
   depends_on "ninja" => :build
-  depends_on "python@3.11" => [:build, :test]
   depends_on "python@3.12" => [:build, :test]
+  depends_on "python@3.13" => [:build, :test]
   depends_on "openblas"
 
   on_linux do

@@ -6,6 +6,7 @@ class Cloog < Formula
   license "LGPL-2.1-or-later"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "a094bf71fc868a36e66ae12b4a3de5ad0c887f9f92278a473722273bad35fd64"
     sha256 cellar: :any,                 arm64_sonoma:   "ead03f190330ee52bead39f8d29fdb67667882b5acecaa490f6d63c2bc750cac"
     sha256 cellar: :any,                 arm64_ventura:  "cead91fed1a94c7121eb28dbd53060c3bf70a83c62a0546e50d2ec486e1e1e63"
     sha256 cellar: :any,                 arm64_monterey: "9d8c88f5f09bcc01984b15f0ba5d2fe143ee4e129f7dafce268cb36831f33480"
@@ -17,7 +18,7 @@ class Cloog < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "e0f9fc5de0ae2ddc6bc734ae97b67cf0173ba90da90db87f5402d36c3bcc0ef6"
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "gmp"
   depends_on "isl"
 
@@ -25,13 +26,12 @@ class Cloog < Formula
     # Avoid doc build.
     ENV["ac_cv_prog_TEXI2DVI"] = ""
 
-    system "./configure", "--disable-dependency-tracking",
-                          "--disable-silent-rules",
-                          "--prefix=#{prefix}",
+    system "./configure", "--disable-silent-rules",
                           "--with-gmp=system",
                           "--with-gmp-prefix=#{Formula["gmp"].opt_prefix}",
                           "--with-isl=system",
-                          "--with-isl-prefix=#{Formula["isl"].opt_prefix}"
+                          "--with-isl-prefix=#{Formula["isl"].opt_prefix}",
+                          *std_configure_args
     system "make", "install"
   end
 

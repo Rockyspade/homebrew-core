@@ -7,6 +7,7 @@ class AzureStorageCpp < Formula
   revision 10
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "715929b7bf9be66a120d8daaadef336fc4e69cc10b98bf57b1db566ed74c43ae"
     sha256 cellar: :any,                 arm64_sonoma:   "88c8ce8dd3036ecb8d825e45e4f540d3f85812a5551adbdff2f3e633a14971b2"
     sha256 cellar: :any,                 arm64_ventura:  "0980769654725aabfdaaf9fd7f5141bc3a80d283bd2926dd44271a96153b43ab"
     sha256 cellar: :any,                 arm64_monterey: "3c46568d7f4eb00aae073edb010631672d09ddf104aa58575d6e04717238d349"
@@ -37,7 +38,7 @@ class AzureStorageCpp < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <was/common.h>
       #include <was/storage_account.h>
       using namespace azure;
@@ -49,7 +50,7 @@ class AzureStorageCpp < Formula
         }
         catch(...){ return 1; }
       }
-    EOS
+    CPP
     flags = ["-std=c++11", "-I#{include}",
              "-I#{Formula["boost"].include}",
              "-I#{Formula["openssl@3"].include}",

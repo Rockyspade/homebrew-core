@@ -18,13 +18,8 @@ class Saxon < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "ac4085e4f707a91b86a0254c7f45e5acf92ccc0b47c0e195f1392892d2d4ca40"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "ac4085e4f707a91b86a0254c7f45e5acf92ccc0b47c0e195f1392892d2d4ca40"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "ac4085e4f707a91b86a0254c7f45e5acf92ccc0b47c0e195f1392892d2d4ca40"
-    sha256 cellar: :any_skip_relocation, sonoma:         "ac4085e4f707a91b86a0254c7f45e5acf92ccc0b47c0e195f1392892d2d4ca40"
-    sha256 cellar: :any_skip_relocation, ventura:        "0f43e474b01c6429b086d7573dbc8a4da1bf5bec5095d190e874528fe0468f2b"
-    sha256 cellar: :any_skip_relocation, monterey:       "ac4085e4f707a91b86a0254c7f45e5acf92ccc0b47c0e195f1392892d2d4ca40"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "108a2c67d34a7e79fa57431cf707b0c7eee33c49940e2a8f9a972d244fe53393"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, all: "a3155919fc60b17e722c0f2c760f08c4a8e39812273cf86f11e3aa0e6e36b2ee"
   end
 
   depends_on "openjdk"
@@ -35,10 +30,10 @@ class Saxon < Formula
   end
 
   test do
-    (testpath/"test.xml").write <<~EOS
+    (testpath/"test.xml").write <<~XML
       <test>It works!</test>
-    EOS
-    (testpath/"test.xsl").write <<~EOS
+    XML
+    (testpath/"test.xsl").write <<~XSL
       <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
         <xsl:template match="/">
           <html>
@@ -48,14 +43,14 @@ class Saxon < Formula
           </html>
         </xsl:template>
       </xsl:stylesheet>
-    EOS
-    assert_equal <<~EOS.chop, shell_output("#{bin}/saxon test.xml test.xsl")
+    XSL
+    assert_equal <<~HTML.chop, shell_output("#{bin}/saxon test.xml test.xsl")
       <!DOCTYPE HTML>
       <html>
          <body>
             <p>It works!</p>
          </body>
       </html>
-    EOS
+    HTML
   end
 end

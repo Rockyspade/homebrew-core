@@ -1,8 +1,8 @@
 class FlowCli < Formula
   desc "Command-line interface that provides utilities for building Flow applications"
   homepage "https://onflow.org"
-  url "https://github.com/onflow/flow-cli/archive/refs/tags/v1.20.5.tar.gz"
-  sha256 "654c29527bfefcbaf9ffb11d39629383a54abf2a6efe9b34d84889644b5dc975"
+  url "https://github.com/onflow/flow-cli/archive/refs/tags/v2.1.1.tar.gz"
+  sha256 "58d8ee38cbfe503d783d78691617e8058213ae3f054183946ec6dc84023be9b2"
   license "Apache-2.0"
   head "https://github.com/onflow/flow-cli.git", branch: "master"
 
@@ -12,13 +12,12 @@ class FlowCli < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "5fb55ca02eca7019f0ac0f856d714323a1beac0bb3ae08b3923224804760e7b0"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "80c9bedad29fa9f4c4de27f80312a756941d9226593e7cf12e18f32af0f8afd5"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "39e341d9d44472f60a8495308b8407eeb6b023766cabb75371ab11942f3e5dbf"
-    sha256 cellar: :any_skip_relocation, sonoma:         "aa5370622028455e24ada74ee8670d391bee21f056d0b24455db4ffb6d76b706"
-    sha256 cellar: :any_skip_relocation, ventura:        "effe05a6c64b8d8aab2f81c043b0711632df0481ebb37ed2089a8c8df2a257e8"
-    sha256 cellar: :any_skip_relocation, monterey:       "ebfcbe1a1f94b0efeebec2c6f81fab469ea71978d0f456db9cde8f103768c6c2"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "3eeef7dd7c70439463b5cb5f767c52676b502a8d82cd3e4bca019815ed92f9d5"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "ddade623bb3f375d162b790f735a773cd03881a5a0eab303cf4274e51931aca1"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "d1ceea5e413bcb240843af76542e269000c51013c93b8560e799851e5ae30bc1"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "4d52c550aadf44b5945a816985d6dd3ef72cfc629941c68cf34ebf1283a68c9a"
+    sha256 cellar: :any_skip_relocation, sonoma:        "29549d676ba96a85c12be95c73367bce9c52197c9aa0788a5f40e3fd57d7c6b7"
+    sha256 cellar: :any_skip_relocation, ventura:       "5f4a579c3cca8000273b596d2d766c3ecaef576a0a1a3a43364f38030225c634"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "fc278a534a5af54772185fcdcf26b1fca75d674695df620b369ea401e53cc471"
   end
 
   depends_on "go" => :build
@@ -34,7 +33,7 @@ class FlowCli < Formula
 
   test do
     (testpath/"hello.cdc").write <<~EOS
-      pub fun main() {
+      access(all) fun main() {
         log("Hello, world!")
       }
     EOS

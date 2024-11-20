@@ -7,6 +7,7 @@ class Glade < Formula
   revision 1
 
   bottle do
+    sha256 arm64_sequoia:  "e162366f083df623dd7cd1854a781cdf3d520bfde698588abc9296ab33fd8804"
     sha256 arm64_sonoma:   "271ff90536f47461687153dc97dd25d5ba9ad4f22c1a087e303fc52f54646dda"
     sha256 arm64_ventura:  "a9a7c003418e9867e2ae9d1da7c4230a812638d06b1ff6626454c952e4107e16"
     sha256 arm64_monterey: "254b71a95a632595fc9314162cd89607fac7ee27890bf57155fc2882473258a2"
@@ -62,14 +63,14 @@ class Glade < Formula
     # fails in Linux CI with (glade:20337): Gtk-WARNING **: 21:45:31.876: cannot open display:
     system bin/"glade", "--version" if OS.mac?
 
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <gladeui/glade.h>
 
       int main(int argc, char *argv[]) {
         gboolean glade_util_have_devhelp();
         return 0;
       }
-    EOS
+    C
 
     pkg_config_flags = shell_output("pkg-config --cflags --libs gladeui-2.0").chomp.split
     system ENV.cc, "test.c", "-o", "test", *pkg_config_flags

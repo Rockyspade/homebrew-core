@@ -1,29 +1,21 @@
 class Ipget < Formula
   desc "Retrieve files over IPFS and save them locally"
   homepage "https://github.com/ipfs/ipget/"
-  url "https://github.com/ipfs/ipget/archive/refs/tags/v0.10.0.tar.gz"
-  sha256 "a9bffe36f23284fa691cca0bc85d1890782ca0c7bc69a25f9881b712914a96cb"
+  url "https://github.com/ipfs/ipget/archive/refs/tags/v0.11.1.tar.gz"
+  sha256 "3dd56e9243ab59383d206c2b374980cc987c016a391976dd9dcf5bff33a96f35"
   license "MIT"
   head "https://github.com/ipfs/ipget.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "9751c89c7cca300ed66833d95b90c237444411ee7749de9a77dc22524bf75f7b"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "d7b81dbd9f3069c91d2379c9f7f4a6a792024513d5eed979f6b9c5b4cecfd997"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "eb635acd8e0287f7b6b17bb4fd2d6e2b908e035fd122a91238dd6a24a5f69a83"
-    sha256 cellar: :any_skip_relocation, sonoma:         "0e6ffd097a8a372c5322abe054329678f2eca450d4ba73c754dfd5ba6e26cc09"
-    sha256 cellar: :any_skip_relocation, ventura:        "975a7db2409f90e92ecc37e361ff032e8442829abb5c45f12134beaa385dfa55"
-    sha256 cellar: :any_skip_relocation, monterey:       "a3baad50d018574421224f09325c2308e65ce584da1d270f208f4f131ce2baa7"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "779aa12c179ffab409d0658b5a748666c241bbd959aec17baf5eb08a104b78b3"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "d8ae441fecd189ca058e76d0acfb30e93a2fa8a04beffdaa27b1780d3f0ba34b"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "d963166f966424517640b342f72019fd6d1f5d7721a508f60d3841f512ded3d2"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "4e5a57ab51fe284bb42595846d991d16f16c9af8b9edc1ca59a8d4601abc2ffa"
+    sha256 cellar: :any_skip_relocation, sonoma:        "f918f9a023d8f9259c75ed408752e6a0cfe660806ec2e9aef326ebaf19ac199f"
+    sha256 cellar: :any_skip_relocation, ventura:       "f5725f63532333b6729f26664512984c4e2914358344894c6c9cfe8fabf81245"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "304bebe13417bc89ee71aab782f6f528824b4fd3dae6d8bf6a01540b2e11832c"
   end
 
   depends_on "go" => :build
-
-  # patch version to match with the release
-  # upstream PR ref, https://github.com/ipfs/ipget/pull/147
-  patch do
-    url "https://github.com/ipfs/ipget/commit/1716f2298e54394123f3dda283ad30f0390b5640.patch?full_index=1"
-    sha256 "cb3faa2d66702f1df82fbf04e78778422d7634b5e1fd831c249be06845cca82c"
-  end
 
   def install
     system "go", "build", *std_go_args(ldflags: "-s -w")

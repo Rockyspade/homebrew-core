@@ -1,7 +1,7 @@
 class Vip < Formula
   desc "Program that provides for interactive editing in a pipeline"
-  homepage "https://www.cs.duke.edu/~des/vip.html"
-  url "https://www.cs.duke.edu/~des/scripts/vip"
+  homepage "https://users.cs.duke.edu/~des/vip.html"
+  url "https://users.cs.duke.edu/~des/scripts/vip"
   version "19971113"
   sha256 "171278e8bd43abdbd3a4c35addda27a0d3c74fc784dbe60e4783d317ac249d11"
   # Permission is granted to reproduce and distribute this program
@@ -29,16 +29,8 @@ class Vip < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "1b14079339dd70f264f10a81fc1d4934353ab7aa85b32403de04703ba5340dc6"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "cd1eaee76c43cbe5384907f794d619db9b4d044eb54e223e0666e4da73f007e8"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "cd1eaee76c43cbe5384907f794d619db9b4d044eb54e223e0666e4da73f007e8"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "cd1eaee76c43cbe5384907f794d619db9b4d044eb54e223e0666e4da73f007e8"
-    sha256 cellar: :any_skip_relocation, sonoma:         "1b14079339dd70f264f10a81fc1d4934353ab7aa85b32403de04703ba5340dc6"
-    sha256 cellar: :any_skip_relocation, ventura:        "cd1eaee76c43cbe5384907f794d619db9b4d044eb54e223e0666e4da73f007e8"
-    sha256 cellar: :any_skip_relocation, monterey:       "cd1eaee76c43cbe5384907f794d619db9b4d044eb54e223e0666e4da73f007e8"
-    sha256 cellar: :any_skip_relocation, big_sur:        "cd1eaee76c43cbe5384907f794d619db9b4d044eb54e223e0666e4da73f007e8"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e859ab68e89bde9988f3966d5b5352ccb56dc0d88ddd958d200b5f60e5f91653"
+    rebuild 2
+    sha256 cellar: :any_skip_relocation, all: "4168bb377aa3ca2722f484c1bfbd8c5d89e9231565439ac1ad2ad06ddfeb3d20"
   end
 
   resource "man" do

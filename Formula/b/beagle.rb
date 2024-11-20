@@ -11,6 +11,7 @@ class Beagle < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "68b15491189b2d39203b4675128f67e2757f7c32a61fd6771495ad634ec1b1f3"
     sha256 cellar: :any,                 arm64_sonoma:   "b6d8ccd22a1a3dd0fc66aa753d774382005e10a6c92102af898a8c48a249e2d6"
     sha256 cellar: :any,                 arm64_ventura:  "3d83a1652998bf200c2b1a7942fb3946d751a9d647f46b1275109e49c48be695"
     sha256 cellar: :any,                 arm64_monterey: "8ec46e2c91cff30977deec35fc3e01707f11f81960075c16da25edb8a6f9ca8c"
@@ -35,16 +36,16 @@ class Beagle < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include "libhmsbeagle/platform.h"
       int main() { return 0; }
-    EOS
-    (testpath/"T.java").write <<~EOS
+    CPP
+    (testpath/"T.java").write <<~JAVA
       class T {
         static { System.loadLibrary("hmsbeagle-jni"); }
         public static void main(String[] args) {}
       }
-    EOS
+    JAVA
     system ENV.cxx, "-I#{include}/libhmsbeagle-1", testpath/"test.cpp", "-o", "test"
     system "./test"
     system Formula["openjdk@11"].bin/"javac", "T.java"

@@ -1,8 +1,8 @@
 class ParallelHashmap < Formula
   desc "Family of header-only, fast, memory-friendly C++ hashmap and btree containers"
   homepage "https://greg7mdp.github.io/parallel-hashmap/"
-  url "https://github.com/greg7mdp/parallel-hashmap/archive/refs/tags/v1.3.12.tar.gz"
-  sha256 "0cc203144321924cfbfcc401f42d8204c0dd24e2760c7a1c091baa16d9777c08"
+  url "https://github.com/greg7mdp/parallel-hashmap/archive/refs/tags/v1.4.1.tar.gz"
+  sha256 "949874f4207b8735422438b23b884fb1f4b926689bb5eebff38cc4d357d09cd2"
   license "Apache-2.0"
   version_scheme 1
   head "https://github.com/greg7mdp/parallel-hashmap.git", branch: "master"
@@ -16,7 +16,7 @@ class ParallelHashmap < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "9548d098a91f8bd264c2e996860098d4665be87daa676d7c5ebf820aabe0823f"
+    sha256 cellar: :any_skip_relocation, all: "28bb19b17276b3d5f13fcd9bc74000a6f426530df7484e7f218c53c1fa84da4c"
   end
 
   depends_on "cmake" => :build
@@ -27,7 +27,7 @@ class ParallelHashmap < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <iostream>
       #include <string>
       #include <parallel_hashmap/phmap.h>
@@ -48,7 +48,7 @@ class ParallelHashmap < Formula
           std::cout << "baz:" << examples["baz"] << std::endl;
           return 0;
       }
-    EOS
+    CPP
     system ENV.cxx, "-std=c++11", "test.cpp", "-o", "test", "-I#{include}"
     assert_equal "foo:a\nbar:b\nbaz:c\n", shell_output("./test")
   end

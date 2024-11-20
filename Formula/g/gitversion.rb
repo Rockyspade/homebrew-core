@@ -1,24 +1,22 @@
 class Gitversion < Formula
   desc "Easy semantic versioning for projects using Git"
   homepage "https://gitversion.net"
-  url "https://github.com/GitTools/GitVersion/archive/refs/tags/6.0.2.tar.gz"
-  sha256 "e18aa3984c057efa6c6afdb223b31c9ea31f7859498ff84c02aaf6fc91d5c3a0"
+  url "https://github.com/GitTools/GitVersion/archive/refs/tags/6.0.5.tar.gz"
+  sha256 "621b46427db8947fa9a2ff04d0fcc4d00d0dd0ce05e248eb8d7bbc18e4ba29a7"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "28d46db8b669808fc430a0b958316e6faff23f150555119c7095cfd100ce334c"
-    sha256 cellar: :any,                 arm64_ventura:  "33fc7543dfcec77c67c4759dd3c59b2d65b02d89df21fc1c2fea2d3646a651a4"
-    sha256 cellar: :any,                 arm64_monterey: "36a19d0a3d5afee24bc6c503cde30201c932694dc8cfa8c29ea547621cea1490"
-    sha256 cellar: :any,                 sonoma:         "eae0f7fff24077a8151ec40d1f23fa8a1033a56c593c8a9a7c0a84ce22382597"
-    sha256 cellar: :any,                 ventura:        "b6d0372f81db453f2252977a07be5471f864697404259f2f231a7874de01b6fe"
-    sha256 cellar: :any,                 monterey:       "d97f8ebb3eb0321f43808ac3814d2e52499d38c0e937491393546ff913e73390"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "26b415bd114e91a473b65740f890722f6edc02b31d25f87547a77fbeaf7701af"
+    sha256 cellar: :any,                 arm64_sequoia: "fae232c086ea1d8c37f1b3984ad05064278e79adc156825985aa6fe8c2523a2d"
+    sha256 cellar: :any,                 arm64_sonoma:  "aa322c23f444e8dff137177a50559760c9d4f062bc5fc1b8610f67f5149b9842"
+    sha256 cellar: :any,                 arm64_ventura: "8b49968692aef48626c8dd70abf01204cd9246577ffc12b6e9e766234fac3464"
+    sha256 cellar: :any,                 ventura:       "bf1f9c7685da72147892bb11d1ac14e4167ffe2edb9abe9a41fa77cb1eeb9665"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "cc5389bd40a2e8e7ca02acb9704b5ec0d69b51421939baee10b53e48a1f6be7f"
   end
 
-  depends_on "dotnet"
+  depends_on "dotnet@8"
 
   def install
-    dotnet = Formula["dotnet"]
+    dotnet = Formula["dotnet@8"]
     os = OS.mac? ? "osx" : OS.kernel_name.downcase
     arch = Hardware::CPU.intel? ? "x64" : Hardware::CPU.arch.to_s
 

@@ -64,7 +64,7 @@ class Openclonk < Formula
     end
   end
 
-  disable! date: "2024-01-16", because: "does not build since 2018"
+  disable! date: "2024-01-16", because: :does_not_build # since 2018
 
   depends_on "cmake" => :build
   depends_on "freealut"
@@ -78,7 +78,7 @@ class Openclonk < Formula
   uses_from_macos "zlib"
 
   on_linux do
-    depends_on "pkg-config" => :build
+    depends_on "pkgconf" => :build
     depends_on "libxrandr"
     depends_on "mesa"
     depends_on "openal-soft"

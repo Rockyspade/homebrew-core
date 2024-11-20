@@ -4,8 +4,8 @@ class Semgrep < Formula
   desc "Easily detect and prevent bugs and anti-patterns in your codebase"
   homepage "https://semgrep.dev"
   url "https://github.com/semgrep/semgrep.git",
-      tag:      "v1.85.0",
-      revision: "2490e33e306873bccff72e42005df99e6ecfd018"
+      tag:      "v1.96.0",
+      revision: "e743e2d243c83e6ba20e8f2096569f7383c00239"
   license "LGPL-2.1-only"
   head "https://github.com/semgrep/semgrep.git", branch: "develop"
 
@@ -15,13 +15,12 @@ class Semgrep < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "e981de3fa10dc7ed5937e1e8e35e9cd194187566ccaef960220d2a975e30de18"
-    sha256 cellar: :any,                 arm64_ventura:  "9585fb9ad80cd26c1cf397e0e9e1b6496d90fbc6fea41e68104fe104e8b621fd"
-    sha256 cellar: :any,                 arm64_monterey: "92ecfba34cb34bdfd237e2be8051e03d04bc5b0104f4dff377c46fdc0193cf8b"
-    sha256 cellar: :any,                 sonoma:         "d03a3d0e68eae4c2a541e4299bb6c209210502a14d0854b7df4257fde6a4199e"
-    sha256 cellar: :any,                 ventura:        "d8758f3b93ff98226b00e90a8bfdbb3e77505f1b3fcf4c1b8927945cbcea1af2"
-    sha256 cellar: :any,                 monterey:       "d5333b05467654d0051d9179e4f25e56c9bde3c6bb1566dfafd41cb07f0a2e67"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b1cb092365dd7d216f185fd6a144bb7affb4ec31a9133a70bbda9768029e6fa4"
+    sha256 cellar: :any,                 arm64_sequoia: "099051725230031f77d3df23ed5030b83f71cc4200f5d19e1af7a57e8dbe1290"
+    sha256 cellar: :any,                 arm64_sonoma:  "f5d2d8eb2b08fa44f2bb3a094712e3a377e9bb4457d831b8a9b19597e874a182"
+    sha256 cellar: :any,                 arm64_ventura: "b7d7eedd3ff7ebac8d945eea3766494f56131ab033bd9ecc41b58f229e30343e"
+    sha256 cellar: :any,                 sonoma:        "325d04ef412408cd0b7762ca6668470d06d9424fdea63e15c59f3e812e5cc541"
+    sha256 cellar: :any,                 ventura:       "e3e4e896f02926b5567f478b6e4c8c93fcb9f140751cc19d3c5b242119bcaeef"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "08c493b02bb58704ceb8fca1bf9bc6e1b73966a09ad52cb0109ea6d2a743d8f3"
   end
 
   depends_on "autoconf" => :build
@@ -38,7 +37,7 @@ class Semgrep < Formula
   depends_on "libev"
   depends_on "pcre"
   depends_on "pcre2"
-  depends_on "python@3.12"
+  depends_on "python@3.13"
   depends_on "sqlite"
   depends_on "tree-sitter"
 
@@ -58,13 +57,13 @@ class Semgrep < Formula
   end
 
   resource "bracex" do
-    url "https://files.pythonhosted.org/packages/ac/f1/ac657fd234f4ee61da9d90f2bae7d6078074de2f97cb911743faa8d10a91/bracex-2.5.tar.gz"
-    sha256 "0725da5045e8d37ea9592ab3614d8b561e22c3c5fde3964699be672e072ab611"
+    url "https://files.pythonhosted.org/packages/d6/6c/57418c4404cd22fe6275b8301ca2b46a8cdaa8157938017a9ae0b3edf363/bracex-2.5.post1.tar.gz"
+    sha256 "12c50952415bfa773d2d9ccb8e79651b8cdb1f31a42f6091b804f6ba2b4a66b6"
   end
 
   resource "charset-normalizer" do
-    url "https://files.pythonhosted.org/packages/63/09/c1bc53dab74b1816a00d8d030de5bf98f724c52c1635e07681d312f20be8/charset-normalizer-3.3.2.tar.gz"
-    sha256 "f30c3cb33b24454a82faecaf01b19c18562b1e89558fb6c56de4d9118a032fd5"
+    url "https://files.pythonhosted.org/packages/f2/4f/e1808dc01273379acc506d18f1504eb2d299bd4131743b9fc54d7be4df1e/charset_normalizer-3.4.0.tar.gz"
+    sha256 "223217c3d4f82c3ac5e29032b3f1c2eb0fb591b72161f86d93f5719079dae93e"
   end
 
   resource "click" do
@@ -98,8 +97,8 @@ class Semgrep < Formula
   end
 
   resource "face" do
-    url "https://files.pythonhosted.org/packages/d7/bc/4d0f6c1e095eb977782edd94245f84b69c6f8df152480c78ab310e895098/face-22.0.0.tar.gz"
-    sha256 "d5d692f90bc8f5987b636e47e36384b9bbda499aaf0a77aa0b0bbe834c76923d"
+    url "https://files.pythonhosted.org/packages/ac/79/2484075a8549cd64beae697a8f664dee69a5ccf3a7439ee40c8f93c1978a/face-24.0.0.tar.gz"
+    sha256 "611e29a01ac5970f0077f9c577e746d48c082588b411b33a0dd55c4d872949f6"
   end
 
   resource "glom" do
@@ -108,13 +107,13 @@ class Semgrep < Formula
   end
 
   resource "googleapis-common-protos" do
-    url "https://files.pythonhosted.org/packages/0b/1a/41723ae380fa9c561cbe7b61c4eef9091d5fe95486465ccfc84845877331/googleapis-common-protos-1.63.2.tar.gz"
-    sha256 "27c5abdffc4911f28101e635de1533fb4cfd2c37fbaa9174587c799fac90aa87"
+    url "https://files.pythonhosted.org/packages/53/3b/1599ceafa875ffb951480c8c74f4b77646a6b80e80970698f2aa93c216ce/googleapis_common_protos-1.65.0.tar.gz"
+    sha256 "334a29d07cddc3aa01dee4988f9afd9b2916ee2ff49d6b757155dc0d197852c0"
   end
 
   resource "idna" do
-    url "https://files.pythonhosted.org/packages/21/ed/f86a79a07470cb07819390452f178b3bef1d375f2ec021ecfc709fc7cf07/idna-3.7.tar.gz"
-    sha256 "028ff3aadf0609c1fd278d8ea3089299412a7a8b9bd005dd08b9f8285bcb5cfc"
+    url "https://files.pythonhosted.org/packages/f1/70/7703c29685631f5a7590aa73f1f1d3fa9a380e654b86af429e0934a32f7d/idna-3.10.tar.gz"
+    sha256 "12f65c9b470abda6dc35cf8e63cc574b1c52b11df2c86030af0ac09b01b13ea9"
   end
 
   resource "importlib-metadata" do
@@ -128,8 +127,8 @@ class Semgrep < Formula
   end
 
   resource "jsonschema-specifications" do
-    url "https://files.pythonhosted.org/packages/f8/b9/cc0cc592e7c195fb8a650c1d5990b10175cf13b4c97465c72ec841de9e4b/jsonschema_specifications-2023.12.1.tar.gz"
-    sha256 "48a76787b3e70f5ed53f1160d2b81f586e4ca6d1548c5de7085d1682674764cc"
+    url "https://files.pythonhosted.org/packages/10/db/58f950c996c793472e336ff3655b13fbcf1e3b359dcf52dcf3ed3b52c352/jsonschema_specifications-2024.10.1.tar.gz"
+    sha256 "0f38b83639958ce1152d02a7f062902c41c8fd20d558b0c34344292d417ae272"
   end
 
   resource "markdown-it-py" do
@@ -193,13 +192,13 @@ class Semgrep < Formula
   end
 
   resource "peewee" do
-    url "https://files.pythonhosted.org/packages/bd/be/e9c886b4601a19f4c34a1b75c5fe8b98a2115dd964251a76b24c977c369d/peewee-3.17.6.tar.gz"
-    sha256 "cea5592c6f4da1592b7cff8eaf655be6648a1f5857469e30037bf920c03fb8fb"
+    url "https://files.pythonhosted.org/packages/e1/2d/c5e34703c118da6dae4de89d5c9b5a2fb9fbc2f7789ac2c8d8836f6367ba/peewee-3.17.7.tar.gz"
+    sha256 "6aefc700bd530fc6ac23fa19c9c5b47041751d92985b799169c8e318e97eabaa"
   end
 
   resource "protobuf" do
-    url "https://files.pythonhosted.org/packages/e8/ab/cb61a4b87b2e7e6c312dce33602bd5884797fd054e0e53205f1c27cf0f66/protobuf-4.25.4.tar.gz"
-    sha256 "0dc4a62cc4052a036ee2204d26fe4d835c62827c855c8a03f29fe6da146b380d"
+    url "https://files.pythonhosted.org/packages/67/dd/48d5fdb68ec74d70fabcc252e434492e56f70944d9f17b6a15e3746d2295/protobuf-4.25.5.tar.gz"
+    sha256 "7f8249476b4a9473645db7f8ab42b02fe1488cbe5fb72fddd445e0665afd8584"
   end
 
   resource "pygments" do
@@ -218,13 +217,13 @@ class Semgrep < Formula
   end
 
   resource "rich" do
-    url "https://files.pythonhosted.org/packages/b3/01/c954e134dc440ab5f96952fe52b4fdc64225530320a910473c1fe270d9aa/rich-13.7.1.tar.gz"
-    sha256 "9be308cb1fe2f1f57d67ce99e95af38a1e2bc71ad9813b0e247cf7ffbcc3a432"
+    url "https://files.pythonhosted.org/packages/1d/d6/9773d48804d085962c4f522db96f6a9ea9bd2e0480b3959a929176d92f01/rich-13.5.3.tar.gz"
+    sha256 "87b43e0543149efa1253f485cd845bb7ee54df16c9617b8a893650ab84b4acb6"
   end
 
   resource "rpds-py" do
-    url "https://files.pythonhosted.org/packages/55/64/b693f262791b818880d17268f3f8181ef799b0d187f6f731b1772e05a29a/rpds_py-0.20.0.tar.gz"
-    sha256 "d72a210824facfdaf8768cf2d7ca25a042c30320b3020de2fa04640920d4e121"
+    url "https://files.pythonhosted.org/packages/23/80/afdf96daf9b27d61483ef05b38f282121db0e38f5fd4e89f40f5c86c2a4f/rpds_py-0.21.0.tar.gz"
+    sha256 "ed6378c9d66d0de903763e7706383d60c33829581f0adff47b6535f1802fa6db"
   end
 
   resource "ruamel-yaml" do
@@ -232,19 +231,14 @@ class Semgrep < Formula
     sha256 "6024b986f06765d482b5b07e086cc4b4cd05dd22ddcbc758fa23d54873cf313d"
   end
 
-  resource "ruamel-yaml-clib" do
-    url "https://files.pythonhosted.org/packages/46/ab/bab9eb1566cd16f060b54055dd39cf6a34bfa0240c53a7218c43e974295b/ruamel.yaml.clib-0.2.8.tar.gz"
-    sha256 "beb2e0404003de9a4cab9753a8805a8fe9320ee6673136ed7f04255fe60bb512"
-  end
-
   resource "setuptools" do
-    url "https://files.pythonhosted.org/packages/ce/ef/013ded5b0d259f3fa636bf35de186f0061c09fbe124020ce6b8db68c83af/setuptools-72.2.0.tar.gz"
-    sha256 "80aacbf633704e9c8bfa1d99fa5dd4dc59573efcf9e4042c13d3bcef91ac2ef9"
+    url "https://files.pythonhosted.org/packages/ed/22/a438e0caa4576f8c383fa4d35f1cc01655a46c75be358960d815bfbb12bd/setuptools-75.3.0.tar.gz"
+    sha256 "fba5dd4d766e97be1b1681d98712680ae8f2f26d7881245f2ce9e40714f1a686"
   end
 
   resource "tomli" do
-    url "https://files.pythonhosted.org/packages/c0/3f/d7af728f075fb08564c5949a9c95e44352e23dee646869fa104a3b2060a3/tomli-2.0.1.tar.gz"
-    sha256 "de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f"
+    url "https://files.pythonhosted.org/packages/35/b9/de2a5c0144d7d75a57ff355c0c24054f965b2dc3036456ae03a51ea6264b/tomli-2.0.2.tar.gz"
+    sha256 "d46d457a85337051c36524bc5349dd91b1877838e2979ac5ced3e710ed8a60ed"
   end
 
   resource "typing-extensions" do
@@ -253,8 +247,8 @@ class Semgrep < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/43/6d/fa469ae21497ddc8bc93e5877702dca7cb8f911e337aca7452b5724f1bb6/urllib3-2.2.2.tar.gz"
-    sha256 "dd505485549a7a552833da5e6063639d0d177c04f23bc3864e41e5dc5f612168"
+    url "https://files.pythonhosted.org/packages/ed/63/22ba4ebfe7430b76388e7cd448d5478814d3032121827c12a2cc287e2260/urllib3-2.2.3.tar.gz"
+    sha256 "e7d814a81dad81e6caf2ec9fdedb284ecc9c73076b62654547cc64ccdcae26e9"
   end
 
   resource "wcmatch" do
@@ -268,14 +262,28 @@ class Semgrep < Formula
   end
 
   resource "zipp" do
-    url "https://files.pythonhosted.org/packages/0e/af/9f2de5bd32549a1b705af7a7c054af3878816a1267cb389c03cc4f342a51/zipp-3.20.0.tar.gz"
-    sha256 "0145e43d89664cfe1a2e533adc75adafed82fe2da404b4bbb6b026c0157bdb31"
+    url "https://files.pythonhosted.org/packages/54/bf/5c0000c44ebc80123ecbdddba1f5dcd94a5ada602a9c225d84b5aaa55e86/zipp-3.20.2.tar.gz"
+    sha256 "bc9eb26f4506fda01b81bcde0ca78103b6e62f991b381fec825435c836edbc29"
   end
 
   def install
-    # Work around ruamel.yaml.clib not building on Xcode 15.3, remove after a new release
-    # has resolved: https://sourceforge.net/p/ruamel-yaml-clib/tickets/32/
-    ENV.append_to_cflags "-Wno-incompatible-function-pointer-types" if DevelopmentTools.clang_build_version >= 1500
+    # Ensure dynamic linkage to our libraries
+    inreplace "src/main/flags.sh" do |s|
+      s.gsub!("$(brew --prefix libev)/lib/libev.a", Formula["libev"].opt_lib/shared_library("libev"))
+      s.gsub!("$(pkg-config gmp --variable libdir)/libgmp.a", Formula["gmp"].opt_lib/shared_library("libgmp"))
+      s.gsub!(
+        "$(pkg-config tree-sitter --variable libdir)/libtree-sitter.a",
+        Formula["tree-sitter"].opt_lib/shared_library("libtree-sitter"),
+      )
+      s.gsub!(
+        "$(pkg-config libpcre --variable libdir)/libpcre.a",
+        Formula["pcre"].opt_lib/shared_library("libpcre"),
+      )
+      s.gsub!(
+        "$(pkg-config libpcre2-8 --variable libdir)/libpcre2-8.a",
+        Formula["pcre2"].opt_lib/shared_library("libpcre2-8"),
+      )
+    end
 
     ENV.deparallelize
     Dir.mktmpdir("opamroot") do |opamroot|
@@ -290,8 +298,9 @@ class Semgrep < Formula
       ENV["OPAMNODEPEXTS"] = ENV["OPAMYES"] = "1"
       # Set library path so opam + lwt can find libev
       ENV["LIBRARY_PATH"] = "#{HOMEBREW_PREFIX}/lib"
-      # Set path to libev for our static linking logic
-      ENV["SEMGREP_LIBEV_ARCHIVE_PATH"] = "#{HOMEBREW_PREFIX}/lib/libev.a"
+      # Opam's solver times out when it is set to the default of 60.0
+      # See: https://github.com/Homebrew/homebrew-core/pull/191306
+      ENV["OPAMSOLVERTIMEOUT"] = "1200"
 
       system "opam", "init", "--no-setup", "--disable-sandboxing"
       ENV.deparallelize { system "opam", "switch", "create", "ocaml-base-compiler.4.14.0" }
@@ -312,7 +321,7 @@ class Semgrep < Formula
     end
 
     ENV["SEMGREP_SKIP_BIN"] = "1"
-    venv = virtualenv_create(libexec, "python3.12")
+    venv = virtualenv_create(libexec, "python3.13")
     venv.pip_install resources.reject { |r| r.name == "glom" }
 
     # Replace `imp` usage: https://github.com/mahmoud/glom/commit/1f883f0db898d6b15fcc0f293225dcccc16b2a57
@@ -326,20 +335,22 @@ class Semgrep < Formula
 
     venv.pip_install_and_link buildpath/"cli"
 
-    generate_completions_from_executable(bin/"semgrep", shells: [:fish, :zsh], shell_parameter_format: :click)
+    generate_completions_from_executable(bin/"semgrep", "--legacy",
+                                         shells:                 [:fish, :zsh],
+                                         shell_parameter_format: :click)
   end
 
   test do
     system bin/"semgrep", "--help"
-    (testpath/"script.py").write <<~EOS
+    (testpath/"script.py").write <<~PYTHON
       def silly_eq(a, b):
         return a + b == a + b
-    EOS
+    PYTHON
 
     output = shell_output("#{bin}/semgrep script.py -l python -e '$X == $X'")
     assert_match "a + b == a + b", output
 
-    (testpath/"script.ts").write <<~EOS
+    (testpath/"script.ts").write <<~TYPESCRIPT
       function test_equal() {
         a = 1;
         b = 2;
@@ -348,7 +359,7 @@ class Semgrep < Formula
             return 1;
         return 0;
       }
-    EOS
+    TYPESCRIPT
 
     output = shell_output("#{bin}/semgrep script.ts -l ts -e '$X == $X'")
     assert_match "a + b == a + b", output

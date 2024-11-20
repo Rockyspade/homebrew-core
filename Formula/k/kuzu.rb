@@ -1,23 +1,23 @@
 class Kuzu < Formula
   desc "Embeddable graph database management system built for query speed & scalability"
   homepage "https://kuzudb.com/"
-  url "https://github.com/kuzudb/kuzu/archive/refs/tags/v0.6.0.tar.gz"
-  sha256 "e031dd4f51e719dd945ac96b271a952554c4f7ba6239533b6c23d58123fedf28"
+  url "https://github.com/kuzudb/kuzu/archive/refs/tags/v0.7.0.tar.gz"
+  sha256 "93b0e192873c858bc3162c3167dfb9dc7c5583606f77c9a24ca0ccaca8afb72b"
   license "MIT"
   head "https://github.com/kuzudb/kuzu.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "7c2de79deb462b33974ad7ba228e763bb828c12f28547bac69260a459ed08eab"
-    sha256 cellar: :any,                 arm64_ventura:  "e820f66b5bbb212c134fdc9269767f0447ab6dc57fca549de6d25dac7665cc61"
-    sha256 cellar: :any,                 arm64_monterey: "e3615c738eb25b3d1b36f50c521abec6492d9cb2be95d7b57582489fc3e1a26c"
-    sha256 cellar: :any,                 sonoma:         "bdad23ddd7a5ff2f23d6402e3c7a862691a41545badcc66b8bd3c67c73a3bfff"
-    sha256 cellar: :any,                 ventura:        "76c3b01c761a5afea8ddf899ce35ca541a8fdbdc6cf3957eac1bc7d8c683d408"
-    sha256 cellar: :any,                 monterey:       "3f9df70f537ffe79bc4273f6ecd893585a0527d7aade9d3a4f687434851e802f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "904628ecdf32fa0bc7f15424eb9ff311ef83b4267d921d3ebf55cc7712a3c3f6"
+    sha256 cellar: :any,                 arm64_sequoia: "a9e77670704d49e7f98347fe09901325e97f4154526a9102f16d85a0653cf0df"
+    sha256 cellar: :any,                 arm64_sonoma:  "f63ade46595f398899568e026273a7b295f0e4ffd90ce30a914df377615d98a6"
+    sha256 cellar: :any,                 arm64_ventura: "62534f32ead7e6998853fd0fc2da2ec42a575a9b8ad5df2650929bde88c62999"
+    sha256 cellar: :any,                 sonoma:        "7e0d72c93ff51b31f45f2341f9514e5877b3b2b6f2c7bf542905082c4e4be8e7"
+    sha256 cellar: :any,                 ventura:       "e49907d9c9494d18e22aadfad45b286c66cadf4381a8e16fe92fcb3dcd8926f1"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "41a4b4e1ffbc3f7df1bf41d364d7a56409cab56574c187bd231f0f7547125309"
   end
 
   depends_on "cmake" => :build
-  depends_on "python@3.12" => :build
+
+  uses_from_macos "python" => :build
 
   on_macos do
     depends_on "llvm" if DevelopmentTools.clang_build_version <= 1400

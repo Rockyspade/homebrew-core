@@ -2,9 +2,10 @@ class SwiftFormat < Formula
   desc "Formatting technology for Swift source code"
   homepage "https://github.com/swiftlang/swift-format"
   url "https://github.com/swiftlang/swift-format.git",
-      tag:      "510.1.0",
-      revision: "7996ac678197d293f6c088a1e74bb778b4e10139"
+      tag:      "600.0.0",
+      revision: "65f9da9aad84adb7e2028eb32ca95164aa590e3b"
   license "Apache-2.0"
+  revision 1
   version_scheme 1
   head "https://github.com/swiftlang/swift-format.git", branch: "main"
 
@@ -14,13 +15,12 @@ class SwiftFormat < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "c437e97e800c88f93e5888967364514d11cea08d7e51a908e42789f3edce21de"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "b7230ade95e61a45c86cf2f3b23847502ff79e5390d575018b970ec094d4447f"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "c19b042df867ea23ae2c81837c2b7c0f772a04abb55406d27f3472bca98df78f"
-    sha256 cellar: :any_skip_relocation, sonoma:         "7b71e4df0cd03078c71c867b835d756de32270241338b9c7da093ff9d7b78122"
-    sha256 cellar: :any_skip_relocation, ventura:        "859b0e132e9c8491a6b406fcae047acc6ea36d715a150dc4259692aaf95fc274"
-    sha256 cellar: :any_skip_relocation, monterey:       "b3c52a501c90d3f04e78c5ca3f4175503b2905eef3402c8da4954f1445330b2b"
-    sha256                               x86_64_linux:   "f8dda1ab8a875599b7a0b414f5f656d6e67befe625658964c5a7ed28f7ca958d"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "4bee0106201ba2a3036576610e61832b97fb65292c194f52fc15d62e1bdb2243"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "ac50e5269ecc0bffb70a6c5077f97954e2e51c9158a3bfa36b86d89f9d6c5e43"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "7fb047e8f80a72e5d8d7ae50c496d0cf59dd3ab654ce6048e4b7fa7b85afe69a"
+    sha256 cellar: :any_skip_relocation, sonoma:        "a99a19c9fc177a57b2577e3c1b30feb70f13388fc9c4e4ea7968f783058e09a0"
+    sha256 cellar: :any_skip_relocation, ventura:       "a652f68cc4bed9c3186b66c8ee68e79b7387d37943aaff0a0c2d4197367b73fe"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b1949fcb7f1b943fa5b0216bc6f18e12dc369c0538b093786332f851f22b0b03"
   end
 
   # The bottles are built on systems with the CLT installed, and do not work
@@ -29,10 +29,22 @@ class SwiftFormat < Formula
 
   depends_on xcode: ["14.0", :build]
 
-  uses_from_macos "swift"
+  uses_from_macos "swift" => :build
+
+  # Fix hang on Linux.
+  # Remove with the next release.
+  patch do
+    url "https://github.com/swiftlang/swift-format/commit/5a1348bd9d08227b2af8a94e95bf2ebb1ca1817e.patch?full_index=1"
+    sha256 "0b012627c97d077cbbbc5c9427bab8f6a5c03b150116b2370eaa43bb0b4d9454"
+  end
 
   def install
-    system "swift", "build", "--disable-sandbox", "-c", "release"
+    args = if OS.mac?
+      ["--disable-sandbox"]
+    else
+      ["--static-swift-stdlib"]
+    end
+    system "swift", "build", *args, "-c", "release", "--product", "swift-format"
     bin.install ".build/release/swift-format"
     doc.install "Documentation/Configuration.md"
   end

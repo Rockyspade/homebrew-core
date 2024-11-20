@@ -11,6 +11,7 @@ class ArmLinuxGnueabihfBinutils < Formula
   end
 
   bottle do
+    sha256 arm64_sequoia: "6942fe8a2cb9b5bf36dc3af17b5e0eaf7646c843fe599f924fe7ab8c1d31da6c"
     sha256 arm64_sonoma:  "fc58d0db195365cfbae0778ddb159b972bba0f8025a4748d6a622b27b36a4a37"
     sha256 arm64_ventura: "4b4b2e940fd37153d23adbe7a05fe7c191232cff01ed6fa7545e2ac4018c2ca1"
     sha256 sonoma:        "14d772054e88d8a57c6f6d96968866130d49943bc72e4943198a988b8c4deab7"
@@ -18,7 +19,7 @@ class ArmLinuxGnueabihfBinutils < Formula
     sha256 x86_64_linux:  "6dca015b099d6221e09b9acfba7514099d538d5bf57fa5b40940a7bf1bb256be"
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   # Requires the <uchar.h> header
   # https://sourceware.org/bugzilla/show_bug.cgi?id=31320
   depends_on macos: :ventura
@@ -37,10 +38,7 @@ class ArmLinuxGnueabihfBinutils < Formula
     ENV.append "CXXFLAGS", "-Wno-c++11-narrowing"
 
     target = "arm-linux-gnueabihf"
-    system "./configure", "--disable-debug",
-                          "--disable-dependency-tracking",
-                          "--enable-deterministic-archives",
-                          "--prefix=#{prefix}",
+    system "./configure", "--enable-deterministic-archives",
                           "--libdir=#{lib}/#{target}",
                           "--infodir=#{info}/#{target}",
                           "--disable-werror",
@@ -50,7 +48,8 @@ class ArmLinuxGnueabihfBinutils < Formula
                           "--enable-interwork",
                           "--with-system-zlib",
                           "--with-zstd",
-                          "--disable-nls"
+                          "--disable-nls",
+                          *std_configure_args
     system "make"
     system "make", "install"
   end

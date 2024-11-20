@@ -10,6 +10,7 @@ class Jrtplib < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "ef88fc08dc41b679c8ccdcaebabab8303f7eb30ccc8cddb2776e4952f335d2f0"
     sha256 cellar: :any,                 arm64_sonoma:   "c21691446176fd07d6163eece3a708d9088739e61fa29671cdeacdb3737fabc5"
     sha256 cellar: :any,                 arm64_ventura:  "82b8535c4b305e27653d742b771ba387c09e937be9917a8e53a8aa2c04034e2f"
     sha256 cellar: :any,                 arm64_monterey: "66a2c5923fb2f9999ea1a5adcacbceb38398231be4536f51f8902e4f84b5cdc4"
@@ -34,7 +35,7 @@ class Jrtplib < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <jrtplib3/rtpsessionparams.h>
       using namespace jrtplib;
       int main() {
@@ -42,7 +43,7 @@ class Jrtplib < Formula
         sessionparams.SetOwnTimestampUnit(1.0/8000.0);
         return 0;
       }
-    EOS
+    CPP
 
     system ENV.cxx, "test.cpp", "-I#{include}", "-L#{lib}", "-ljrtp",
                     "-o", "test"

@@ -16,6 +16,9 @@ class OsrmBackend < Formula
     #
     # Also add temporary build fix to 'include/util/lua_util.hpp' for Boost 1.85.0.
     # Issue ref: https://github.com/Project-OSRM/osrm-backend/issues/6850
+    #
+    # Also backport sol2.hpp workaround to avoid a Clang bug. Remove in the next release
+    # Ref: https://github.com/Project-OSRM/osrm-backend/commit/523ee762f077908d03b66d0976c877b52adf22fa
     patch :DATA
   end
 
@@ -25,6 +28,7 @@ class OsrmBackend < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "ea5f99145c4fe841d95fba33e08a093f88b291e311e219b0b833fd9777caeb9e"
     sha256 cellar: :any,                 arm64_sonoma:   "650d17a3915469c4bbd23eec83f8ceb27570b0d3207c1a3598f3d6747296c21e"
     sha256 cellar: :any,                 arm64_ventura:  "ccd438e39cdec24fdff74bb2ed43cee49d00af2b3144ad90802fa3e3bb53eb79"
     sha256 cellar: :any,                 arm64_monterey: "072bd2264dec2d9db23593505666eb8b67b5f993d5753a67decae862be2b5330"
@@ -80,7 +84,7 @@ class OsrmBackend < Formula
     node2 = 'visible="true" version="1" changeset="323878" timestamp="2008-05-03T13:39:23Z"'
     node3 = 'visible="true" version="1" changeset="323878" timestamp="2008-05-03T13:39:23Z"'
 
-    (testpath/"test.osm").write <<~EOS
+    (testpath/"test.osm").write <<~XML
       <?xml version="1.0" encoding="UTF-8"?>
       <osm version="0.6">
        <bounds minlat="54.0889580" minlon="12.2487570" maxlat="54.0913900" maxlon="12.2524800"/>
@@ -93,14 +97,14 @@ class OsrmBackend < Formula
         <tag k="highway" v="unclassified"/>
        </way>
       </osm>
-    EOS
+    XML
 
-    (testpath/"tiny-profile.lua").write <<~EOS
+    (testpath/"tiny-profile.lua").write <<~LUA
       function way_function (way, result)
         result.forward_mode = mode.driving
         result.forward_speed = 1
       end
-    EOS
+    LUA
 
     safe_system bin/"osrm-extract", "test.osm", "--profile", "tiny-profile.lua"
     safe_system bin/"osrm-contract", "test.osrm"
@@ -134,3 +138,40 @@ index 36af5a1f3..cd2d1311c 100644
 
  #include <iostream>
  #include <string>
+
+diff --git a/third_party/sol2-3.3.0/include/sol/sol.hpp b/third_party/sol2-3.3.0/include/sol/sol.hpp
+index 8b0b7d36ea4ef2a36133ce28476ae1620fcd72b5..d7da763f735434bf4a40b204ff735f4e464c1b13 100644
+--- a/third_party/sol2-3.3.0/include/sol/sol.hpp
++++ b/third_party/sol2-3.3.0/include/sol/sol.hpp
+@@ -19416,7 +19416,14 @@ namespace sol { namespace function_detail {
+ 		}
+
+ 		template <bool is_yielding, bool no_trampoline>
+-		static int call(lua_State* L) noexcept(std::is_nothrow_copy_assignable_v<T>) {
++		static int call(lua_State* L)
++// see https://github.com/ThePhD/sol2/issues/1581#issuecomment-2103463524
++#if SOL_IS_ON(SOL_COMPILER_CLANG)
++		// apparent regression in clang 18 - llvm/llvm-project#91362
++#else
++			noexcept(std::is_nothrow_copy_assignable_v<T>)
++#endif
++		{
+ 			int nr;
+ 			if constexpr (no_trampoline) {
+ 				nr = real_call(L);
+@@ -19456,7 +19463,14 @@ namespace sol { namespace function_detail {
+ 		}
+
+ 		template <bool is_yielding, bool no_trampoline>
+-		static int call(lua_State* L) noexcept(std::is_nothrow_copy_assignable_v<T>) {
++		static int call(lua_State* L)
++// see https://github.com/ThePhD/sol2/issues/1581#issuecomment-2103463524
++#if SOL_IS_ON(SOL_COMPILER_CLANG)
++		// apparent regression in clang 18 - llvm/llvm-project#91362
++#else
++			noexcept(std::is_nothrow_copy_assignable_v<T>)
++#endif
++		{
+ 			int nr;
+ 			if constexpr (no_trampoline) {
+ 				nr = real_call(L);

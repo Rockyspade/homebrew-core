@@ -6,6 +6,7 @@ class Libxfixes < Formula
   license "MIT"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "d8cf5f8d0134815b458eeaf44dd0e18357322bfeba750b4a79c7619ce24568a8"
     sha256 cellar: :any,                 arm64_sonoma:   "50d2927a1b3705cccad6057873681f1605786646c2dbd8af9bac2dcfbd1b49d6"
     sha256 cellar: :any,                 arm64_ventura:  "b087b60e125d6e348292f14f9d692693a0dca7894975002fa29f754c25395bbc"
     sha256 cellar: :any,                 arm64_monterey: "515bbc38f06c142ff7cdb65b9f1401fe187241b64186b0670f4809787e288c2a"
@@ -36,14 +37,14 @@ class Libxfixes < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include "X11/extensions/Xfixes.h"
 
       int main(int argc, char* argv[]) {
         XFixesSelectionNotifyEvent event;
         return 0;
       }
-    EOS
+    C
     system ENV.cc, "test.c"
     assert_equal 0, $CHILD_STATUS.exitstatus
   end

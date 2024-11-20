@@ -11,6 +11,7 @@ class Mkhexgrid < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "66907e9872e7fa397d62e89974e7ad0abfb9a2dc527f25d32606e0d6a73e93f5"
     sha256 cellar: :any,                 arm64_sonoma:   "2714d9b761672dd9ce249a18f1b24d7d0a954574383107b7b048924d11587fd4"
     sha256 cellar: :any,                 arm64_ventura:  "f506ce3ff66554b2586a73404a1af6d811024842b254218b67f7aa421f699d9b"
     sha256 cellar: :any,                 arm64_monterey: "5b461772bb6b74ee5cc07db25a8baf6055941f93cba08946bb7174e024298e7d"
@@ -27,10 +28,12 @@ class Mkhexgrid < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "a52fcf963685daee9a1f8ab938b009639886dfb1f2a71cdf93969ff4a5d6bfc3"
   end
 
-  depends_on "boost"
+  depends_on "boost" => :build
   depends_on "gd"
 
   def install
+    ENV.cxx11
+
     inreplace "Makefile" do |s|
       s.change_make_var! "DESTDIR", prefix
       s.change_make_var! "CC", ENV.cc

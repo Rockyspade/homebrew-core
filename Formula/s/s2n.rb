@@ -1,8 +1,8 @@
 class S2n < Formula
   desc "Implementation of the TLS/SSL protocols"
   homepage "https://github.com/aws/s2n-tls"
-  url "https://github.com/aws/s2n-tls/archive/refs/tags/v1.5.1.tar.gz"
-  sha256 "d79710d6ef089097a3b84fc1e5cec2f08d1ec46e93b1d400df59fcfc859e15a3"
+  url "https://github.com/aws/s2n-tls/archive/refs/tags/v1.5.9.tar.gz"
+  sha256 "8a9aa2ba9a25f936e241eaa6bb7e39bc1a097d178c4b255fa36795c0457e3f4e"
   license "Apache-2.0"
   head "https://github.com/aws/s2n-tls.git", branch: "main"
 
@@ -12,13 +12,12 @@ class S2n < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "a098c9c60b0902dd52f1ccd00be745acd712328cade8b55772fd90f1e84516ce"
-    sha256 cellar: :any,                 arm64_ventura:  "2bdc7cb808376e920808a52026eb16c820315f1f086ff3830addce9d76194920"
-    sha256 cellar: :any,                 arm64_monterey: "1e025ecbc0532b35b4c126c092b89056fb065f37c2e1615ba1aecb0f873f459b"
-    sha256 cellar: :any,                 sonoma:         "141f9c2eb073ca7be650c9918cf4cd7dd45629e3602d22c376075f739b9d2db9"
-    sha256 cellar: :any,                 ventura:        "fcc933ab0d1e28e6d69fdaa7ca8e85edd6ceb7dccfda13df4a384694c88ef6ef"
-    sha256 cellar: :any,                 monterey:       "a695a15f45ffada1b8207e10f3cd15e7f90deca28df7be77560544fbec452d6c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5dc18bca6c565d2dfd65c45c18a916c6667930d60f45e53f89abd9e96cef5a1f"
+    sha256 cellar: :any,                 arm64_sequoia: "00b3e40ef3eae87579b4ff37d7e6e626dc4a1672f935c5ca5d55fdc2c17f968f"
+    sha256 cellar: :any,                 arm64_sonoma:  "acedc4be09cef1b47c114eb155a907074b78b5a2a55b77d5374d3ffae40ebc95"
+    sha256 cellar: :any,                 arm64_ventura: "220d35e7b29150b7b75ebe4848f81070dd7ad133ad4aa1a182a0b3ac4f5f8375"
+    sha256 cellar: :any,                 sonoma:        "d55a6152c5b68775986e12ff08d12a293c2b230777c02e37fe52fbd9e3999afa"
+    sha256 cellar: :any,                 ventura:       "879fb481e42f74f12e273cc8c7cf531d45b4402d3a184e58c21d15c32d7bea82"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "452e366b212bfbb62e52380a335d63281069031513d8c34624be8f2388bbccd4"
   end
 
   depends_on "cmake" => :build
@@ -37,14 +36,14 @@ class S2n < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <assert.h>
       #include <s2n.h>
       int main() {
         assert(s2n_init() == 0);
         return 0;
       }
-    EOS
+    C
     system ENV.cc, "test.c", "-L#{opt_lib}", "-ls2n", "-o", "test"
     ENV["S2N_DONT_MLOCK"] = "1" if OS.linux?
     system "./test"

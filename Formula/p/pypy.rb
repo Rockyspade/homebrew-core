@@ -1,8 +1,8 @@
 class Pypy < Formula
   desc "Highly performant implementation of Python 2 in Python"
   homepage "https://pypy.org/"
-  url "https://downloads.python.org/pypy/pypy2.7-v7.3.16-src.tar.bz2"
-  sha256 "43721cc0c397f0f3560b325c20c70b11f7c76c27910d3df09f8418cec4f9c2ad"
+  url "https://downloads.python.org/pypy/pypy2.7-v7.3.17-src.tar.bz2"
+  sha256 "50e06840f4bbde91448080a4118068a89b8fbcae25ff8da1e2bb1402dc9a0346"
   license "MIT"
   revision 1
   head "https://github.com/pypy/pypy.git", branch: "main"
@@ -13,20 +13,19 @@ class Pypy < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "da1a01f89696f81729d396a0a8d7f8bbfd601064147bcdf26a9080a5d94e3acc"
-    sha256 cellar: :any,                 arm64_ventura:  "64b8f29a40a69dad3b2fbfe0f6b22b31baf0520189b70cccea9af48bfae85c7f"
-    sha256 cellar: :any,                 arm64_monterey: "8e33e35169131951c317964a1f20f8151958c99d60f4c8830679ea0c88daebb6"
-    sha256 cellar: :any,                 sonoma:         "e681af17dd443e7cf0be677356beb1285c365b9cd67cf0ba68fd7279f7f9fe3f"
-    sha256 cellar: :any,                 ventura:        "d89473f5b6a9cbd2f150bbd40c236efc562aefea65bf8674cf8a081af1f091b0"
-    sha256 cellar: :any,                 monterey:       "77e02724127fff79dcdc56d0a522c2e2ebca1127ad5e6788872b2e81af84e1af"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c6392a5a456bbbd9a7b3f690c9408f4b8a7ac990da4571d9e8d05d57bc3df422"
+    sha256 cellar: :any,                 arm64_sequoia: "fde9ad14a4d4238ffb86ac7678048eb59812d4a80e4806673b5a4aa1920d4c07"
+    sha256 cellar: :any,                 arm64_sonoma:  "a722ce7fead5aa7d217259ac716fe2de88348daacf3f4b6d39c374ebb64b4693"
+    sha256 cellar: :any,                 arm64_ventura: "f91f6d9db8f89df16a513550f0d8bf344da4c05689faab09e675accc8cd3b117"
+    sha256 cellar: :any,                 sonoma:        "26aff7d94b19d7c8a73dfcf547d0ae4933205e70307d7af06eec8374a5908997"
+    sha256 cellar: :any,                 ventura:       "dfc471f6f2dcbedfbad9f928dd2f77d2b7c33e48c954692f3d7e15636302912c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e3ec62e5d6a517ee0fd009759b2931a0c040b18e0693414a5d45a74e4f48f644"
   end
 
   depends_on "pkg-config" => :build
   depends_on "gdbm"
   depends_on "openssl@3"
   depends_on "sqlite"
-  depends_on "tcl-tk"
+  depends_on "tcl-tk@8"
 
   uses_from_macos "bzip2"
   uses_from_macos "expat"
@@ -77,9 +76,11 @@ class Pypy < Formula
     ENV.append_to_cflags "-Wno-incompatible-function-pointer-types" if DevelopmentTools.clang_build_version >= 1500
 
     # The `tcl-tk` library paths are hardcoded and need to be modified for non-/usr/local prefix
+    tcltk = Formula["tcl-tk@8"]
     inreplace "lib_pypy/_tkinter/tklib_build.py" do |s|
-      s.gsub! "/usr/local/opt/tcl-tk/", Formula["tcl-tk"].opt_prefix/""
-      s.gsub! "/include'", "/include/tcl-tk'"
+      s.gsub! "['/usr/local/opt/tcl-tk/include']", "[]"
+      s.gsub! "(homebrew + '/include')", "('#{tcltk.opt_include}/tcl-tk')"
+      s.gsub! "(homebrew + '/opt/tcl-tk/lib')", "('#{tcltk.opt_lib}')"
     end
 
     if OS.mac?

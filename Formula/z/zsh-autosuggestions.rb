@@ -1,19 +1,12 @@
 class ZshAutosuggestions < Formula
   desc "Fish-like fast/unobtrusive autosuggestions for zsh"
   homepage "https://github.com/zsh-users/zsh-autosuggestions"
-  url "https://github.com/zsh-users/zsh-autosuggestions/archive/refs/tags/v0.7.0.tar.gz"
-  sha256 "ccd97fe9d7250b634683c651ef8a2fe3513ea917d1b491e8696a2a352b714f08"
+  url "https://github.com/zsh-users/zsh-autosuggestions/archive/refs/tags/v0.7.1.tar.gz"
+  sha256 "0df7affff21cd87ed298e6a3970ed08a1dd66a6efa676454ee5b091ad503badf"
   license "MIT"
 
   bottle do
-    rebuild 2
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "41af0bbd2d46b3e09d821e1c4702c2e224ce214d436fc9a09ca7e6fec32ebfa6"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "41af0bbd2d46b3e09d821e1c4702c2e224ce214d436fc9a09ca7e6fec32ebfa6"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "41af0bbd2d46b3e09d821e1c4702c2e224ce214d436fc9a09ca7e6fec32ebfa6"
-    sha256 cellar: :any_skip_relocation, sonoma:         "5b431cf90fc39ec89e8f3b67aad634732ea7c4691812d2169e39a89deb6246c9"
-    sha256 cellar: :any_skip_relocation, ventura:        "5b431cf90fc39ec89e8f3b67aad634732ea7c4691812d2169e39a89deb6246c9"
-    sha256 cellar: :any_skip_relocation, monterey:       "41af0bbd2d46b3e09d821e1c4702c2e224ce214d436fc9a09ca7e6fec32ebfa6"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "41af0bbd2d46b3e09d821e1c4702c2e224ce214d436fc9a09ca7e6fec32ebfa6"
+    sha256 cellar: :any_skip_relocation, all: "b81edc29e7e71866042bb3e06be7c23ce5501b6cd72be6cd5f3fdfd14b311c71"
   end
 
   uses_from_macos "zsh" => :test

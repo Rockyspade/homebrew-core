@@ -1,18 +1,17 @@
 class Promptfoo < Formula
   desc "Test your LLM app locally"
   homepage "https://promptfoo.dev/"
-  url "https://registry.npmjs.org/promptfoo/-/promptfoo-0.78.3.tgz"
-  sha256 "2c47cac6d1813da46c27cf59d48c812cfd02f24c7b9d8c26b5581733352ddc38"
+  url "https://registry.npmjs.org/promptfoo/-/promptfoo-0.97.0.tgz"
+  sha256 "8cd0c71b27aeec33644495ebe50cc6ee0efac9ab5c83ecce5b9bed8ab4c9fd55"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "c7b3ceb5590de2e8fc20170fb7b8ead124b2d457f5f2db252c0ef0e3ffcaa749"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "4745ca28afc16e136ad6ca5f3e90f172dba8e489998918b526394f0a704be7ca"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "abdec5f2b4704e2c07ab0243576b9ad9975d28b7500e576eb5b62326b0a8d164"
-    sha256 cellar: :any_skip_relocation, sonoma:         "d26306fa6556b3aa13666bd012695a6414958bc539ff7d15b4dfcc5fba43d834"
-    sha256 cellar: :any_skip_relocation, ventura:        "7bf00aae53f7ce46db73bd08e388b9dd73038b737f3a593d9ddee71b3d5d7546"
-    sha256 cellar: :any_skip_relocation, monterey:       "d170fd6bcb63843d5efeec995a4380044fbe5e25a12e4aeca50acc19721fcef7"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "19a3fee9e8ebcc0d8104818e4244417686b6e8a23d133f923a968daec260ae84"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "907a881ede458d454f7c9dcfe2bb86bacc1098a9eb90b22370e02c642c6213ff"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "095181920d7e481195f68caab8598edd37d2438ae3bdb38a649f29d9f4297758"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "81331e421c5f81f36a67d2669da55a04d1262da62bdf38e06d9d67049b0f7961"
+    sha256 cellar: :any_skip_relocation, sonoma:        "3f09e4c4d5fef5587cb6a69e577971af2ef4bfea43e307d5ffd1ae9654ccb8fd"
+    sha256 cellar: :any_skip_relocation, ventura:       "d4027337121a3743bb21b95e9aec314b50f8f14c6a027f40d576d64728e901ac"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d54ed991524967d433be6929237f92937fc346374acd32974ab10fcaf934ca5e"
   end
 
   depends_on "node"

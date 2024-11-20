@@ -1,18 +1,17 @@
 class Mihomo < Formula
   desc "Another rule-based tunnel in Go, formerly known as ClashMeta"
   homepage "https://wiki.metacubex.one"
-  url "https://github.com/MetaCubeX/mihomo/archive/refs/tags/v1.18.7.tar.gz"
-  sha256 "e4ff0d1a8762ff3e259e4999d9808b353c7a58a1dcabe87dccc9c91bdb6814c7"
+  url "https://github.com/MetaCubeX/mihomo/archive/refs/tags/v1.18.10.tar.gz"
+  sha256 "98e5c79fd5bec5478ffb3972d28a0474034a9abbd7dde2859c0c891ab5b71b2d"
   license "GPL-3.0-or-later"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "e2df6df3ebfd439150b8f84af11a0784762c00c84273b34b54cefd46fad23485"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "59b174cd3cf6049bbfca92054a9b4604383d7c3cb9f0bd076ba01c45841f3a2c"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "b02dbd14ec8c070e0eefb8d53782ba9e462cae465b656d6def6d334407fd18e5"
-    sha256 cellar: :any_skip_relocation, sonoma:         "1a1bdce0ffabb98827e4cc8872cffd8ae139469370fb433ed781ef1e0d5b863e"
-    sha256 cellar: :any_skip_relocation, ventura:        "e0e9cca3639e784294f6926c0d5e2e23b0eb38fae3436808f4e2df444d4263d2"
-    sha256 cellar: :any_skip_relocation, monterey:       "d3ffeff2a73f3623922803df0c4b597af597e7ed7c108376cc2cd4d25ffb24dc"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "3996e627b44b39cae3c0d587e0eb1b3c2027f9fef3f4bf75e29fd8ea33ef684f"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "7b9071c7fa695607cc8f26d182b56f5eaa85565210c32dffb4d0c0cae7643fe5"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "8994600c401575fe3bd1455528aef03142185d64c8d4f7451cb6ae1edadac61a"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "f5dcae5afe31053e02fea7030fa775ca99d79892c9fb949e97f7950a7bfeadea"
+    sha256 cellar: :any_skip_relocation, sonoma:        "a76c78c1d661b10a17eb9c6cb8dc0f3fdbcf7493eb58e0bd57d346c424fd6825"
+    sha256 cellar: :any_skip_relocation, ventura:       "612c7983f62c1bafd916af8b9421a2a675fffa2ad6d41b9fb05e2d24da78eba8"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e8ed15b08074a532496007c364df8002e390b546a16a7ab208ad8f8693609960"
   end
 
   depends_on "go" => :build
@@ -25,10 +24,10 @@ class Mihomo < Formula
     ]
     system "go", "build", "-tags", "with_gvisor", *std_go_args(ldflags:)
 
-    (buildpath/"config.yaml").write <<~EOS
+    (buildpath/"config.yaml").write <<~YAML
       # Document: https://wiki.metacubex.one/config/
       mixed-port: 7890
-    EOS
+    YAML
     pkgetc.install "config.yaml"
   end
 
@@ -49,9 +48,9 @@ class Mihomo < Formula
   test do
     assert_match version.to_s, shell_output("#{bin}/mihomo -v")
 
-    (testpath/"mihomo/config.yaml").write <<~EOS
+    (testpath/"mihomo/config.yaml").write <<~YAML
       mixed-port: #{free_port}
-    EOS
+    YAML
     system bin/"mihomo", "-t", "-d", testpath/"mihomo"
   end
 end

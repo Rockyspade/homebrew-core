@@ -11,6 +11,7 @@ class Spatialindex < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "015d8d895f7d70c463c51cc1edbe5947312bba8c02520ed7038847bd72029802"
     sha256 cellar: :any,                 arm64_sonoma:   "d4d8356031dbd364d52f7084eda53904504adb4c2d66cd271eb59724c68c54bb"
     sha256 cellar: :any,                 arm64_ventura:  "18cf32a34ab1ba0b81c809ddcdaee91467b0221cd0175db1fdf859f8f6be237f"
     sha256 cellar: :any,                 arm64_monterey: "45516ebe96f28fd4cc70ee529d7e008b897e4e277aaff5ee7407635134089bd7"
@@ -33,7 +34,7 @@ class Spatialindex < Formula
   test do
     # write out a small program which inserts a fixed box into an rtree
     # and verifies that it can query it
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <spatialindex/SpatialIndex.h>
 
       using namespace std;
@@ -79,7 +80,7 @@ class Spatialindex < Formula
 
           return (q_vis.matches.size() == 1) ? 0 : 1;
       }
-    EOS
+    CPP
     system ENV.cxx, "-std=c++11", "test.cpp", "-L#{lib}", "-lspatialindex", "-o", "test"
     system "./test"
   end

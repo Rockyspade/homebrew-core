@@ -1,19 +1,18 @@
 class Libvatek < Formula
   desc "User library to control VATek chips"
   homepage "https://github.com/VisionAdvanceTechnologyInc/vatek_sdk_2"
-  url "https://github.com/VisionAdvanceTechnologyInc/vatek_sdk_2/archive/refs/tags/v3.10.tar.gz"
-  sha256 "cf445ba21c78ddc013b8f123719543156774e0878183dcef058611871d34ec45"
+  url "https://github.com/VisionAdvanceTechnologyInc/vatek_sdk_2/archive/refs/tags/v3.12.1.tar.gz"
+  sha256 "293a9d8f271fe960c987b0c620bbc1daacaf1fba00374c3431cab990456ba516"
   license "BSD-2-Clause"
   head "https://github.com/VisionAdvanceTechnologyInc/vatek_sdk_2.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "0cc06fb62e01663ce4e68e119f9c250bfba4a0704e312589f30dda8e5ea173ab"
-    sha256 cellar: :any,                 arm64_ventura:  "a83491dc4361af9536e53467b5fdbbd0b43e0591c0c452c76c5cc7599f101ac8"
-    sha256 cellar: :any,                 arm64_monterey: "c9d734af1f8c9040363632e95b03455aded913f0acedaa1047c83d35f680f905"
-    sha256 cellar: :any,                 sonoma:         "89ed2d18d0b47530be1ce7a729c3790e985261c63ff7974e47e0b8985fca9c1a"
-    sha256 cellar: :any,                 ventura:        "dd44e932338325cfcea3ae83fee997d6266ea77b507b35bcb7872b24c023911c"
-    sha256 cellar: :any,                 monterey:       "bb080754bdfd077151049207517de79ed2fc6fd346ff465f55cca79bf55fa6b0"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d9fa301f6a5ca4ad23ccfecb3d2ca72e4df979b355ebde97e9bdf3c7b78bd69e"
+    sha256 cellar: :any,                 arm64_sequoia: "1e231d20c397029d363b48b1d685a4ed1710ea69e1cf4408c7bcbd758418b425"
+    sha256 cellar: :any,                 arm64_sonoma:  "c081fd50a34d94aefe63df4c343975be869bbfad3b0215a5daaa6b306a8b46d7"
+    sha256 cellar: :any,                 arm64_ventura: "adbf2c5ff43b6d27ff6fee7e2e58c8a4468387e50ae96c227ffb91dd055f94f3"
+    sha256 cellar: :any,                 sonoma:        "1451fcbafaed9feedeedd0acb7b96a08f5b039ee713e308b569162680eb125f9"
+    sha256 cellar: :any,                 ventura:       "1e5c0363747da7a46a013899694315c0d01226c2251f7fd00e208218dd99ac53"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "09d2064162ff257be56fd39c20b6af3626943f328097a8e715515d5e4ea2c592"
   end
 
   depends_on "cmake" => :build
@@ -28,7 +27,7 @@ class Libvatek < Formula
   end
 
   test do
-    (testpath/"vatek_test.c").write <<~EOS
+    (testpath/"vatek_test.c").write <<~C
       #include <vatek_sdk_device.h>
       #include <stdio.h>
       #include <stdlib.h>
@@ -46,7 +45,7 @@ class Libvatek < Formula
               return EXIT_FAILURE;
           }
       }
-    EOS
+    C
     system ENV.cc, "vatek_test.c", "-I#{include}/vatek", "-L#{lib}", "-lvatek_core", "-o", "vatek_test"
     assert_equal "passed", shell_output("./vatek_test").strip
   end

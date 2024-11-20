@@ -1,21 +1,11 @@
 class Grpc < Formula
   desc "Next generation open source RPC library and framework"
   homepage "https://grpc.io/"
+  url "https://github.com/grpc/grpc.git",
+      tag:      "v1.68.0",
+      revision: "6b49ae626bc9cd7033e062f89dbe0e0576b1110e"
   license "Apache-2.0"
-  revision 4
   head "https://github.com/grpc/grpc.git", branch: "master"
-
-  stable do
-    url "https://github.com/grpc/grpc.git",
-        tag:      "v1.62.2",
-        revision: "96f984744fe728e196c11d33b91b022566c0d40f"
-
-    # Backport fix for Protobuf 26
-    patch do
-      url "https://github.com/grpc/grpc/commit/98a96c5068da14ed29d70ca23818b5f408a2e7b4.patch?full_index=1"
-      sha256 "5c4fc4307d0943ce3c9a07921bddaa24ca3d504adf38c9b0f071e23327661ac1"
-    end
-  end
 
   # There can be a notable gap between when a version is tagged and a
   # corresponding release is created, so we check releases instead of the Git
@@ -29,13 +19,12 @@ class Grpc < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "c9d9996cd5fc3ea4ab38b6de3c02cf4fc09bcc7c35cab5bdcafdfead0591be0c"
-    sha256 cellar: :any,                 arm64_ventura:  "9bfb08b7e237d5627661646aa3cd69661107e03d252507d11cd999eeda84e99b"
-    sha256 cellar: :any,                 arm64_monterey: "8deaf1f1399b7fa007b835d707d832d8d642caf737a9b29bcb50c4793b644d61"
-    sha256 cellar: :any,                 sonoma:         "236c463aac549d09b77c98bf5453be0b25eb4a1e610c69f7d17d5767c48599cd"
-    sha256 cellar: :any,                 ventura:        "bf63524eea14cdf767ace3bf474740f8a23326643b3b9d481f1b383c77bca6ab"
-    sha256 cellar: :any,                 monterey:       "ebadd34a7782281b7f1166d4e6cb0f293663e5a0fd91a3b59409318eff7ea12d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a48893c79556662762c551476b92a7eca91fc350a44ad22f2fd51576e076376b"
+    sha256 cellar: :any,                 arm64_sequoia: "9e47a4ac6d76db5c0deeba82d2d3c25194d606b489fec24c3c1bd4afe7750f51"
+    sha256 cellar: :any,                 arm64_sonoma:  "00d9c617d1af81fef0679ca87755bc9be1f2f338e951642e7d74983eaeae3f56"
+    sha256 cellar: :any,                 arm64_ventura: "86d6d8123aa9c37e10299d23a8e40ec4a56b69d92f406372b4a28424f8ce0c21"
+    sha256 cellar: :any,                 sonoma:        "9327468f106acedb350b27603b92d70a4a3b45a0c2c54087ac7a0a353e5aef97"
+    sha256 cellar: :any,                 ventura:       "edad26928bd56750a585ca69a7215577250770927fa05fe5872a67ac357e5f6c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "96a0740f9e6f4d4fc31458d04ee760daba90eb28be4aebddf4b793a16903097c"
   end
 
   depends_on "autoconf" => :build
@@ -78,32 +67,43 @@ class Grpc < Formula
       -DgRPC_ZLIB_PROVIDER=package
       -DgRPC_RE2_PROVIDER=package
     ]
+    linker_flags = []
+    linker_flags += %w[-undefined dynamic_lookup] if OS.mac?
+    args << "-DCMAKE_SHARED_LINKER_FLAGS=-Wl,#{linker_flags.join(",")}" if linker_flags.present?
     system "cmake", "-S", ".", "-B", "_build", *args, *std_cmake_args
     system "cmake", "--build", "_build"
     system "cmake", "--install", "_build"
 
     # The following are installed manually, so need to use CMAKE_*_LINKER_FLAGS
+    # TODO: `grpc_cli` is a huge pain to install. Consider removing it.
+    linker_flags += %W[-rpath #{rpath} -rpath #{rpath(target: HOMEBREW_PREFIX/"lib")}]
     args = %W[
-      -DCMAKE_EXE_LINKER_FLAGS=-Wl,-rpath,#{rpath}
-      -DCMAKE_SHARED_LINKER_FLAGS=-Wl,-rpath,#{rpath}
+      -DCMAKE_EXE_LINKER_FLAGS=-Wl,#{linker_flags.join(",")}
+      -DCMAKE_SHARED_LINKER_FLAGS=-Wl,#{linker_flags.join(",")}
       -DBUILD_SHARED_LIBS=ON
       -DgRPC_BUILD_TESTS=ON
+      -DgRPC_ABSL_PROVIDER=package
+      -DgRPC_CARES_PROVIDER=package
+      -DgRPC_PROTOBUF_PROVIDER=package
+      -DgRPC_SSL_PROVIDER=package
+      -DgRPC_ZLIB_PROVIDER=package
+      -DgRPC_RE2_PROVIDER=package
     ]
-    system "cmake", "-S", ".", "-B", "_build", *args, *std_cmake_args
-    system "cmake", "--build", "_build", "--target", "grpc_cli"
-    bin.install "_build/grpc_cli"
-    lib.install Dir["_build/#{shared_library("libgrpc++_test_config", "*")}"]
+    system "cmake", "-S", ".", "-B", "_build-grpc_cli", *args, *std_cmake_args
+    system "cmake", "--build", "_build-grpc_cli", "--target", "grpc_cli"
+    bin.install "_build-grpc_cli/grpc_cli"
+    lib.install (buildpath/"_build-grpc_cli").glob(shared_library("libgrpc++_test_config", "*"))
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <grpc/grpc.h>
       int main() {
         grpc_init();
         grpc_shutdown();
         return GRPC_STATUS_OK;
       }
-    EOS
+    CPP
     ENV.prepend_path "PKG_CONFIG_PATH", Formula["openssl@3"].opt_lib/"pkgconfig"
     pkg_config_flags = shell_output("pkg-config --cflags --libs libcares protobuf re2 grpc++").chomp.split
     system ENV.cc, "test.cpp", "-L#{Formula["abseil"].opt_lib}", *pkg_config_flags, "-o", "test"

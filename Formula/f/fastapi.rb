@@ -3,24 +3,23 @@ class Fastapi < Formula
 
   desc "CLI for FastAPI framework"
   homepage "https://fastapi.tiangolo.com/"
-  url "https://files.pythonhosted.org/packages/2c/09/71a961740a1121d7cc90c99036cc3fbb507bf0c69860d08d4388f842196b/fastapi-0.112.1.tar.gz"
-  sha256 "b2537146f8c23389a7faa8b03d0bd38d4986e6983874557d95eed2acc46448ef"
+  url "https://files.pythonhosted.org/packages/ae/29/f71316b9273b6552a263748e49cd7b83898dc9499a663d30c7b9cb853cb8/fastapi-0.115.5.tar.gz"
+  sha256 "0e7a4d0dc0d01c68df21887cce0945e72d3c48b9f4f79dfe7a7d53aa08fbb289"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "5a9189b8f4a6c05d884dcd3abcd58d854d1dd0cd656e71684835d81910a1696a"
-    sha256 cellar: :any,                 arm64_ventura:  "e3c34bf9cf78c6ff472b16e86a2f085d3938aa4bf1b80ce869fa4be7a7532ca8"
-    sha256 cellar: :any,                 arm64_monterey: "905f52fb71a55a1fa5c7311b5a8586d0bfca1ee4f083f8ce846329d56f887d81"
-    sha256 cellar: :any,                 sonoma:         "32085d7dc37f2721b53a665e17b843b05bd63fb078a5b3e0eb1967890c43f071"
-    sha256 cellar: :any,                 ventura:        "2e335ca89bf6f5c060e84d8c09e43a64fe115999b29e0f758b1da892066a1782"
-    sha256 cellar: :any,                 monterey:       "d5a890421c743f3f42199448841240996de7a6c609a368a3881db72229f1df56"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6b6abce65dad0063cfb61c262de7c46ed075e6d7275dc138bba5250c8d8ed854"
+    sha256 cellar: :any,                 arm64_sequoia: "0a7de80793c3b2201fe37b9538c0b905bf6d6725aaff8ebc086aba55ea7fde6c"
+    sha256 cellar: :any,                 arm64_sonoma:  "3d8d6e9ef39921b94c9e86aaee1efd1b4218d6ca124b7da52fedce73d549e5a1"
+    sha256 cellar: :any,                 arm64_ventura: "eb1e82a8e2426a74644766d5aa580b720a3ca7da8cdf289e393852f851e9a214"
+    sha256 cellar: :any,                 sonoma:        "223d97f24b4e66290c5d300714af4a80133b75416ed0f4da957d9000b5b73ef8"
+    sha256 cellar: :any,                 ventura:       "466a7902b78b24616f43869900710727915a353ecf6d7a8be63424f452efcc4d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "cc3bf5e13453f5f1ff1b610f3fa2285080dc869dd90ee13877b924ca6bff08ce"
   end
 
   depends_on "rust" => :build # for pydantic
   depends_on "certifi"
   depends_on "libyaml"
-  depends_on "python@3.12"
+  depends_on "python@3.13"
 
   uses_from_macos "libffi"
   uses_from_macos "libxml2", since: :ventura
@@ -32,8 +31,8 @@ class Fastapi < Formula
   end
 
   resource "anyio" do
-    url "https://files.pythonhosted.org/packages/e6/e3/c4c8d473d6780ef1853d630d581f70d655b4f8d7553c6997958c283039a2/anyio-4.4.0.tar.gz"
-    sha256 "5aadc6a1bbb7cdb0bede386cac5e2940f5e2ff3aa20277e991cf028e0585ce94"
+    url "https://files.pythonhosted.org/packages/9f/09/45b9b7a6d4e45c6bcb5bf61d19e3ab87df68e0601fa8c5293de3542546cc/anyio-4.6.2.post1.tar.gz"
+    sha256 "4c8bc31ccdb51c7f7bd251f51c609e038d63e34219b44aa86e47576389880b4c"
   end
 
   resource "click" do
@@ -42,8 +41,8 @@ class Fastapi < Formula
   end
 
   resource "dnspython" do
-    url "https://files.pythonhosted.org/packages/37/7d/c871f55054e403fdfd6b8f65fd6d1c4e147ed100d3e9f9ba1fe695403939/dnspython-2.6.1.tar.gz"
-    sha256 "e8f0f9c23a7b7cb99ded64e6c3a6f3e701d78f50c55e002b839dea7225cff7cc"
+    url "https://files.pythonhosted.org/packages/b5/4a/263763cb2ba3816dd94b08ad3a33d5fdae34ecb856678773cc40a3605829/dnspython-2.7.0.tar.gz"
+    sha256 "ce9c432eda0dc91cf618a5cedf1a4e142651196bbcd2c80e89ed5a907e5cfaf1"
   end
 
   resource "email-validator" do
@@ -62,23 +61,23 @@ class Fastapi < Formula
   end
 
   resource "httpcore" do
-    url "https://files.pythonhosted.org/packages/17/b0/5e8b8674f8d203335a62fdfcfa0d11ebe09e23613c3391033cbba35f7926/httpcore-1.0.5.tar.gz"
-    sha256 "34a38e2f9291467ee3b44e89dd52615370e152954ba21721378a87b2960f7a61"
+    url "https://files.pythonhosted.org/packages/b6/44/ed0fa6a17845fb033bd885c03e842f08c1b9406c86a2e60ac1ae1b9206a6/httpcore-1.0.6.tar.gz"
+    sha256 "73f6dbd6eb8c21bbf7ef8efad555481853f5f6acdeaff1edb0694289269ee17f"
   end
 
   resource "httptools" do
-    url "https://files.pythonhosted.org/packages/67/1d/d77686502fced061b3ead1c35a2d70f6b281b5f723c4eff7a2277c04e4a2/httptools-0.6.1.tar.gz"
-    sha256 "c6e26c30455600b95d94b1b836085138e82f177351454ee841c148f93a9bad5a"
+    url "https://files.pythonhosted.org/packages/a7/9a/ce5e1f7e131522e6d3426e8e7a490b3a01f39a6696602e1c4f33f9e94277/httptools-0.6.4.tar.gz"
+    sha256 "4e93eee4add6493b59a5c514da98c939b244fce4a0d8879cd3f466562f4b7d5c"
   end
 
   resource "httpx" do
-    url "https://files.pythonhosted.org/packages/5c/2d/3da5bdf4408b8b2800061c339f240c1802f2e82d55e50bd39c5a881f47f0/httpx-0.27.0.tar.gz"
-    sha256 "a0cb88a46f32dc874e04ee956e4c2764aba2aa228f650b06788ba6bda2962ab5"
+    url "https://files.pythonhosted.org/packages/78/82/08f8c936781f67d9e6b9eeb8a0c8b4e406136ea4c3d1f89a5db71d42e0e6/httpx-0.27.2.tar.gz"
+    sha256 "f7c2be1d2f3c3c3160d441802406b206c2b76f5947b11115e6df10c6c65e66c2"
   end
 
   resource "idna" do
-    url "https://files.pythonhosted.org/packages/21/ed/f86a79a07470cb07819390452f178b3bef1d375f2ec021ecfc709fc7cf07/idna-3.7.tar.gz"
-    sha256 "028ff3aadf0609c1fd278d8ea3089299412a7a8b9bd005dd08b9f8285bcb5cfc"
+    url "https://files.pythonhosted.org/packages/f1/70/7703c29685631f5a7590aa73f1f1d3fa9a380e654b86af429e0934a32f7d/idna-3.10.tar.gz"
+    sha256 "12f65c9b470abda6dc35cf8e63cc574b1c52b11df2c86030af0ac09b01b13ea9"
   end
 
   resource "jinja2" do
@@ -92,8 +91,8 @@ class Fastapi < Formula
   end
 
   resource "markupsafe" do
-    url "https://files.pythonhosted.org/packages/87/5b/aae44c6655f3801e81aa3eef09dbbf012431987ba564d7231722f68df02d/MarkupSafe-2.1.5.tar.gz"
-    sha256 "d283d37a890ba4c1ae73ffadf8046435c76e7bc2247bbb63c00bd1a709c6544b"
+    url "https://files.pythonhosted.org/packages/b2/97/5d42485e71dfc078108a86d6de8fa46db44a1a9295e89c5d6d4a06e23a62/markupsafe-3.0.2.tar.gz"
+    sha256 "ee55d3edf80167e48ea11a923c7386f4669df67d7994554387f84e7d8b0a2bf0"
   end
 
   resource "mdurl" do
@@ -102,13 +101,13 @@ class Fastapi < Formula
   end
 
   resource "pydantic" do
-    url "https://files.pythonhosted.org/packages/8c/99/d0a5dca411e0a017762258013ba9905cd6e7baa9a3fd1fe8b6529472902e/pydantic-2.8.2.tar.gz"
-    sha256 "6f62c13d067b0755ad1c21a34bdd06c0c12625a22b0fc09c6b149816604f7c2a"
+    url "https://files.pythonhosted.org/packages/a9/b7/d9e3f12af310e1120c21603644a1cd86f59060e040ec5c3a80b8f05fae30/pydantic-2.9.2.tar.gz"
+    sha256 "d155cef71265d1e9807ed1c32b4c8deec042a44a50a4188b25ac67ecd81a9c0f"
   end
 
   resource "pydantic-core" do
-    url "https://files.pythonhosted.org/packages/12/e3/0d5ad91211dba310f7ded335f4dad871172b9cc9ce204f5a56d76ccd6247/pydantic_core-2.20.1.tar.gz"
-    sha256 "26ca695eeee5f9f1aeeb211ffc12f10bcb6f71e2989988fda61dabd65db878d4"
+    url "https://files.pythonhosted.org/packages/e2/aa/6b6a9b9f8537b872f552ddd46dd3da230367754b6f707b8e1e963f515ea3/pydantic_core-2.23.4.tar.gz"
+    sha256 "2584f7cf844ac4d970fba483a717dbe10c1c1c96a969bf65d61ffe94df1b2863"
   end
 
   resource "pygments" do
@@ -122,8 +121,8 @@ class Fastapi < Formula
   end
 
   resource "python-multipart" do
-    url "https://files.pythonhosted.org/packages/5c/0f/9c55ac6c84c0336e22a26fa84ca6c51d58d7ac3a2d78b0dfa8748826c883/python_multipart-0.0.9.tar.gz"
-    sha256 "03f54688c663f1b7977105f021043b0793151e4cb1c1a9d4a11fc13d622c4026"
+    url "https://files.pythonhosted.org/packages/40/22/edea41c2d4a22e666c0c7db7acdcbf7bc8c1c1f7d3b3ca246ec982fec612/python_multipart-0.0.17.tar.gz"
+    sha256 "41330d831cae6e2f22902704ead2826ea038d0419530eadff3ea80175aec5538"
   end
 
   resource "pyyaml" do
@@ -132,8 +131,8 @@ class Fastapi < Formula
   end
 
   resource "rich" do
-    url "https://files.pythonhosted.org/packages/b3/01/c954e134dc440ab5f96952fe52b4fdc64225530320a910473c1fe270d9aa/rich-13.7.1.tar.gz"
-    sha256 "9be308cb1fe2f1f57d67ce99e95af38a1e2bc71ad9813b0e247cf7ffbcc3a432"
+    url "https://files.pythonhosted.org/packages/ab/3a/0316b28d0761c6734d6bc14e770d85506c986c85ffb239e688eeaab2c2bc/rich-13.9.4.tar.gz"
+    sha256 "439594978a49a09530cff7ebc4b5c7103ef57baf48d5ea3184f21d9a2befa098"
   end
 
   resource "shellingham" do
@@ -147,13 +146,13 @@ class Fastapi < Formula
   end
 
   resource "starlette" do
-    url "https://files.pythonhosted.org/packages/43/e2/d49a94ecb665b3a1c34b40c78165a737abc384fcabc843ccb14a3bd3dc37/starlette-0.38.2.tar.gz"
-    sha256 "c7c0441065252160993a1a37cf2a73bb64d271b17303e0b0c1eb7191cfb12d75"
+    url "https://files.pythonhosted.org/packages/3e/da/1fb4bdb72ae12b834becd7e1e7e47001d32f91ec0ce8d7bc1b618d9f0bd9/starlette-0.41.2.tar.gz"
+    sha256 "9834fd799d1a87fd346deb76158668cfa0b0d56f85caefe8268e2d97c3468b62"
   end
 
   resource "typer" do
-    url "https://files.pythonhosted.org/packages/ac/0a/d55af35db5f50f486e3eda0ada747eed773859e2699d3ce570b682a9b70a/typer-0.12.3.tar.gz"
-    sha256 "49e73131481d804288ef62598d97a1ceef3058905aa536a1134f90891ba35482"
+    url "https://files.pythonhosted.org/packages/e7/87/9eb07fdfa14e22ec7658b5b1147836d22df3848a22c85a4e18ed272303a5/typer-0.13.0.tar.gz"
+    sha256 "f1c7198347939361eec90139ffa0fd8b3df3a2259d5852a0f7400e476d95985c"
   end
 
   resource "typing-extensions" do
@@ -162,23 +161,23 @@ class Fastapi < Formula
   end
 
   resource "uvicorn" do
-    url "https://files.pythonhosted.org/packages/5a/01/5e637e7aa9dd031be5376b9fb749ec20b86f5a5b6a49b87fabd374d5fa9f/uvicorn-0.30.6.tar.gz"
-    sha256 "4b15decdda1e72be08209e860a1e10e92439ad5b97cf44cc945fcbee66fc5788"
+    url "https://files.pythonhosted.org/packages/e0/fc/1d785078eefd6945f3e5bab5c076e4230698046231eb0f3747bc5c8fa992/uvicorn-0.32.0.tar.gz"
+    sha256 "f78b36b143c16f54ccdb8190d0a26b5f1901fe5a3c777e1ab29f26391af8551e"
   end
 
   resource "uvloop" do
-    url "https://files.pythonhosted.org/packages/bc/f1/dc9577455e011ad43d9379e836ee73f40b4f99c02946849a44f7ae64835e/uvloop-0.20.0.tar.gz"
-    sha256 "4603ca714a754fc8d9b197e325db25b2ea045385e8a3ad05d3463de725fdf469"
+    url "https://files.pythonhosted.org/packages/af/c0/854216d09d33c543f12a44b393c402e89a920b1a0a7dc634c42de91b9cf6/uvloop-0.21.0.tar.gz"
+    sha256 "3bf12b0fda68447806a7ad847bfa591613177275d35b6724b1ee573faa3704e3"
   end
 
   resource "watchfiles" do
-    url "https://files.pythonhosted.org/packages/9e/1a/b06613ef620d7f5ca712a3d4928ec1c07182159a64277fcdf7738edb0b32/watchfiles-0.23.0.tar.gz"
-    sha256 "9338ade39ff24f8086bb005d16c29f8e9f19e55b18dcb04dfa26fcbc09da497b"
+    url "https://files.pythonhosted.org/packages/c8/27/2ba23c8cc85796e2d41976439b08d52f691655fdb9401362099502d1f0cf/watchfiles-0.24.0.tar.gz"
+    sha256 "afb72325b74fa7a428c009c1b8be4b4d7c2afedafb2982827ef2156646df2fe1"
   end
 
   resource "websockets" do
-    url "https://files.pythonhosted.org/packages/2e/62/7a7874b7285413c954a4cca3c11fd851f11b2fe5b4ae2d9bee4f6d9bdb10/websockets-12.0.tar.gz"
-    sha256 "81df9cbcbb6c260de1e007e58c011bfebe2dafc8435107b0537f393dd38c8b1b"
+    url "https://files.pythonhosted.org/packages/d5/95/9ec3ef89770eaf437ec3a6aa18d07aa29215419009e3330fd1031ff2f162/websockets-14.0.tar.gz"
+    sha256 "be90aa6dab180fed523c0c10a6729ad16c9ba79067402d01a4d8aa7ce48d4084"
   end
 
   def install
@@ -189,7 +188,7 @@ class Fastapi < Formula
   test do
     port = free_port
 
-    (testpath/"main.py").write <<~EOS
+    (testpath/"main.py").write <<~PYTHON
       from fastapi import FastAPI
 
       app = FastAPI()
@@ -197,7 +196,7 @@ class Fastapi < Formula
       @app.get("/")
       async def read_root():
           return {"Hello": "World"}
-    EOS
+    PYTHON
 
     pid = fork do
       exec bin/"fastapi", "dev", "--port", port.to_s, "main.py"

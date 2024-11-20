@@ -1,11 +1,20 @@
 class Stp < Formula
   desc "Simple Theorem Prover, an efficient SMT solver for bitvectors"
   homepage "https://stp.github.io/"
-  url "https://github.com/stp/stp/archive/refs/tags/2.3.4.tar.gz"
-  sha256 "dc197e337c058dc048451b712169a610f7040b31d0078b6602b831fbdcbec990"
   license "MIT"
   revision 1
   head "https://github.com/stp/stp.git", branch: "master"
+
+  stable do
+    url "https://github.com/stp/stp/archive/refs/tags/2.3.4.tar.gz"
+    sha256 "dc197e337c058dc048451b712169a610f7040b31d0078b6602b831fbdcbec990"
+
+    # Replace distutils for python 3.12+
+    patch do
+      url "https://github.com/stp/stp/commit/fb185479e760b6ff163512cb6c30ac9561aadc0e.patch?full_index=1"
+      sha256 "7e50f26901e31de4f84ceddc1a1d389ab86066a8dcbc5d88e9ec1f0809fa0909"
+    end
+  end
 
   livecheck do
     url :stable
@@ -13,6 +22,7 @@ class Stp < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "b9b31350b44ffe11b365eaf5d9937481a97489a178412478da2bd4663ae94482"
     sha256 cellar: :any,                 arm64_sonoma:   "95e15af6a14beb3660a270b7686a6d80e5ce0bad483137dd8f6e55b9e084776d"
     sha256 cellar: :any,                 arm64_ventura:  "46a50b47c60a22bdc702279dd8e87670192255e1512ce9f925a067c049daa0c7"
     sha256 cellar: :any,                 arm64_monterey: "225bd9e76bdcf19d25386a9987d15aa2a4750581ea44d05cac8e29beb729560c"
@@ -26,7 +36,6 @@ class Stp < Formula
   depends_on "bison" => :build
   depends_on "cmake" => :build
   depends_on "flex" => :build
-  depends_on "python-setuptools" => :build
   depends_on "boost"
   depends_on "cryptominisat"
   depends_on "gmp"
@@ -42,7 +51,7 @@ class Stp < Formula
     inreplace "lib/Util/GitSHA1.cpp.in", "@CMAKE_CXX_COMPILER@", ENV.cxx
 
     system "cmake", "-S", ".", "-B", "build",
-                    "-DPYTHON_EXECUTABLE=#{Formula["python@3.12"].opt_bin}/#{python}",
+                    "-DPYTHON_EXECUTABLE=#{which(python)}",
                     "-DPYTHON_LIB_INSTALL_DIR=#{site_packages}",
                     *std_cmake_args
     system "cmake", "--build", "build"
@@ -58,7 +67,7 @@ class Stp < Formula
     EOS
     assert_equal "sat", shell_output("#{bin}/stp --SMTLIB2 prob.smt").chomp
 
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include "stp/c_interface.h"
       #include <assert.h>
       int main() {
@@ -75,7 +84,7 @@ class Stp < Formula
         vc_Destroy(vc);
         return 0;
       }
-    EOS
+    C
 
     expected_output = <<~EOS
       COUNTEREXAMPLE BEGIN:\s

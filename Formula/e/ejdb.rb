@@ -8,6 +8,7 @@ class Ejdb < Formula
   head "https://github.com/Softmotions/ejdb.git", branch: "master"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "5edce24e64d4033d0cacaa8cfac387a347bb895d7ffb7d93e205581eaa4b32bd"
     sha256 cellar: :any,                 arm64_sonoma:   "e0b8000aa7f9e587b5c003bc949f897692fd67ee2e2b75024f2c4900495fd68a"
     sha256 cellar: :any,                 arm64_ventura:  "4d04af75587bace755ce51b52efbb350f21fe9ff68e627e46ba6df5c0b3d802d"
     sha256 cellar: :any,                 arm64_monterey: "651db63cf52361e30d51e00be5d21d0312a987ecf6fb13ca4db0aaa6e36419fc"
@@ -41,7 +42,7 @@ class Ejdb < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <ejdb2/ejdb2.h>
 
       #define RCHECK(rc_)          \\
@@ -113,7 +114,7 @@ class Ejdb < Formula
         RCHECK(rc);
         return 0;
       }
-    EOS
+    C
 
     system ENV.cc, "-I#{include}/ejdb2", "test.c", "-L#{lib}", "-lejdb2", "-o", testpath/"test"
     system "./test"

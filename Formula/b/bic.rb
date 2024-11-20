@@ -1,7 +1,7 @@
 class Bic < Formula
   desc "C interpreter and API explorer"
   homepage "https://github.com/hexagonal-sun/bic"
-  license "GPL-2.0"
+  license "GPL-2.0-only"
 
   stable do
     url "https://github.com/hexagonal-sun/bic/releases/download/v1.0.0/bic-v1.0.0.tar.gz"
@@ -53,12 +53,12 @@ class Bic < Formula
   end
 
   test do
-    (testpath/"hello.c").write <<~EOS
+    (testpath/"hello.c").write <<~C
       #include <stdio.h>
       int main () {
         puts("Hello Homebrew!");
       }
-    EOS
+    C
     assert_equal "Hello Homebrew!", shell_output("#{bin}/bic -s hello.c").strip
   end
 end

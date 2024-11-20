@@ -5,7 +5,6 @@ class Cataclysm < Formula
   version "0.G"
   sha256 "e559d0d495b314ed39890920b222b4ae5067db183b5d39d4263700bfd66f36fb"
   license "CC-BY-SA-3.0"
-  head "https://github.com/CleverRaven/Cataclysm-DDA.git", branch: "master"
 
   livecheck do
     url :stable
@@ -14,6 +13,7 @@ class Cataclysm < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "fc475b0ecef7dc2d0739fc1ad7eec5c0fb220080a7722d3df9e221143776c6be"
     sha256 cellar: :any,                 arm64_sonoma:   "1f0baa0478cd23de28c5ad1d2b10b90979b0c627a6445f15b287193d760c8493"
     sha256 cellar: :any,                 arm64_ventura:  "99558da9dc0aff5d3e520504578ba4112a1ccd25be503414c8b35473b9b4e298"
     sha256 cellar: :any,                 arm64_monterey: "9e83a6fc0c9ae9ae1364fe3dcaa56192b9324f7d2423b8e4df309f1044a717b4"
@@ -25,8 +25,14 @@ class Cataclysm < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "14498eae0539dcfee7034f2975d7889b62c50c0684082954c0695fa4293db7dd"
   end
 
-  depends_on "pkg-config" => :build
+  head do
+    url "https://github.com/CleverRaven/Cataclysm-DDA.git", branch: "master"
+    on_macos do
+      depends_on "freetype"
+    end
+  end
 
+  depends_on "pkgconf" => :build
   depends_on "libogg"
   depends_on "libvorbis"
   depends_on "sdl2"
@@ -77,9 +83,7 @@ class Cataclysm < Formula
     user_config_dir.mkpath
 
     # run cataclysm for 30 seconds
-    pid = fork do
-      exec bin/"cataclysm"
-    end
+    pid = spawn bin/"cataclysm"
     begin
       sleep 30
       assert_predicate user_config_dir/"config",

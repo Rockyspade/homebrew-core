@@ -3,8 +3,8 @@ class Systemd < Formula
 
   desc "System and service manager"
   homepage "https://systemd.io"
-  url "https://github.com/systemd/systemd/archive/refs/tags/v256.4.tar.gz"
-  sha256 "7861d544190f938cac1b242624d78c96fe2ebbc7b72f86166e88b50451c6fa58"
+  url "https://github.com/systemd/systemd/archive/refs/tags/v256.8.tar.gz"
+  sha256 "b3d003b4f6d1ab0bfae0cf7a37c4aa559923c49bc8e9d1331b7459e12ebc357a"
   license all_of: [
     # Main license is LGPL-2.1-or-later while systemd-udevd is GPL-2.0-or-later
     "LGPL-2.1-or-later",
@@ -30,8 +30,7 @@ class Systemd < Formula
   head "https://github.com/systemd/systemd.git", branch: "main"
 
   bottle do
-    rebuild 1
-    sha256 x86_64_linux: "92df5931608cf2164af5aac2d1bb18f369ef286dfad337d047363ac1f920b594"
+    sha256 x86_64_linux: "e7af990380e1203731c37fd78c1b4c5561405e60e1b75b7f3111e030dd7f11fa"
   end
 
   depends_on "coreutils" => :build
@@ -65,8 +64,8 @@ class Systemd < Formula
   end
 
   resource "markupsafe" do
-    url "https://files.pythonhosted.org/packages/87/5b/aae44c6655f3801e81aa3eef09dbbf012431987ba564d7231722f68df02d/MarkupSafe-2.1.5.tar.gz"
-    sha256 "d283d37a890ba4c1ae73ffadf8046435c76e7bc2247bbb63c00bd1a709c6544b"
+    url "https://files.pythonhosted.org/packages/b2/97/5d42485e71dfc078108a86d6de8fa46db44a1a9295e89c5d6d4a06e23a62/markupsafe-3.0.2.tar.gz"
+    sha256 "ee55d3edf80167e48ea11a923c7386f4669df67d7994554387f84e7d8b0a2bf0"
   end
 
   def install

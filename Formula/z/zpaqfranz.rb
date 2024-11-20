@@ -1,26 +1,25 @@
 class Zpaqfranz < Formula
   desc "Deduplicating command-line archiver and backup tool"
   homepage "https://github.com/fcorbelli/zpaqfranz"
-  url "https://github.com/fcorbelli/zpaqfranz/archive/refs/tags/60.5.tar.gz"
-  sha256 "d74f0f40eeb49eecc0ffaa6670af15976124edf7f2f4ba96cbc50f7c99815a95"
+  url "https://github.com/fcorbelli/zpaqfranz/archive/refs/tags/60.9.tar.gz"
+  sha256 "e55633e3f186a5e1618d294df7505975523e98e706a282118614679ed9dc19c8"
   license all_of: [:public_domain, "MIT", "Zlib", "Unlicense", "BSD-2-Clause", "Apache-2.0"]
   head "https://github.com/fcorbelli/zpaqfranz.git", branch: "main"
 
   # Some versions using a stable tag format are marked as pre-release on GitHub,
   # so it's necessary to check release versions instead of tags.
   livecheck do
-    url :url
+    url :stable
     strategy :github_latest
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "896ff14e9282f5af016e2395df136f3f0acd8361075636a61b6d7b40e76b11ac"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "480d97098e4a29f52c0596ddf652019bdacbbd4bc1bc9c122b2e2a8c3bf6da94"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "452a6ac134dbb1010f602b15bba80b3d1e64239a0c119a8a63f4b6bd239628b8"
-    sha256 cellar: :any_skip_relocation, sonoma:         "31f7c36510d77c3b0ac03e54f3b6c94fca9209fbd85495d1b31811ebc922e429"
-    sha256 cellar: :any_skip_relocation, ventura:        "3730a582cd5e278a83b7a61942a7a3fa4f1d4a7be4f3ef47c7df1c5b40cfc1ee"
-    sha256 cellar: :any_skip_relocation, monterey:       "2af8f578c5327d68888f6252e7383f47a1cce5503992e8c011cafab5f8e40840"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f5eb0ea3cbe7a143aa344cecb5f7928096050232ecf2354c39effa1613255687"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "0542f69dbeb3156e5bfb571b9b7ac6a06333f6f7a531c9d721ff2033dab14d64"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "02933d1096705d9d416f389f1924e2cc3ea42ba012867e84fb8fd525d8c9f682"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "a66481260a4fa0cf22de001ee0df296f1d103ad482caa355d912fef7e1064982"
+    sha256 cellar: :any_skip_relocation, sonoma:        "45c1bfb5bf8c19ac647be33ac5f614865cc0e3fecac38f68ef4b6bc584ec25da"
+    sha256 cellar: :any_skip_relocation, ventura:       "155fdfe4349d26d32513b733a61a9c3c3fcea7641d329f90f1f7ff93fdda1f75"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3f975d30f30d96172e20bc8ab1986b091b08287daaaef6dc87866fbac665515a"
   end
 
   def install

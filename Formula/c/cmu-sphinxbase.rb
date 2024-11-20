@@ -40,7 +40,7 @@ class CmuSphinxbase < Formula
 
   disable! date: "2024-01-02", because: :repo_archived
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   # If these are found, they will be linked against and there is no configure
   # switch to turn them off.
   depends_on "libsamplerate"
@@ -58,7 +58,7 @@ class CmuSphinxbase < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include "cmd_ln.h"
 
       int main(int argc, char **argv) {
@@ -69,7 +69,7 @@ class CmuSphinxbase < Formula
         cmd_ln_free_r(config);
         return 0;
       }
-    EOS
+    CPP
     system ENV.cxx, "test.cpp", "-L#{lib}", "-lsphinxbase", "-I#{include}/sphinxbase", "-o", "test"
     system "./test"
   end

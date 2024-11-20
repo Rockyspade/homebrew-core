@@ -6,6 +6,7 @@ class AppstreamGlib < Formula
   license "LGPL-2.1-or-later"
 
   bottle do
+    sha256 cellar: :any, arm64_sequoia:  "8b7403b1054de2416fa93563425321346b3f19e0828dc570eda83d6275892c69"
     sha256 cellar: :any, arm64_sonoma:   "436c07f995a7eebb35d00956d96b5a3a7839fe406ad2ecfcb870ba47c2fe14cf"
     sha256 cellar: :any, arm64_ventura:  "5fc017681fbd7c6900cc1a81412d922d681266fc53842b81b14b76975a4ec76e"
     sha256 cellar: :any, arm64_monterey: "ec5bcbd5802db3070ef6f9e2401608d45e1a0b26820342dab42b7b123861298e"
@@ -20,7 +21,7 @@ class AppstreamGlib < Formula
   depends_on "gobject-introspection" => :build
   depends_on "meson" => :build
   depends_on "ninja" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "gdk-pixbuf"
   depends_on "glib"
   depends_on "json-glib"
@@ -50,7 +51,7 @@ class AppstreamGlib < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <appstream-glib.h>
 
       int main(int argc, char *argv[]) {
@@ -58,7 +59,7 @@ class AppstreamGlib < Formula
         g_assert_nonnull(screen_shot);
         return 0;
       }
-    EOS
+    C
     gdk_pixbuf = Formula["gdk-pixbuf"]
     gettext = Formula["gettext"]
     glib = Formula["glib"]

@@ -8,6 +8,7 @@ class TrojanGo < Formula
   head "https://github.com/p4gefau1t/trojan-go.git", branch: "master"
 
   bottle do
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "f58e47fab9a183c8212343c7e2e7fb4096af8ccc3a3d6db82bcace4e2a0feaf0"
     sha256 cellar: :any_skip_relocation, arm64_sonoma:   "f9872077ff3a1ef7d427cac872b6b1ff7d3cff029c241e35a884e4b4a090e163"
     sha256 cellar: :any_skip_relocation, arm64_ventura:  "76f3e955eee77490f3104b14685a116a56697e78a77cd681a2161ae1889fc251"
     sha256 cellar: :any_skip_relocation, arm64_monterey: "ec98c6b4c3d8848c7f4f509b2dc0597ced55ca1345e6cb7df3db3cc61e8806ca"
@@ -125,7 +126,7 @@ class TrojanGo < Formula
     end
 
     trojan_go_server_port = free_port
-    (testpath/"server.yaml").write <<~EOS
+    (testpath/"server.yaml").write <<~YAML
       run-type:     server
       local-addr:   127.0.0.1
       local-port:   #{trojan_go_server_port}
@@ -136,11 +137,11 @@ class TrojanGo < Formula
       ssl:
         cert:       #{testpath}/test.crt
         key:        #{testpath}/test.key
-    EOS
+    YAML
     server = fork { exec bin/"trojan-go", "-config", testpath/"server.yaml" }
 
     trojan_go_client_port = free_port
-    (testpath/"client.yaml").write <<~EOS
+    (testpath/"client.yaml").write <<~YAML
       run-type:     client
       local-addr:   127.0.0.1
       local-port:   #{trojan_go_client_port}
@@ -151,7 +152,7 @@ class TrojanGo < Formula
       ssl:
         verify:     false
         sni:        localhost
-    EOS
+    YAML
     client = fork { exec bin/"trojan-go", "-config", testpath/"client.yaml" }
 
     sleep 3

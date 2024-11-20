@@ -2,8 +2,8 @@ class Flyctl < Formula
   desc "Command-line tools for fly.io services"
   homepage "https://fly.io"
   url "https://github.com/superfly/flyctl.git",
-      tag:      "v0.2.115",
-      revision: "885dd16968f060901ae19354cfaa190f5a19f710"
+      tag:      "v0.3.39",
+      revision: "b28c5c56d4986534ba25a5a34ae5d1952f2ca4b4"
   license "Apache-2.0"
   head "https://github.com/superfly/flyctl.git", branch: "master"
 
@@ -18,13 +18,12 @@ class Flyctl < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "e2710fb6696b031c683ee84c68c5095d1f187889ad01ddc2c9bcab899e44100a"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "e2710fb6696b031c683ee84c68c5095d1f187889ad01ddc2c9bcab899e44100a"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "e2710fb6696b031c683ee84c68c5095d1f187889ad01ddc2c9bcab899e44100a"
-    sha256 cellar: :any_skip_relocation, sonoma:         "8c35d03160724136c7b01b2264ff81f233f6f8b19774c30043e4c2dbe3e80aaf"
-    sha256 cellar: :any_skip_relocation, ventura:        "8c35d03160724136c7b01b2264ff81f233f6f8b19774c30043e4c2dbe3e80aaf"
-    sha256 cellar: :any_skip_relocation, monterey:       "8c35d03160724136c7b01b2264ff81f233f6f8b19774c30043e4c2dbe3e80aaf"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "cf96897b6ff9840580372a43eda1a43a220e54ece2260d7b3e00265f957dc66b"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "07953ce420c0e370b92df82c472d85b4e9279fda11bbad62851f703fc5f42905"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "07953ce420c0e370b92df82c472d85b4e9279fda11bbad62851f703fc5f42905"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "07953ce420c0e370b92df82c472d85b4e9279fda11bbad62851f703fc5f42905"
+    sha256 cellar: :any_skip_relocation, sonoma:        "0af38528752f9c1565190b18c125cf8892b207f27ac87bbef5f4f97e45765c8f"
+    sha256 cellar: :any_skip_relocation, ventura:       "0af38528752f9c1565190b18c125cf8892b207f27ac87bbef5f4f97e45765c8f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "be8afcc86403f67ff8ea434eb1132e947658cae9084373e064619d7d3b4a4f9d"
   end
 
   depends_on "go" => :build
@@ -42,6 +41,7 @@ class Flyctl < Formula
     bin.install_symlink "flyctl" => "fly"
 
     generate_completions_from_executable(bin/"flyctl", "completion")
+    generate_completions_from_executable(bin/"fly", "completion", base_name: "fly")
   end
 
   test do

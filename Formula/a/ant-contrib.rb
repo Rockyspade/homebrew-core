@@ -11,7 +11,8 @@ class AntContrib < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "2b3e0ff584bdc78fa47d6f422f1737f2c307d627ba4efe38e9a59548725fd48d"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, all: "11f6456cf47128a33054e067467dd8186dfd6db33c85cf60bb8620e4a269fced"
   end
 
   depends_on "ant"
@@ -22,7 +23,7 @@ class AntContrib < Formula
   end
 
   test do
-    (testpath/"build.xml").write <<~EOS
+    (testpath/"build.xml").write <<~XML
       <project name="HomebrewTest" default="init" basedir=".">
         <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
         <target name="init">
@@ -34,7 +35,7 @@ class AntContrib < Formula
           </if>
         </target>
       </project>
-    EOS
+    XML
     system Formula["ant"].opt_bin/"ant"
   end
 end

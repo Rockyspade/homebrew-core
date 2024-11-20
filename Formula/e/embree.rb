@@ -12,6 +12,7 @@ class Embree < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "2ce8bbb8db418a1db7568e8608497e5df8fad482df2c8daa1cd20ccf01fd1589"
     sha256 cellar: :any,                 arm64_sonoma:   "719d672a8f015eb72d2227a1cf2c28345591976abcbd8a3d096f45318d7edca1"
     sha256 cellar: :any,                 arm64_ventura:  "2968f35c23daf66b3e6afc07bee6cf68829b3285f1e29dc098b0ace335851711"
     sha256 cellar: :any,                 arm64_monterey: "c39c1dd2e9dc0cf439a7df98dd74df9c0b86808300a1a44ccc45fefb4b2d88c4"
@@ -47,7 +48,7 @@ class Embree < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <assert.h>
       #include <embree4/rtcore.h>
 
@@ -57,7 +58,7 @@ class Embree < Formula
         rtcReleaseDevice(device);
         return 0;
       }
-    EOS
+    C
 
     system ENV.cc, "test.c", "-I#{include}", "-L#{lib}", "-lembree4"
     assert_match "Embree Ray Tracing Kernels #{version} ()", shell_output("./a.out")

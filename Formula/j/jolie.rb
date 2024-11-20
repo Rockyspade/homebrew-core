@@ -1,18 +1,12 @@
 class Jolie < Formula
   desc "Service-oriented programming language"
   homepage "https://www.jolie-lang.org/"
-  url "https://github.com/jolie/jolie/releases/download/v1.12.1/jolie-1.12.1.jar"
-  sha256 "d6d5f90254c43f04982451a49134e7df94a081a4d1965a95fc29e7959678a286"
+  url "https://github.com/jolie/jolie/releases/download/v1.12.2/jolie-1.12.2.jar"
+  sha256 "69fa87e555f8587f6085e9f23cdbe2b6b3e6ff356428fd88b3820ed63a2b259c"
   license "LGPL-2.1-only"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "9db417b509499bc5ff1b3bfff0d5fab4b6b0fe95185f8b0660615a2f04ab8c95"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "9db417b509499bc5ff1b3bfff0d5fab4b6b0fe95185f8b0660615a2f04ab8c95"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "9db417b509499bc5ff1b3bfff0d5fab4b6b0fe95185f8b0660615a2f04ab8c95"
-    sha256 cellar: :any_skip_relocation, sonoma:         "9db417b509499bc5ff1b3bfff0d5fab4b6b0fe95185f8b0660615a2f04ab8c95"
-    sha256 cellar: :any_skip_relocation, ventura:        "9db417b509499bc5ff1b3bfff0d5fab4b6b0fe95185f8b0660615a2f04ab8c95"
-    sha256 cellar: :any_skip_relocation, monterey:       "9db417b509499bc5ff1b3bfff0d5fab4b6b0fe95185f8b0660615a2f04ab8c95"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e6155fdd1b4c997e527baeee0af58255fc05402d8dda4b93c5359612da88f22d"
+    sha256 cellar: :any_skip_relocation, all: "508eaa11315909ca605100636265b4aa66d07f8983ce5399099392a692af3637"
   end
 
   depends_on "openjdk"

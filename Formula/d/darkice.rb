@@ -11,6 +11,7 @@ class Darkice < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "63d77f3484a28636bd7c5a7a804a0d8e3e410e3b07b4859d27ce0a8b9b714233"
     sha256 cellar: :any,                 arm64_sonoma:   "089a73da66e99a1289c3259dc974acf0ffcc053af05facf3b760f8b0d7c4b0e9"
     sha256 cellar: :any,                 arm64_ventura:  "22abd05d4b3d880d9b1ad6abaf636f7d31c65ff3d20a7ce54c888d5464b32369"
     sha256 cellar: :any,                 arm64_monterey: "d70aab113619347c2b1ab5dc69b265a0dcacab27c30a81ad852c12417960e670"
@@ -20,7 +21,7 @@ class Darkice < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "e96398becc4f8c42c2fa104ea86e96207756ee073a301d0acb0fe56fd665ebcb"
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
 
   depends_on "faac"
   depends_on "jack"

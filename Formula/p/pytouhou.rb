@@ -21,9 +21,10 @@ class Pytouhou < Formula
   end
 
   # Repo fails to `hg pull` with recent `mercurial`
-  deprecate! date: "2024-02-23", because: :does_not_build
+  # Repo is 502 erroring and bottles are currently broken
+  disable! date: "2024-10-11", because: :does_not_build
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "cython"
   depends_on "glfw"
   depends_on "gtk+3"

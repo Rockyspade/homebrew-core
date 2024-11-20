@@ -3,20 +3,14 @@ class NicotinePlus < Formula
 
   desc "Graphical client for the Soulseek peer-to-peer network"
   homepage "https://nicotine-plus.org"
-  url "https://files.pythonhosted.org/packages/63/1c/73f765da20b5b7e3579f6099490a9c4ac93e7c6341f97cf51d53ea0df49f/nicotine_plus-3.3.4.tar.gz"
-  sha256 "512bf4aea9b42d5f3d58e0c96ed90efc2af568f8d0a624bf957ffb5f84ab9b7c"
+  url "https://files.pythonhosted.org/packages/5a/d3/a489967ab67165a6893f23e03c5134cf1b9cd35fd826c0a7c9ea3c743cb9/nicotine_plus-3.3.6.tar.gz"
+  sha256 "6a0b39c5ff4fb4768689516a3a2cfe3aafdc568b5237f19553c51b1de712ee66"
   license "GPL-3.0-or-later"
   head "https://github.com/nicotine-plus/nicotine-plus.git", branch: "master"
 
   bottle do
     rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "ee66410a793440590408fc0524157aa98814d693bcf5173321eee17ed31bbf29"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "ee66410a793440590408fc0524157aa98814d693bcf5173321eee17ed31bbf29"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "ee66410a793440590408fc0524157aa98814d693bcf5173321eee17ed31bbf29"
-    sha256 cellar: :any_skip_relocation, sonoma:         "ee66410a793440590408fc0524157aa98814d693bcf5173321eee17ed31bbf29"
-    sha256 cellar: :any_skip_relocation, ventura:        "ee66410a793440590408fc0524157aa98814d693bcf5173321eee17ed31bbf29"
-    sha256 cellar: :any_skip_relocation, monterey:       "ee66410a793440590408fc0524157aa98814d693bcf5173321eee17ed31bbf29"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "603be73b6c65bf171d66df59924bb95264b65836e32a69e0a8c523dd5d076207"
+    sha256 cellar: :any_skip_relocation, all: "1efbc77356619bdb2f9ab67519031f51fa3e19eb262f890b805ca5df9aaf66f6"
   end
 
   depends_on "adwaita-icon-theme"
@@ -24,7 +18,7 @@ class NicotinePlus < Formula
   depends_on "libadwaita"
   depends_on "py3cairo"
   depends_on "pygobject3"
-  depends_on "python@3.12"
+  depends_on "python@3.13"
 
   on_linux do
     depends_on "gettext" => :build # for `msgfmt`

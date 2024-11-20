@@ -12,6 +12,7 @@ class S2geometry < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "42a3c92e44c8a87963d691a53ef3ea50efeb0aeef11e4678af4e58f4cf673995"
     sha256 cellar: :any,                 arm64_sonoma:   "182a06b04d14b0bbfec1bd35d4b1dc70f19fad84a83886fb206e2867a230c5bf"
     sha256 cellar: :any,                 arm64_ventura:  "93b5347b89211b4644a76a6f2295cb67bbbe7a39d02d2db417b6bde16555d787"
     sha256 cellar: :any,                 arm64_monterey: "2f48215b6cbe1a2adc02816547f5e74451834d8699ec930561cdef84400b3c03"
@@ -51,7 +52,7 @@ class S2geometry < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include "s2/s2loop.h"
       #include "s2/s2polygon.h"
       #include "s2/s2latlng.h"
@@ -87,7 +88,7 @@ class S2geometry < Formula
 
           return 0;
       }
-    EOS
+    CPP
 
     system ENV.cxx, "-std=c++17", "test.cpp", "-o", "test",
       "-L#{lib}", "-ls2", "-L#{Formula["abseil"].lib}", "-labsl_log_internal_message"

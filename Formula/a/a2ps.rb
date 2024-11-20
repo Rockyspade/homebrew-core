@@ -7,6 +7,7 @@ class A2ps < Formula
   license "GPL-3.0-or-later"
 
   bottle do
+    sha256 arm64_sequoia:  "7effcbad404640b62723336fc0d1024f04f3cf98e4e40d595243512422897f4f"
     sha256 arm64_sonoma:   "65b376bbaea1ccebe7b46ed808d280c966c0e24fb22f6e92e86dd6eb9d769b75"
     sha256 arm64_ventura:  "3e182ba99072bc793eaa3e93761288026df7fec9520a39f3f51f1436fe7f5230"
     sha256 arm64_monterey: "1e6ab666ea444efe10b8892b9923264b8dc0d5961674b3a0937a9cd94397542b"
@@ -16,18 +17,18 @@ class A2ps < Formula
     sha256 x86_64_linux:   "6df41a07d6bd52713e700a83a2994c5955b305ee068b73c50e4786cbb8213dae"
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "bdw-gc"
   depends_on "libpaper"
   uses_from_macos "gperf"
 
   def install
-    system "./configure", *std_configure_args,
-                          "--sysconfdir=#{etc}",
+    system "./configure", "--sysconfdir=#{etc}",
                           "--with-lispdir=#{elisp}",
                           "--with-packager=#{tap.user}",
                           "--with-packager-version=#{pkg_version}",
-                          "--with-packager-bug-reports=#{tap.issues_url}"
+                          "--with-packager-bug-reports=#{tap.issues_url}",
+                          *std_configure_args
     system "make", "install"
     inreplace etc/"a2ps.cfg", prefix, opt_prefix
   end

@@ -1,17 +1,14 @@
 class ChibiScheme < Formula
   desc "Small footprint Scheme for use as a C Extension Language"
   homepage "https://github.com/ashinn/chibi-scheme"
-  url "https://github.com/ashinn/chibi-scheme/archive/refs/tags/0.11.tar.gz"
-  sha256 "b4404d5304b51b243684702fa7b5f2d82f77cb7ef470bcfca1d94f8ed7660342"
+  url "https://github.com/ashinn/chibi-scheme/releases/download/0.11/chibi-scheme-0.11.0.tgz"
+  version "0.11"
+  sha256 "74d4edd9a904e30da7b4defe4c0d7aac63c5254e64869935f5de86acf59db6b2"
   license "BSD-3-Clause"
   head "https://github.com/ashinn/chibi-scheme.git", branch: "master"
 
-  livecheck do
-    url :stable
-    regex(/^v?(\d+(?:\.\d+)+)$/i)
-  end
-
   bottle do
+    sha256 arm64_sequoia:  "91aa4dee44f150abda4aed2001a7ed4a78abc923a0a550ea863b69d79d53998c"
     sha256 arm64_sonoma:   "3aa850015f232c2e5eb9c4622ac5ad7356ebb07ad3562db673cc02eaf15550fa"
     sha256 arm64_ventura:  "9bc3a2cee147f70c2370b3b2de9f081907c8a5e4399f2115eeddd76dc72dcc61"
     sha256 arm64_monterey: "9e59a68ef1ebcabbf717e8b7f87e7b769f0f380ccdb64e46d4385bdccb53aec9"

@@ -13,6 +13,7 @@ class Bitlbee < Formula
 
   bottle do
     rebuild 1
+    sha256 arm64_sequoia:  "b657d232b9e5c995bad586bebabccbf58cab67a71f81dcc20ef65ba7685c7c5c"
     sha256 arm64_sonoma:   "5405ccb44de475193bc30f0c57d9794ede440f7c3d8e608404cd2aee0431713b"
     sha256 arm64_ventura:  "d5abbf75f2d71752b48051f6072394422a338650a187b53f0bcb528981da9e3a"
     sha256 arm64_monterey: "6c291e3c2ef13b1e766bbfa75f7732f273cacdd6eb98bfdd474db446a8ae0137"
@@ -25,7 +26,7 @@ class Bitlbee < Formula
     sha256 x86_64_linux:   "046736bbc9acefad55c69d5acbe77d4f96123d6a1ab49db0179d95f5cb72eec6"
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "glib"
   depends_on "gnutls"
   depends_on "libgcrypt"

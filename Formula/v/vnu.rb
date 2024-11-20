@@ -1,20 +1,13 @@
 class Vnu < Formula
   desc "Nu Markup Checker: command-line and server HTML validator"
   homepage "https://validator.github.io/validator/"
-  url "https://registry.npmjs.org/vnu-jar/-/vnu-jar-23.4.11.tgz"
-  sha256 "cbba595a86d680d48e9c5261a16d9ef409e5658ad8aa47081c593690a652cf0f"
+  url "https://registry.npmjs.org/vnu-jar/-/vnu-jar-24.10.17.tgz"
+  sha256 "4617d3e3234a40efce2eb42fa9c0fcc8abf85c33fffb8825bfd77563209d43b0"
   license "MIT"
   version_scheme 1
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "81b343a03a3a7f211a61a6793bdea0d180afb01e95b2cd311ce4fb296ee11503"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "81b343a03a3a7f211a61a6793bdea0d180afb01e95b2cd311ce4fb296ee11503"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "81b343a03a3a7f211a61a6793bdea0d180afb01e95b2cd311ce4fb296ee11503"
-    sha256 cellar: :any_skip_relocation, sonoma:         "81b343a03a3a7f211a61a6793bdea0d180afb01e95b2cd311ce4fb296ee11503"
-    sha256 cellar: :any_skip_relocation, ventura:        "81b343a03a3a7f211a61a6793bdea0d180afb01e95b2cd311ce4fb296ee11503"
-    sha256 cellar: :any_skip_relocation, monterey:       "81b343a03a3a7f211a61a6793bdea0d180afb01e95b2cd311ce4fb296ee11503"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d3a803564acec3a4e5ed15e65dfa6d61d1e4e957254a1018f5b131a5846e1b01"
+    sha256 cellar: :any_skip_relocation, all: "fd5e7e37becb6d7cee0a854a2081bf5fd7575f28a637b2c6329b9e2ff88556a2"
   end
 
   depends_on "openjdk"

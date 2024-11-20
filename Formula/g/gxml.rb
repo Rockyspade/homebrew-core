@@ -7,6 +7,7 @@ class Gxml < Formula
   revision 1
 
   bottle do
+    sha256 arm64_sequoia:  "47216df062f881bebea1796d72ce28358e3eeb746dbf9215e80ae4476daa3902"
     sha256 arm64_sonoma:   "8f97268cf4c3e02ebb80664ad7130ed9e8a73651c8ee4a4edff6a0c49f109518"
     sha256 arm64_ventura:  "e6e950ee7e48514e6ba3b1f81037e99799886d05adf2fdf7a31d3939bf9b7196"
     sha256 arm64_monterey: "6fe172d27e676eb132acbef9b7a82d7e42658b1998babea50783504c2c4fa22c"
@@ -43,14 +44,14 @@ class Gxml < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <gxml/gxml.h>
 
       int main(int argc, char *argv[]) {
         GType type = gxml_document_get_type();
         return 0;
       }
-    EOS
+    C
     ENV.prepend_path "PKG_CONFIG_PATH", Formula["libxml2"].opt_lib/"pkgconfig"
     pkg_config_flags = shell_output("pkg-config --cflags --libs libxml-2.0 gxml-0.20").chomp.split
     system ENV.cc, "test.c", "-o", "test", *pkg_config_flags

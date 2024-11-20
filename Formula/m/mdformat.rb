@@ -3,21 +3,15 @@ class Mdformat < Formula
 
   desc "CommonMark compliant Markdown formatter"
   homepage "https://mdformat.readthedocs.io/en/stable/"
-  url "https://files.pythonhosted.org/packages/df/86/6374cc48a89862cfc8e350a65d6af47792e83e7684f13e1222afce110a41/mdformat-0.7.17.tar.gz"
-  sha256 "a9dbb1838d43bb1e6f03bd5dca9412c552544a9bc42d6abb5dc32adfe8ae7c0d"
+  url "https://files.pythonhosted.org/packages/1c/bc/71d461905953d1c716c30e11ca513d7b43097c2d0aa46fde838e30eefe32/mdformat-0.7.19.tar.gz"
+  sha256 "a7d22df9802383432367864da907d2d147485b5cb6872e2d66937c1333e4d58a"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "14024bedc37d382d69cf4bdc4d6da652920d83b238c17c5e4bfa5078bc40e2bc"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "14024bedc37d382d69cf4bdc4d6da652920d83b238c17c5e4bfa5078bc40e2bc"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "14024bedc37d382d69cf4bdc4d6da652920d83b238c17c5e4bfa5078bc40e2bc"
-    sha256 cellar: :any_skip_relocation, sonoma:         "14024bedc37d382d69cf4bdc4d6da652920d83b238c17c5e4bfa5078bc40e2bc"
-    sha256 cellar: :any_skip_relocation, ventura:        "14024bedc37d382d69cf4bdc4d6da652920d83b238c17c5e4bfa5078bc40e2bc"
-    sha256 cellar: :any_skip_relocation, monterey:       "14024bedc37d382d69cf4bdc4d6da652920d83b238c17c5e4bfa5078bc40e2bc"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "8c5d61f62ab333861eccbfeaf1a7a9f4b8d09f0fc68a620a0a1c90146af14a2f"
+    sha256 cellar: :any_skip_relocation, all: "afbdce8013fa157c340da53689cc3cc3d96299e5cee6beee21480590a89695f3"
   end
 
-  depends_on "python@3.12"
+  depends_on "python@3.13"
 
   resource "markdown-it-py" do
     url "https://files.pythonhosted.org/packages/38/71/3b932df36c1a044d397a1f92d1cf91ee0a503d91e470cbd670aa66b07ed0/markdown-it-py-3.0.0.tar.gz"

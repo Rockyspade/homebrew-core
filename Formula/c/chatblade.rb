@@ -3,24 +3,23 @@ class Chatblade < Formula
 
   desc "CLI Swiss Army Knife for ChatGPT"
   homepage "https://github.com/npiv/chatblade"
-  url "https://files.pythonhosted.org/packages/64/1a/e83b916bf98e4c4df1e160952e212c7325dbd5f96b2a67f0a34486279603/chatblade-0.6.2.tar.gz"
-  sha256 "3786335ce943d542e1887aea03a08b3b0052b504846f3f32aad3ade6609158b4"
+  url "https://files.pythonhosted.org/packages/ff/02/e7dfd50d98139472851d03d793c39aebe1364a960648312d252137b0ec25/chatblade-0.7.0.tar.gz"
+  sha256 "bfa5f96aa02b869df76e6f0910b0c2528c44de7b2f95ae08de7d192cb30c7892"
   license "GPL-3.0-only"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "88efb44b943857a79c00da5bec626a482bc07cc35948b9a6311e81310693042e"
-    sha256 cellar: :any,                 arm64_ventura:  "a24efb6483a54a86821055613e633788a2fbe89e6f2059cf908bb15dc31ad91b"
-    sha256 cellar: :any,                 arm64_monterey: "bd92f65b400b891699ee7ee845f235f3036a6fcf4bd6ae42dc27184e7fa0ccbe"
-    sha256 cellar: :any,                 sonoma:         "72e5ed884367015c8b8f5463752c1e87c9fbfe887853f7d48125e49b02553ed8"
-    sha256 cellar: :any,                 ventura:        "d64ab352c22e1199c4ad68882ac1b56a3346a04e0f4c4e1481c84716f9d6b3eb"
-    sha256 cellar: :any,                 monterey:       "fdd1474ad540e3ccf3fc17e2e8a11e44ffaa8df642db63203abbb30aff1c98e0"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "fee8cc84ce0a61e340cd030b97471e15e0fa11bf437caaebe3ea9e1f27122d38"
+    sha256 cellar: :any,                 arm64_sequoia: "61371a8d776224f33de8213260dba58a7ceb146fb397dcfd0210e472bedfb141"
+    sha256 cellar: :any,                 arm64_sonoma:  "3537a6539e9d244d4f0a4ed9ec30f7fe20eb44e689565026b80dc1dbbc2c1657"
+    sha256 cellar: :any,                 arm64_ventura: "1794d7f0efdf4b63fd2eebaa22b9338b0cf477408e6bee6bd520577271617f2e"
+    sha256 cellar: :any,                 sonoma:        "7065e1ab74fb45376b9e43fcc76d61fc574e1fd3b630e7254acd7dc6f6a28548"
+    sha256 cellar: :any,                 ventura:       "372d6488df27ac6f2a92c6b821e60117ac193366784e63890600151cce6e8a86"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f62cad36e67faf9e59cdfc4a2908c4cdca2e1f22de2f33892d5b6cfcc6fdd304"
   end
 
   depends_on "rust" => :build
   depends_on "certifi"
   depends_on "libyaml"
-  depends_on "python@3.12"
+  depends_on "python@3.13"
 
   resource "annotated-types" do
     url "https://files.pythonhosted.org/packages/ee/67/531ea369ba64dcff5ec9c3402f9f51bf748cec26dde048a2f973a4eea7f5/annotated_types-0.7.0.tar.gz"
@@ -28,13 +27,13 @@ class Chatblade < Formula
   end
 
   resource "anyio" do
-    url "https://files.pythonhosted.org/packages/e6/e3/c4c8d473d6780ef1853d630d581f70d655b4f8d7553c6997958c283039a2/anyio-4.4.0.tar.gz"
-    sha256 "5aadc6a1bbb7cdb0bede386cac5e2940f5e2ff3aa20277e991cf028e0585ce94"
+    url "https://files.pythonhosted.org/packages/78/49/f3f17ec11c4a91fe79275c426658e509b07547f874b14c1a526d86a83fc8/anyio-4.6.0.tar.gz"
+    sha256 "137b4559cbb034c477165047febb6ff83f390fc3b20bf181c1fc0a728cb8beeb"
   end
 
   resource "charset-normalizer" do
-    url "https://files.pythonhosted.org/packages/63/09/c1bc53dab74b1816a00d8d030de5bf98f724c52c1635e07681d312f20be8/charset-normalizer-3.3.2.tar.gz"
-    sha256 "f30c3cb33b24454a82faecaf01b19c18562b1e89558fb6c56de4d9118a032fd5"
+    url "https://files.pythonhosted.org/packages/f2/4f/e1808dc01273379acc506d18f1504eb2d299bd4131743b9fc54d7be4df1e/charset_normalizer-3.4.0.tar.gz"
+    sha256 "223217c3d4f82c3ac5e29032b3f1c2eb0fb591b72161f86d93f5719079dae93e"
   end
 
   resource "distro" do
@@ -48,18 +47,18 @@ class Chatblade < Formula
   end
 
   resource "httpcore" do
-    url "https://files.pythonhosted.org/packages/17/b0/5e8b8674f8d203335a62fdfcfa0d11ebe09e23613c3391033cbba35f7926/httpcore-1.0.5.tar.gz"
-    sha256 "34a38e2f9291467ee3b44e89dd52615370e152954ba21721378a87b2960f7a61"
+    url "https://files.pythonhosted.org/packages/b6/44/ed0fa6a17845fb033bd885c03e842f08c1b9406c86a2e60ac1ae1b9206a6/httpcore-1.0.6.tar.gz"
+    sha256 "73f6dbd6eb8c21bbf7ef8efad555481853f5f6acdeaff1edb0694289269ee17f"
   end
 
   resource "httpx" do
-    url "https://files.pythonhosted.org/packages/5c/2d/3da5bdf4408b8b2800061c339f240c1802f2e82d55e50bd39c5a881f47f0/httpx-0.27.0.tar.gz"
-    sha256 "a0cb88a46f32dc874e04ee956e4c2764aba2aa228f650b06788ba6bda2962ab5"
+    url "https://files.pythonhosted.org/packages/78/82/08f8c936781f67d9e6b9eeb8a0c8b4e406136ea4c3d1f89a5db71d42e0e6/httpx-0.27.2.tar.gz"
+    sha256 "f7c2be1d2f3c3c3160d441802406b206c2b76f5947b11115e6df10c6c65e66c2"
   end
 
   resource "idna" do
-    url "https://files.pythonhosted.org/packages/21/ed/f86a79a07470cb07819390452f178b3bef1d375f2ec021ecfc709fc7cf07/idna-3.7.tar.gz"
-    sha256 "028ff3aadf0609c1fd278d8ea3089299412a7a8b9bd005dd08b9f8285bcb5cfc"
+    url "https://files.pythonhosted.org/packages/f1/70/7703c29685631f5a7590aa73f1f1d3fa9a380e654b86af429e0934a32f7d/idna-3.10.tar.gz"
+    sha256 "12f65c9b470abda6dc35cf8e63cc574b1c52b11df2c86030af0ac09b01b13ea9"
   end
 
   resource "markdown-it-py" do
@@ -83,13 +82,13 @@ class Chatblade < Formula
   end
 
   resource "pydantic" do
-    url "https://files.pythonhosted.org/packages/8c/99/d0a5dca411e0a017762258013ba9905cd6e7baa9a3fd1fe8b6529472902e/pydantic-2.8.2.tar.gz"
-    sha256 "6f62c13d067b0755ad1c21a34bdd06c0c12625a22b0fc09c6b149816604f7c2a"
+    url "https://files.pythonhosted.org/packages/a9/b7/d9e3f12af310e1120c21603644a1cd86f59060e040ec5c3a80b8f05fae30/pydantic-2.9.2.tar.gz"
+    sha256 "d155cef71265d1e9807ed1c32b4c8deec042a44a50a4188b25ac67ecd81a9c0f"
   end
 
   resource "pydantic-core" do
-    url "https://files.pythonhosted.org/packages/12/e3/0d5ad91211dba310f7ded335f4dad871172b9cc9ce204f5a56d76ccd6247/pydantic_core-2.20.1.tar.gz"
-    sha256 "26ca695eeee5f9f1aeeb211ffc12f10bcb6f71e2989988fda61dabd65db878d4"
+    url "https://files.pythonhosted.org/packages/e2/aa/6b6a9b9f8537b872f552ddd46dd3da230367754b6f707b8e1e963f515ea3/pydantic_core-2.23.4.tar.gz"
+    sha256 "2584f7cf844ac4d970fba483a717dbe10c1c1c96a969bf65d61ffe94df1b2863"
   end
 
   resource "pygments" do
@@ -108,8 +107,8 @@ class Chatblade < Formula
   end
 
   resource "regex" do
-    url "https://files.pythonhosted.org/packages/3f/51/64256d0dc72816a4fe3779449627c69ec8fee5a5625fd60ba048f53b3478/regex-2024.7.24.tar.gz"
-    sha256 "9cfd009eed1a46b27c14039ad5bbc5e71b6367c5b2e6d5f5da0ea91600817506"
+    url "https://files.pythonhosted.org/packages/f9/38/148df33b4dbca3bd069b963acab5e0fa1a9dbd6820f8c322d0dd6faeff96/regex-2024.9.11.tar.gz"
+    sha256 "6c188c307e8433bcb63dc1915022deb553b4203a70722fc542c363bf120a01fd"
   end
 
   resource "requests" do
@@ -128,8 +127,8 @@ class Chatblade < Formula
   end
 
   resource "tiktoken" do
-    url "https://files.pythonhosted.org/packages/c4/4a/abaec53e93e3ef37224a4dd9e2fc6bb871e7a538c2b6b9d2a6397271daf4/tiktoken-0.7.0.tar.gz"
-    sha256 "1077266e949c24e0291f6c350433c6f0971365ece2b173a23bc3b9f9defef6b6"
+    url "https://files.pythonhosted.org/packages/37/02/576ff3a6639e755c4f70997b2d315f56d6d71e0d046f4fb64cb81a3fb099/tiktoken-0.8.0.tar.gz"
+    sha256 "9ccbb2740f24542534369c5635cfd9b2b3c2490754a78ac8831d99f89f94eeb2"
   end
 
   resource "tqdm" do
@@ -143,8 +142,8 @@ class Chatblade < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/43/6d/fa469ae21497ddc8bc93e5877702dca7cb8f911e337aca7452b5724f1bb6/urllib3-2.2.2.tar.gz"
-    sha256 "dd505485549a7a552833da5e6063639d0d177c04f23bc3864e41e5dc5f612168"
+    url "https://files.pythonhosted.org/packages/ed/63/22ba4ebfe7430b76388e7cd448d5478814d3032121827c12a2cc287e2260/urllib3-2.2.3.tar.gz"
+    sha256 "e7d814a81dad81e6caf2ec9fdedb284ecc9c73076b62654547cc64ccdcae26e9"
   end
 
   def install

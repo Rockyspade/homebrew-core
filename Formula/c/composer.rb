@@ -1,8 +1,8 @@
 class Composer < Formula
   desc "Dependency Manager for PHP"
   homepage "https://getcomposer.org/"
-  url "https://getcomposer.org/download/2.7.7/composer.phar"
-  sha256 "aab940cd53d285a54c50465820a2080fcb7182a4ba1e5f795abfb10414a4b4be"
+  url "https://getcomposer.org/download/2.8.3/composer.phar"
+  sha256 "8323b4105c6e166d47c9db93209370083f9e421743636e108c37d8c1126386ef"
   license "MIT"
 
   livecheck do
@@ -11,14 +11,12 @@ class Composer < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "a878ab2c5f0a7cc3dc11b49b33b1627e16dde21e76a5222e787d1c656fa6aafb"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "a878ab2c5f0a7cc3dc11b49b33b1627e16dde21e76a5222e787d1c656fa6aafb"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "a878ab2c5f0a7cc3dc11b49b33b1627e16dde21e76a5222e787d1c656fa6aafb"
-    sha256 cellar: :any_skip_relocation, sonoma:         "64bc13abdf6b18fcad1a3b9d2ce910526b690240c2c54f21f145ca9c4e679070"
-    sha256 cellar: :any_skip_relocation, ventura:        "64bc13abdf6b18fcad1a3b9d2ce910526b690240c2c54f21f145ca9c4e679070"
-    sha256 cellar: :any_skip_relocation, monterey:       "64bc13abdf6b18fcad1a3b9d2ce910526b690240c2c54f21f145ca9c4e679070"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f0a52f38e9003c8b16117222d6b61e6e1b61fbb3751a30e472fc13620ed098ea"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "ffcd50d18b94306ee3e0d3344c272a0fb12976a32a2499e8e75b6f273b63472b"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "ffcd50d18b94306ee3e0d3344c272a0fb12976a32a2499e8e75b6f273b63472b"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "ffcd50d18b94306ee3e0d3344c272a0fb12976a32a2499e8e75b6f273b63472b"
+    sha256 cellar: :any_skip_relocation, sonoma:        "98ffb3f3898a862ae5e787791d88dd62558ec1472e4b07f6cb48e57043589fe2"
+    sha256 cellar: :any_skip_relocation, ventura:       "98ffb3f3898a862ae5e787791d88dd62558ec1472e4b07f6cb48e57043589fe2"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "566125d44a96734436a0ca4a10d1b29629f81a24db702d221f1adab818569be1"
   end
 
   depends_on "php"
@@ -35,7 +33,7 @@ class Composer < Formula
   end
 
   test do
-    (testpath/"composer.json").write <<~EOS
+    (testpath/"composer.json").write <<~JSON
       {
         "name": "homebrew/test",
         "authors": [
@@ -52,9 +50,9 @@ class Composer < Formula
           }
         }
       }
-    EOS
+    JSON
 
-    (testpath/"src/HelloWorld/Greetings.php").write <<~EOS
+    (testpath/"src/HelloWorld/Greetings.php").write <<~PHP
       <?php
 
       namespace HelloWorld;
@@ -64,9 +62,9 @@ class Composer < Formula
           return 'HelloHomebrew';
         }
       }
-    EOS
+    PHP
 
-    (testpath/"tests/test.php").write <<~EOS
+    (testpath/"tests/test.php").write <<~PHP
       <?php
 
       // Autoload files using the Composer autoloader.
@@ -75,7 +73,7 @@ class Composer < Formula
       use HelloWorld\\Greetings;
 
       echo Greetings::sayHelloWorld();
-    EOS
+    PHP
 
     system bin/"composer", "install"
     assert_match(/^HelloHomebrew$/, shell_output("php tests/test.php"))

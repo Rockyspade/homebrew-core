@@ -1,8 +1,8 @@
 class Gedit < Formula
   desc "GNOME text editor"
   homepage "https://gedit-technology.github.io/apps/gedit/"
-  url "https://download.gnome.org/sources/gedit/47/gedit-47.0.tar.xz"
-  sha256 "fa4a597e34c76d4ac91431b5ae6e191c96c6b0af1702e0899ab35199edfa1bfa"
+  url "https://download.gnome.org/sources/gedit/48/gedit-48.0.tar.xz"
+  sha256 "fe0fef9b7b0799120db86ae893a060036a13445352ded9169bab28d38acf0e80"
   license "GPL-2.0-or-later"
 
   # gedit doesn't seem to follow the typical GNOME version scheme, so we
@@ -13,13 +13,12 @@ class Gedit < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "dd584b18e86c5235a5489d70ff5d9e9b592029ed8695d91e4be0668d0cd57d49"
-    sha256 arm64_ventura:  "bb6e0bb90be7ac45bf541e6682eca988a08178d28a37705c959cb3a0e3667e1b"
-    sha256 arm64_monterey: "de2b6d26a133ad1dbe1e4e9f549210bbaa0af08753f6508d97193032be9d73f0"
-    sha256 sonoma:         "f4f2363f23697b099ee4203b7b04e4fb7fcd272de677c4098a3ecfcae9520477"
-    sha256 ventura:        "225c6cc2e8c21d272519b387a48776a2ff0fffe6a1f1145a4e76aeca88f21143"
-    sha256 monterey:       "4d491cf75ae5637ad53f83930628ce2a4321c698082a33f41c546304da2cc040"
-    sha256 x86_64_linux:   "d44f0ce398f5a58684a6797d457a6056b4f976e8bce80d93b14b4e831a94e79b"
+    sha256 arm64_sequoia: "83fe0bda6dccd626c19648210c10c93ef704c741e3fdc4b38c290aa383492286"
+    sha256 arm64_sonoma:  "065ab3ebd2816a03034cf4f12503c38e24fa75aa27223c7f68567c71e1e1a44b"
+    sha256 arm64_ventura: "f50188ba824bdaad251d67bca1a0afa68d373efd4d0708a24f1c382e6c1a1c54"
+    sha256 sonoma:        "f1036b5616817ac915b66e5b975b95348d6616205451341316b7dae21dca3275"
+    sha256 ventura:       "4ba6a406eabef6af60d36da98d699612f061bad2b212f188edbb0cf11443e41f"
+    sha256 x86_64_linux:  "a67cc884fd2bfba8121e786bc14181c046941f9c2efc8557de8a18205253f49a"
   end
 
   depends_on "desktop-file-utils" => :build # for update-desktop-database
@@ -74,14 +73,14 @@ class Gedit < Formula
     # main executable test
     system bin/"gedit", "--version"
     # API test
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <gedit/gedit-debug.h>
 
       int main(int argc, char *argv[]) {
         gedit_debug_init();
         return 0;
       }
-    EOS
+    C
 
     flags = shell_output("pkg-config --cflags --libs gedit").chomp.split
     flags << "-Wl,-rpath,#{lib}/gedit" if OS.linux?

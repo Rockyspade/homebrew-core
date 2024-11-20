@@ -11,6 +11,7 @@ class Jumanpp < Formula
   end
 
   bottle do
+    sha256 arm64_sequoia:  "6ea43f4832aa25047b071cc99cb91995b249db44017818191fd106b0c50f901d"
     sha256 arm64_sonoma:   "9fa8968d1e8332287161611d534e060d383cd5e732dc56015fe681cbe38d88fd"
     sha256 arm64_ventura:  "a4f9b268938b28a53c03143114f43e12f5a158007a2d3fca46c79811daec00f8"
     sha256 arm64_monterey: "c4db4776b58c04151f749e3e4254a437abc02fb0f284a8a1eccfa02e50b6651f"
@@ -27,14 +28,12 @@ class Jumanpp < Formula
     sha256 x86_64_linux:   "a646201910dc5c938adcd64559fc0ce85dd8f13017ddadb1b65965f4cc2f4afe"
   end
 
+  depends_on "boost" => :build
   depends_on "boost-build" => :build
-  depends_on "boost"
   depends_on "gperftools"
 
   def install
-    system "./configure", "--disable-dependency-tracking",
-                          "--disable-silent-rules",
-                          "--prefix=#{prefix}"
+    system "./configure", "--disable-silent-rules", *std_configure_args
     system "make", "install"
   end
 

@@ -1,19 +1,18 @@
 class PandocCrossref < Formula
   desc "Pandoc filter for numbering and cross-referencing"
   homepage "https://github.com/lierdakil/pandoc-crossref"
-  url "https://github.com/lierdakil/pandoc-crossref/archive/refs/tags/v0.3.17.1c.tar.gz"
-  version "0.3.17.1c"
-  sha256 "1c1d00d356c74749d530b508db2e6aca6fe9f5ae3a283af58d25bedc99293977"
+  url "https://github.com/lierdakil/pandoc-crossref/archive/refs/tags/v0.3.18.0b.tar.gz"
+  version "0.3.18.0b"
+  sha256 "a71043e86104951815886d560dd1173308bd7f7e556ce80530b4de03c1bcd9a5"
   license "GPL-2.0-or-later"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "c94edf93c9f715b57577df9412dcdba0051b921304ff1885d880ddf7f049ec8c"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "971e09c4acbb7f0331738d28b7f23ef905e444aa1ce7bcd2001dd84b8d5565b1"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "09f58513da6d5c759db7726f2a58de805bb58b23e8797bd882d159066e0795dd"
-    sha256 cellar: :any_skip_relocation, sonoma:         "3dc0f52abfeeb9fa1d1d12d1833fdecaf20049dca2ebe7057a4d7256a39ed604"
-    sha256 cellar: :any_skip_relocation, ventura:        "f4e1cff8bf41b03362223374fb0a5880bccf6811dadeffab0a3b17cce6715ed5"
-    sha256 cellar: :any_skip_relocation, monterey:       "d7015c5a49f787bef8ba735b31e206875d56591215c3d5317e5f9b380aa8128d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "638d0887665fededa6bd785f025cf6e3ca12691be15b0451d7fa45b7f7ea4820"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "454b100be09864162dff118c2490ec0e0bc597e2d832f926510ffe4486a98221"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "a942e0c90660465a0b1dc9e5b509336e9beae20ee7b1e94ffdb8fc04e69525e5"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "efc0398a828f9c0bdf9637244423aa7b7ad6c98aa2d1b64d08a8013c255e5cac"
+    sha256 cellar: :any_skip_relocation, sonoma:        "2c7a8bebdfa52ce8ef133cc14b464fc5ddb7a1ae60e6fa156ec3992aa2bfb711"
+    sha256 cellar: :any_skip_relocation, ventura:       "f756208d8a05afd7332cc5fb2872bb4d2358b0bb76c63bacb4ac9cc6eb4e8f4d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "63b421075b72824a3132beafb12730eaebfbf1dcd907eae0e89eed3ac1ed1468"
   end
 
   depends_on "cabal-install" => :build
@@ -31,13 +30,13 @@ class PandocCrossref < Formula
   end
 
   test do
-    (testpath/"hello.md").write <<~EOS
+    (testpath/"hello.md").write <<~MARKDOWN
       Demo for pandoc-crossref.
       See equation @eq:eqn1 for cross-referencing.
       Display equations are labelled and numbered
 
       $$ P_i(x) = \\sum_i a_i x^i $$ {#eq:eqn1}
-    EOS
+    MARKDOWN
     output = shell_output("#{Formula["pandoc"].bin}/pandoc -F #{bin}/pandoc-crossref -o out.html hello.md 2>&1")
     assert_match "∑", (testpath/"out.html").read
     refute_match "WARNING: pandoc-crossref was compiled", output

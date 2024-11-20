@@ -1,8 +1,8 @@
 class Gradle < Formula
   desc "Open-source build automation tool based on the Groovy and Kotlin DSL"
   homepage "https://www.gradle.org/"
-  url "https://services.gradle.org/distributions/gradle-8.10-all.zip"
-  sha256 "682b4df7fe5accdca84a4d1ef6a3a6ab096b3efd5edf7de2bd8c758d95a93703"
+  url "https://services.gradle.org/distributions/gradle-8.11-all.zip"
+  sha256 "73d2d553933194d8eefed0a291acbe45392ca3572ba13834cbbf373da375276d"
   license "Apache-2.0"
 
   livecheck do
@@ -11,13 +11,7 @@ class Gradle < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "76efc1a8a88b3b7bcfa34e464deab59ab120ab630a950d4ebf9b202a535c4e01"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "76efc1a8a88b3b7bcfa34e464deab59ab120ab630a950d4ebf9b202a535c4e01"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "76efc1a8a88b3b7bcfa34e464deab59ab120ab630a950d4ebf9b202a535c4e01"
-    sha256 cellar: :any_skip_relocation, sonoma:         "c5b4d9a4e299179c513419ff0bd1658c9f47da9454a9b276f1b08fe77b2fd2aa"
-    sha256 cellar: :any_skip_relocation, ventura:        "c5b4d9a4e299179c513419ff0bd1658c9f47da9454a9b276f1b08fe77b2fd2aa"
-    sha256 cellar: :any_skip_relocation, monterey:       "c5b4d9a4e299179c513419ff0bd1658c9f47da9454a9b276f1b08fe77b2fd2aa"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "76efc1a8a88b3b7bcfa34e464deab59ab120ab630a950d4ebf9b202a535c4e01"
+    sha256 cellar: :any_skip_relocation, all: "399044d8f24c64605e7690c8b54b44ad10551601865e16e19b9109b78bf75cce"
   end
 
   # https://github.com/gradle/gradle/blob/master/platforms/documentation/docs/src/docs/userguide/releases/compatibility.adoc
@@ -28,6 +22,10 @@ class Gradle < Formula
     libexec.install %w[bin docs lib src]
     env = Language::Java.overridable_java_home_env
     (bin/"gradle").write_env_script libexec/"bin/gradle", env
+
+    # Ensure we have uniform bottles.
+    inreplace libexec/"src/jvm-services/org/gradle/jvm/toolchain/internal/LinuxInstallationSupplier.java",
+              "/usr/local", HOMEBREW_PREFIX
   end
 
   test do

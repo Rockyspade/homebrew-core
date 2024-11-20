@@ -1,19 +1,18 @@
 class SpicetifyCli < Formula
   desc "Command-line tool to customize Spotify client"
   homepage "https://github.com/spicetify/cli"
-  url "https://github.com/spicetify/cli/archive/refs/tags/v2.37.1/v2.37.1.tar.gz"
-  sha256 "9c73e72036f1f75eaebdd5c819bd17cf3b124f31e96c50ca2644a233d9839c28"
+  url "https://github.com/spicetify/cli/archive/refs/tags/v2.38.4/v2.38.4.tar.gz"
+  sha256 "595e3d85d56421e8dc233d0c567f2f705e76ac2c56e05793df9e0919bddb22a6"
   license "LGPL-2.1-only"
   head "https://github.com/spicetify/cli.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "062c7f86fe732c7f0acd9f82066fb2bc29a79b2e408119b5551282d805b5093a"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "f0a39f1a7f5717a57087f1c5998155a467e4af09f6c5af7cd253439ccd650e5f"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "3fe3893873384f4ade31e03ae4862b87ef29fcfc690df812e59d2d44ba113687"
-    sha256 cellar: :any_skip_relocation, sonoma:         "d18bd18e9fee9dce4c8e24ba53913c2de74cff7e3402c764d694cbd9346ed22f"
-    sha256 cellar: :any_skip_relocation, ventura:        "099ad452b7ea5c40a13f6d6ff70ec116b4c2ee84514311ac6e95d29713aefd71"
-    sha256 cellar: :any_skip_relocation, monterey:       "2512946019ba5818ab5ac74de1adba40b00536d4675b09914fbe6e2620e7acd7"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e25003851c1a824f6294ecf9505dac4bf123ab6fa3937f1dda2a7dbe3bd904b8"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "d58f63ab5d2bc403de5ce40174f60f7f31a53b49db68e5e8ca716866e683240a"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "d58f63ab5d2bc403de5ce40174f60f7f31a53b49db68e5e8ca716866e683240a"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "d58f63ab5d2bc403de5ce40174f60f7f31a53b49db68e5e8ca716866e683240a"
+    sha256 cellar: :any_skip_relocation, sonoma:        "82cd5f6c21b5275bbdf5b00caef7dbcd30969ec577169c518849e3e5a4f9b5f8"
+    sha256 cellar: :any_skip_relocation, ventura:       "82cd5f6c21b5275bbdf5b00caef7dbcd30969ec577169c518849e3e5a4f9b5f8"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "059087fd4f8d1ebe6d46917f1d9ab88f95947606fb2fa62ae96828b01c21b684"
   end
 
   depends_on "go" => :build
@@ -49,8 +48,11 @@ class SpicetifyCli < Formula
       current_theme           = SpicetifyDefault
       prefs_path              = #{pref_file}
     EOS
+
     quiet_system bin/"spicetify", "config"
     assert_match version.to_s, shell_output("#{bin}/spicetify -v")
-    assert_match "SpicetifyDefault", shell_output("#{bin}/spicetify config current_theme")
+
+    output = shell_output("#{bin}/spicetify config current_theme 2>&1", 1)
+    assert_match "com.spotify.Client is not a valid path", output
   end
 end

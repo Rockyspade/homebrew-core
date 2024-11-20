@@ -1,18 +1,17 @@
 class Vet < Formula
   desc "Policy driven vetting of open source dependencies"
   homepage "https://github.com/safedep/vet"
-  url "https://github.com/safedep/vet/archive/refs/tags/v1.6.1.tar.gz"
-  sha256 "b71449df6aa575ca9ffc24a154f208e725d8b2ec11f42d59e8215162879806f1"
+  url "https://github.com/safedep/vet/archive/refs/tags/v1.8.3.tar.gz"
+  sha256 "8ba353011f216b2b45ceccaf1cfd9251896fd8ba9365bf460b01a87c9ed97fc8"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "61c34d2ac0b7cd9cf28d66e7c3b2d9e8e84c21977311adeb099218ecc916d4b5"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "429f081dfd4c86741fb1a67e98403a759264b78610a87ab072d7539ff115dce5"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "d09b3deb94d5c3af660afd8a4ad4b77c705e202809036f234199afda2c22c728"
-    sha256 cellar: :any_skip_relocation, sonoma:         "23d2ee50ef975b561ebed9586f266d341ef2b4f12e9673499aeb870cd03ac076"
-    sha256 cellar: :any_skip_relocation, ventura:        "f2c421275a48239b812d152a063bb2e7a00f0b17d7f06bc956e9fd734c9e24bc"
-    sha256 cellar: :any_skip_relocation, monterey:       "c1d141c2a966ec95b72651bcffada6fe57093edecb7ab61523c522ef16582293"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f095836e362d28a577dc2541d6edcdb84e2586e0b5ef5185aa4ebb32a865c5b8"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "2f50445827c0d888976a90b1942b8dd62cc9a887ed44a08b03a1f05b48a72ccc"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "37561b92720e54759edc886608504880004607c82ad46f21a8f9102b9efe4eb6"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "13674ab3d2722785822b1e866d3cff8f702be375eea88a6a60fc21f013e33b64"
+    sha256 cellar: :any_skip_relocation, sonoma:        "3b52ae36d093e5a09b5027fbc2c73722b4c98d49487d61dec8a9c98e91d4e3ca"
+    sha256 cellar: :any_skip_relocation, ventura:       "4549c4c77b9d2b6539e2ef0070cc16e78f1a98f49f4e10b1801e324fc2a9246f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "6abb6faf1b89054f4309dffb54e644ade9b036ffeb6a8e24c6fb2a1276eca168"
   end
 
   depends_on "go" => :build

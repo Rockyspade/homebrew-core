@@ -4,16 +4,16 @@ class Ncnn < Formula
   url "https://github.com/Tencent/ncnn/archive/refs/tags/20240820.tar.gz"
   sha256 "21e7897c7a332894934800a15189915b5131dddc84b2c8d5669ff53de8c5efa4"
   license "BSD-3-Clause"
+  revision 5
   head "https://github.com/Tencent/ncnn.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "016732f1055a90f9d2b7ddf5db615a67bac594e3267f3cd3bea4b2c79e6c3dbb"
-    sha256 cellar: :any,                 arm64_ventura:  "29645728bb4c0f1cfa9c6172cd5e52aa6b2dc2f15e68da23719fcebd9e789a50"
-    sha256 cellar: :any,                 arm64_monterey: "1fc3c5a13edfe50b2b5907442d5cf5cded68ed16f9e9c0d1448e71f870420a77"
-    sha256 cellar: :any,                 sonoma:         "c2e792f098072b29ae924cc65862abf0ceca537c17456ea7a9684cdf14723701"
-    sha256 cellar: :any,                 ventura:        "989aca3dc0f9b52286fd8dc2f8b9704bf9f71928fc89306d73138e920d30a46c"
-    sha256 cellar: :any,                 monterey:       "c93c26e3910c3e94e8b7b0475a2a8676ed48dbfb766dbcf23248a06eb03018bf"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "0294e4ffb63184b232b9099fab2f59b2dd42fb81d0646248c3f28302c757ab0f"
+    sha256 cellar: :any,                 arm64_sequoia: "0fc6f36f40ac00a3093b6257a150026398c5ae5304992f103bdc45cf74a253dd"
+    sha256 cellar: :any,                 arm64_sonoma:  "bc0120683ef6d55f797dd26f639e860681544d3588f9b28a8cfedf110b0998d2"
+    sha256 cellar: :any,                 arm64_ventura: "5bb3b572b66031afc1afa5fad37dbb408a2cf7139d94bb25233eceb3c9dbb18a"
+    sha256 cellar: :any,                 sonoma:        "b0ba0c2e85cd0ee075c6f856d7435217b15d6f84d2a24c0cb12c32abc454473b"
+    sha256 cellar: :any,                 ventura:       "3f465221ec5d7c109e3a966410e22aabf5e241325312f309d3e009b68d378ac7"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3741ad723827b237a044ae3126c60be1c4a149c58c00ef016b792b6b1b87abc0"
   end
 
   depends_on "cmake" => :build
@@ -71,7 +71,7 @@ class Ncnn < Formula
       vulkan = 0
     end
 
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <cassert>
       #include <ncnn/gpu.h>
       #include <ncnn/mat.h>
@@ -91,7 +91,7 @@ class Ncnn < Formula
 
           return 0;
       }
-    EOS
+    CPP
 
     system ENV.cxx, "test.cpp", "-std=c++11",
                     "-I#{include}", "-L#{lib}", "-lncnn",

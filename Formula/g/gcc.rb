@@ -2,25 +2,19 @@ class Gcc < Formula
   desc "GNU compiler collection"
   homepage "https://gcc.gnu.org/"
   license "GPL-3.0-or-later" => { with: "GCC-exception-3.1" }
-  revision 2
+  revision 1
   head "https://gcc.gnu.org/git/gcc.git", branch: "master"
 
   stable do
-    url "https://ftp.gnu.org/gnu/gcc/gcc-14.1.0/gcc-14.1.0.tar.xz"
-    mirror "https://ftpmirror.gnu.org/gcc/gcc-14.1.0/gcc-14.1.0.tar.xz"
-    sha256 "e283c654987afe3de9d8080bc0bd79534b5ca0d681a73a11ff2b5d3767426840"
+    url "https://ftp.gnu.org/gnu/gcc/gcc-14.2.0/gcc-14.2.0.tar.xz"
+    mirror "https://ftpmirror.gnu.org/gcc/gcc-14.2.0/gcc-14.2.0.tar.xz"
+    sha256 "a7b39bc69cbf9e25826c5a60ab26477001f7c08d85cec04bc0e29cabed6f3cc9"
 
     # Branch from the Darwin maintainer of GCC, with a few generic fixes and
     # Apple Silicon support, located at https://github.com/iains/gcc-14-branch
     patch do
-      url "https://raw.githubusercontent.com/Homebrew/formula-patches/82b5c1cd38826ab67ac7fc498a8fe74376a40f4a/gcc/gcc-14.1.0.diff"
-      sha256 "1529cff128792fe197ede301a81b02036c8168cb0338df21e4bc7aafe755305a"
-    end
-
-    # Addition patch to be more portable across various SDK headers
-    patch do
-      url "https://github.com/iains/gcc-14-branch/commit/75ff8c390327ac693f6a1c40510bc0d35d7a1e22.patch?full_index=1"
-      sha256 "13a7ef21fafa39b268e63c3aaed6a78a1d744176a08ffb8d0fbf2f0083e0c850"
+      url "https://raw.githubusercontent.com/Homebrew/formula-patches/f30c309442a60cfb926e780eae5d70571f8ab2cb/gcc/gcc-14.2.0-r2.diff"
+      sha256 "6c0a4708f35ccf2275e6401197a491e3ad77f9f0f9ef5761860768fa6da14d3d"
     end
   end
 
@@ -30,13 +24,13 @@ class Gcc < Formula
   end
 
   bottle do
-    sha256                               arm64_sonoma:   "e1227afa804f5ee85190d5535a0a0fe73c58b1eab5237587eff70ab1b9ca9e5f"
-    sha256                               arm64_ventura:  "3f8ed3e421ef22d01d17ffc2cdb5c1cb76ca282965f8856df57adb4f500fc749"
-    sha256                               arm64_monterey: "9892be5aca16cc3af27d9a880887a06692c30e42b265ef8756e8440c2d9d3cb1"
-    sha256                               sonoma:         "716e2a7c8c1d730545cb2e4ac1672d352b5fabf27b047516910332dfc40d3236"
-    sha256                               ventura:        "5232770600bcf29aa29c975e15e2507ddbb2fbc659c23df8082b7d7b638a164f"
-    sha256                               monterey:       "b096ff8885dd151beedede482b30ef69e18782942e95acd9f44fe2894c83cf08"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "43f2a32e78d80b34474723d215347cb4be7c6ab1e6b3d42576bb202e1bbdae6c"
+    sha256                               arm64_sequoia: "96d8bf02f621cfa180cfe6c466fe0aff2cf3f48eab52ea5a5232cdd2a5cc30c4"
+    sha256                               arm64_sonoma:  "4d94c81d3aea48d77d6e7d7d359d05b48024bac44ade59e08dc3fe0f62539a17"
+    sha256                               arm64_ventura: "2869b13880fbe3d3d9d074e3b5f2dbf3bd0593f826d11b8b10165fd489b94deb"
+    sha256                               sequoia:       "548e5453b0cbf88fe86d63aeef2dacfa7eacc030ccdf037113add3040d64db50"
+    sha256                               sonoma:        "901263863f3f4e8b99f9ffb1cccdb00e5fe74fd1013ac79d37af7ce07f600123"
+    sha256                               ventura:       "7832d72cd4f578e244d5b920f2523e77b8f30328229440a569afa5a88df353fb"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0902085b2185b224dd20c2ee5f12d83284cdbb68d0dab1e2edbd4c6603545de6"
   end
 
   # The bottles are built on systems with the CLT installed, and do not work
@@ -126,6 +120,7 @@ class Gcc < Formula
       # Change the default directory name for 64-bit libraries to `lib`
       # https://stackoverflow.com/a/54038769
       inreplace "gcc/config/i386/t-linux64", "m64=../lib64", "m64="
+      inreplace "gcc/config/aarch64/t-aarch64-linux", "lp64=../lib64", "lp64="
 
       make_args = %W[
         BOOT_CFLAGS=-I#{Formula["zlib"].opt_include}
@@ -258,18 +253,18 @@ class Gcc < Formula
   end
 
   test do
-    (testpath/"hello-c.c").write <<~EOS
+    (testpath/"hello-c.c").write <<~C
       #include <stdio.h>
       int main()
       {
         puts("Hello, world!");
         return 0;
       }
-    EOS
+    C
     system bin/"gcc-#{version_suffix}", "-o", "hello-c", "hello-c.c"
     assert_equal "Hello, world!\n", shell_output("./hello-c")
 
-    (testpath/"hello-cc.cc").write <<~EOS
+    (testpath/"hello-cc.cc").write <<~CPP
       #include <iostream>
       struct exception { };
       int main()
@@ -280,11 +275,11 @@ class Gcc < Formula
           catch (...) { }
         return 0;
       }
-    EOS
+    CPP
     system bin/"g++-#{version_suffix}", "-o", "hello-cc", "hello-cc.cc"
     assert_equal "Hello, world!\n", shell_output("./hello-cc")
 
-    (testpath/"test.f90").write <<~EOS
+    (testpath/"test.f90").write <<~FORTRAN
       integer,parameter::m=10000
       real::a(m), b(m)
       real::fact=0.5
@@ -294,7 +289,7 @@ class Gcc < Formula
       end do
       write(*,"(A)") "Done"
       end
-    EOS
+    FORTRAN
     system bin/"gfortran", "-o", "test", "test.f90"
     assert_equal "Done\n", shell_output("./test")
 

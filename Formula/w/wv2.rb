@@ -15,6 +15,7 @@ class Wv2 < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "0b9e9d8d06ee14ba09ec9f467e24aba00ecc63966bb877fc88a3868a2fb2041c"
     sha256 cellar: :any,                 arm64_sonoma:   "ab4eca06cc176e58df0a6d57de60929427e68ce2d8dc1fc9f71b2a15a88c59d3"
     sha256 cellar: :any,                 arm64_ventura:  "590dea1f89ca9fe964215ad6b338aa92ca782157d77bb867a568c380cf9259f0"
     sha256 cellar: :any,                 arm64_monterey: "dda217f7db1f6f78199bb54741c836013f9bc563641925be66e76fee4f001738"
@@ -58,7 +59,7 @@ class Wv2 < Formula
   test do
     testpath.install resource("testole.doc")
 
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <cstdlib>
       #include <iostream>
       #include <string>
@@ -104,7 +105,7 @@ class Wv2 < Formula
 
           return 0;
       }
-    EOS
+    CPP
 
     wv2_flags = shell_output("#{bin}/wv2-config --cflags --libs").chomp.split
     system ENV.cxx, "test.cpp", "-L#{Formula["libgsf"].lib}",

@@ -6,9 +6,9 @@ class GccAT9 < Formula
   sha256 "27769f64ef1d4cd5e2be8682c0c93f9887983e6cfd1a927ce5a0a2915a95cf8f"
   license "GPL-3.0-or-later" => { with: "GCC-exception-3.1" }
 
+  # https://gcc.gnu.org/gcc-9/
   livecheck do
-    url :stable
-    regex(%r{href=.*?gcc[._-]v?(9(?:\.\d+)+)(?:/?["' >]|\.t)}i)
+    skip "No longer developed or maintained"
   end
 
   bottle do
@@ -214,18 +214,18 @@ class GccAT9 < Formula
   end
 
   test do
-    (testpath/"hello-c.c").write <<~EOS
+    (testpath/"hello-c.c").write <<~C
       #include <stdio.h>
       int main()
       {
         puts("Hello, world!");
         return 0;
       }
-    EOS
+    C
     system bin/"gcc-#{version.major}", "-o", "hello-c", "hello-c.c"
     assert_equal "Hello, world!\n", `./hello-c`
 
-    (testpath/"hello-cc.cc").write <<~EOS
+    (testpath/"hello-cc.cc").write <<~CPP
       #include <iostream>
       struct exception { };
       int main()
@@ -236,11 +236,11 @@ class GccAT9 < Formula
           catch (...) { }
         return 0;
       }
-    EOS
+    CPP
     system bin/"g++-#{version.major}", "-o", "hello-cc", "hello-cc.cc"
     assert_equal "Hello, world!\n", `./hello-cc`
 
-    (testpath/"test.f90").write <<~EOS
+    (testpath/"test.f90").write <<~FORTRAN
       integer,parameter::m=10000
       real::a(m), b(m)
       real::fact=0.5
@@ -250,7 +250,7 @@ class GccAT9 < Formula
       end do
       write(*,"(A)") "Done"
       end
-    EOS
+    FORTRAN
     system bin/"gfortran-#{version.major}", "-o", "test", "test.f90"
     assert_equal "Done\n", `./test`
   end

@@ -1,19 +1,18 @@
 class Glasskube < Formula
   desc "Missing Package Manager for Kubernetes"
   homepage "https://glasskube.dev/"
-  url "https://github.com/glasskube/glasskube/archive/refs/tags/v0.17.0.tar.gz"
-  sha256 "11ec36c58c321d0cf8b9c137cc26e8020a938548f40795160a76a18bcde25a7b"
+  url "https://github.com/glasskube/glasskube/archive/refs/tags/v0.25.0.tar.gz"
+  sha256 "fcd6bbb2f964a74834e230db6426f9096b7f6b2f4ae0ce241b4c17a1d15d2c9d"
   license "Apache-2.0"
   head "https://github.com/glasskube/glasskube.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "cb1e8e26056f0be98f3a9380bf6b523eb539e41aec1e409e52362d3d95c1d435"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "b6d4112b83622762b6b40b37efd71e7ca5f1d1ba24f19536c9f82e52f8f50ed6"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "e8f249bec821d6ca3346069292875b41cd7199174851e5ebbe790f0b16745dc4"
-    sha256 cellar: :any_skip_relocation, sonoma:         "5f744d4690d7d9269b5edd723a92807ae7e334f84e053cf974e3e5bc7c530857"
-    sha256 cellar: :any_skip_relocation, ventura:        "31b180d89d4909a3073631cc704ef6a1ca6169cee476cacb5281bd44e47418d4"
-    sha256 cellar: :any_skip_relocation, monterey:       "c94df6c281e1c8e3a2e56168ab895759622f47c322bf6f37d5f248ba88dcd3a4"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b2193a329817ab61023bd1fbce06d37066b691d7156622188f8d86e40a52fd49"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "26434ed3ab1f2f5945b6fd34a27fc50f784f2aa8eeb70809068f5c951b3a4c4a"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "26434ed3ab1f2f5945b6fd34a27fc50f784f2aa8eeb70809068f5c951b3a4c4a"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "26434ed3ab1f2f5945b6fd34a27fc50f784f2aa8eeb70809068f5c951b3a4c4a"
+    sha256 cellar: :any_skip_relocation, sonoma:        "663656e3fe152032e25b9c0bb91e6f51214fcdc7a1d42eca19ceae5c691d548d"
+    sha256 cellar: :any_skip_relocation, ventura:       "663656e3fe152032e25b9c0bb91e6f51214fcdc7a1d42eca19ceae5c691d548d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "bb9ea281153ed4389e2ba5f4200f50896394ca00095716b691b759833273ad19"
   end
 
   depends_on "go" => :build

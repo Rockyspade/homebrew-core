@@ -1,18 +1,17 @@
 class Eslint < Formula
   desc "AST-based pattern checker for JavaScript"
   homepage "https://eslint.org"
-  url "https://registry.npmjs.org/eslint/-/eslint-9.9.0.tgz"
-  sha256 "b0e2456f7181b00a6005fcbda4f635eee6f175ee87c8dc593fb75337d575d5eb"
+  url "https://registry.npmjs.org/eslint/-/eslint-9.15.0.tgz"
+  sha256 "8a400a3c6ac4cadaed2d7c2656ca4ac2d98722ddaf5d8e615670b72557b4e77e"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "a58933e6031ec51a7fc6422ec56cf9fb0252fb984b56f392372ab7d0a3c10c6f"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "a58933e6031ec51a7fc6422ec56cf9fb0252fb984b56f392372ab7d0a3c10c6f"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "a58933e6031ec51a7fc6422ec56cf9fb0252fb984b56f392372ab7d0a3c10c6f"
-    sha256 cellar: :any_skip_relocation, sonoma:         "fc921be29d7e30093cf2d6574c2def9011e8f987c41f732674b32672f32a7777"
-    sha256 cellar: :any_skip_relocation, ventura:        "fc921be29d7e30093cf2d6574c2def9011e8f987c41f732674b32672f32a7777"
-    sha256 cellar: :any_skip_relocation, monterey:       "fc921be29d7e30093cf2d6574c2def9011e8f987c41f732674b32672f32a7777"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a58933e6031ec51a7fc6422ec56cf9fb0252fb984b56f392372ab7d0a3c10c6f"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "b4c5ac218b5d4f99327ff8d39e867b9c0e35832b4301f04d35fe413d1e467afe"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "b4c5ac218b5d4f99327ff8d39e867b9c0e35832b4301f04d35fe413d1e467afe"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "b4c5ac218b5d4f99327ff8d39e867b9c0e35832b4301f04d35fe413d1e467afe"
+    sha256 cellar: :any_skip_relocation, sonoma:        "b97983e4cee200074cd7c8df1585663fb70e7b3a6d65efcb337793fc0eef202b"
+    sha256 cellar: :any_skip_relocation, ventura:       "b97983e4cee200074cd7c8df1585663fb70e7b3a6d65efcb337793fc0eef202b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b4c5ac218b5d4f99327ff8d39e867b9c0e35832b4301f04d35fe413d1e467afe"
   end
 
   depends_on "node"

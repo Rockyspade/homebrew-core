@@ -1,8 +1,8 @@
 class OpenlibertyJakartaee8 < Formula
   desc "Lightweight open framework for Java (Jakarta EE 8)"
   homepage "https://openliberty.io"
-  url "https://public.dhe.ibm.com/ibmdl/export/pub/software/openliberty/runtime/release/24.0.0.7/openliberty-javaee8-24.0.0.7.zip"
-  sha256 "9080788909e4fc4c6e395e3ec380bebeefbb28339c02ddf0c69b681e5a3e8581"
+  url "https://public.dhe.ibm.com/ibmdl/export/pub/software/openliberty/runtime/release/24.0.0.11/openliberty-javaee8-24.0.0.11.zip"
+  sha256 "228ee0f37336c8899cb123d67da373c415a902b2128e878ce635f095235868bf"
   license "EPL-1.0"
 
   livecheck do
@@ -11,13 +11,7 @@ class OpenlibertyJakartaee8 < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "3d4560266b5a79a53aa0bda43041fa7ff2139e2eabc100a2c41d124429042d88"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "3d4560266b5a79a53aa0bda43041fa7ff2139e2eabc100a2c41d124429042d88"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "3d4560266b5a79a53aa0bda43041fa7ff2139e2eabc100a2c41d124429042d88"
-    sha256 cellar: :any_skip_relocation, sonoma:         "3d4560266b5a79a53aa0bda43041fa7ff2139e2eabc100a2c41d124429042d88"
-    sha256 cellar: :any_skip_relocation, ventura:        "3d4560266b5a79a53aa0bda43041fa7ff2139e2eabc100a2c41d124429042d88"
-    sha256 cellar: :any_skip_relocation, monterey:       "3d4560266b5a79a53aa0bda43041fa7ff2139e2eabc100a2c41d124429042d88"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "9eae33ba6474d06594fbfef0a109abab0da876feacf25a57da68b653f651f8d4"
+    sha256 cellar: :any_skip_relocation, all: "2337f0352284146d67a28e7d1bf8ac15168e6b6aa97fa878a9fc32f9218db424"
   end
 
   depends_on "openjdk"

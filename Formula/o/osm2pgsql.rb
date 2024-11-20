@@ -1,28 +1,29 @@
 class Osm2pgsql < Formula
   desc "OpenStreetMap data to PostgreSQL converter"
   homepage "https://osm2pgsql.org"
-  url "https://github.com/openstreetmap/osm2pgsql/archive/refs/tags/1.11.0.tar.gz"
-  sha256 "6b46313813b816f15ce906c04cd4108bbb05362740e0a1a8889055f4e25977d2"
+  url "https://github.com/openstreetmap/osm2pgsql/archive/refs/tags/2.0.0.tar.gz"
+  sha256 "05c2355b4a59d03a0f9855b4234a3bdc717b078faee625e73357947d1a82fe89"
   license "GPL-2.0-only"
-  revision 2
   head "https://github.com/openstreetmap/osm2pgsql.git", branch: "master"
 
   bottle do
-    sha256 arm64_sonoma:   "a4e3b44ee3c1717a0eff88f03678d3fb88b2e7bbc1c0c1c0ac05ab8a1d605556"
-    sha256 arm64_ventura:  "999c603e48cd96f0c33b1db28ef55eef999b7c24484a09dcd5d198189eca72bd"
-    sha256 arm64_monterey: "42d4c065c00f567cc477c4b831cf5071c407297aa52076d7c0fc3b7ae32b1040"
-    sha256 sonoma:         "11e38c0e29beb114c08466e4dce0a52ab2fbcd364c7dcd175cb99d43009de7fc"
-    sha256 ventura:        "65ecc28dc6aa3d9592917be707643bdc96be5b58b877dcce2310ff828848c19e"
-    sha256 monterey:       "a8a9a207d9922f6dff4d4a422fdaca49292ae5cb5b4f8080d998cdfa9591effb"
-    sha256 x86_64_linux:   "984e9ebf513a1d2e5ce54d65ff6cbcd54902e60d897daffd07c8cdeaeef9c0aa"
+    rebuild 1
+    sha256 arm64_sequoia: "ffea3cae27bf62d48968eb9be4ab85440e60fa216231855c97a68ed4e42b8219"
+    sha256 arm64_sonoma:  "b6f235dacd6ba9a51d383689d1b632445108ec701f89793bf40c4e6a55e856b9"
+    sha256 arm64_ventura: "07994b3ea37df9184ad633a9d0a30a571ec4f5e4b07497106a5182797ff455e2"
+    sha256 sonoma:        "1fe7f0b34eeec3f80bf76bb57df61afb08a4018c20234e6b46de2a1bf9e7abc0"
+    sha256 ventura:       "85d2ace7b9134fdfaf2cd64d9ee9c269796524b8aef5e5cd659e1b11401d3a2e"
+    sha256 x86_64_linux:  "574cff38f797341afc455c8d7ee5a996d2ebe376214f38a578f4a79e260d52a7"
   end
 
+  depends_on "boost" => :build
+  depends_on "cli11" => :build
   depends_on "cmake" => :build
+  depends_on "fmt" => :build
+  depends_on "libosmium" => :build
   depends_on "lua" => :build
   depends_on "nlohmann-json" => :build
 
-  depends_on "boost"
-  depends_on "geos"
   depends_on "libpq"
   depends_on "luajit"
   depends_on "proj"
@@ -38,9 +39,16 @@ class Osm2pgsql < Formula
     inreplace "cmake/FindLua.cmake", /set\(LUA_VERSIONS5( \d\.\d)+\)/,
                                      "set(LUA_VERSIONS5 #{lua_version})"
 
-    args = %w[
+    # Remove bundled libraries
+    rm_r("contrib")
+
+    args = %W[
+      -DEXTERNAL_CLI11=ON
+      -DEXTERNAL_FMT=ON
+      -DEXTERNAL_LIBOSMIUM=ON
+      -DEXTERNAL_PROTOZERO=ON
+      -DPROTOZERO_INCLUDE_DIR=#{Formula["libosmium"].opt_libexec}/include
       -DWITH_LUAJIT=ON
-      -DUSE_PROJ_LIB=6
     ]
 
     system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args

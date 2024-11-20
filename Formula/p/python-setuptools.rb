@@ -1,21 +1,16 @@
 class PythonSetuptools < Formula
   desc "Easily download, build, install, upgrade, and uninstall Python packages"
   homepage "https://setuptools.pypa.io/"
-  url "https://files.pythonhosted.org/packages/8d/37/f4d4ce9bc15e61edba3179f9b0f763fc6d439474d28511b11f0d95bab7a2/setuptools-73.0.1.tar.gz"
-  sha256 "d59a3e788ab7e012ab2c4baed1b376da6366883ee20d7a5fc426816e3d7b1193"
+  url "https://files.pythonhosted.org/packages/c8/db/722a42ffdc226e950c4757b3da7b56ff5c090bb265dccd707f7b8a3c6fee/setuptools-75.5.0.tar.gz"
+  sha256 "5c4ccb41111392671f02bb5f8436dfc5a9a7185e80500531b133f5775c4163ef"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "d67fb05597ca4e5250c551333b0a3a4604dd29c62af3b2e48fc762deabb79bdc"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "d67fb05597ca4e5250c551333b0a3a4604dd29c62af3b2e48fc762deabb79bdc"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "d67fb05597ca4e5250c551333b0a3a4604dd29c62af3b2e48fc762deabb79bdc"
-    sha256 cellar: :any_skip_relocation, sonoma:         "658bee7b856a56286109dd83a475a13ffc1a0e7182fe59bd009547d4c261146d"
-    sha256 cellar: :any_skip_relocation, ventura:        "658bee7b856a56286109dd83a475a13ffc1a0e7182fe59bd009547d4c261146d"
-    sha256 cellar: :any_skip_relocation, monterey:       "658bee7b856a56286109dd83a475a13ffc1a0e7182fe59bd009547d4c261146d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e39cf7e8f3fa3d30cb456c3c1c432f2a5b18fb97e81ea6c68c4cf96bdc068ce7"
+    sha256 cellar: :any_skip_relocation, all: "7e758a2614f8f1d54c16b10f2004f13d77ef02d037313132f6a56eecba764d81"
   end
 
   depends_on "python@3.12" => [:build, :test]
+  depends_on "python@3.13" => [:build, :test]
 
   def pythons
     deps.map(&:to_formula)
@@ -24,8 +19,22 @@ class PythonSetuptools < Formula
   end
 
   def install
+    inreplace_paths = %w[
+      _distutils/unixccompiler.py
+      _vendor/platformdirs/unix.py
+      tests/test_easy_install.py
+    ]
+
     pythons.each do |python|
       system python, "-m", "pip", "install", *std_pip_args, "."
+
+      # Ensure uniform bottles
+      setuptools_site_packages = prefix/Language::Python.site_packages(python)/"setuptools"
+      inreplace setuptools_site_packages/"_vendor/platformdirs/macos.py", "/opt/homebrew", HOMEBREW_PREFIX
+
+      inreplace_files = inreplace_paths.map { |file| setuptools_site_packages/file }
+      inreplace_files += setuptools_site_packages.glob("_vendor/platformdirs-*dist-info/METADATA")
+      inreplace inreplace_files, "/usr/local", HOMEBREW_PREFIX
     end
   end
 

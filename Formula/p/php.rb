@@ -2,10 +2,11 @@ class Php < Formula
   desc "General-purpose scripting language"
   homepage "https://www.php.net/"
   # Should only be updated if the new version is announced on the homepage, https://www.php.net/
-  url "https://www.php.net/distributions/php-8.3.10.tar.xz"
-  mirror "https://fossies.org/linux/www/php-8.3.10.tar.xz"
-  sha256 "a0f2179d00931fe7631a12cbc3428f898ca3d99fe564260c115af381d2a1978d"
+  url "https://www.php.net/distributions/php-8.3.13.tar.xz"
+  mirror "https://fossies.org/linux/www/php-8.3.13.tar.xz"
+  sha256 "89adb978cca209124fe53fd6327bc4966ca21213a7fa2e9504f854e340873018"
   license "PHP-3.01"
+  revision 1
 
   livecheck do
     url "https://www.php.net/downloads"
@@ -13,13 +14,12 @@ class Php < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "0b6ba26212e16ecd59e268024e17946d95c4c0723e0234092c0c8700cd493110"
-    sha256 arm64_ventura:  "a424aba4cba7d90789adb33e0a872e8fa1ed602258f1949b8b053d37d8615576"
-    sha256 arm64_monterey: "fed1289395302144ef24cfd722271c7157d38fa0bb6dbf9e02c25ef4f9eb52e9"
-    sha256 sonoma:         "62fd74d18031c6c56771465fc3be13a3f2547fb4ffdba5cc521cbef12a707c1a"
-    sha256 ventura:        "b45cc254e2977b16e23e4dca6709b88b20014d39c970f98909a07ee2d6f1b814"
-    sha256 monterey:       "586392559420c6b6fef97137d623945e59a51dc177b02838b99d7268724d4558"
-    sha256 x86_64_linux:   "111e4a51d201e6d99f94256cf0bf4da6adeb88754616a677e77ada74170c19b7"
+    sha256 arm64_sequoia: "15c560986b678304b096290de5943d82819c070fd10f2dd5d17de80dac9e21f3"
+    sha256 arm64_sonoma:  "4302da5c442fc94e48ebe38b5ddaa3f10cbed2ee7814c943cf7b5c551363e5bc"
+    sha256 arm64_ventura: "6aaa841763fb70aa5bc6ecd1d7438fb572aa84c962845b1cfd45913456835a11"
+    sha256 sonoma:        "89a4a8786d7f0e896918383e22b5f35c8ad6d9e09fe85323d782f031eb6ab191"
+    sha256 ventura:       "39f80dbed8b83782b872be7f035921a70d33de3040e8786b20209bfa6d2c8841"
+    sha256 x86_64_linux:  "c85a942302bbddf5d33dff3037084118599407bad7b6ccff5e9b2cc150e9e082"
   end
 
   head do
@@ -41,7 +41,7 @@ class Php < Formula
   depends_on "gd"
   depends_on "gettext"
   depends_on "gmp"
-  depends_on "icu4c"
+  depends_on "icu4c@76"
   depends_on "krb5"
   depends_on "libpq"
   depends_on "libsodium"
@@ -347,11 +347,11 @@ class Php < Formula
       port_fpm = free_port
 
       expected_output = /^Hello world!$/
-      (testpath/"index.php").write <<~EOS
+      (testpath/"index.php").write <<~PHP
         <?php
         echo 'Hello world!' . PHP_EOL;
         var_dump(ldap_connect());
-      EOS
+      PHP
       main_config = <<~EOS
         Listen #{port}
         ServerName localhost:#{port}
@@ -399,7 +399,7 @@ class Php < Formula
       pid = fork do
         exec Formula["httpd"].opt_bin/"httpd", "-X", "-f", "#{testpath}/httpd.conf"
       end
-      sleep 3
+      sleep 10
 
       assert_match expected_output, shell_output("curl -s 127.0.0.1:#{port}")
 
@@ -412,7 +412,7 @@ class Php < Formula
       pid = fork do
         exec Formula["httpd"].opt_bin/"httpd", "-X", "-f", "#{testpath}/httpd-fpm.conf"
       end
-      sleep 3
+      sleep 10
 
       assert_match expected_output, shell_output("curl -s 127.0.0.1:#{port}")
     ensure

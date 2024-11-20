@@ -21,7 +21,7 @@ class Gtkextra < Formula
   # https://gtkextra.sourceforge.net/cms/index.php?option=com_content&view=article&id=63:new-maintainer-searched&catid=3:news
   disable! date: "2024-01-21", because: :unmaintained
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "gtk+"
 
   # Fix -flat_namespace being used on Big Sur and later.
@@ -41,13 +41,13 @@ class Gtkextra < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <gtkextra/gtkextra.h>
       int main(int argc, char *argv[]) {
         GtkWidget *canvas = gtk_plot_canvas_new(GTK_PLOT_A4_H, GTK_PLOT_A4_W, 0.8);
         return 0;
       }
-    EOS
+    C
     atk = Formula["atk"]
     cairo = Formula["cairo"]
     fontconfig = Formula["fontconfig"]

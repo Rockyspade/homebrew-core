@@ -2,22 +2,21 @@ class Aom < Formula
   desc "Codec library for encoding and decoding AV1 video streams"
   homepage "https://aomedia.googlesource.com/aom"
   url "https://aomedia.googlesource.com/aom.git",
-      tag:      "v3.9.1",
-      revision: "8ad484f8a18ed1853c094e7d3a4e023b2a92df28"
+      tag:      "v3.11.0",
+      revision: "d6f30ae474dd6c358f26de0a0fc26a0d7340a84c"
   license "BSD-2-Clause"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "8cb9a41dca274a535e5cf7ea728a694f3e9621d97ea48fa8fd270cd5d99f0347"
-    sha256 cellar: :any,                 arm64_ventura:  "7b35304138ab104ff4c05cc78d16fdd6f3a4a19393d50cab274356f0dfc72479"
-    sha256 cellar: :any,                 arm64_monterey: "1274fcede1882cd3cd3f176e2a44f461e3dba57f2fa77151722774c77753455b"
-    sha256 cellar: :any,                 sonoma:         "cb0a6ac49c83d5377c1fe7fdc4df43e403af231c2d6db3398b01cd70b31f1ab7"
-    sha256 cellar: :any,                 ventura:        "7410d19b27f952bc12722457ea58b904a6de0416f3d7ada42cfad2b1cd67e795"
-    sha256 cellar: :any,                 monterey:       "9abf106327c58ffaae970744caad8b9bdace79220ba3ecf4e47fe4eb500f6fb0"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d018fbe0e71201de17504c3a5ed73f3499dfd36b1b07a09173e826418abd00b8"
+    sha256 cellar: :any,                 arm64_sequoia: "eab56b62a34fa519427a4388055e3f1abe244aebfaaebbd3e7eeb6a2bf770b87"
+    sha256 cellar: :any,                 arm64_sonoma:  "02f671d324c3073b89bc753c96d2bb2e0ea79520c4ebe7354bec355eb9988b46"
+    sha256 cellar: :any,                 arm64_ventura: "a6d544883fdf924adca547941499685e5e7340a1b7e6e485e1bbfc1bdbea563c"
+    sha256 cellar: :any,                 sonoma:        "14d14953b41129d9c6ec2beb5e5d36b62efa05c3a6af8ef8f8804264c8901204"
+    sha256 cellar: :any,                 ventura:       "73666ba2ebee2685d2bcea0af94d9208b8147d35108bb3834bacd41060f23b63"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "32716bca18edf78819253b2cc58279af4e021977de36fe1109dd3dd9c53d9166"
   end
 
   depends_on "cmake" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "jpeg-xl"
   depends_on "libvmaf"
 
@@ -39,7 +38,7 @@ class Aom < Formula
       "-DCONFIG_TUNE_VMAF=1",
     ]
 
-    system "cmake", "-S", ".", "-B", "brewbuild", *std_cmake_args, *args
+    system "cmake", "-S", ".", "-B", "brewbuild", *args, *std_cmake_args
     system "cmake", "--build", "brewbuild"
     system "cmake", "--install", "brewbuild"
   end
@@ -53,13 +52,13 @@ class Aom < Formula
     testpath.install resource("homebrew-bus_qcif_15fps.y4m")
 
     system bin/"aomenc", "--webm",
-                            "--tile-columns=2",
-                            "--tile-rows=2",
-                            "--cpu-used=8",
-                            "--output=bus_qcif_15fps.webm",
-                            "bus_qcif_15fps.y4m"
+                         "--tile-columns=2",
+                         "--tile-rows=2",
+                         "--cpu-used=8",
+                         "--output=bus_qcif_15fps.webm",
+                         "bus_qcif_15fps.y4m"
 
     system bin/"aomdec", "--output=bus_qcif_15fps_decode.y4m",
-                            "bus_qcif_15fps.webm"
+                         "bus_qcif_15fps.webm"
   end
 end

@@ -12,6 +12,7 @@ class Coturn < Formula
   end
 
   bottle do
+    sha256                               arm64_sequoia:  "f7c39ae1c05a2070ae697a9faa8eb6eb0a12c49369156c6113e5b285a678a371"
     sha256                               arm64_sonoma:   "bc53417a3443680592e2fdea9159781f7c8fb5ea7ec7be327fd9df6987fadf83"
     sha256                               arm64_ventura:  "29aca0c706485a911b2a21de41235d9b592919508585d626425709518e30a9ea"
     sha256                               arm64_monterey: "618cbd141e1e439b749b24147e26c49d1d75da27009f565ce03040c73d24d559"
@@ -23,7 +24,7 @@ class Coturn < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "1c91fbd01d98f9d930e27333818de9f7ae357b1d0ca2313a8a6fcf1f4eee8837"
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "hiredis"
   depends_on "libevent"
   depends_on "libpq"
@@ -32,15 +33,12 @@ class Coturn < Formula
   def install
     ENV["SSL_CFLAGS"] = "-I#{Formula["openssl@3"].opt_include}"
     ENV["SSL_LIBS"] = "-L#{Formula["openssl@3"].opt_lib} -lssl -lcrypto"
-    system "./configure", "--disable-debug",
-                          "--disable-dependency-tracking",
-                          "--disable-silent-rules",
+    system "./configure", "--disable-silent-rules",
                           "--mandir=#{man}",
                           "--localstatedir=#{var}",
                           "--includedir=#{include}",
-                          "--libdir=#{lib}",
                           "--docdir=#{doc}",
-                          "--prefix=#{prefix}"
+                          *std_configure_args
 
     system "make", "install"
 

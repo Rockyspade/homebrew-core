@@ -2,19 +2,18 @@ class KubectlCnpg < Formula
   desc "CloudNativePG plugin for kubectl"
   homepage "https://cloudnative-pg.io/"
   url "https://github.com/cloudnative-pg/cloudnative-pg.git",
-      tag:      "v1.23.3",
-      revision: "2b489ad6a0b5013af1534adc282592a15aaf9869"
+      tag:      "v1.24.1",
+      revision: "3f96930d984ff7e795e013160afbc6d3012f8718"
   license "Apache-2.0"
   head "https://github.com/cloudnative-pg/cloudnative-pg.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "bb9d30ef5a60b16ff6bc83bf6be54599b9fd2069de38ebc824323685c5a95c43"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "db3096a74819008179381b643f53ed47c692ed40bd8a1b85315d30aa1b4c91ff"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "740073de332592ab9a476c374fd90338198e9e21a6c1b7a3f9faf769fe7bd9dc"
-    sha256 cellar: :any_skip_relocation, sonoma:         "30e5c93cb2ca444c33deba382383545f7da44d36321ec6862ba02718b8c8acfc"
-    sha256 cellar: :any_skip_relocation, ventura:        "d8e2e590b71378b06c1c61ee8ac3dfdfa43523b818930c36b625f0666ff964e9"
-    sha256 cellar: :any_skip_relocation, monterey:       "745333e61c8a896c818cf0483a02e502beb55bcf8463ed9cd43fa69dfd289d9c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "07a4b130da83cc9e400617c27073cd152decb55406e0ceeaa01891946d06457e"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "b19bf771b8590bbb1c60ff016e67ee9e8b6d9b5c41942ba9407388299d577f1f"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "2221c3d8752bca7a298711bf8c7c118243aa505e92a92917824735e186dd0fac"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "0895fc09d7888bb271c315d2b1f3a4cdf5448bcf072932be4134464ae1224e51"
+    sha256 cellar: :any_skip_relocation, sonoma:        "09688dc982a5094a056a0ea3e5e98ac86a8e159d91061c84d5d89e41bed0398e"
+    sha256 cellar: :any_skip_relocation, ventura:       "3ac45046f88ba7f0cebc648922cc81897658938f0210ef5852e359e337bfa16d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c9d453dee5d90f7bbeebd1263f3310f155d14e61036700cd38f441c9b8d37312"
   end
 
   depends_on "go" => :build

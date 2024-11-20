@@ -1,19 +1,18 @@
 class Gnunet < Formula
   desc "Framework for distributed, secure and privacy-preserving applications"
   homepage "https://gnunet.org/"
-  url "https://ftp.gnu.org/gnu/gnunet/gnunet-0.21.2.tar.gz"
-  mirror "https://ftpmirror.gnu.org/gnunet/gnunet-0.21.2.tar.gz"
-  sha256 "8c2351268e9b8ba2ad288b8b337ce399f79c18e3ffd960803f4ed5de7dda9fa1"
+  url "https://ftp.gnu.org/gnu/gnunet/gnunet-0.22.2.tar.gz"
+  mirror "https://ftpmirror.gnu.org/gnunet/gnunet-0.22.2.tar.gz"
+  sha256 "4e78fdd08b46408ec21b6c05a00d56fd649457123dcd929887264fde51e845e3"
   license "AGPL-3.0-or-later"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "80a3a071b390f9d15f0e84e5f5af17b486dd65f146b3f0e9de59530ad07e650e"
-    sha256 cellar: :any,                 arm64_ventura:  "570598cc3c051512b44944d49ec96cfb768a4e4c71cd05a3ed932695faeffbd3"
-    sha256 cellar: :any,                 arm64_monterey: "f9b1ae7c259af8f62b4f5872c1db2707ce00f4596c1861e615732a758349f784"
-    sha256 cellar: :any,                 sonoma:         "ec1e100e3d94aec5b54cfad86e4caa0e2e8ffb61e6bd2f3f09bec0deeb248e5f"
-    sha256 cellar: :any,                 ventura:        "4beeb787ef01b37696ef6172722deddcdd434794e23da865db01f17ff2f554da"
-    sha256 cellar: :any,                 monterey:       "89cca3de2e856cd8930e2e7f083ebc820460bb025bcb4c0c300ae4f3f51ff10c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a66145c8fdf87794050a20e33074ccecd901f28645ee2da8ea2b8418d908249b"
+    sha256 cellar: :any,                 arm64_sequoia: "fc769cbdc29e7e87e826b4aba00be21c12db34d456d2de84e7b46326040c7316"
+    sha256 cellar: :any,                 arm64_sonoma:  "04328fd5df9ab7133f7ee0ed28edf5af6413e5085b1da6f1788f824faef47e45"
+    sha256 cellar: :any,                 arm64_ventura: "c19afb381d719340936388950fc6e7c4fe52e1a65f3624ccd2eca9bb198653ec"
+    sha256 cellar: :any,                 sonoma:        "ae8b36a0e8806ad373afc38850e353053da79aaafb73f45a3063743831a44f2a"
+    sha256 cellar: :any,                 ventura:       "ac78575b4cd919f0583da665d3c122834496dd9eea8aaa41bb9bde02865b7e3c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e5bae678ede4b9bc6b6d9518f455aa7191fc903c939ddd07a5bee3bd8d27586e"
   end
 
   depends_on "pkg-config" => :build

@@ -3,21 +3,15 @@ class RuffLsp < Formula
 
   desc "Language Server Protocol implementation for Ruff"
   homepage "https://github.com/astral-sh/ruff-lsp"
-  url "https://files.pythonhosted.org/packages/a3/a2/8e165ce9edb98771f86b85a147f2e5ab268e8a578aa71c753572ad035b0b/ruff_lsp-0.0.55.tar.gz"
-  sha256 "33fcfc77bbdc47f7a116a64f5fb9140e70d76d54f55a0d9a740a21b797906a45"
+  url "https://files.pythonhosted.org/packages/0d/3b/d77cba8ed4c92732d540f5384afdbcf08e742d14ad9c2e93c1c5d4764a9c/ruff_lsp-0.0.58.tar.gz"
+  sha256 "378db39955b32260473602b531dc6333d6686d1d8956673ef1c5203e08132032"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "8c8b4589c86fd49520ff93396f557b2cafea9c9914125b73857ce0e8469f7181"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "8c8b4589c86fd49520ff93396f557b2cafea9c9914125b73857ce0e8469f7181"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "8c8b4589c86fd49520ff93396f557b2cafea9c9914125b73857ce0e8469f7181"
-    sha256 cellar: :any_skip_relocation, sonoma:         "8c8b4589c86fd49520ff93396f557b2cafea9c9914125b73857ce0e8469f7181"
-    sha256 cellar: :any_skip_relocation, ventura:        "8c8b4589c86fd49520ff93396f557b2cafea9c9914125b73857ce0e8469f7181"
-    sha256 cellar: :any_skip_relocation, monterey:       "8c8b4589c86fd49520ff93396f557b2cafea9c9914125b73857ce0e8469f7181"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d5a8735ec52f84a69127c7bd2345cf46f08b26875df2bbb5222f4bbc9bbb6102"
+    sha256 cellar: :any_skip_relocation, all: "b3f636d714bec4633fc10c36ffc6adfd56919a5c1211cc069e6eb0f52d3ea679"
   end
 
-  depends_on "python@3.12"
+  depends_on "python@3.13"
   depends_on "ruff"
 
   resource "attrs" do
@@ -26,8 +20,8 @@ class RuffLsp < Formula
   end
 
   resource "cattrs" do
-    url "https://files.pythonhosted.org/packages/1e/57/c6ccd22658c4bcb3beb3f1c262e1f170cf136e913b122763d0ddd328d284/cattrs-23.2.3.tar.gz"
-    sha256 "a934090d95abaa9e911dac357e3a8699e0b4b14f8529bcc7d2b1ad9d51672b9f"
+    url "https://files.pythonhosted.org/packages/64/65/af6d57da2cb32c076319b7489ae0958f746949d407109e3ccf4d115f147c/cattrs-24.1.2.tar.gz"
+    sha256 "8028cfe1ff5382df59dd36474a86e02d817b06eaf8af84555441bac915d2ef85"
   end
 
   resource "lsprotocol" do

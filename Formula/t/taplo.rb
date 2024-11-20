@@ -18,6 +18,7 @@ class Taplo < Formula
   end
 
   bottle do
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "da36eb11dac5c0f350bb591c2b7ea79bdae70e404280a1264b416b68c49e9c16"
     sha256 cellar: :any_skip_relocation, arm64_sonoma:   "f866b21d8b368f7a9514e55c10ef5ab404a3a2ddd5acb0f49654637560cacdc4"
     sha256 cellar: :any_skip_relocation, arm64_ventura:  "67ca79bc3aa55e7bf9e4b9e58ef6e60156765d9d8b02f0e289de1cf8496212ca"
     sha256 cellar: :any_skip_relocation, arm64_monterey: "280ebeecf1512ff5d7fc178b4286fcf25425e63c9c43aad7504262444a897968"
@@ -35,12 +36,12 @@ class Taplo < Formula
 
   test do
     test_file = testpath/"invalid.toml"
-    (testpath/"invalid.toml").write <<~EOS
+    (testpath/"invalid.toml").write <<~TOML
       # INVALID TOML DOC
       fruit = []
 
       [[fruit]] # Not allowed
-    EOS
+    TOML
 
     output = shell_output("#{bin}/taplo lint #{test_file} 2>&1", 1)
     assert_match "expected array of tables", output

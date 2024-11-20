@@ -6,6 +6,7 @@ class Libxls < Formula
   license "BSD-2-Clause"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "18328c76088316939868e45a8057c4998eac03d89fc85722c34bbe8fb6f9cdda"
     sha256 cellar: :any,                 arm64_sonoma:   "26eda83d2c3f21f086cba2142ef5ea4db5728d47e9b78eda1a832ae35039aa31"
     sha256 cellar: :any,                 arm64_ventura:  "5dbc5a3cc52e9f6b52bfe3c1f065b687ce7596fcd30b75ca0ba6ad55613d878d"
     sha256 cellar: :any,                 arm64_monterey: "fdcf6a5152977cad6b6cd2e9098fa656a77a082e1bd33de0688aaab7a1a7ab7e"
@@ -33,7 +34,7 @@ class Libxls < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <stdio.h>
       #include <stdlib.h>
       #include <string.h>
@@ -56,7 +57,7 @@ class Libxls < Formula
           }
           return 0;
       }
-    EOS
+    C
 
     system ENV.cc, "test.c", "-L#{lib}", "-I#{include}", "-lxlsreader", "-o", "test"
     system "./test", pkgshare/"test2.xls"

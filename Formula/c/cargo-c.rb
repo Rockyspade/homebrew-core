@@ -1,8 +1,8 @@
 class CargoC < Formula
   desc "Helper program to build and install c-like libraries"
   homepage "https://github.com/lu-zero/cargo-c"
-  url "https://github.com/lu-zero/cargo-c/archive/refs/tags/v0.10.3.tar.gz"
-  sha256 "922171afb3ceaf6553ff3916ae4663d3743ba22f80725f2300a26b76eb6eb94f"
+  url "https://github.com/lu-zero/cargo-c/archive/refs/tags/v0.10.5.tar.gz"
+  sha256 "3f131a6a647851a617a87daaaf777a9e50817957be0af29806615613e98efc8a"
   license "MIT"
 
   livecheck do
@@ -11,29 +11,26 @@ class CargoC < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "b7185684a104169982511f59d5551f5647736f0543e5b6d9386b22da08643b90"
-    sha256 cellar: :any,                 arm64_ventura:  "0cf7db1a3320601f1a140953069c4b79714b80095d78b3465b0005e627da0d79"
-    sha256 cellar: :any,                 arm64_monterey: "04e5e4b5ba0f4951c233b5730f33c0849585f05b0e3c38142e59e77bea4907a8"
-    sha256 cellar: :any,                 sonoma:         "faa2930ea57e6c3ac22746a4271a463e1180a001af0e4a8a8224c7efab0e2f9b"
-    sha256 cellar: :any,                 ventura:        "3842f77fe03491c52c029539282d1deae58fe07c4e710b644e8beec0c1f7350d"
-    sha256 cellar: :any,                 monterey:       "ba1f217eae0e553e42805fce58b91e340f456beaf5892bc4c5fd7d6bb853c944"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a1a338df719a904741bae73400bdf2d05ff43e88e2e1ef4148328f85abc0883b"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_sequoia: "8e9a3bae0da95a41d8818909c34ded22c2aba59a3a12d07b0389eef73985ed94"
+    sha256 cellar: :any,                 arm64_sonoma:  "c476ff73e9228cdeab5fe42e4d9ca54bf01a641cd72bb9d3290bf120229b27d1"
+    sha256 cellar: :any,                 arm64_ventura: "13be07e091401e2a1913d19b2876186fda87d7547bd5a67400a97c693334b428"
+    sha256 cellar: :any,                 sonoma:        "22b3b8467d4d071bd79cc234cb5f513f3b5c1f93fec3a5f330172a468a50c283"
+    sha256 cellar: :any,                 ventura:       "952068e034d29232358ce9747cc246cfa0371f1e08c15d2d0184428101a69a6c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "72b2f52bb385f560be363f7631bbc3c5bff0c8f70243ff0428bdb2c15ee163a2"
   end
 
+  depends_on "pkgconf" => :build
   depends_on "rust" => :build
-  # The `cargo` crate requires http2, which `curl-config` from macOS reports to
-  # be missing despite its presence.
-  # Try switching to `uses_from_macos` when that's resolved.
-  depends_on "curl"
-  depends_on "libgit2@1.7"
+  depends_on "libgit2"
   depends_on "libssh2"
   depends_on "openssl@3"
 
+  # curl-config on ventura builds do not report http2 feature,
+  # this is a workaround to allow to build against system curl
+  # see discussions in https://github.com/Homebrew/homebrew-core/pull/197727
+  uses_from_macos "curl", since: :sonoma
   uses_from_macos "zlib"
-
-  on_linux do
-    depends_on "pkg-config" => :build
-  end
 
   def install
     ENV["LIBGIT2_NO_VENDOR"] = "1"
@@ -59,8 +56,7 @@ class CargoC < Formula
     assert_match cargo_error, shell_output("#{bin}/cargo-cbuild cbuild 2>&1", 1)
 
     [
-      Formula["curl"].opt_lib/shared_library("libcurl"),
-      Formula["libgit2@1.7"].opt_lib/shared_library("libgit2"),
+      Formula["libgit2"].opt_lib/shared_library("libgit2"),
       Formula["libssh2"].opt_lib/shared_library("libssh2"),
       Formula["openssl@3"].opt_lib/shared_library("libssl"),
       Formula["openssl@3"].opt_lib/shared_library("libcrypto"),

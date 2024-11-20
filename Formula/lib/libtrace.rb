@@ -15,6 +15,7 @@ class Libtrace < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "f040acaba777d80b9cbe3562d2e07e9d72a44f3d7c7ebcfc4dcc729619a2da0c"
     sha256 cellar: :any,                 arm64_sonoma:   "c49542e5eed197e539d27582727740ff8b3257e097b909af754b509e3d334692"
     sha256 cellar: :any,                 arm64_ventura:  "cd56a08655316acaf06509af286f4d6a67b435ba148dff0b409decb76375fbef"
     sha256 cellar: :any,                 arm64_monterey: "ad45eff84fa6e27d71c6dfa658e2925a4cacd13d5c671d9f8dd7f0ccaa812dfa"
@@ -48,7 +49,7 @@ class Libtrace < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <libtrace.h>
       #include <inttypes.h>
       #include <stdio.h>
@@ -255,7 +256,7 @@ class Libtrace < Formula
               }
         return 0;
       }
-    EOS
+    C
     system ENV.cc, "test.c", "-I#{include}", "-L#{lib}", "-ltrace", "-o", "test"
     resource("homebrew-8021x.pcap").stage testpath
     system "./test", testpath/"8021x.pcap"

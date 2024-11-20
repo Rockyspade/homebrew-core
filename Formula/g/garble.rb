@@ -1,20 +1,19 @@
 class Garble < Formula
   desc "Obfuscate Go builds"
   homepage "https://github.com/burrowers/garble"
-  url "https://github.com/burrowers/garble/archive/refs/tags/v0.12.1.tar.gz"
-  sha256 "98ade316176d434f298bdb36e4c421e3c4c33668cfd2922d358f7f0403566500"
+  url "https://github.com/burrowers/garble/archive/refs/tags/v0.13.0.tar.gz"
+  sha256 "22a1696ce880b34ca5ff949b6b5a42d4e370502e0b40b59eaa679eae13e45363"
   license "BSD-3-Clause"
-  revision 6
+  revision 2
   head "https://github.com/burrowers/garble.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "ad9d97457e74c332d0b396104fd06bdfb45a575b948cebebd2d1b906f8781577"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "a0710bb8adb3e41b132db1a95d2e6ff48ed9ca366b8e3eb256bcf55f33e28936"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "d7bf92f187d254443ed06f383f677870d2d10d699bd7e06d24735f8ff75e8c57"
-    sha256 cellar: :any_skip_relocation, sonoma:         "98073a96ccd345437b5cab868fda304e1e6dcaa3457ef75165b89e07687de003"
-    sha256 cellar: :any_skip_relocation, ventura:        "c57dcbed5a389285bbcd71891d86844ecf94deed27c334d18e688302e07276ba"
-    sha256 cellar: :any_skip_relocation, monterey:       "e3af2f15ee584c8272750c699fa4423a37fc328bd46027651645ce788ea645ad"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "99293abbb6731948f9fd9d8166e03dc26f964b343b34ba5701b2a4ff01818ce0"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "b43364e3519406a6d6c4c66255c369e424f95ddfe86bbced91becfa0ab0a0418"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "b43364e3519406a6d6c4c66255c369e424f95ddfe86bbced91becfa0ab0a0418"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "b43364e3519406a6d6c4c66255c369e424f95ddfe86bbced91becfa0ab0a0418"
+    sha256 cellar: :any_skip_relocation, sonoma:        "2dc1f4ae207bd7fa1e34a234885e33120158b6dd58bb77f19c02c28d3c21b4f5"
+    sha256 cellar: :any_skip_relocation, ventura:       "2dc1f4ae207bd7fa1e34a234885e33120158b6dd58bb77f19c02c28d3c21b4f5"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "463460a6d267dc1397b6f598fbe98c52ee50e406353b3e1644e8defca332bf9a"
   end
 
   depends_on "go" => [:build, :test]
@@ -26,7 +25,7 @@ class Garble < Formula
   end
 
   test do
-    (testpath/"hello.go").write <<~EOS
+    (testpath/"hello.go").write <<~GO
       package main
 
       import "fmt"
@@ -34,7 +33,7 @@ class Garble < Formula
       func main() {
           fmt.Println("Hello World")
       }
-    EOS
+    GO
     system bin/"garble", "-literals", "-tiny", "build", testpath/"hello.go"
     assert_equal "Hello World\n", shell_output("#{testpath}/hello")
 

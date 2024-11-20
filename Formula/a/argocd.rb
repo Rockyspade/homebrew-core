@@ -2,8 +2,8 @@ class Argocd < Formula
   desc "GitOps Continuous Delivery for Kubernetes"
   homepage "https://argoproj.github.io/cd"
   url "https://github.com/argoproj/argo-cd.git",
-      tag:      "v2.12.1",
-      revision: "26b2039a55b9bdf807a70d344af8ade5171d3d39"
+      tag:      "v2.13.0",
+      revision: "347f221adba5599ef4d5f12ee572b2c17d01db4d"
   license "Apache-2.0"
 
   # There can be a notable gap between when a version is tagged and a
@@ -18,13 +18,12 @@ class Argocd < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "6dbc917227305ddd5d8df6f08ecd271d292b33c2a9b3ad1b13e7d0a2367a524b"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "89b9057bd3addfbbc25fa6c1e0ff47a64b2a4910ce1b527e78cd3eb77a534df8"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "eb64a736ca871bc31d59b867dc5cffb37b11f323dc6f1ae68e4d1b805a8a2190"
-    sha256 cellar: :any_skip_relocation, sonoma:         "f990a244e3078ad3f59bae9cc3438c4fefa3b9c01a7b5f0a7a47499ec6ba2674"
-    sha256 cellar: :any_skip_relocation, ventura:        "a30b793551d802af88ef79d2ab5053fa9d25cf54098aa3d20ae8e10974bd5ffd"
-    sha256 cellar: :any_skip_relocation, monterey:       "d7ab20af570a04935f84d4dcd6df039af4ad57ee805eb3f91bcffd21f811be89"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "473e0221d8fb2b6ac507a459fe5992eb65086e07f7de9b131835633a9bcb6386"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "f38f81021195a99a879966f3706e81d4fc5e3feae621e1510a10d1ba5b98ae6e"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "075ac92c7373a90459803d5b0e98840e61a081cb25c74dcc61bb5df69de1a39f"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "8124afce24dd171f5d8c4ceba2eea9ac503b76e9f969d7978241602faa7611e4"
+    sha256 cellar: :any_skip_relocation, sonoma:        "cc7ccb8efda2d62085ec83f601d3ad4c7a436c7b4330290d95864e054d7081e0"
+    sha256 cellar: :any_skip_relocation, ventura:       "9e3c60189a6cc4f2e3f842ef71401282e68e145f51bc5b01e94cde3aedd10d8f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "2531de98a1bd34d83e9b10566d935c26d585fa142f2ae0720e9024e537164a9f"
   end
 
   depends_on "go" => :build
@@ -42,7 +41,7 @@ class Argocd < Formula
     system "make", "cli-local"
     bin.install "dist/argocd"
 
-    generate_completions_from_executable(bin/"argocd", "completion", shells: [:bash, :zsh])
+    generate_completions_from_executable(bin/"argocd", "completion")
   end
 
   test do

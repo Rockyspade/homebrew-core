@@ -1,18 +1,17 @@
 class Libjuice < Formula
   desc "UDP Interactive Connectivity Establishment (ICE) library"
   homepage "https://github.com/paullouisageneau/libjuice"
-  url "https://github.com/paullouisageneau/libjuice/archive/refs/tags/v1.5.2.tar.gz"
-  sha256 "9b145cbf4c88829249b33cf6d8d92f575694d557d1b36e780b6903c10f7094b8"
+  url "https://github.com/paullouisageneau/libjuice/archive/refs/tags/v1.5.7.tar.gz"
+  sha256 "6385c574f3c33f766ed25cddf919625b0ae8ca0d76871f70301e5a0cf2c93dc8"
   license "MPL-2.0"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "7ba26ae15b490051eebb820493f305b32c6d2407538e01255fdfe33bed441f66"
-    sha256 cellar: :any,                 arm64_ventura:  "c74831bd0d7656207ec842be2188f8cb8c546ed9f3cef3dd1ac56ca1de1fc200"
-    sha256 cellar: :any,                 arm64_monterey: "22007fcb8cb60bbc94248bec446df0bff34c153fcbb8415c9d90c5c5c8a8492f"
-    sha256 cellar: :any,                 sonoma:         "d9d28db37b0a414131ebd38ffbafadc7ee6054e31a8c3ceedf8d9d4534a8ae72"
-    sha256 cellar: :any,                 ventura:        "77507fa82ad005ee75f30d013aa46ff6bc8dbe60ed4d5ff0481e9bfbeb7affc5"
-    sha256 cellar: :any,                 monterey:       "401e6c121b824e0828afe67ae4025586c42c176faaaee5bfccb9d8ddc890ddb6"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "7bd036220c275574ba900b2b43f6c7f333572016afce04266aaf4a2ddbcde7d9"
+    sha256 cellar: :any,                 arm64_sequoia: "ed571298e95ec58f065403da6205544d42aec68ab14cf745d392ad495c098141"
+    sha256 cellar: :any,                 arm64_sonoma:  "a3a260330d564ac730c45bfe88dac8c7da620a5034284d5dd1d64c1ef816afc7"
+    sha256 cellar: :any,                 arm64_ventura: "72aa40c4dc361fe718e9afaf0af55e38b54e172832e13a115d36536013929b7d"
+    sha256 cellar: :any,                 sonoma:        "7951d8fbcb03390b5d593a29b2539d561a943b15f6ba559078a2d5055e09010f"
+    sha256 cellar: :any,                 ventura:       "bca10dda1797aafd614735076d368ceedc76bdbeca7c3d658ddc958104f3608c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "fc82c641d66d92d7688058d4401d4b4e0e105ff1baee5181ff9e665fdb519a79"
   end
 
   depends_on "cmake" => :build
@@ -24,7 +23,7 @@ class Libjuice < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <stdio.h>
       #include "juice/juice.h"
 
@@ -49,7 +48,7 @@ class Libjuice < Formula
 
           return 0;
       }
-    EOS
+    C
 
     system ENV.cc, "test.c", "-I#{include}", "-L#{lib}", "-ljuice", "-o", "test"
     system "./test"

@@ -7,6 +7,7 @@ class Libccd < Formula
   revision 1
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "69d7221dceabfe62cded58442a541ed7b4e40dc91195ddc1032d9219d6d4eb80"
     sha256 cellar: :any,                 arm64_sonoma:   "0a6c12b8b5b369018a4186622359a2b9bc8ce40a4c0fe2452263e2d4ef03d92a"
     sha256 cellar: :any,                 arm64_ventura:  "9db2e87ee4c5b69faa9269a54f22046b5c4d18a72a65bc0dd4164c35a23edbe1"
     sha256 cellar: :any,                 arm64_monterey: "95bbd2e402b8388a6b348fd755b6997ae765568357115013996efe9e596f982f"
@@ -28,7 +29,7 @@ class Libccd < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <assert.h>
       #include <ccd/config.h>
       #include <ccd/vec3.h>
@@ -41,7 +42,7 @@ class Libccd < Formula
           ccd_vec3_origin, NULL);
         return 0;
       }
-    EOS
+    C
     system ENV.cc, "-o", "test", "test.c", "-L#{lib}", "-lccd"
     system "./test"
   end

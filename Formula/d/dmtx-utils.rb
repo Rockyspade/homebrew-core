@@ -4,23 +4,20 @@ class DmtxUtils < Formula
   url "https://github.com/dmtx/dmtx-utils/archive/refs/tags/v0.7.6.tar.gz"
   sha256 "0d396ec14f32a8cf9e08369a4122a16aa2e5fa1675e02218f16f1ab777ea2a28"
   license all_of: ["GPL-2.0-or-later", "LGPL-2.1-or-later"]
-  revision 6
+  revision 8
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "152c08bbdef851937b9b330243318d4d49a3d7563c9e85b703753d44b2e005b4"
-    sha256 cellar: :any,                 arm64_ventura:  "c147ab73dac9c03562cf06d561a923ba70e30ecb4607d755622d0156805a7892"
-    sha256 cellar: :any,                 arm64_monterey: "81be259b08bd67f4dab389bb326b4adbdd01cd201d5b98c77f4cc72e0f5c669a"
-    sha256 cellar: :any,                 arm64_big_sur:  "f7e90d8cd99bbedb06dffa5338d64e65307fcb4c98095d897a91466a8da86322"
-    sha256 cellar: :any,                 sonoma:         "eb533e070969a723b9aa747dab30b457e29c647db29a6872ab98f2108f15197d"
-    sha256 cellar: :any,                 ventura:        "161997f60768bb9798550757f0a01e2e27434934d9ec8a2b47153a52abe10cd7"
-    sha256 cellar: :any,                 monterey:       "7a754c6517fc4a35d07c17a34b3bf98d62d85fa6015f11ecd38d92db4e1c0372"
-    sha256 cellar: :any,                 big_sur:        "fa4722a33d220d1f8cd8740c4b6d938e92f8d9b76ab555762cc8c84c72084573"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "cc7f066604465fcaf850671368291a758eec7fa261d6bbdbde892b798fd0daa1"
+    sha256 cellar: :any,                 arm64_sequoia: "266e690457d4ad1f3844c37e52e3228121803ab16f5df2a8441ac8f0380a2b12"
+    sha256 cellar: :any,                 arm64_sonoma:  "1ed0bf91ff69184917d25840c46c8b1a390e116b468dba2bfebcfca4688326f4"
+    sha256 cellar: :any,                 arm64_ventura: "baccf696ad55b1eeda946e6e9e6f8085e6cee318bec01446bd260f774ec3ebd7"
+    sha256 cellar: :any,                 sonoma:        "e4166dd09301ba1d1bf09ca625d395b145b5271b6e8c6938c6299b1b6773eac7"
+    sha256 cellar: :any,                 ventura:       "57db09489948aa30d196602969ff17059e3668afd012b2bd21a56c1de4bf4e16"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "86b15ef564fc867cfe335573ed209b3c96cb509859ac0507794433316d8246b4"
   end
 
   depends_on "autoconf" => :build
   depends_on "automake" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
 
   depends_on "imagemagick"
   depends_on "libdmtx"
@@ -38,7 +35,7 @@ class DmtxUtils < Formula
 
   def install
     system "autoreconf", "--force", "--install", "--verbose"
-    system "./configure", *std_configure_args.reject { |s| s["--disable-debug"] }
+    system "./configure", *std_configure_args
     system "make", "install"
   end
 

@@ -5,7 +5,7 @@ class Encfs < Formula
   sha256 "4709f05395ccbad6c0a5b40a4619d60aafe3473b1a79bafb3aa700b1f756fd63"
   # The code comprising the EncFS library (libencfs) is licensed under the LGPL.
   # The main programs (encfs, encfsctl, etc) are licensed under the GPL.
-  license "GPL-3.0"
+  license "GPL-3.0-or-later"
   revision 4
   head "https://github.com/vgough/encfs.git", branch: "master"
 
@@ -15,7 +15,7 @@ class Encfs < Formula
 
   depends_on "cmake" => :build
   depends_on "gettext" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "libfuse@2"
   depends_on :linux # on macOS, requires closed-source macFUSE
   depends_on "openssl@3"

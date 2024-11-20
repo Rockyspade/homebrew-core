@@ -3,19 +3,19 @@ class Libxmlb < Formula
 
   desc "Library for querying compressed XML metadata"
   homepage "https://github.com/hughsie/libxmlb"
-  url "https://github.com/hughsie/libxmlb/releases/download/0.3.19/libxmlb-0.3.19.tar.xz"
-  sha256 "0a3ec258b12dbf10e5fe840b2421c84137eb7cc1b09c3de6210f3f7d51733733"
+  url "https://github.com/hughsie/libxmlb/releases/download/0.3.21/libxmlb-0.3.21.tar.xz"
+  sha256 "642343c9b3eca5c234ef83d3d5f6307c78d024f2545f3cc2fa252c9e14e4efd1"
   license "LGPL-2.1-or-later"
   head "https://github.com/hughsie/libxmlb.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any, arm64_sonoma:   "b777a7b297501a29a04d2c6329935a82d64ae89dcf090de28c0036a700e94390"
-    sha256 cellar: :any, arm64_ventura:  "e3bfe1743a29e3966da4eab2327c871912bda318318b9c6430c7fefbe1f47cdb"
-    sha256 cellar: :any, arm64_monterey: "a798d76e1bc87c30496af800eee986d24f03e75e5fbde0e9555756f33ad642f8"
-    sha256 cellar: :any, sonoma:         "714df40e63e33e3a92ce69851e8ab7d32968db10545ee63da73b8e4d64a16a75"
-    sha256 cellar: :any, ventura:        "dae509b7bd28a60c8e54170f99cfdb6a3e4790b269ca49b9038fd1bd49aee11f"
-    sha256 cellar: :any, monterey:       "127f052e1b0e8fb561d0107209e66ac257579797af402d5af7f3965cdf2aaea8"
-    sha256               x86_64_linux:   "41146b757dcff6c8f462d6acc6f734a4e3352f70518534fbaa2f97fe28cfe204"
+    rebuild 1
+    sha256 cellar: :any, arm64_sequoia: "7602ee280a7157ea41ff0ee62d720523b320ddf104dc788ca466587639b39953"
+    sha256 cellar: :any, arm64_sonoma:  "6e72c476724d651c02926c05e26219ed4e4cfdceb28ad0def3ccba646928e1de"
+    sha256 cellar: :any, arm64_ventura: "a97159b6525f962e97b4584aa7bab1adeaaea2f917738ddc279da7ff804a566d"
+    sha256 cellar: :any, sonoma:        "239946259891a14150b7e690717f39f2fddd77e546cfd80edbda4c2a58250f43"
+    sha256 cellar: :any, ventura:       "b6363ecabc2c73f0916a5510d7f65ac8bd4f35200e67dfb15412d221ed500cc6"
+    sha256               x86_64_linux:  "f9928bd831f1c92e46d44e527f295065325c48ca07a096b2655c53275527d70c"
   end
 
   depends_on "gi-docgen" => :build
@@ -23,14 +23,14 @@ class Libxmlb < Formula
   depends_on "meson" => :build
   depends_on "ninja" => :build
   depends_on "pkg-config" => :build
-  depends_on "python@3.12" => :build
+  depends_on "python@3.13" => :build
   depends_on "vala" => :build
   depends_on "glib"
   depends_on "xz"
   depends_on "zstd"
 
   def install
-    rewrite_shebang detected_python_shebang, "src/generate-version-script.py"
+    rewrite_shebang detected_python_shebang(use_python_from_path: true), "src/generate-version-script.py"
 
     system "meson", "setup", "build",
                     "-Dgtkdoc=false",
@@ -42,14 +42,14 @@ class Libxmlb < Formula
   test do
     system bin/"xb-tool", "-h"
 
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <xmlb.h>
       int main(int argc, char *argv[]) {
         XbBuilder *builder = xb_builder_new();
         g_assert_nonnull(builder);
         return 0;
       }
-    EOS
+    C
     gettext = Formula["gettext"]
     glib = Formula["glib"]
     xz = Formula["xz"]

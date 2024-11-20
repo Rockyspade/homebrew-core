@@ -4,22 +4,21 @@ class Apngasm < Formula
   url "https://github.com/apngasm/apngasm/archive/refs/tags/3.1.10.tar.gz"
   sha256 "8171e2c1d37ab231a2061320cb1e5d15cee37642e3ce78e8ab0b8dfc45b80f6c"
   license "Zlib"
-  revision 12
+  revision 14
   head "https://github.com/apngasm/apngasm.git", branch: "master"
 
   bottle do
-    sha256                               arm64_sonoma:   "3a6f6e9b91f2d80ce968c45c3afb0451571c8c36e8d77d0bd39a3019bb287a7b"
-    sha256                               arm64_ventura:  "4e25dd800a4f2d03b45eacd18923a4f506e12ebd622f40320897e54010f55005"
-    sha256 cellar: :any,                 arm64_monterey: "6e14826462b3dc0680497efedb6e07a1c5c7b7e654390bc0a4dd4717988ca795"
-    sha256                               sonoma:         "85e58492f5d69bf7a49fe7383853c522d9cabdf5f5a0089843f289128d1743b9"
-    sha256                               ventura:        "acdd034209553a72323d865bbe920e5de4b292a59280bd1d5b932313189ba36a"
-    sha256 cellar: :any,                 monterey:       "ce09450b72330d1149d8dd583a6514f6d885340a44455f55829d0a6d78ca501a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "22992924f031618d9172e5c0f08e3e6e3337e9658b29604494abddd1a2af60f5"
+    sha256                               arm64_sequoia: "9ab6d41b1207fda23093f453b7a01dd53de9ed4ce3afceba84e04d285bc24b86"
+    sha256                               arm64_sonoma:  "34179cfc45bd2d0de38857a16074e94eb377f7fbd0da8bd7bb71f94c0c4ed943"
+    sha256                               arm64_ventura: "0633ef0217bfae8ff34422403729eb063321bc7264847ea2d6e25d1b9bf06436"
+    sha256                               sonoma:        "83e5b9b112bb3bfbc35b42e764738a652bdf6ac715c03d9e2a049930d9518fe5"
+    sha256                               ventura:       "18facc88d2285faeea0dc9bd2d3fcb75744fdaccbc2c14b4c8404a6dda00313b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "786c541183a6c3e45bbf3bb74141bc0570bb664dbf3e20ce71f6e7f2674c0166"
   end
 
   depends_on "cmake" => :build
   depends_on "boost"
-  depends_on "icu4c"
+  depends_on "icu4c@76"
   depends_on "libpng"
   depends_on "lzlib"
   depends_on macos: :catalina

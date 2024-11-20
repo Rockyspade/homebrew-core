@@ -1,8 +1,8 @@
 class Abyss < Formula
   desc "Genome sequence assembler for short reads"
   homepage "https://www.bcgsc.ca/resources/software/abyss"
-  url "https://github.com/bcgsc/abyss/releases/download/2.3.8/abyss-2.3.8.tar.gz"
-  sha256 "3c262269043f619c79ec3dcd91f5595cb141229f9a13d1a76a952b9a0bfb0d84"
+  url "https://github.com/bcgsc/abyss/releases/download/2.3.10/abyss-2.3.10.tar.gz"
+  sha256 "bbe42e00d1ebb53ec6afaad07779baaaee994aa5c65b9a38cf4ad2011bb93c65"
   license all_of: ["GPL-3.0-only", "LGPL-2.1-or-later", "MIT", "BSD-3-Clause"]
 
   livecheck do
@@ -10,13 +10,12 @@ class Abyss < Formula
     regex(/^v?(\d+(?:\.\d+)+)$/i)
   end
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "d51aaa3ebeee8f2d7aafddbda19f362f8964bd438cc8cd882c4d449a34215aca"
-    sha256 cellar: :any,                 arm64_ventura:  "ee601d3305bf086edc4537d6e47c62ae6203c7b20a8554cf13320cecf8c534d8"
-    sha256 cellar: :any,                 arm64_monterey: "53684411c7bbb832019b78dba2e84c99a8172e81b8f580ea28f8bf3791c239dc"
-    sha256 cellar: :any,                 sonoma:         "fd91fd250b60d771640582cb02d4d7b1b50003d17cf05152a7a8fce9e63dd5e0"
-    sha256 cellar: :any,                 ventura:        "05f1bfc1159a8bd98b2258763927a02d64e691efab0440ee1c6ef386569a0506"
-    sha256 cellar: :any,                 monterey:       "b941004f43971894244fbb61163f307bc74826544f714209ac7e0578eedbdf8c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ce78fd4fc24e5657de9f8eba20727e0eda20b78eb47e735306c93566810da1e9"
+    sha256 cellar: :any,                 arm64_sequoia: "c4c97608ca2bb86304b77b4fddd3abee125f25971ba51495e95e6658b1ad5d1a"
+    sha256 cellar: :any,                 arm64_sonoma:  "f4bdcdb91f2004e514df06e02f91d6341cb8d3f3ce32a9acf3958d37f1983f80"
+    sha256 cellar: :any,                 arm64_ventura: "22819d8dfedb879c1f0742ec3f07e9090d99385b533bfc54158beddbe1eefadc"
+    sha256 cellar: :any,                 sonoma:        "6bd97e0afea52bf21f3c0f01d10b2643c22c4aed6bf3e36cece3545d6ad6e9d1"
+    sha256 cellar: :any,                 ventura:       "d81fe789736077b682ba6cbc7c62d89333ee560a7c2c02a0b3e936810e3cac1a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7cb253b94acc90a0619ef05ba23a178f9a28e8ee0395ffea66abbeb13500726f"
   end
 
   head do

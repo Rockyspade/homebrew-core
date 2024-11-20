@@ -1,23 +1,27 @@
 class Jp2a < Formula
   desc "Convert JPG images to ASCII"
   homepage "https://github.com/Talinx/jp2a"
-  url "https://github.com/Talinx/jp2a/releases/download/v1.2.0/jp2a-1.2.0.tar.bz2"
-  sha256 "bf27b42defa872a2a6b064e89b5e09bd6d822aa63e2d0f42840fabd0ce5d49bb"
+  url "https://github.com/Talinx/jp2a/releases/download/v1.3.2/jp2a-1.3.2.tar.bz2"
+  sha256 "e2aabc4df8f003035059996f0768b4543fd483ab8cffa5f62286a1d00ddb0439"
   license "GPL-2.0-or-later"
   version_scheme 1
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "874626298e9ec3382fec6b0959bfd2c03de419640ada27d70547012c0fee1b9b"
-    sha256 cellar: :any,                 arm64_ventura:  "cd1ddc8d78c2b8391a7fd5b69ac9357a7105a223029ca3d4a691f5a6e57f57ca"
-    sha256 cellar: :any,                 arm64_monterey: "7e104bb6a94326ac330df1daeed8424a92e9ca66d02a681c892bac0ccb20df9f"
-    sha256 cellar: :any,                 sonoma:         "06689dada11615dce0fc563c73dd91b4ff8a2c8f0b08936381392a29de81fe88"
-    sha256 cellar: :any,                 ventura:        "ec87f44c1fa6669a6ab3f0d7ac08c4746e6966416b3ae2ad2d88a9545622fe70"
-    sha256 cellar: :any,                 monterey:       "e97f337a7a7120c1a7f352e810f3e307be24a46cfdfdd957a21998fbc34d2e83"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "626b7dd604f1a12c799d2e3b73241fd874adbb5032ce853519de4fce554c4d83"
+    sha256 cellar: :any,                 arm64_sequoia: "c57c32d5a9a823615408c17fc7692cf918beac96cd9557c54f905da5803b9f31"
+    sha256 cellar: :any,                 arm64_sonoma:  "daf37f1570a9e1b2bd46b2cc0ccf57af00a813a0de9022a106e89fc7fe829ddc"
+    sha256 cellar: :any,                 arm64_ventura: "1b7dbe456e302277e7ff10a79e3999b35672855ca3a04425cf89572df87bf5b4"
+    sha256 cellar: :any,                 sonoma:        "1c5b176bba2e8ae0d825761da452a334d11411637342a159fecc6c9add83c5bf"
+    sha256 cellar: :any,                 ventura:       "e9b1cca5d32321539eec19f0e0c037a8e137cee43448a04b135f620df806478d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "00f6f42f5d2ef84ddc1a42004e9c44789be388385a454215e02dfa9b07c1bf43"
   end
 
+  depends_on "pkg-config" => :build
   depends_on "jpeg-turbo"
+  depends_on "libexif"
   depends_on "libpng"
+  depends_on "webp"
+  uses_from_macos "curl"
+  uses_from_macos "ncurses"
 
   def install
     system "./configure", *std_configure_args, "--disable-silent-rules"

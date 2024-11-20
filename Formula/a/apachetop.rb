@@ -6,6 +6,7 @@ class Apachetop < Formula
   license "BSD-3-Clause"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "5fca6d39ff40dc897dd1051087db749f0f6921515443fd6dcd1dbc9150847c3a"
     sha256 cellar: :any,                 arm64_sonoma:   "32e56eb605dc205768eeeb8fa3d6bd575dee188cef3e4962e6e62ffb7bfb7075"
     sha256 cellar: :any,                 arm64_ventura:  "83ab9282b83e2d1e56142e673273f8b709944a0019ffc42547be9a50040c6fcd"
     sha256 cellar: :any,                 arm64_monterey: "090134b03c12d592af96aea44192ba384f283ba968d90d267f30fd888599cd33"
@@ -19,7 +20,7 @@ class Apachetop < Formula
 
   depends_on "autoconf" => :build
   depends_on "automake" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "adns"
   depends_on "ncurses"
   depends_on "pcre2"
@@ -31,11 +32,11 @@ class Apachetop < Formula
   def install
     ENV.append "CXX", "-std=gnu++17"
 
-    system "./configure", *std_configure_args,
-                          "--mandir=#{man}",
+    system "./configure", "--mandir=#{man}",
                           "--with-logfile=#{var}/log/apache2/access_log",
                           "--with-adns=#{Formula["adns"].opt_prefix}",
-                          "--with-pcre2=#{Formula["pcre2"].opt_prefix}"
+                          "--with-pcre2=#{Formula["pcre2"].opt_prefix}",
+                          *std_configure_args
     system "make", "install"
   end
 

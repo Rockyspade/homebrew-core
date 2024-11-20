@@ -25,7 +25,7 @@ class AnsibleAT7 < Formula
   # https://docs.ansible.com/ansible/latest/reference_appendices/release_and_maintenance.html#ansible-community-package-release-cycle
   disable! date: "2024-01-10", because: :unmaintained
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "rust" => :build
   depends_on "certifi"
   depends_on "cffi"
@@ -572,14 +572,14 @@ class AnsibleAT7 < Formula
 
   test do
     ENV["ANSIBLE_REMOTE_TEMP"] = testpath/"tmp"
-    (testpath/"playbook.yml").write <<~EOS
+    (testpath/"playbook.yml").write <<~YAML
       ---
       - hosts: all
         gather_facts: False
         tasks:
         - name: ping
           ping:
-    EOS
+    YAML
     (testpath/"hosts.ini").write [
       "localhost ansible_connection=local",
       " ansible_python_interpreter=#{Formula["python@3.11"].opt_bin}/python3.11",

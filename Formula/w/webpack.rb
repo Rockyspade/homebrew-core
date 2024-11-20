@@ -3,19 +3,18 @@ require "json"
 class Webpack < Formula
   desc "Bundler for JavaScript and friends"
   homepage "https://webpack.js.org/"
-  url "https://registry.npmjs.org/webpack/-/webpack-5.93.0.tgz"
-  sha256 "3aa06fab2965c33d9b563affe86146bda627b0e872a57ebe94450f17260a9616"
+  url "https://registry.npmjs.org/webpack/-/webpack-5.96.1.tgz"
+  sha256 "0f6b03262c764b8ed22edc182bed56ba8671b0ac272b187f2bb44e087aa4f04e"
   license "MIT"
   head "https://github.com/webpack/webpack.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "71c5fb8088c0232d4907e7d91908fbf87370709c4ba310695bb676abbb2baed9"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "71c5fb8088c0232d4907e7d91908fbf87370709c4ba310695bb676abbb2baed9"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "71c5fb8088c0232d4907e7d91908fbf87370709c4ba310695bb676abbb2baed9"
-    sha256 cellar: :any_skip_relocation, sonoma:         "f2df30c4bf157b8f4a74c66ef315a8ecc3284314a2f64b2ec80e39bd28475923"
-    sha256 cellar: :any_skip_relocation, ventura:        "f2df30c4bf157b8f4a74c66ef315a8ecc3284314a2f64b2ec80e39bd28475923"
-    sha256 cellar: :any_skip_relocation, monterey:       "f2df30c4bf157b8f4a74c66ef315a8ecc3284314a2f64b2ec80e39bd28475923"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "20cbcbf900e5beb86391f7fc151f9084e41ddc600581e00d29c3cda5830a1a1f"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "a56adbfd19b54122450d07eade1ccb0b7036c0bbf3f913b46ee1470966796cef"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "a56adbfd19b54122450d07eade1ccb0b7036c0bbf3f913b46ee1470966796cef"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "a56adbfd19b54122450d07eade1ccb0b7036c0bbf3f913b46ee1470966796cef"
+    sha256 cellar: :any_skip_relocation, sonoma:        "f406292a75bd168924df2c4d9c12764b4d07ac12e834ed8e904586ebec80204b"
+    sha256 cellar: :any_skip_relocation, ventura:       "f406292a75bd168924df2c4d9c12764b4d07ac12e834ed8e904586ebec80204b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a56adbfd19b54122450d07eade1ccb0b7036c0bbf3f913b46ee1470966796cef"
   end
 
   depends_on "node"
@@ -49,7 +48,7 @@ class Webpack < Formula
   end
 
   test do
-    (testpath/"index.js").write <<~EOS
+    (testpath/"index.js").write <<~JS
       function component() {
         const element = document.createElement('div');
         element.innerHTML = 'Hello' + ' ' + 'webpack';
@@ -57,7 +56,7 @@ class Webpack < Formula
       }
 
       document.body.appendChild(component());
-    EOS
+    JS
 
     system bin/"webpack", "bundle", "--mode", "production", "--entry", testpath/"index.js"
     assert_match "const e=document.createElement(\"div\");", File.read(testpath/"dist/main.js")

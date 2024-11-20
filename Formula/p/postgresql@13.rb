@@ -1,8 +1,8 @@
 class PostgresqlAT13 < Formula
   desc "Object-relational database system"
   homepage "https://www.postgresql.org/"
-  url "https://ftp.postgresql.org/pub/source/v13.16/postgresql-13.16.tar.bz2"
-  sha256 "c9cbbb6129f02328204828066bb3785c00a85c8ca8fd329c2a8a53c1f5cd8865"
+  url "https://ftp.postgresql.org/pub/source/v13.17/postgresql-13.17.tar.bz2"
+  sha256 "022b0a6e7bc374a777eece33708895d7b60cae07d492b286b296a49d7395d78b"
   license "PostgreSQL"
 
   livecheck do
@@ -11,13 +11,12 @@ class PostgresqlAT13 < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "9c5ad5732a0d3aadc19497fec8adb4f6bb7200c3a639cb50ef8c16acb3dfd840"
-    sha256 arm64_ventura:  "e2efbc97914a7b59c161ec19e7b59ef0897bbffecda427e7fd8907f87a3392e9"
-    sha256 arm64_monterey: "158e7142f1baaef9d22552a1321940cb88237b04d79832dbe7ade718160697b1"
-    sha256 sonoma:         "cc5f721176126b27591d8b32ce757a511a99771edc028b82a676b827c2ed27e3"
-    sha256 ventura:        "acdeeda47d03736424b634a4d73af4c900877a044571d849f12c99ee79a7f25f"
-    sha256 monterey:       "b754cc225fa5df47f30a72df8bc1e5696f5352a1898cc077d91710a758004e63"
-    sha256 x86_64_linux:   "c0565962ffc23fd1a0c22d2c0407b1995e544cbc4d3e245358531c38c6434cb1"
+    sha256 arm64_sequoia: "7745713fbe04d190ed3be55a0f4538fee3300fda77f34ce6d0f750e3e1eb87a1"
+    sha256 arm64_sonoma:  "5b4ef8e48e14f5732ba0f740fd03b9350c857213b15e9e844dc1caba8f54d002"
+    sha256 arm64_ventura: "b7d6bd3d6a39351952f81e09ca23a850a1db6258a915987e5f95254c66a5f00c"
+    sha256 sonoma:        "cd256078447b76e5cffcb638e04996a52625348a7be74155556bf7ab3581a3cf"
+    sha256 ventura:       "f7221bf82699756c42c9619f3836759a6974890ed3b0f66c7404781b2caf2bcb"
+    sha256 x86_64_linux:  "45c7899bb5700ae0c0ecf833fd856341ed2592a4f65d197b0bed0970ea9e5950"
   end
 
   keg_only :versioned_formula
@@ -26,7 +25,7 @@ class PostgresqlAT13 < Formula
   deprecate! date: "2025-11-13", because: :unsupported
 
   depends_on "pkg-config" => :build
-  depends_on "icu4c"
+  depends_on "icu4c@76"
 
   # GSSAPI provided by Kerberos.framework crashes when forked.
   # See https://github.com/Homebrew/homebrew-core/issues/47494.
@@ -47,7 +46,7 @@ class PostgresqlAT13 < Formula
   end
 
   def install
-    ENV.delete "PKG_CONFIG_LIBDIR" if OS.mac? && version == :catalina
+    ENV.delete "PKG_CONFIG_LIBDIR" if OS.mac? && MacOS.version == :catalina
     ENV.prepend "LDFLAGS", "-L#{Formula["openssl@3"].opt_lib} -L#{Formula["readline"].opt_lib}"
     ENV.prepend "CPPFLAGS", "-I#{Formula["openssl@3"].opt_include} -I#{Formula["readline"].opt_include}"
 
@@ -70,12 +69,7 @@ class PostgresqlAT13 < Formula
       --with-perl
       --with-uuid=e2fs
     ]
-    if OS.mac?
-      args += %w[
-        --with-bonjour
-        --with-tcl
-      ]
-    end
+    args += %w[--with-bonjour --with-tcl] if OS.mac?
 
     # PostgreSQL by default uses xcodebuild internally to determine this,
     # which does not work on CLT-only installs.
@@ -97,12 +91,11 @@ class PostgresqlAT13 < Formula
                                     "pkgincludedir=#{include}/postgresql",
                                     "includedir_server=#{include}/postgresql/server",
                                     "includedir_internal=#{include}/postgresql/internal"
+    return unless OS.linux?
 
-    if OS.linux?
-      inreplace lib/"postgresql/pgxs/src/Makefile.global",
-                "LD = #{HOMEBREW_PREFIX}/Homebrew/Library/Homebrew/shims/linux/super/ld",
-                "LD = #{HOMEBREW_PREFIX}/bin/ld"
-    end
+    inreplace lib/"postgresql/pgxs/src/Makefile.global",
+              "LD = #{Superenv.shims_path}/ld",
+              "LD = #{HOMEBREW_PREFIX}/bin/ld"
   end
 
   def post_install
@@ -160,8 +153,6 @@ class PostgresqlAT13 < Formula
     caveats += <<~EOS
       This formula has created a default database cluster with:
         initdb --locale=C -E UTF-8 #{postgresql_datadir}
-      For more details, read:
-        https://www.postgresql.org/docs/#{version.major}/app-initdb.html
     EOS
 
     caveats

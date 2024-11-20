@@ -12,6 +12,7 @@ class Spandsp < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "fb9acce46b687e18c6e016cf9db9be77645778722eccc71589bc06b7fa7c6344"
     sha256 cellar: :any,                 arm64_sonoma:   "c0031a76da7569594a6e541f5373a81fd8fd67fe51d8ded0bc317c22b7c9d61b"
     sha256 cellar: :any,                 arm64_ventura:  "1de79b77a71edef3e67c18da0b22400821a06190cd2c6e1363ed8bdf92fb6379"
     sha256 cellar: :any,                 arm64_monterey: "1dfce0ba8ff13c46c285baa0de02f0d2e82fae7b86ca5e81fdcd5b520924511b"
@@ -39,7 +40,7 @@ class Spandsp < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #define SPANDSP_EXPOSE_INTERNAL_STRUCTURES
       #include <spandsp.h>
 
@@ -49,7 +50,7 @@ class Spandsp < Formula
         memset(&t38, 0, sizeof(t38));
         return (t38_terminal_init(&t38, 0, NULL, NULL) == NULL) ? 0 : 1;
       }
-    EOS
+    C
     system ENV.cc, "test.c", "-L#{lib}", "-lspandsp", "-o", "test"
     system "./test"
   end

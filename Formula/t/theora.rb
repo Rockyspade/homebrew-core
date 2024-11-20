@@ -22,6 +22,7 @@ class Theora < Formula
 
   bottle do
     rebuild 4
+    sha256 cellar: :any,                 arm64_sequoia:  "19801e6ceb5c12db4621afff8746a3ef77581226559ec728c6c07a49659b23d3"
     sha256 cellar: :any,                 arm64_sonoma:   "7f57dbcd0a12b47f7f886f9474d2ffa04df1ff62fc9c6a330c4f828386d94301"
     sha256 cellar: :any,                 arm64_ventura:  "b4b1fe0a53ce538d88ca098fce885c20cca62175c2d2141ad96454e7163674a6"
     sha256 cellar: :any,                 arm64_monterey: "56008e9450fcf3f712f34ec79407b8e738953d5fc50feaf72a6434dd28fc1101"
@@ -66,7 +67,7 @@ class Theora < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <theora/theora.h>
 
       int main()
@@ -76,7 +77,7 @@ class Theora < Formula
           theora_info_clear(&inf);
           return 0;
       }
-    EOS
+    C
     system ENV.cc, "test.c", "-L#{lib}", "-ltheora", "-o", "test"
     system "./test"
   end

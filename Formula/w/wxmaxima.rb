@@ -1,8 +1,8 @@
 class Wxmaxima < Formula
   desc "Cross platform GUI for Maxima"
   homepage "https://wxmaxima-developers.github.io/wxmaxima/"
-  url "https://github.com/wxMaxima-developers/wxmaxima/archive/refs/tags/Version-24.08.0.tar.gz"
-  sha256 "a0957c1852ca2d93e34f8f0329673f40af065e7648739d088da28bd33627b758"
+  url "https://github.com/wxMaxima-developers/wxmaxima/archive/refs/tags/Version-24.11.0.tar.gz"
+  sha256 "e01fd8ca9bb8054e38f6d973f619e2549ab6ab9d0aaebae70c4ed73580258055"
   license "GPL-2.0-or-later"
   head "https://github.com/wxMaxima-developers/wxmaxima.git", branch: "main"
 
@@ -12,12 +12,10 @@ class Wxmaxima < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "f5f1e8d4ae104152f9f85bef2f9552647465984eaad5d38ac275103d745e9c19"
-    sha256 arm64_ventura:  "3abef2ef7771cbef1c2b3a9d2e9f5d2662a5d4c0b625c31f644086f30f73831f"
-    sha256 arm64_monterey: "e1e390f4dfc27d2bbf760aaae35ec14abff1d185cfd4ccef045c1a30ce88ce6b"
-    sha256 sonoma:         "47ad334e5899b328702ab71f991cdfe16bcac85b370014a2035dcada7ad7f97c"
-    sha256 ventura:        "bad0204f986887c72b03cbd7750cf96a11447f5d350b40fe24f6d086e1ba20e2"
-    sha256 monterey:       "0384aa9700ae2c7c698865f3c2982aade375a141d7d1ca9ead03bb4a9fc04739"
+    sha256 arm64_sonoma:  "2358e8f2d617ee1712c99475050a1a4e949cb71cdd1cd7506dd119b4e85f4158"
+    sha256 arm64_ventura: "43209d344a49e1f9ca0cbdb23749a66b271b3f3f4ed31f1a86a9575ccc52000f"
+    sha256 sonoma:        "afb0646873fe32ce18f6e2728cdfba174d0a91f0681b9bbb23ad7010ed61b9a6"
+    sha256 ventura:       "27aa853a9d23657d84ff041fed37c0994e4551ad996655a3962ef35920c40205"
   end
 
   depends_on "cmake" => :build
@@ -39,12 +37,6 @@ class Wxmaxima < Formula
         return tree;
                ^~~~
     EOS
-  end
-
-  # fix version output, upstream patch ref, https://github.com/wxMaxima-developers/wxmaxima/pull/1937
-  patch do
-    url "https://github.com/wxMaxima-developers/wxmaxima/commit/077ec646a11bfb5aa83a478e636a715a38a9b68b.patch?full_index=1"
-    sha256 "15fb4db52cb7e1237ee5d0934653db06809d172e2bf54709435ec24d1f7ab7a9"
   end
 
   def install

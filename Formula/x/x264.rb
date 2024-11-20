@@ -39,6 +39,7 @@ class X264 < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "599b5307d2eed20dd72830c722dd30faeca5fa7f87b9a36c122ed575311d84fc"
     sha256 cellar: :any,                 arm64_sonoma:   "19910a7d287524c93e7c56e30eca711618e0b568c0a9a4462924b76761840fd5"
     sha256 cellar: :any,                 arm64_ventura:  "65babfc775b28b5d51d5acece8eb62ef377869964f088385cd09668848b63853"
     sha256 cellar: :any,                 arm64_monterey: "629c423cef3f124d566e852d72a7d27b48370463c7501f3c99879f5eab68ae20"
@@ -79,7 +80,7 @@ class X264 < Formula
 
   test do
     assert_match version.to_s.delete("r"), shell_output("#{bin}/x264 --version").lines.first
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <stdint.h>
       #include <x264.h>
 
@@ -91,7 +92,7 @@ class X264 < Formula
           x264_picture_clean(&pic);
           return 0;
       }
-    EOS
+    C
     system ENV.cc, "-L#{lib}", "test.c", "-lx264", "-o", "test"
     system "./test"
   end

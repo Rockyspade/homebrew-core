@@ -1,11 +1,10 @@
 class Mkvtoolnix < Formula
   desc "Matroska media files manipulation tools"
   homepage "https://mkvtoolnix.download/"
-  url "https://mkvtoolnix.download/sources/mkvtoolnix-86.0.tar.xz"
-  mirror "https://fossies.org/linux/misc/mkvtoolnix-86.0.tar.xz"
-  sha256 "29a9155fbba99f9074de2abcfbdc4e966ea38c16d9f6f547cf2d8d9a48152c97"
+  url "https://mkvtoolnix.download/sources/mkvtoolnix-88.0.tar.xz"
+  mirror "https://fossies.org/linux/misc/mkvtoolnix-88.0.tar.xz"
+  sha256 "f2f08c0100740668ef8aba7953fe4aed8c04ee6a5b51717816a4b3d529df0a25"
   license "GPL-2.0-or-later"
-  revision 1
 
   livecheck do
     url "https://mkvtoolnix.download/sources/"
@@ -13,13 +12,11 @@ class Mkvtoolnix < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_sonoma:   "6e1e9a95f20805baee179943e3de46f4dafd26ac89159ecfda90ddea3a621d3e"
-    sha256 cellar: :any, arm64_ventura:  "094d79990d30405b4b576e01f1807a87b7f5b01801deff701ae996b127230aa3"
-    sha256 cellar: :any, arm64_monterey: "88e22898eb6a0e2a004a26fa0c1972a29cc144bb0a1922d5d243ddaec9ef2df0"
-    sha256 cellar: :any, sonoma:         "f35bb84cb240167f206fdfee7eef839f2788e5f92b6d96352bc5041997f84844"
-    sha256 cellar: :any, ventura:        "114eb2b80e0dce42e977edaa859a8ef3e283b6512d4541a37f94fb28fffd42da"
-    sha256 cellar: :any, monterey:       "5cf493fe882637a02c5cd2dceedb90bbb2172b00c78ff66400bf180c6524bb93"
-    sha256               x86_64_linux:   "3fd17211454629853e8122aaefc1901841dd490245fdfc7f5274c471f4186ffe"
+    sha256 cellar: :any, arm64_sonoma:  "329977efb28115e0916b81930aa5c3d80f704873fa01a84e455cd1121c54d390"
+    sha256 cellar: :any, arm64_ventura: "e198ed850fe3a7321c3731779aad017805044d2baf2b87ece83ea2a9992d78e8"
+    sha256 cellar: :any, sonoma:        "c21a7bec8c15d18e0393fdd9c06a6e32735d3c18601c684e444a2bdcdc2058c1"
+    sha256 cellar: :any, ventura:       "d34d3d101c467d2540680136c07c2fedcd656fcf85636eb13e1ba1165ed18f96"
+    sha256               x86_64_linux:  "30329404910c7b0ef020ed777e36b5de9203b9f53d691f7cc823bcd080014550"
   end
 
   head do

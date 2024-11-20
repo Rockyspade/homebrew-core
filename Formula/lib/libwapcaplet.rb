@@ -7,6 +7,7 @@ class Libwapcaplet < Formula
   head "https://git.netsurf-browser.org/libwapcaplet.git", branch: "master"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "c751d28cd839b73ae650342148ec11c12f0c74a02c74228e5a455012a9753dec"
     sha256 cellar: :any,                 arm64_sonoma:   "5610a67ece4b5be886260e784b100c438ec7c083c7043a4684aabf8bda19feac"
     sha256 cellar: :any,                 arm64_ventura:  "8323a6bff5ca487dd247baf5cf9e0176073b6c6ced4ded461c0d121606cf54d1"
     sha256 cellar: :any,                 arm64_monterey: "2d26edc578df10929cbe2fab48bebf5a21476a4eae3b8079ff20b840e181d8da"
@@ -29,7 +30,7 @@ class Libwapcaplet < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <stdio.h>
       #include <libwapcaplet/libwapcaplet.h>
 
@@ -43,7 +44,7 @@ class Libwapcaplet < Formula
           printf("%.*s", (int) lwc_string_length(str), lwc_string_data(str));
           lwc_string_destroy(str);
       }
-    EOS
+    C
 
     system ENV.cc, "test.c", "-I#{include}", "-L#{lib}", "-lwapcaplet", "-o", "test"
     assert_equal "Hello world!", shell_output(testpath/"test")

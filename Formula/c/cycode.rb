@@ -3,27 +3,26 @@ class Cycode < Formula
 
   desc "Boost security in your dev lifecycle via SAST, SCA, Secrets & IaC scanning"
   homepage "https://github.com/cycodehq/cycode-cli"
-  url "https://files.pythonhosted.org/packages/93/92/c44d851efc4b70b7e69481a29ef1a359ed40f83adfe77e0c465604c5f2bf/cycode-1.10.7.tar.gz"
-  sha256 "56a6179e56d35628f81aafccfa21c89c1f93f0052d7f515838a59d0e349c3e21"
+  url "https://files.pythonhosted.org/packages/84/00/56e961f9c06ea79ffd0ff3c84331e607f56633a9f1811c7324de5d8e5076/cycode-2.0.0.tar.gz"
+  sha256 "3e9677627a42c46099239eac7fde30a7d5f243aab477396191b54ecaecebbf5a"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "933f52ecb8be85bda05568b44d0b161c90ef3c57c6cf2ea1663cae1e5acfed0a"
-    sha256 cellar: :any,                 arm64_ventura:  "3c402cf295f8687bc57b7fd50be91ceda876c8a47b89c89f46e265f4571ed105"
-    sha256 cellar: :any,                 arm64_monterey: "d5f92452d1a6266237083ee63112216089f3ae159814fb22b714f07343f5a3c3"
-    sha256 cellar: :any,                 sonoma:         "d46a5cd0c892502f0d7872cddad807e0291c88209a46fa38725eb882d192a72b"
-    sha256 cellar: :any,                 ventura:        "9d4b4d2a84802cd9e0c4ca04c61ad5f263b788e3682146ed776393a2e3efedae"
-    sha256 cellar: :any,                 monterey:       "811df684302715a8925e328cec3e58689c5995193f9dc2fd4626bfe792b2570d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "69120b9ca655540e0fb13bc032f7dd54744e2ec23ffdb2f1e9d167706a2be158"
+    sha256 cellar: :any,                 arm64_sequoia: "4ad90b7176cbe8699046d3b0a74fcb722678edc2be2b2ba5c167f0f3546431a2"
+    sha256 cellar: :any,                 arm64_sonoma:  "7d5667379f8e73e4c1f4280ceaf0f703d0637d098d563f47e099aa5108f7eb5e"
+    sha256 cellar: :any,                 arm64_ventura: "b8c2796138b60c97e25a9ef73851a53bf96ad823a55c341603bf43f40329ef6c"
+    sha256 cellar: :any,                 sonoma:        "255bd461ca5f9704e14d6ec7c68df480e4596c7958f3330332fb0c7e15fb67aa"
+    sha256 cellar: :any,                 ventura:       "4dd5796767dcec65b4823adb351ef155bb4c5d199158bbf58e3c98fe5e8c61bd"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7dcf98f3f7442847966ed6aad4fcab378238851e854f7de3bcba71905009adbf"
   end
 
   depends_on "certifi"
   depends_on "libyaml"
-  depends_on "python@3.12"
+  depends_on "python@3.13"
 
   resource "arrow" do
-    url "https://files.pythonhosted.org/packages/7f/c0/c601ea7811f422700ef809f167683899cdfddec5aa3f83597edf97349962/arrow-1.2.3.tar.gz"
-    sha256 "3934b30ca1b9f292376d9db15b19446088d12ec58629bc3f0da28fd55fb633a1"
+    url "https://files.pythonhosted.org/packages/2e/00/0f6e8fcdb23ea632c866620cc872729ff43ed91d284c866b515c6342b173/arrow-1.3.0.tar.gz"
+    sha256 "d4540617648cb5f895730f1ad8c82a65f2dad0166f57b75f3ca54759c4d67a85"
   end
 
   resource "binaryornot" do
@@ -37,8 +36,8 @@ class Cycode < Formula
   end
 
   resource "charset-normalizer" do
-    url "https://files.pythonhosted.org/packages/63/09/c1bc53dab74b1816a00d8d030de5bf98f724c52c1635e07681d312f20be8/charset-normalizer-3.3.2.tar.gz"
-    sha256 "f30c3cb33b24454a82faecaf01b19c18562b1e89558fb6c56de4d9118a032fd5"
+    url "https://files.pythonhosted.org/packages/f2/4f/e1808dc01273379acc506d18f1504eb2d299bd4131743b9fc54d7be4df1e/charset_normalizer-3.4.0.tar.gz"
+    sha256 "223217c3d4f82c3ac5e29032b3f1c2eb0fb591b72161f86d93f5719079dae93e"
   end
 
   resource "click" do
@@ -62,28 +61,28 @@ class Cycode < Formula
   end
 
   resource "idna" do
-    url "https://files.pythonhosted.org/packages/21/ed/f86a79a07470cb07819390452f178b3bef1d375f2ec021ecfc709fc7cf07/idna-3.7.tar.gz"
-    sha256 "028ff3aadf0609c1fd278d8ea3089299412a7a8b9bd005dd08b9f8285bcb5cfc"
+    url "https://files.pythonhosted.org/packages/f1/70/7703c29685631f5a7590aa73f1f1d3fa9a380e654b86af429e0934a32f7d/idna-3.10.tar.gz"
+    sha256 "12f65c9b470abda6dc35cf8e63cc574b1c52b11df2c86030af0ac09b01b13ea9"
   end
 
   resource "marshmallow" do
-    url "https://files.pythonhosted.org/packages/03/81/763717b3448e5d3a3906f27ab2ffedc9a495e8077946f54b8033967d29fd/marshmallow-3.20.2.tar.gz"
-    sha256 "4c1daff273513dc5eb24b219a8035559dc573c8f322558ef85f5438ddd1236dd"
+    url "https://files.pythonhosted.org/packages/70/40/faa10dc4500bca85f41ca9d8cefab282dd23d0fcc7a9b5fab40691e72e76/marshmallow-3.22.0.tar.gz"
+    sha256 "4972f529104a220bb8637d595aa4c9762afbe7f7a77d82dc58c1615d70c5823e"
   end
 
   resource "packaging" do
-    url "https://files.pythonhosted.org/packages/51/65/50db4dda066951078f0a96cf12f4b9ada6e4b811516bf0262c0f4f7064d4/packaging-24.1.tar.gz"
-    sha256 "026ed72c8ed3fcce5bf8950572258698927fd1dbda10a5e981cdf0ac37f4f002"
+    url "https://files.pythonhosted.org/packages/d0/63/68dbb6eb2de9cb10ee4c9c14a0148804425e13c4fb20d61cce69f53106da/packaging-24.2.tar.gz"
+    sha256 "c228a6dc5e932d346bc5739379109d49e8853dd8223571c7c5b55260edc0b97f"
   end
 
   resource "pathspec" do
-    url "https://files.pythonhosted.org/packages/a0/2a/bd167cdf116d4f3539caaa4c332752aac0b3a0cc0174cdb302ee68933e81/pathspec-0.11.2.tar.gz"
-    sha256 "e0d8d0ac2f12da61956eb2306b69f9469b42f4deb0f3cb6ed47b9cce9996ced3"
+    url "https://files.pythonhosted.org/packages/ca/bc/f35b8446f4531a7cb215605d100cd88b7ac6f44ab3fc94870c120ab3adbf/pathspec-0.12.1.tar.gz"
+    sha256 "a482d51503a1ab33b1c67a6c3813a26953dbdc71c31dacaef9a838c4e29f5712"
   end
 
   resource "pyjwt" do
-    url "https://files.pythonhosted.org/packages/30/72/8259b2bccfe4673330cea843ab23f86858a419d8f1493f66d413a76c7e3b/PyJWT-2.8.0.tar.gz"
-    sha256 "57e28d156e3d5c10088e0c68abb90bfac3df82b40a71bd0daa20c65ccd5c23de"
+    url "https://files.pythonhosted.org/packages/fb/68/ce067f09fca4abeca8771fe667d89cc347d1e99da3e093112ac329c6020e/pyjwt-2.9.0.tar.gz"
+    sha256 "7e1e5b56cc735432a7369cbfa0efe50fa113ebecdc04ae6922deba8b84582d0c"
   end
 
   resource "python-dateutil" do
@@ -92,8 +91,8 @@ class Cycode < Formula
   end
 
   resource "pyyaml" do
-    url "https://files.pythonhosted.org/packages/cd/e5/af35f7ea75cf72f2cd079c95ee16797de7cd71f29ea7c68ae5ce7be1eda0/PyYAML-6.0.1.tar.gz"
-    sha256 "bfdf460b1736c775f2ba9f6a92bca30bc2095067b8a9d77876d1fad6cc3b4a43"
+    url "https://files.pythonhosted.org/packages/54/ed/79a089b6be93607fa5cdaedf301d7dfb23af5f25c398d5ead2525b063e17/pyyaml-6.0.2.tar.gz"
+    sha256 "d584d9ec91ad65861cc08d42e834324ef890a082e591037abe114850ff7bbc3e"
   end
 
   resource "requests" do
@@ -102,8 +101,8 @@ class Cycode < Formula
   end
 
   resource "sentry-sdk" do
-    url "https://files.pythonhosted.org/packages/6d/b3/39e4cd04b75a1ada788342d0d30a781cf65b5e43da806d5bf2bad4846ea3/sentry_sdk-2.11.0.tar.gz"
-    sha256 "4ca16e9f5c7c6bc2fb2d5c956219f4926b148e511fffdbbde711dc94f1e0468f"
+    url "https://files.pythonhosted.org/packages/24/cc/0d87cc8246f52d92228aa6718a24e1988a2893f4abe2f64ec5a8bcba4185/sentry_sdk-2.18.0.tar.gz"
+    sha256 "0dc21febd1ab35c648391c664df96f5f79fb0d92d7d4225cd9832e53a617cafd"
   end
 
   resource "six" do
@@ -119,6 +118,11 @@ class Cycode < Formula
   resource "texttable" do
     url "https://files.pythonhosted.org/packages/1c/dc/0aff23d6036a4d3bf4f1d8c8204c5c79c4437e25e0ae94ffe4bbb55ee3c2/texttable-1.7.0.tar.gz"
     sha256 "2d2068fb55115807d3ac77a4ca68fa48803e84ebb0ee2340f858107a36522638"
+  end
+
+  resource "types-python-dateutil" do
+    url "https://files.pythonhosted.org/packages/31/f8/f6ee4c803a7beccffee21bb29a71573b39f7037c224843eff53e5308c16e/types-python-dateutil-2.9.0.20241003.tar.gz"
+    sha256 "58cb85449b2a56d6684e41aeefb4c4280631246a0da1a719bdbe6f3fb0317446"
   end
 
   resource "urllib3" do

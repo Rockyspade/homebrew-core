@@ -6,6 +6,7 @@ class Osqp < Formula
   license "Apache-2.0"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "647ab37438a0017321a9e6f1182f805cef876a66a2f943d5f23dc59082fd9f0f"
     sha256 cellar: :any,                 arm64_sonoma:   "75737089a5452b23716c6e18c7ec61944a75334727292470db873e951be0ff64"
     sha256 cellar: :any,                 arm64_ventura:  "ca78e8724eade029e62543fd5c71024400dcf7af5e34fcd9b520aa6030ed6a50"
     sha256 cellar: :any,                 arm64_monterey: "037777df22a74ad68ede796d9004ac30939144e63507112f35011d552f6091fd"
@@ -37,7 +38,7 @@ class Osqp < Formula
   end
 
   test do
-    (testpath/"CMakeLists.txt").write <<~EOS
+    (testpath/"CMakeLists.txt").write <<~CMAKE
       cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
       project(osqp_demo LANGUAGES C)
       find_package(osqp CONFIG REQUIRED)
@@ -47,10 +48,10 @@ class Osqp < Formula
 
       add_executable(osqp_demo_static osqp_demo.c)
       target_link_libraries(osqp_demo_static PRIVATE osqp::osqpstatic -lm)
-    EOS
+    CMAKE
 
     # from https://github.com/osqp/osqp/blob/HEAD/tests/demo/test_demo.h
-    (testpath/"osqp_demo.c").write <<~EOS
+    (testpath/"osqp_demo.c").write <<~C
       #include <assert.h>
       #include <osqp.h>
 
@@ -92,7 +93,7 @@ class Osqp < Formula
         c_free(settings);
         return 0;
       }
-    EOS
+    C
 
     system "cmake", "-S", ".", "-B", "build"
     system "cmake", "--build", "build"

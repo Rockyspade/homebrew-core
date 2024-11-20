@@ -1,20 +1,18 @@
 class Nickel < Formula
   desc "Better configuration for less"
   homepage "https://github.com/tweag/nickel"
-  url "https://github.com/tweag/nickel/archive/refs/tags/1.7.0.tar.gz"
-  sha256 "0a187cb5e4d34fb485ae7ceca77e18b27f22860cf79c03f92e12fc5c2c59c01e"
+  url "https://github.com/tweag/nickel/archive/refs/tags/1.9.0.tar.gz"
+  sha256 "c5c0000e6b1618921c1ce23dc90eefb482bdfe9f9716d4ef5cf24a3b99ec4c7d"
   license "MIT"
   head "https://github.com/tweag/nickel.git", branch: "master"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "a522d3e1aae94df5f30388505f28acc4eb6bc3c3fc959a530ebb552d5dc0d951"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "3f6881c9772da598c5e5d26b8d498b12202f7ac6a086b2ba9debe4fbf092f304"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "23e4b08a784947748e47468eee77825a5f0f5cc43d115318170e6c73b4d86622"
-    sha256 cellar: :any_skip_relocation, sonoma:         "dc071ca43f33e73af100f18be725773b5f2dd2dc4aa4b9371ca09cb981123328"
-    sha256 cellar: :any_skip_relocation, ventura:        "2dc84f6726c6eb472401f06e8daebf90884f8f3326020b59c2a1f48b8859234f"
-    sha256 cellar: :any_skip_relocation, monterey:       "8621559b7921ad62b79ffced1e3c35349b202409e917e65440668bdbc6c2cac6"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d3c615d3fdd6ba13c24c61632bfefecb555d9f1e1103f0c4e6f28784e007e21b"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "506125955cbbd70f1674454cb727c2a3cc5ecda34a83550bb0846846a536ecd6"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "49b0abfdd487f8a155eb10496e0627cc60337143c66dec5f883b2e46736eb23a"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "54238f41a2b7cccc2e38854dfa2e2b71c18b8467e3bc8a47ed755c59dbcd4e44"
+    sha256 cellar: :any_skip_relocation, sonoma:        "56618f2098ff20ff4f358fb09b4da1d367844824ad5d19237268cb0d965ad1a6"
+    sha256 cellar: :any_skip_relocation, ventura:       "5aab1d707c105c2bf6ff3518ea9215a981e70eea49cbe3fda8297c6e5ea3e7bd"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "92cab7bffd980ed4ab4987668fbed7e738c0476d793d0745c9ccd78e236d2e4b"
   end
 
   depends_on "rust" => :build

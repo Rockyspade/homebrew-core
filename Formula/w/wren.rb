@@ -11,6 +11,7 @@ class Wren < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "32ef27315c3c2718071ccbe516fbdc91934eb94d2a0e5f91ec63c215efb8aea0"
     sha256 cellar: :any,                 arm64_sonoma:   "a3100038802e99ce273976dec06b8cd2239cc9146523664938107d867ad9ba60"
     sha256 cellar: :any,                 arm64_ventura:  "a56a102a2a2e336cae95c2df5bec5ddc48dcb53dd7c922ae6f19380637f6c759"
     sha256 cellar: :any,                 arm64_monterey: "c3e1412d38068f8218c7753b55468289c1602c0bc60ab2d60f45fb2bb7547dbf"
@@ -36,7 +37,7 @@ class Wren < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <assert.h>
       #include <stdio.h>
       #include "wren.h"
@@ -53,7 +54,7 @@ class Wren < Formula
         printf("1 + 2 = %d\\n", (int) wrenGetSlotDouble(vm, 0));
         wrenFreeVM(vm);
       }
-    EOS
+    C
     system ENV.cc, "test.c", "-I#{include}", "-L#{lib}", "-lwren", "-o", "test"
     assert_equal "1 + 2 = 3", shell_output("./test").strip
   end

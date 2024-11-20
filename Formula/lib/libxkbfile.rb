@@ -6,6 +6,7 @@ class Libxkbfile < Formula
   license "MIT"
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "e66ffd78987318c3f579f3afb3e8356d086edcdd6dfde914e94b3fb047b65117"
     sha256 cellar: :any,                 arm64_sonoma:   "cb79bbe025a76e58fd15adee3bf20ee3efd8103a578d2e6139358c1f9cd7a8fd"
     sha256 cellar: :any,                 arm64_ventura:  "c5ad9490a09538b6a72372d8716a424ebbecf777c2a1ea5d448fcefe950a78c9"
     sha256 cellar: :any,                 arm64_monterey: "6ef647b8fbac800454607ac21aac57a9264a4c5a2cb912afb34671f5c6a6ab0a"
@@ -33,7 +34,7 @@ class Libxkbfile < Formula
   end
 
   test do
-    (testpath/"test.c").write <<~EOS
+    (testpath/"test.c").write <<~C
       #include <stdio.h>
       #include <X11/XKBlib.h>
       #include "X11/extensions/XKBfile.h"
@@ -42,7 +43,7 @@ class Libxkbfile < Formula
         XkbFileInfo info;
         return 0;
       }
-    EOS
+    C
     system ENV.cc, "test.c"
     assert_equal 0, $CHILD_STATUS.exitstatus
   end

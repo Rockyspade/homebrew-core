@@ -5,6 +5,7 @@ class Octave < Formula
   mirror "https://ftpmirror.gnu.org/octave/octave-9.2.0.tar.xz"
   sha256 "21417afb579105b035cac0bea09201522e384893ae90a781b8727efa32765807"
   license "GPL-3.0-or-later"
+  revision 2
 
   # New tarballs appear on https://ftp.gnu.org/gnu/octave/ before a release is
   # announced, so we check the octave.org download page instead.
@@ -14,13 +15,11 @@ class Octave < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "02f7cc330a2375c96920796a281e93087399509754c41fdd25f83794f1396690"
-    sha256 arm64_ventura:  "f89bc978f60040fdc82e5d1f2fe16ff26c5ab94fe2795ad75bd0bd776f9772ff"
-    sha256 arm64_monterey: "4878ff0d0ff235453053b256207c625cfda8133440eb1edceacfbc5c4f2a8685"
-    sha256 sonoma:         "4fbbbdc08918039d20113559a8daaad2edeca34581784fc6c5c0ec93d379c28d"
-    sha256 ventura:        "e5ddc3cba4721722c34a319bb097b4c84c4c4e29a3318139af1513ff8a905612"
-    sha256 monterey:       "939a246d08b1bae6d6682700cbb8c361867544046dce81efeade8a544963a212"
-    sha256 x86_64_linux:   "6287c397454f4d4c2c6e1871d0cbcd92e363fbb26f605242f264572c1be4c7f6"
+    sha256 arm64_sonoma:  "6db0a9b4e3effce4a3f10f50a0b6b4fb721693ca517d409ffa0bf28e4aa5132e"
+    sha256 arm64_ventura: "ff75d2805a738e47e7624fec50d4fe25f78c17b35a62a21cc22de00d96b8120e"
+    sha256 sonoma:        "dd39ccca52e34d7acf3b6a9c377f475efbd5b6c6a3ae739bf81627c76bb0363e"
+    sha256 ventura:       "aeb0606c1ce997c84736fb63eaec9cff8f7ac29819b76db50f0d228fa436529c"
+    sha256 x86_64_linux:  "752410d834abe564286d7fcfe6f6915d27866d56b760c0869d1c61b44c1bf8fa"
   end
 
   head do
@@ -36,7 +35,7 @@ class Octave < Formula
   # Complete list of dependencies at https://wiki.octave.org/Building
   depends_on "gnu-sed" => :build # https://lists.gnu.org/archive/html/octave-maintainers/2016-09/msg00193.html
   depends_on "openjdk" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "arpack"
   depends_on "epstool"
   depends_on "fftw"
@@ -84,8 +83,6 @@ class Octave < Formula
   # Dependencies use Fortran, leading to spurious messages about GCC
   cxxstdlib_check :skip
 
-  fails_with gcc: "5"
-
   def install
     # Default configuration passes all linker flags to mkoctfile, to be
     # inserted into every oct/mex build. This is unnecessary and can cause
@@ -126,7 +123,10 @@ class Octave < Formula
     end
 
     system "./configure", *args, *std_configure_args
-    system "make", "all"
+    # https://github.com/Homebrew/homebrew-core/pull/170959#issuecomment-2351023470
+    ENV.deparallelize do
+      system "make", "all"
+    end
 
     # Avoid revision bumps whenever fftw's, gcc's or OpenBLAS' Cellar paths change
     inreplace "src/mkoctfile.cc" do |s|

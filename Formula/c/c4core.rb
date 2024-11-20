@@ -6,6 +6,7 @@ class C4core < Formula
   license all_of: ["MIT", "BSL-1.0"]
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "fe615637e6e596329673a4f5b2145cef977a7d0439d9b1122c1189692930b85b"
     sha256 cellar: :any,                 arm64_sonoma:   "2ac1666e0948d9827c198274de5c15df4917c9e696f00ed9a88a8cf64a21a196"
     sha256 cellar: :any,                 arm64_ventura:  "e78cfd204659c87379cbcb49bb8a68ada74d51a0414b7e0de65c5c7670938762"
     sha256 cellar: :any,                 arm64_monterey: "5cc4fdc91e5003b26f7d6650c473a6dfb071087062e643464e8fabd3c781a6c7"
@@ -24,7 +25,7 @@ class C4core < Formula
   end
 
   test do
-    (testpath/"CMakeLists.txt").write <<~EOS
+    (testpath/"CMakeLists.txt").write <<~CMAKE
       cmake_minimum_required(VERSION 3.5)
       project(c4core_test)
 
@@ -32,9 +33,9 @@ class C4core < Formula
 
       add_executable(c4core_test test.cpp)
       target_link_libraries(c4core_test c4core::c4core)
-    EOS
+    CMAKE
 
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include "c4/charconv.hpp" // header file for character conversion utilities
       #include "c4/format.hpp"   // header file for formatting utilities
       #include <iostream>
@@ -57,7 +58,7 @@ class C4core < Formula
 
           return 0;
       }
-    EOS
+    CPP
 
     system "cmake", "-S", ".", "-B", "build", *std_cmake_args
     system "cmake", "--build", "build"

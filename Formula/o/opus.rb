@@ -11,6 +11,7 @@ class Opus < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 arm64_sequoia:  "564c0c7f19ac41ed22baabf7c1bf2e172f81bad60ec211d03bda8eeb42ce2f1a"
     sha256 cellar: :any,                 arm64_sonoma:   "017d3d10cf679cad5cee3501a53945903eabff9f7657214944bf9156f85e9872"
     sha256 cellar: :any,                 arm64_ventura:  "d53715a8e666c4d91917f6746c2516aca2f160294ca5542a7db7a53d953c7447"
     sha256 cellar: :any,                 arm64_monterey: "02260aea3cc13374c4366abb75e14034bb374d76873d4fbbd9f26794e1d727cb"
@@ -36,7 +37,7 @@ class Opus < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <opus.h>
 
       int main(int argc, char **argv)
@@ -60,7 +61,7 @@ class Opus < Formula
         }
         return err;
       }
-    EOS
+    CPP
     system ENV.cxx, "-I#{include}/opus", testpath/"test.cpp",
            "-L#{lib}", "-lopus", "-o", "test"
     system "./test"

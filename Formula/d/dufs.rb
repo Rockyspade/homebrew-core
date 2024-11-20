@@ -1,18 +1,17 @@
 class Dufs < Formula
   desc "Static file server"
   homepage "https://github.com/sigoden/dufs"
-  url "https://github.com/sigoden/dufs/archive/refs/tags/v0.41.0.tar.gz"
-  sha256 "8c0549678a4954a498e0f1f99fe4beec2acd3cb0084fc611cf20431313b05033"
+  url "https://github.com/sigoden/dufs/archive/refs/tags/v0.43.0.tar.gz"
+  sha256 "4ba3b90486336efc4e592bcf15f14d4e3b6ac7b3b1bf8770815b8c43975d8b01"
   license any_of: ["Apache-2.0", "MIT"]
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "09d12364717ce43d02181db124d3eb1cf5c366b417190a6002bc14acf96c0ae4"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "28999d5b0e1dc24bdaa4c38ff8cf8642ad531cfcd43b31a82a3fe4c23146037d"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "4475dc148bdc74b27395805ee113bbda358c4ecde493a4c6efb1bb21eb72632e"
-    sha256 cellar: :any_skip_relocation, sonoma:         "733ef95274ffe10c44a790765bf68ee0d79f6b4181c16b3213293f765d90e38d"
-    sha256 cellar: :any_skip_relocation, ventura:        "709da7d0b1d757fcf4939716ccc30b072316766ff7d9d8c3087b28ac1b9663aa"
-    sha256 cellar: :any_skip_relocation, monterey:       "407e3e17eb39494141f79ff647fc6af149486e1db3618b484d6356a7b7b6a98a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "de418b9b6c1ce412cc721e06987f3080cda7a06be44342f099e57bf65b9fa43d"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "e9907f1078c8ae4f2a52d038eef8ce547ac8cb14d88aced1ae385b562322c717"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "362bbbbe8f036f15d480ef45c944ce97cbe86d9e9b739d2403e9984df7106e6f"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "9b5f5323b754d091c8c15573339a9e0ac241eb30a6e1225fe737e9e41cdede6f"
+    sha256 cellar: :any_skip_relocation, sonoma:        "dade66c1045bd01e2725a36df9f95b71c2d4035a522bc258ecd9a10069dc0d45"
+    sha256 cellar: :any_skip_relocation, ventura:       "ff3b995c743d161810b2d11544feb09771673ad5696ef712413f2ede68ac88c6"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "cf38795658e47257cee21c8d5ee8116fb9241b2638c75d17d03adee7b31b6b72"
   end
 
   depends_on "rust" => :build

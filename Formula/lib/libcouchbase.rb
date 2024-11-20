@@ -1,8 +1,8 @@
 class Libcouchbase < Formula
   desc "C library for Couchbase"
   homepage "https://docs.couchbase.com/c-sdk/current/hello-world/start-using-sdk.html"
-  url "https://packages.couchbase.com/clients/c/libcouchbase-3.3.12.tar.gz"
-  sha256 "a5db78dc3e51842a85233f66422b3bffe6bd78a6d6ea223c43ef0240d49962cf"
+  url "https://packages.couchbase.com/clients/c/libcouchbase-3.3.14.tar.gz"
+  sha256 "c41c3b187572b76902e9c98c7badee26daa92f5e46da040cc134337db59878a9"
   license "Apache-2.0"
   head "https://github.com/couchbase/libcouchbase.git", branch: "master"
 
@@ -15,13 +15,12 @@ class Libcouchbase < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "0ffde6d5799d351b615e209633510b278fb118778de121d6a5087950a557039c"
-    sha256 arm64_ventura:  "4da283f5643ee2514c6aceeedff4831db3396482cf882a04cde7cffe23ec55f0"
-    sha256 arm64_monterey: "a3eaa5aac0eb967ec979f6541a94ee06d90bd2c5c31cd2f6e431c3e9be4777c2"
-    sha256 sonoma:         "d0598fabec118ef1fe9130c658842e30aa1d5fed27b17c8cdd1df6c3625659e8"
-    sha256 ventura:        "fb91b909b6257f711aa1f84f3ebe5b1f6a0e15c7723a0868788a52336af13473"
-    sha256 monterey:       "0271f1056669dacfc8f9d14bd66607c09d22791ae2e3aa0c0e6b455d99cfbc2b"
-    sha256 x86_64_linux:   "c8054fd22f7c61a0b5cd07cf86e0f0f4bbde0da15820b108840bdf4afdaea578"
+    sha256 arm64_sequoia: "48fc696fbd01815b85d6688d708dbda473949d7a21dc3d23a42497a6a7e4cb52"
+    sha256 arm64_sonoma:  "0b349c6d887f4d1fa8ce90610958bcc378c25c0680c17d54423a40beef9d03dd"
+    sha256 arm64_ventura: "65f2fb66349062c64159ba96df4cd468a790e4fd82cb2b73c7417feeb40a682f"
+    sha256 sonoma:        "e1e496fb18f1443ad9c3b6a423a1e492f1af52dbbd25e492d81f442e4255641c"
+    sha256 ventura:       "11e68ddd86c4d5d1aa7cd42cac3048b267829747bc86a3f3214e6472b901873f"
+    sha256 x86_64_linux:  "6282dfb328aff46e1c25862f1f08406566e1aa92f296de25ccd1880bae41fd5d"
   end
 
   depends_on "cmake" => :build

@@ -1,18 +1,22 @@
 class Kubehound < Formula
   desc "Tool for building Kubernetes attack paths"
   homepage "https://kubehound.io"
-  url "https://github.com/DataDog/KubeHound/archive/refs/tags/v1.4.0.tar.gz"
-  sha256 "9f047d7fa3f5e27d1b5db974ce34622e6960c7ad9ab7b354572486c6f08362db"
+  url "https://github.com/DataDog/KubeHound/archive/refs/tags/v1.6.0.tar.gz"
+  sha256 "d77cdd05de70f4efa32db16f824ffeb04e9ddd6cb9be62e8be95579af3528213"
   license "Apache-2.0"
 
+  livecheck do
+    url :stable
+    strategy :github_latest
+  end
+
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "a02aba0d6a0dc6e0f5bc9c5b02f6148bb66d42235e2e2d92b417c7bcbfcbc629"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "4e1a38640d095b9ba84550564aa457dca1290ac9575e98190a2726d10b710ba0"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "1ab4b02298d45ea221457c5455fa662227261982a5622a70e7902dfe81f66c58"
-    sha256 cellar: :any_skip_relocation, sonoma:         "1be0bbd65c84695b90a1ce21c716b07595f1d291cea7b4192c555712a6c34fb0"
-    sha256 cellar: :any_skip_relocation, ventura:        "e1a9ec7f118f611dfb69d2afc642df3e3e385f5d39cc95e513d490e68cfa23ef"
-    sha256 cellar: :any_skip_relocation, monterey:       "4e98e2229c5f01c307e316916195c0e8eaa3895792abbd58f3a7476cbd3c1b19"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a4066baa79df387838477c5665820fdddf42042eb5d212cbba6883f59e0836cc"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "b5a7aec6b3ab8071c74eb27613cdb632f79d7c145b5865c1f4537e02e0c7f85a"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "442ca990c675846f5f4da0309e2d3251317bd0bc4ea1bad80b93483b8a6e2638"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "598f863b2da3863aa2a88a300fb8bb72017aad2b32666490cda0c14d9d0eec92"
+    sha256 cellar: :any_skip_relocation, sonoma:        "05497b4858b6fa67a13414997f47b239a9a500d7191f43c519ff4075b9dc68ea"
+    sha256 cellar: :any_skip_relocation, ventura:       "47a7fbe378a0ea9744654d3981f3906e2d499d225b5c1f954b67012d96d2eb86"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "25c065f5524e14fdee16fa32785619cdf9f6e9edb1d8e34775138d4ba55ab196"
   end
 
   depends_on "go" => [:build, :test]

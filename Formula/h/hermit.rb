@@ -1,18 +1,17 @@
 class Hermit < Formula
   desc "Manages isolated, self-bootstrapping sets of tools in software projects"
   homepage "https://cashapp.github.io/hermit"
-  url "https://github.com/cashapp/hermit/archive/refs/tags/v0.39.3.tar.gz"
-  sha256 "dd3a2c576bffe7bb7a838fca9daaa7880d939d9b10e4d10d979d8ad2a675c40f"
+  url "https://github.com/cashapp/hermit/archive/refs/tags/v0.41.0.tar.gz"
+  sha256 "330ee3826bc686135b8c6e3ae764e27fe2e446df484f04d08fc90bb86beea9db"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "41ada97b022df81dae5eb0d721bab7ca6a0d5c3732ae4a0bed15e163d085a5c8"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "6efc531f5a68d2f8a87098f370a1e3713d8e48b76df8bd1ca185c2ee34785a48"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "d7bed88360f75ebacf3b4909728a312c55c960ee0158a0d672ad57bfe2e56e84"
-    sha256 cellar: :any_skip_relocation, sonoma:         "d84d6c2b7ca33b0ba877176d0d9d3ff5af66d745f1ea5ba0771f04cd4ada829d"
-    sha256 cellar: :any_skip_relocation, ventura:        "64382c62344c75ebaa30db00d9508af954bf640cbe10a8126b2737dcf0e82a04"
-    sha256 cellar: :any_skip_relocation, monterey:       "cc628ea11015daf51ec6fa6f172068b437da8bcc983ab3954099fde54a35605d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "0b767c1fa52eb3b3215f8f63c08e83d9fdbd1c0b1ac95b7f38922b6ce162a5bd"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "07dc2c7c6a3327033f61755f0e4860ee1e7972ff0643b576fcb03b14bffbd629"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "e8da34bff41a7f5c0c4e738e5ecbcb1184334d307cf0046eb9cdb1c1976b1d02"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "b680e7d511afdebf205f0b51be756a7f92079a48ec5a8cfc9e511ce38fbd94be"
+    sha256 cellar: :any_skip_relocation, sonoma:        "5268f3ae0ed4ce9dc0d54ede0bf21a88924cab70be595e02ae8c476ff35faed0"
+    sha256 cellar: :any_skip_relocation, ventura:       "092637f88e7638750b7118cf4f0b3688fb8b314116267b16d8e01f659fbf15d3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "61ae0e9f614015f43fea330c98565e51e636147ae12e2ba61afd042f26a645d5"
   end
 
   depends_on "go" => :build

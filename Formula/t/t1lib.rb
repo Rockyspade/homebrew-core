@@ -13,6 +13,7 @@ class T1lib < Formula
 
   bottle do
     rebuild 2
+    sha256                               arm64_sequoia:  "b13bdc384d062e0a30c75b4ec280865e39273acb787acf872d98a416a5b08ffd"
     sha256                               arm64_sonoma:   "549b1729a39ffb52fa0a6e733d43f73d371bcbaea936270c5ad22e421c923127"
     sha256                               arm64_ventura:  "4178a1b4a03a25c8216994221938a31ea77cf68bc4e80e61995d3375423d12f2"
     sha256                               arm64_monterey: "015a6d7c251045c97f334922342d56d1ba93a398f32ba4c0b32ce9ef494fa02a"
@@ -30,9 +31,63 @@ class T1lib < Formula
   end
 
   def install
+    # Workaround for newer Clang
+    ENV.append_to_cflags "-Wno-implicit-int" if DevelopmentTools.clang_build_version >= 1403
+
     system "./configure", "--prefix=#{prefix}"
     system "make", "without_doc"
     system "make", "install"
     share.install "Fonts" => "fonts"
+  end
+
+  test do
+    # T1_SetString seems to fail on macOS with "(E) T1_SetString(): t1_abort: Reason: unable to fix subpath break?"
+    # https://github.com/Homebrew/homebrew-core/pull/194149#issuecomment-2412940237
+    (testpath/"test.c").write <<~C
+      #include <stdio.h>
+      #include <stdlib.h>
+      #include <t1lib.h>
+
+      int main( void)
+      {
+        int i;
+        T1_SetBitmapPad(16);
+
+        if ((T1_InitLib(NO_LOGFILE)==NULL)){
+          fprintf(stderr, "Initialization of t1lib failed\\n");
+          return EXIT_FAILURE;
+        }
+
+        for( i=0; i<T1_GetNoFonts(); i++){
+          printf("FontID=%d, Font=%s\\n", i, T1_GetFontFilePath(i));
+          printf("FontID=%d, Metrics=%s\\n", i, T1_GetAfmFilePath(i));
+          // T1_DumpGlyph(T1_SetString( i, "Test", 0, 0, T1_KERNING, 25.0, NULL));
+        }
+
+        T1_CloseLib();
+        return EXIT_SUCCESS;
+      }
+    C
+
+    system ENV.cc, "test.c", "-I#{include}", "-L#{lib}", "-lt1", "-o", "test"
+
+    testpath.install_symlink Formula["t1lib"].opt_share/"fonts/afm/bchr.afm"
+    testpath.install_symlink Formula["t1lib"].opt_share/"fonts/type1/bchr.pfb"
+    (testpath/"FontDataBase").write "1\nbchr.afm\n"
+    (testpath/"t1lib.config").write <<~EOS
+      FONTDATABASE=./FontDataBase
+      ENCODING=.
+      AFM=.
+      TYPE1=.
+    EOS
+
+    expected_output = <<~EOS
+      FontID=0, Font=./bchr.pfb
+      FontID=0, Metrics=./bchr.afm
+    EOS
+
+    with_env(T1LIB_CONFIG: testpath/"t1lib.config") do
+      assert_equal expected_output, shell_output("./test")
+    end
   end
 end

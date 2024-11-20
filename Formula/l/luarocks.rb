@@ -12,13 +12,8 @@ class Luarocks < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "db9ab021d46007aedf360de024d8a1741885aafa27cc9a2b65e41bed95f68783"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "db9ab021d46007aedf360de024d8a1741885aafa27cc9a2b65e41bed95f68783"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "db9ab021d46007aedf360de024d8a1741885aafa27cc9a2b65e41bed95f68783"
-    sha256 cellar: :any_skip_relocation, sonoma:         "3eeec01c328114fe26141a1fcd774098476d76fa39fc0b550203195aee28abdf"
-    sha256 cellar: :any_skip_relocation, ventura:        "3eeec01c328114fe26141a1fcd774098476d76fa39fc0b550203195aee28abdf"
-    sha256 cellar: :any_skip_relocation, monterey:       "3eeec01c328114fe26141a1fcd774098476d76fa39fc0b550203195aee28abdf"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "11447656d9da29a1cf229ee806fe34608ca99fb2c085e3b2d9245271eb89032d"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, all: "0cf000ae5081eff2d53ed7fe0e7becdb59151b022afe68502954f52bae71b555"
   end
 
   depends_on "luajit" => :test
@@ -34,8 +29,7 @@ class Luarocks < Formula
                           "--sysconfdir=#{etc}",
                           "--rocks-tree=#{HOMEBREW_PREFIX}"
     system "make", "install"
-
-    return if HOMEBREW_PREFIX.to_s == "/usr/local"
+    generate_completions_from_executable(bin/"luarocks", "completion")
 
     # Make bottles uniform to make an `:all` bottle
     luaversion = Formula["lua"].version.major_minor
@@ -48,7 +42,6 @@ class Luarocks < Formula
       loader
     ].map { |file| share/"lua"/luaversion/"luarocks/#{file}.lua" }
     inreplace inreplace_files, "/usr/local", HOMEBREW_PREFIX
-    generate_completions_from_executable(bin/"luarocks", "completion")
   end
 
   test do
@@ -75,19 +68,19 @@ class Luarocks < Formula
 
       case luaversion
       when "5.1"
-        (testpath/"lfs_#{luaversion}test.lua").write <<~EOS
+        (testpath/"lfs_#{luaversion}test.lua").write <<~LUA
           require("lfs")
           lfs.mkdir("blank_space")
-        EOS
+        LUA
 
         system luaexec, "lfs_#{luaversion}test.lua"
         assert_predicate testpath/"blank_space", :directory?,
           "Luafilesystem failed to create the expected directory"
       else
-        (testpath/"lfs_#{luaversion}test.lua").write <<~EOS
+        (testpath/"lfs_#{luaversion}test.lua").write <<~LUA
           require("lfs")
           print(lfs.currentdir())
-        EOS
+        LUA
 
         assert_match testpath.to_s, shell_output("#{luaexec} lfs_#{luaversion}test.lua")
       end
